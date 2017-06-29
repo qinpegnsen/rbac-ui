@@ -15,8 +15,8 @@
   },
   "private": true,
   "napa": {
-    "jquery.flot.spline": "miloszfalinski/jquery.flot.spline",
-    "ika.jvectormap": "kakirigi/ika.jvectormap"
+    "jquery.flot.spline": "git+https://github.com/miloszfalinski/jquery.flot.spline.git",
+    "ika.jvectormap": "git+https://github.com/kakirigi/ika.jvectormap.git"
   },
   "dependencies": {
     "@agm/core": "1.0.0-beta.0",
