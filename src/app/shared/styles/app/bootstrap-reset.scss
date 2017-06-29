@@ -302,33 +302,33 @@ $fa-var-folder-open: "\f07c";
 $fa-var-angle-down: "\f107";
 $fa-var-angle-up: "\f106";
 
-.glyphicon {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
-  font-size: inherit; // can't have font-size inherit on line above, so need to override
-  text-rendering: auto; // optimizelegibility throws things off #1094
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  &.glyphicon-chevron-right:before {
-    content: $fa-var-chevron-right;
-  };
-  &.glyphicon-chevron-left:before {
-    content: $fa-var-chevron-left;
-  };
-  &.glyphicon-chevron-up:before {
-    content: $fa-var-chevron-up;
-  };
-  &.glyphicon-chevron-down:before {
-    content: $fa-var-chevron-down;
-  };
-  &.glyphicon-folder-open:before {
-    content: $fa-var-folder-open;
-  };
-  // Fix angular2-datatable sort icons
-  &.glyphicon-triangle-top:before {
-    content: $fa-var-angle-up !important;
-  }
-  &.glyphicon-triangle-bottom:before {
-    content: $fa-var-angle-down !important;
-  }
-}
+// .glyphicon {
+//   display: inline-block;
+//   font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
+//   font-size: inherit; // can't have font-size inherit on line above, so need to override
+//   text-rendering: auto; // optimizelegibility throws things off #1094
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   &.glyphicon-chevron-right:before {
+//     content: $fa-var-chevron-right;
+//   };
+//   &.glyphicon-chevron-left:before {
+//     content: $fa-var-chevron-left;
+//   };
+//   &.glyphicon-chevron-up:before {
+//     content: $fa-var-chevron-up;
+//   };
+//   &.glyphicon-chevron-down:before {
+//     content: $fa-var-chevron-down;
+//   };
+//   &.glyphicon-folder-open:before {
+//     content: $fa-var-folder-open;
+//   };
+//   // Fix angular2-datatable sort icons
+//   &.glyphicon-triangle-top:before {
+//     content: $fa-var-angle-up !important;
+//   }
+//   &.glyphicon-triangle-bottom:before {
+//     content: $fa-var-angle-down !important;
+//   }
+// }
