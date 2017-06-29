@@ -9,8 +9,14 @@ const headingMain = {
     text: '主菜单',
     heading: true
 };
+const datatables = {
+    text: 'datatables',
+    link: '/datatables',
+    icon: 'icon-speedometer'
+};
 
 export const menu = [
     headingMain,
-    Home
+    Home,
+    datatables
 ];
