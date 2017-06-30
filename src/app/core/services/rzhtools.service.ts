@@ -4,7 +4,7 @@ import {Http} from "@angular/http";
 import {areaJSON} from "./area";
 
 @Injectable()
-export class ToolsService {
+export class RzhtoolsService {
 
   private areaJson: any;
 
@@ -116,16 +116,6 @@ export class ToolsService {
       // getAreaURL = areaJsonFile + '?v=' + (new Date().getTime()); // 清除缓存
       getAreaURL = areaJsonFile; // 清除缓存
     isSelectOld = isNull(isSelectOld) ? true : isSelectOld;
-
-    /*if (isNull(this.areaJson)) {
-     Ajax.get({
-     async: false,
-     url: getAreaURL,
-     success: function (resultData) {
-     this.areaJson = resultData;
-     }
-     });
-     }*/
 
     //取到省级区域对象
     if (areaLevel >= 1) {
