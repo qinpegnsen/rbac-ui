@@ -4,3 +4,5 @@
 /.vscode
 #忽略build文件
 /dist
+#忽略idea项目配置文件夹
+/.idea
