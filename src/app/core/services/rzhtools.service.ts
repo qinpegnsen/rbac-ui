@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {isNull} from "util";
-import {Http} from "@angular/http";
 import {areaJSON} from "./area";
 
 @Injectable()
@@ -8,9 +7,9 @@ export class RzhtoolsService {
 
   private areaJson: any;
 
-  constructor(http: Http) {
+  // Angular2框架负责注入对象
+  constructor() {
     this.areaJson = areaJSON;
-    console.log("█ this.areaJson ►►► ", this.areaJson);
   }
 
   /**
