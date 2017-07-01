@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {isNullOrUndefined} from 'util';
+import {isNull, isNullOrUndefined} from 'util';
 import {AjaxService} from '../services/ajax.service';
 declare var $: any;
 
@@ -36,7 +36,7 @@ export class TableService {
           });
         },
         pageLength: 25,                    //每页显示25条数据
-        sAjaxDataProp:"voList",
+        sAjaxDataProp: "voList",
         ajaxSource: dataUrl,//获取数据的url
         fnServerData: function (sSource, aoData, fnCallback) { //获取数据的处理函数
           _this._ajax.post({
@@ -62,7 +62,7 @@ export class TableService {
             },
             success: (data) => {
               fnCallback(data);
-              console.log("data",data);
+              console.log("data", data);
             },
             error: (data) => {
               console.log('data', data);
@@ -100,4 +100,79 @@ export class TableService {
     else return table.row(sel).data();
   }
 
+  /**
+   * 获得当前页
+   * @param aoData
+   */
+  getCurPage(aoData) {
+    let iDisplayStart = Number.parseInt(this.getPageInfo(aoData, "iDisplayStart")); //开始查询记录次序
+    let pageSize = Number.parseInt(this.getPageSize(aoData));                         //分页大小
+    let curPage: number = iDisplayStart / pageSize;
+    return curPage + 1;
+  };
+
+  /**
+   * 获得分页大小
+   * @param aoData
+   */
+  getPageSize(aoData) {
+    return this.getPageInfo(aoData, "iDisplayLength");
+  };
+
+  /**
+   * 获得搜索的关键字
+   * @param aoData
+   */
+  getSearchKeyWord(aoData) {
+    return this.getPageInfo(aoData, "sSearch");
+  };
+
+  /**
+   * 获取分页对象
+   * @param aoData
+   * @param name 要获取的属性名
+   */
+  getPageInfo(aoData, name) {
+    for (let obj in aoData) {
+      if (aoData[obj].name == name) {
+        return aoData[obj].value;
+      }
+    }
+  };
+
+  /**
+   * 获得排序参数
+   * @param aoData
+   * @returns {any}
+   */
+  getSortColumns(aoData) {
+    var sortName = this.getSortName(aoData);
+    var sortDir = this.getSortDir(aoData);
+    if (!isNull(sortName)) {
+      return sortName + "." + sortDir;
+    }
+    return null;
+  };
+
+  /**
+   * 获取点击的排序名
+   * @param aoData
+   */
+  getSortName(aoData) {
+    var sortCol = this.getPageInfo(aoData, "iSortCol_0");
+    var sortName = null;
+    if (!isNull(sortCol) && Number.parseInt(sortCol) != 0) {
+      sortName = this.getPageInfo(aoData, "mDataProp_" + sortCol);
+    }
+    return sortName;
+  };
+
+  /**
+   * 获取点击的排序方法
+   * @param aoData
+   */
+  getSortDir(aoData) {
+    var sortDir = this.getPageInfo(aoData, "sSortDir_0");
+    return sortDir;
+  };
 }
