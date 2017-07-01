@@ -2,6 +2,7 @@ const PROXY_CONFIG = [
   {
     context: [
       "/login",
+      "/elder",
       "/staff"
     ],
     target: "http://192.168.10.119:8081",   //拦截 context配置路径，经过此地址

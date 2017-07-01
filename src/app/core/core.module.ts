@@ -6,6 +6,7 @@ import {MenuService} from './menu/menu.service';
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {PatternService} from './forms/pattern.service';
 import {AjaxService} from "./services/ajax.service";
+import {TableService} from './list/table.service';
 
 @NgModule({
   imports: [],
@@ -15,6 +16,7 @@ import {AjaxService} from "./services/ajax.service";
     TranslatorService,
     MenuService,
     PatternService,
+    TableService,
     AjaxService
   ],
   declarations: [],

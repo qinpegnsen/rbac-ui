@@ -1,105 +1,54 @@
-import {HomeComponent} from './../../home/home/home.component';
 import {Http} from '@angular/http';
-import {Component, OnInit, Directive} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {TableService} from '../../../core/list/table.service';
 declare var $: any;
 
 @Component({
   selector: 'app-datatables',
-  templateUrl: './datatables.component.html',
+  template: `<button (click)="ceshi()">123456</button><table id="elderGrid" class="table table-striped table-bordered"></table>`,
   styleUrls: ['./datatables.component.scss']
 })
 
 export class DatatablesComponent implements OnInit {
-
-  public singleData;
   public test;
   private table;
+  private tableId; //列表id
 
-  constructor(private http: Http) {
-    this.elderListData();
+  constructor(private http: Http,private tableInfo:TableService) { //初始化
+    this.tableId = 'elderGrid';
+    // tableInfo.elderListData(http,"/upload/basic/uid");
   }
 
   ngOnInit() {
-    var data = [{
-      "name": "Wing",
-      "email": "tellus.eu.augue@arcu.com",
-      "regDate": "2016-01-09T14:48:34-08:00",
-      "city": "Paglieta",
-      "age": 25
-    }, {
-      "name": "Whitney",
-      "email": "sed.dictum@Donec.org",
-      "regDate": "2017-01-23T20:09:52-08:00",
-      "city": "Bear",
-      "age": 32
-    }, {
-      "name": "Oliver",
-      "email": "mauris@Craslorem.ca",
-      "regDate": "2015-11-19T19:11:33-08:00",
-      "city": "Bruderheim",
-      "age": 31
-    }];
-    this.table = $('#elderGrid').DataTable({
-      // bStateSave: true,                   //状态保存，使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容
-      processing: true,                    //加载数据时显示正在加载信息
-      searching: true,                   //显示/屏蔽搜索框
-      lengthChange: false,                //显示、屏蔽每页显示条数
-      autoWidth: false,
-      showRowNumber: true,
-      serverSide: false,                    //指定从服务器端获取数据
-      sPaginationType: "full_numbers",
-      language: {
-        sSearchPlaceholder: "姓名/电话/身份证"
-      },
-      fnDrawCallback: function () {
-        this.api().column(0).nodes().each(function (cell, i) {
-          cell.innerHTML = i + 1;
-        });
-      },
-      // pageLength: 25,                    //每页显示25条数据
-      // ajaxSource: "/elder/listcondition",//获取数据的url
-      // fnServerData: elderService.elderListData,           //获取数据的处理函数
-      // fnServerParams: function (aoData) {
-      //     aoData.push({name: "selPost", value: $scope.selPost}, {name: "inText", value: $scope.sel.intext});
-      // },
-      data: data,
-      aoColumns: [
-        {sTitle: "序号", width: "5%"},
-        {mDataProp: "name", sTitle: "客户名"},
-        {mDataProp: "email", sTitle: "邮箱"},
-        {mDataProp: "city", sTitle: "城市"},
-        {mDataProp: "age", sTitle: "年龄"}
-      ],
-      aoColumnDefs: [//设置列的属性
-        // {
-        //     bSortable: false,
-        //     targets: 0,
-        //     defaultContent: $scope.checkInfos
-        // },
-        {
-          bSortable: false,
-          data: null,
-          targets: 0
-        }
-      ]
-    });
+    let columns = [
+      {sTitle: '序号', width: '5%'},
+      {mDataProp: "username", sTitle: "客户名"},
+      {mDataProp: "sexText", sTitle: "性别"},
+      {mDataProp: "age", sTitle: "年龄"},
+      {mDataProp: "phone", sTitle: "手机号"}
+    ], searchPlaceholder = '姓名或手机号';
+    this.table = this.tableInfo.getDataTables(this.tableId,"/elder/listcondition", searchPlaceholder, columns);
   }
 
-  private elderListData() {
-    this.http.get("/login/login", {
-      method: "post",
-      params: {
-        'staffno': 'admin',
-        'pwd': '888888'
-      }
-    }).subscribe((data) => {
-      console.log("data", data);
-    });
-
-    this.http.get("/upload/basic/uid", {
-      method: "get"
-    }).subscribe((data) => {
-      console.log("data", data);
-    });
+  // private elderListData() {
+  //   this.http.get("/login/login", {
+  //     method: "post",
+  //     params: {
+  //       'staffno': 'admin',
+  //       'pwd': '888888'
+  //     }
+  //   }).subscribe((data) => {
+  //     console.log("data", data);
+  //   });
+  //
+  //   this.http.get("/upload/basic/uid", {
+  //     method: "get"
+  //   }).subscribe((data) => {
+  //     console.log("data", data);
+  //   });
+  // }
+  ceshi(){
+    console.log(this.tableInfo.getSelRow(this.table));
   }
+
 }
