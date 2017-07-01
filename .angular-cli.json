@@ -24,9 +24,9 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
-        "app/core/preloader/preloader.js",
         "assets/datatables/js/jquery.dataTables.min.js",
-        "assets/datatables/js/dataTables.bootstrap.min.js"
+        "assets/datatables/js/dataTables.bootstrap.min.js",
+        "assets/login/js/supersized.3.2.7.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

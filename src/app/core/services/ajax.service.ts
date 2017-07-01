@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {LayoutComponent} from "../../layout/layout.component";
 import {MaskService} from "./mask.service";
+import {Router} from "@angular/router";
 declare var $: any;
 
 @Injectable()
 export class AjaxService {
-  constructor(private maskservice: MaskService) {
+  constructor(private route:Router,private maskservice: MaskService) {
+  // route.navigate("");
   }
 
   //get方式提交，一般用于查询
