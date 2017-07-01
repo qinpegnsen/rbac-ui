@@ -5,6 +5,7 @@ import {TranslatorService} from './translator/translator.service';
 import {MenuService} from './menu/menu.service';
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {PatternService} from './forms/pattern.service';
+import {MaskService} from "./services/mask.service";
 import {AjaxService} from "./services/ajax.service";
 import {TableService} from './list/table.service';
 
@@ -17,6 +18,7 @@ import {TableService} from './list/table.service';
     MenuService,
     PatternService,
     TableService,
+    MaskService,
     AjaxService
   ],
   declarations: [],

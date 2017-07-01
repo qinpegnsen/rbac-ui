@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
+import {LayoutComponent} from "../../layout/layout.component";
+import {MaskService} from "./mask.service";
 declare var $: any;
 
 @Injectable()
 export class AjaxService {
-
-  constructor() {
+  constructor(private maskservice: MaskService) {
   }
 
   //get方式提交，一般用于查询
@@ -19,6 +20,7 @@ export class AjaxService {
 
   //post方式提交，一般用于新增对象
   public post(config) {
+    let _this = this;
     if (!config) {
       console.log("ajax调用参数不能为空");
       return;
@@ -29,13 +31,11 @@ export class AjaxService {
     if (!config.method) config.method = method;
     if (!config.dataType) config.dataType = dataType;
     if (!config.maskIcon) config.maskIcon = maskIcon; //遮罩层样式
-    var loading = '<div id="showLoading" style="position: fixed;z-index:999;top: 0;left:0;width: ' + (width + 20) + 'px;height: ' + height + 'px;background-color:rgba(255,255,255,0.5);"><div class="' + config.maskIcon + '" style="margin: 0 auto;margin: ' + height / 2 + 'px 0px 0px ' + width / 2 + 'px"><div></div><div></div><div></div></div></div>'; //遮罩层
-
     //提交前显示遮罩层
     config.beforeSend = function (xhr) {
       //显示遮罩层
       if (config.mask === true) {
-        // angular.element("body").append(loading); //初始化操作按钮（手机端），放入相应位置
+        _this.maskservice.showMask();
       }
     };
 
@@ -43,7 +43,7 @@ export class AjaxService {
     var success = config.success;
     config.success = function (result, status, xhr) {
       //隐藏遮罩层
-      // if (config.mask === true) angular.element("#showLoading").remove();
+      if (config.mask === true) _this.maskservice.hideMask();
       //过滤登录
       if (xhr.getResponseHeader("serverError") || xhr.getResponseHeader("serverError") === "sessionOut") {
         // $state.go("page.login");
@@ -56,7 +56,7 @@ export class AjaxService {
     var error = config.error;
     config.error = function (result, status, xhr) {
       //隐藏遮罩层
-      // if (config.mask === true) angular.element("#showLoading").remove();
+      if (config.mask === true) _this.maskservice.hideMask();
       //回调
       if (typeof error === "function") {
         error(result, status, xhr);
