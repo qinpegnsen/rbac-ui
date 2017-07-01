@@ -58,7 +58,7 @@ div.dataTables_wrapper div.dataTables_processing {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200px;
+  width: 300px;
   margin-left: -100px;
   margin-top: -26px;
   text-align: center;
@@ -185,4 +185,9 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 
 table.dataTable tbody tr.selected {
   background-color: #B0BED9;
+}
+
+.sel-btn-p-t-b{
+  padding-top: 4px;
+  padding-bottom: 4px;
 }

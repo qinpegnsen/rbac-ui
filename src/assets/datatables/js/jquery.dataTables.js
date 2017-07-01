@@ -4190,7 +4190,7 @@
     var features = settings.aanFeatures;
     // var input = '<input type="search" class="'+classes.sFilterInput+'"/>';
     var input = '<input id="' + tableId + '_sel_input" type="search" class="' + classes.sFilterInput + '"/>';
-    var inputBut = '<span class="btn btn-info p-5-10 mb1 ml">搜索</span>'; //立坤添加
+    var inputBut = '<span class="btn btn-info p-5-10 mb1 ml sel-btn-p-t-b"><i class="fa fa-search"></i></span>'; //立坤添加
 
     var str = language.sSearch;
     str = str.match(/_INPUT_/) ?
@@ -4220,7 +4220,7 @@
       // if ( val != previousSearch.sSearch ) {
       if (infos == "all") { //立坤修改，改为回车查询
         _fnFilterComplete( settings, {
-          "sSearch": val,
+          "sSearch": "",
           "bRegex": previousSearch.bRegex,
           "bSmart": previousSearch.bSmart ,
           "bCaseInsensitive": previousSearch.bCaseInsensitive
@@ -4269,14 +4269,14 @@
     var jqFilter = $('input', filter)
       .val( previousSearch.sSearch )
       .attr( 'placeholder', language.sSearchPlaceholder )
-      // .on(
-      //   // 'keyup.DT search.DT input.DT paste.DT cut.DT',
-      //   'keypress.DT search.DT input.DT paste.DT cut.DT', //立坤修改，改为回车查询
-      //   searchDelay ?
-      //     _fnThrottle( searchFn, searchDelay ) :
-      //     searchFn(e, null) //立坤修改，改为回车查询
-      //   // searchFn
-      // )
+      .on(
+        // 'keyup.DT search.DT input.DT paste.DT cut.DT',
+        'keypress.DT search.DT input.DT paste.DT cut.DT', //立坤修改，改为回车查询
+        searchDelay ?
+          _fnThrottle( searchFn, searchDelay ) :
+          searchFn(e, null) //立坤修改，改为回车查询
+        // searchFn
+      )
       .on( 'keypress.DT', function(e) {
         /* Prevent form submission */
         if ( e.keyCode == 13 ) {
