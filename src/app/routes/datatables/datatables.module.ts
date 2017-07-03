@@ -1,18 +1,22 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DatatablesComponent } from './datatables/datatables.component';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {DatatablesComponent} from './datatables/datatables.component';
+import {Routes, RouterModule} from '@angular/router';
 
 const routes: Routes = [
-    { path: '', component: DatatablesComponent },
+  {path: '', component: DatatablesComponent},
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes),
-        CommonModule
-    ],
-    declarations: [DatatablesComponent]
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule
+  ],
+  declarations: [DatatablesComponent],
+  exports: [
+    RouterModule
+  ]
 })
 
-export class DatatablesModule { }
+export class DatatablesModule {
+}

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TableService} from '../../../core/list/table.service';
 import {AjaxService} from '../../../core/services/ajax.service';
-declare var $: any;
+import {Router} from '@angular/router';
+const swal = require('sweetalert');
 
 @Component({
   selector: 'app-datatables',
@@ -14,7 +15,7 @@ export class DatatablesComponent implements OnInit {
   private table;    //datatable的对象信息
   private tableId; //列表id
 
-  constructor(private ajax: AjaxService, private tableInfo: TableService) { //初始化
+  constructor(private ajax: AjaxService, private tableInfo: TableService,private router:Router) { //初始化
     this.tableId = 'elderGrid'; //定义列表id
   }
 
@@ -74,6 +75,9 @@ export class DatatablesComponent implements OnInit {
         'pwd': '888888'
       },
       success: (data) => {
+        // this.router.navigate(['/datatables'],{ replaceUrl: true }); //路由跳转
+        this.table.draw(); //重新绘制表格
+        swal('登录成功！', '信息列表已自动更新...', 'success');
         console.log('data', data);
       },
       error: (data) => {

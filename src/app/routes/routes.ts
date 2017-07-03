@@ -10,7 +10,8 @@ export const routes = [
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
-            { path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule' }
+            { path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule' },
+            { path: 'msg', loadChildren: './msg/msg.module#MsgModule' }
         ]
     },
     {
