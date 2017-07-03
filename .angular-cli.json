@@ -25,6 +25,7 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "assets/datatables/js/jquery.dataTables.min.js",
+        "app/core/preloader/preloader.js",
         "assets/datatables/js/dataTables.bootstrap.min.js"
       ],
       "environmentSource": "environments/environment.ts",
