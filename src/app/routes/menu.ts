@@ -1,8 +1,3 @@
-const SystemMain = {
-  text: '主菜单',
-  heading: true
-};
-
 /**
  * 系统管理
  * @type {{text: string; link: string; icon: string; submenu: [{text: string; link: string},{text: string; link: string}]}}
@@ -77,7 +72,20 @@ const account = {
     }
   ]
 };
-
+const SystemMain = {
+  text: '测试菜单',
+  heading: true
+};
+const datatables = {
+  text: '列表',
+  link: '/datatables',
+  icon: 'icon-speedometer'
+};
+const msg = {
+  text: '弹框和消息通知',
+  link: '/msg',
+  icon: 'icon-volume-2'
+};
 /**
  * 菜单配置
  * @type {[{text: string; link: string; icon: string; submenu: {text: string; link: string}[]},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string; submenu: {text: string; link: string}[]}]}
@@ -87,5 +95,8 @@ export const menu = [
   organ,
   limit,
   role,
-  account
+  account,
+  SystemMain,
+  datatables,
+  msg
 ];
