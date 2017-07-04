@@ -4,7 +4,7 @@
  */
 const system = {
   text: '系统管理',
-  icon: 'fa-2x fa fa-gears text-center',
+  icon: 'fa fa-gears text-center',
   alert: 'child',
   submenu: [
     {
@@ -29,7 +29,7 @@ const system = {
 const organ = {
   text: '机构管理',
   link: '/organ',
-  icon: 'fa-2x fa fa-institution text-center'
+  icon: 'fa fa-institution text-center'
 };
 
 /**
@@ -39,7 +39,7 @@ const organ = {
 const limit = {
   text: '权限管理',
   link: '/limit',
-  icon: 'fa-2x fa fa-lock text-center'
+  icon: 'fa fa-lock text-center'
 };
 
 /**
@@ -49,7 +49,7 @@ const limit = {
 const role = {
   text: '角色管理',
   link: '/role',
-  icon: 'fa-2x fa fa-group text-center'
+  icon: 'fa fa-group text-center'
 };
 
 /**
@@ -58,7 +58,7 @@ const role = {
  */
 const account = {
   text: '账户管理',
-  icon: 'fa-2x fa fa-user text-center',
+  icon: 'fa fa-user text-center',
   elink: 'http://www.baidu.com/',
   alert: 'child',
   submenu: [
