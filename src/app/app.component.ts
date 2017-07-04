@@ -1,7 +1,9 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-declare var $: any;
-
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { SettingsService } from './core/settings/settings.service';
+import {CookieService} from "_angular2-cookie@1.2.6@angular2-cookie";
+
+declare var $: any;
 
 @Component({
     selector: 'app-root',
@@ -21,9 +23,21 @@ export class AppComponent implements OnInit {
     @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.layout.asideToggled; };
     @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.layout.isCollapsedText; };
 
-    constructor(public settings: SettingsService) { }
+    constructor(public settings: SettingsService, private cookieService:CookieService, private location:Location) { }
 
     ngOnInit() {
         $(document).on('click', '[href="#"]', e => e.preventDefault());
+        //登录状态检测
+        this.checkLogin();
+    }
+
+    private checkLogin(){
+      let url = this.location.path();
+      if(url !== "/pages/login"){
+        let loginCookie = this.cookieService.get("aaa")
+        if(!loginCookie){
+          this.location.go("/pages/login")
+        }
+      }
     }
 }

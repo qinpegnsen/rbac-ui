@@ -23,9 +23,7 @@ export const routes = [
         ]
     },
 
-
-
     // Not found
-    { path: '**', redirectTo: 'home' }
+    { path: '**', redirectTo: '/pages/login' }
 
 ];

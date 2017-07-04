@@ -5,12 +5,13 @@ import {HttpModule, Http} from '@angular/http';
 import {TranslateService, TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import {AppComponent} from './app.component';
+import { AppComponent } from './app.component';
 
-import {CoreModule} from './core/core.module';
-import {LayoutModule} from './layout/layout.module';
-import {SharedModule} from './shared/shared.module';
-import {RoutesModule} from './routes/routes.module';
+import { CoreModule } from './core/core.module';
+import { LayoutModule } from './layout/layout.module';
+import { SharedModule } from './shared/shared.module';
+import { RoutesModule } from './routes/routes.module';
+import { CookieService } from "_angular2-cookie@1.2.6@angular2-cookie";
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: Http) {
@@ -18,26 +19,25 @@ export function createTranslateLoader(http: Http) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    HttpModule,
-    BrowserAnimationsModule, // required for ng2-tag-input
-    CoreModule,
-    LayoutModule,
-    SharedModule.forRoot(),
-    RoutesModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [Http]
-      }
-    })
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        HttpModule,
+        BrowserAnimationsModule, // required for ng2-tag-input
+        CoreModule,
+        LayoutModule,
+        SharedModule.forRoot(),
+        RoutesModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [Http]
+            }
+        })
+    ],
+    providers: [CookieService],
+    bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
