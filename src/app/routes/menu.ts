@@ -93,9 +93,9 @@ const msg = {
 export const menu = [
   system,
   organ,
+  account,
   limit,
   role,
-  account,
   SystemMain,
   datatables,
   msg
