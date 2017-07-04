@@ -12,10 +12,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule
   ],
-  declarations: [DatatablesComponent],
-  exports: [
-    RouterModule
-  ]
+  declarations: [DatatablesComponent]
 })
 
 export class DatatablesModule {

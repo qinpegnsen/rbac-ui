@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         $(document).on('click', '[href="#"]', e => e.preventDefault());
         //登录状态检测
-        this.checkLogin();
+        // this.checkLogin();
     }
 
     private checkLogin(){

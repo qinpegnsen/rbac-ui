@@ -143,5 +143,34 @@ export class MsgComponent implements OnInit {
   msgWait() {
     this.toasterService.pop("wait", "执行中提示", "执行中消息，类型：wait");
   }
-
+  //上中 消息
+  msgTopCenter() {
+    this.toasterconfig['positionClass'] = "toast-top-center";
+    this.toasterService.pop("success", "成功提示", "成功消息，类型：success");
+  }
+  //上左 消息
+  msgTopLeft() {
+    this.toasterconfig['positionClass'] = "toast-top-left";
+    this.toasterService.pop("success", "成功提示", "成功消息，类型：success");
+  }
+  //上右 消息
+  msgTopRight() {
+    this.toasterconfig['positionClass'] = "toast-top-right";
+    this.toasterService.pop("success", "成功提示", "成功消息，类型：success");
+  }
+  //下中 消息
+  msgBottomCenter() {
+    this.toasterconfig['positionClass'] = "toast-bottom-center";
+    this.toasterService.pop("success", "成功提示", "成功消息，类型：success");
+  }
+  //上左 消息
+  msgBottomLeft() {
+    this.toasterconfig['positionClass'] = "toast-bottom-left";
+    this.toasterService.pop("success", "成功提示", "成功消息，类型：success");
+  }
+  //上右 消息
+  msgBottomRight() {
+    this.toasterconfig['positionClass'] = "toast-bottom-right";
+    this.toasterService.pop("success", "成功提示", "成功消息，类型：success");
+  }
 }

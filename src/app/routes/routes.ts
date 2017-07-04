@@ -11,7 +11,8 @@ export const routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
             { path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule' },
-            { path: 'msg', loadChildren: './msg/msg.module#MsgModule' }
+            { path: 'msg', loadChildren: './msg/msg.module#MsgModule' },
+            { path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule' }
         ]
     },
     {
@@ -24,6 +25,6 @@ export const routes = [
     },
 
     // Not found
-    { path: '**', redirectTo: '/pages/login' }
+    { path: '**', redirectTo: 'home' }
 
 ];

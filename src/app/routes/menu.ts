@@ -86,6 +86,11 @@ const msg = {
   link: '/msg',
   icon: 'icon-volume-2'
 };
+const echarts = {
+  text: 'echarts图表',
+  link: '/echarts',
+  icon: 'icon-volume-2'
+};
 /**
  * 菜单配置
  * @type {[{text: string; link: string; icon: string; submenu: {text: string; link: string}[]},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string; submenu: {text: string; link: string}[]}]}
@@ -98,5 +103,6 @@ export const menu = [
   role,
   SystemMain,
   datatables,
-  msg
+  msg,
+  echarts
 ];
