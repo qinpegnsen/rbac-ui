@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-echarts',
@@ -7,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class EchartsComponent implements OnInit {
 
-  constructor() {
+  constructor(public settings: SettingsService) {
   }
 
   ngOnInit() {
@@ -106,5 +107,9 @@ export class EchartsComponent implements OnInit {
       }
     ]
   };
+
+  toggleOffsidebar() {
+    this.settings.layout.offsidebarOpen = !this.settings.layout.offsidebarOpen;
+  }
 
 }

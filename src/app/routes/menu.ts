@@ -89,7 +89,12 @@ const msg = {
 const echarts = {
   text: 'echarts图表',
   link: '/echarts',
-  icon: 'icon-volume-2'
+  icon: 'icon-chart'
+};
+const operationpage = {
+  text: '操作页面',
+  link: '/operationpage',
+  icon: 'icon-doc'
 };
 /**
  * 菜单配置
@@ -104,5 +109,6 @@ export const menu = [
   SystemMain,
   datatables,
   msg,
-  echarts
+  echarts,
+  operationpage
 ];
