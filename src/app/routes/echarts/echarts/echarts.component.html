@@ -1,14 +1,7 @@
 <div class="panel panel-default">
-
-  <li>
-    <a (click)="toggleOffsidebar()">
-      <em class="icon-notebook"></em>
-    </a>
-  </li>
-
   <div class="panel-body">
     <!--指令方式引入图表插件   宽高必填  begin-->
-    <div [ng2-echarts]="chartData" style="height: 300px; width: 100%"></div>
+    <div echarts [options]="chartData"  style="height: 400px"></div>
     <!--指令方式引入图表插件   宽高必填  end-->
   </div>
 </div>
