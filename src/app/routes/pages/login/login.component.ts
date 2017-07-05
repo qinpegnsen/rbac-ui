@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import '../../../../assets/login/js/supersized.3.2.7.min.js'
-import '../../../../assets/login/js/supersized-init.js'
+import {AjaxService} from "../../../core/services/ajax.service";
+import {Location} from '@angular/common';
+import {Router} from "@angular/router";
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -8,39 +10,65 @@ declare var $: any;
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  public userName: string;
+  public password: string;
+  public authMsg: string;
 
-  constructor() {
+  constructor(private ajax: AjaxService, private localtion: Location,private router:Router) {
   }
 
   ngOnInit() {
-    setTimeout(()=>{
-      $.supersized({
-        // Functionality
-        slide_interval     : 4000,    // Length between transitions
-        transition         : 1,    // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-        transition_speed   : 1000,    // Speed of transition
-        performance        : 1,    // 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
+    //初始化界面
+    setTimeout(() => {
+      this.initSupersized();
+    }, 200)
+  }
 
-        // Size & Position
-        min_width          : 0,    // Min width allowed (in pixels)
-        min_height         : 0,    // Min height allowed (in pixels)
-        vertical_center    : 1,    // Vertically center background
-        horizontal_center  : 1,    // Horizontally center background
-        fit_always         : 0,    // Image will never exceed browser width or height (Ignores min. dimensions)
-        fit_portrait       : 1,    // Portrait images will not exceed browser height
-        fit_landscape      : 0,    // Landscape images will not exceed browser width
+  private initSupersized() {
+    $.supersized({
+      // Functionality
+      slide_interval: 4000,    // Length between transitions
+      transition: 1,    // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+      transition_speed: 1000,    // Speed of transition
+      performance: 1,    // 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
 
-        // Components
-        slide_links        : 'blank',    // Individual links for each slide (Options: false, 'num', 'name', 'blank')
-        slides             : [    // Slideshow Images
-          {image : '/assets/login/img/backgrounds/1.jpg'},
-          {image : '/assets/login/img/backgrounds/2.jpg'},
-          {image : '/assets/login/img/backgrounds/3.jpg'},
-          // {image : '/assets/login/img/backgrounds/4.jpg'}
-        ]
-      });
-    },200)
+      // Size & Position
+      min_width: 0,    // Min width allowed (in pixels)
+      min_height: 0,    // Min height allowed (in pixels)
+      vertical_center: 1,    // Vertically center background
+      horizontal_center: 1,    // Horizontally center background
+      fit_always: 0,    // Image will never exceed browser width or height (Ignores min. dimensions)
+      fit_portrait: 1,    // Portrait images will not exceed browser height
+      fit_landscape: 0,    // Landscape images will not exceed browser width
 
+      // Components
+      slide_links: 'blank',    // Individual links for each slide (Options: false, 'num', 'name', 'blank')
+      slides: [    // Slideshow Images
+        {image: '/assets/login/img/backgrounds/1.jpg'}
+        // {image : '/assets/login/img/backgrounds/2.jpg'},
+        // {image : '/assets/login/img/backgrounds/3.jpg'},
+        // {image : '/assets/login/img/backgrounds/4.jpg'}
+      ]
+    });
+  }
+
+  public login() {
+    let me = this;
+    me.ajax.post({
+      url: '/login/login',
+      data: {
+        'staffno': me.userName,
+        'pwd': me.password
+      },
+      success: (result) => {
+        if (result.success) {
+          me.router.navigate(['/home'],{ replaceUrl: true }); //路由跳转
+        }
+      },
+      error: (result) => {
+        console.log('data', result);
+      }
+    });
   }
 
 }

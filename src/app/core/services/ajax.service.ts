@@ -7,7 +7,6 @@ declare var $: any;
 @Injectable()
 export class AjaxService {
   constructor(private route:Router,private maskservice: MaskService) {
-  // route.navigate("");
   }
 
   //get方式提交，一般用于查询
@@ -48,7 +47,7 @@ export class AjaxService {
       if (config.mask === true) _this.maskservice.hideMask();
       //过滤登录
       if (xhr.getResponseHeader("serverError") || xhr.getResponseHeader("serverError") === "sessionOut") {
-        // $state.go("page.login");
+          this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
       } else {
         if (typeof success === "function") {
           success(result, status, xhr);

@@ -4,10 +4,10 @@
     <h1 class="text-info">用户登陆</h1>
     <form role="form" ng-submit="login()" name="loginForm" novalidate="">
       <div id="authMsg" class="authMsg"></div>
-      <input type="text" class="input" name="username" ng-model="user.username" autocomplete="off" required class="username" placeholder="请输入员工账号">
-      <input type="password" class="input" name="password" ng-model="user.password" autocomplete="off" required class="password" placeholder="请输入密码">
+      <input type="text" class="input" name="username" [(ngModel)]="userName" autocomplete="off" required  placeholder="请输入员工账号">
+      <input type="password" class="input" name="password" [(ngModel)]="password" autocomplete="off" required placeholder="请输入密码">
       <!--<div toggle-fullscreen="toggle-fullscreen">-->
-      <button type="submit" class="button button-login">点击登录</button>
+      <button type="submit" class="button button-login" (click)="login()">点击登录</button>
       <!--</div>-->
       <div class="error"><span>+</span></div>
     </form>
@@ -16,7 +16,4 @@
       <p>Copyright &copy; <span ng-bind="app.name"></span></p>
     </div>
   </div>
-
-  <!-- Javascript -->
-  <!--<script src="/assets/js/supersized-init.js"></script>-->
 </div>

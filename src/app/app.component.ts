@@ -2,6 +2,7 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { SettingsService } from './core/settings/settings.service';
 import {CookieService} from "_angular2-cookie@1.2.6@angular2-cookie";
+import {Router} from "@angular/router";
 
 declare var $: any;
 
@@ -23,21 +24,21 @@ export class AppComponent implements OnInit {
     @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.layout.asideToggled; };
     @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.layout.isCollapsedText; };
 
-    constructor(public settings: SettingsService, private cookieService:CookieService, private location:Location) { }
+    constructor(public settings: SettingsService, private cookieService:CookieService, private location:Location,private router:Router) { }
 
     ngOnInit() {
         $(document).on('click', '[href="#"]', e => e.preventDefault());
         //登录状态检测
-        // this.checkLogin();
+        this.checkLogin();
     }
 
     private checkLogin(){
-      let url = this.location.path();
-      if(url !== "/pages/login"){
-        let loginCookie = this.cookieService.get("aaa")
-        if(!loginCookie){
-          this.location.go("/pages/login")
+        let url = this.location.path();
+        let loginCookie = this.cookieService.get("AIXIN_LGTICKET")
+        if(url !== "/pages/login"){
+          if(!loginCookie) this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
+        }else{
+            if(loginCookie) this.router.navigate(['/home'],{ replaceUrl: true }); //路由跳转
         }
-      }
     }
 }
