@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     @HostBinding('class.layout-h') get horizontal() { return this.settings.layout.horizontal; };
     @HostBinding('class.aside-float') get isFloat() { return this.settings.layout.isFloat; };
     @HostBinding('class.offsidebar-open') get offsidebarOpen() { return this.settings.layout.offsidebarOpen; };
+    @HostBinding('class.operationpage-open') get operationpageOpen() { return this.settings.layout.operationpageOpen; }; // 是否显示右侧操作页面 by 立坤
     @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.layout.asideToggled; };
     @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.layout.isCollapsedText; };
 
