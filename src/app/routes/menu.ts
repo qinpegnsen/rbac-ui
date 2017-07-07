@@ -79,7 +79,17 @@ const SystemMain = {
 const datatables = {
   text: '列表',
   link: '/datatables',
-  icon: 'icon-speedometer'
+  icon: 'icon-speedometer',
+  submenu: [
+    {
+      text: 'datatables',
+      link: '/datatables/datatable'
+    },
+    {
+      text: 'ng2-datatable',
+      link: '/datatables/ng2-datatable'
+    }
+  ]
 };
 const msg = {
   text: '弹框和消息通知',
@@ -96,6 +106,16 @@ const operationpage = {
   link: '/operationpage',
   icon: 'icon-doc'
 };
+const navtree = {
+  text: '树',
+  link: '/navtree',
+  icon: 'icon-directions'
+};
+const buttons = {
+  text: '按钮',
+  link: '/buttons',
+  icon: 'icon-doc'
+};
 /**
  * 菜单配置
  * @type {[{text: string; link: string; icon: string; submenu: {text: string; link: string}[]},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string; submenu: {text: string; link: string}[]}]}
@@ -110,5 +130,7 @@ export const menu = [
   datatables,
   msg,
   echarts,
-  operationpage
+  operationpage,
+  navtree,
+  buttons
 ];

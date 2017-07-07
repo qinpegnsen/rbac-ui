@@ -13,7 +13,9 @@ export const routes = [
             { path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule' },
             { path: 'msg', loadChildren: './msg/msg.module#MsgModule' },
             { path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule' },
-            { path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule' }
+            { path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule' },
+            { path: 'navtree', loadChildren: './navtree/navtree.module#NavtreeModule' },
+            { path: 'buttons', loadChildren: './buttons/buttons.module#ButtonsModule' }
         ]
     },
     {
