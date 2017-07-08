@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DatatablesComponent} from './datatables/datatables.component';
 import {Routes, RouterModule} from '@angular/router';
 import {Ng2DatatableComponent} from './ng2-datatable/ng2-datatable.component';
-import {DataTableModule} from "angular2-datatable";
+import {SharedModule} from "../../shared/shared.module";
+import {DatatablesComponent} from "./datatables/datatables.component";
 
 const routes: Routes = [
   {path: 'datatable', component: DatatablesComponent},
@@ -13,8 +13,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    DataTableModule,
-    CommonModule
+    SharedModule
   ],
   declarations: [DatatablesComponent, Ng2DatatableComponent]
 })

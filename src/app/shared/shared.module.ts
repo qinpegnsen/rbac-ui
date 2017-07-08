@@ -30,6 +30,7 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
 import { NowDirective } from './directives/now/now.directive';
 import { ScrollableDirective } from './directives/scrollable/scrollable.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
+import {DataTableModule} from "./directives/ng2-datatable/DataTableModule";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -53,7 +54,8 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         TimepickerModule.forRoot(),
         TooltipModule.forRoot(),
         TypeaheadModule.forRoot(),
-        ToasterModule
+        ToasterModule,
+        DataTableModule
     ],
     providers: [
         ColorsService
@@ -90,6 +92,7 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         TooltipModule,
         TypeaheadModule,
         ToasterModule,
+        DataTableModule,
         FlotDirective,
         SparklineDirective,
         EasypiechartDirective,

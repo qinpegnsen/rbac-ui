@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {isNull} from "util";
 import {Page} from "../../../core/page/page";
-
+import * as _ from "lodash";
 @Component({
   selector: 'app-ng2-datatable',
   templateUrl: './ng2-datatable.component.html',
