@@ -12,8 +12,8 @@ const system = {
       link: '/system/v1'
     },
     {
-      text: '系统属性设置',
-      link: '/system/v2'
+      text: '管理员管理',
+      link: '/account/v1'
     },
     {
       text: '密码修改',
@@ -27,9 +27,9 @@ const system = {
  * @type {{text: string; link: string; icon: string}}
  */
 const organ = {
-  text: '机构管理',
+  text: '组织架构',
   link: '/organ',
-  icon: 'fa fa-institution text-center'
+  icon: 'fa fa-sitemap text-center'
 };
 
 /**
@@ -56,7 +56,7 @@ const role = {
  * 账户管理
  * @type {{text: string; link: string; icon: string}}
  */
-const account = {
+/*const account = {
   text: '账户管理',
   icon: 'fa fa-user text-center',
   elink: 'http://www.baidu.com/',
@@ -71,7 +71,7 @@ const account = {
       link: '/account/v2'
     }
   ]
-};
+};*/
 const SystemMain = {
   text: '测试菜单',
   heading: true
@@ -121,11 +121,11 @@ const buttons = {
  * @type {[{text: string; link: string; icon: string; submenu: {text: string; link: string}[]},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string; submenu: {text: string; link: string}[]}]}
  */
 export const menu = [
-  system,
   organ,
-  account,
-  limit,
+  // account,
   role,
+  limit,
+  system,
   SystemMain,
   datatables,
   msg,
