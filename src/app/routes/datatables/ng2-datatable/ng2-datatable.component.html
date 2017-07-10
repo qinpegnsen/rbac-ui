@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <table class="table table-striped" [mfData]="singleData" [mfTotalRow]="data.totalRow" #mf="mfDataTable" [mfRowsOnPage]="10">
+    <table class="table table-striped" [mfData]="singleData" [mfTotalRow]="data.totalRow" #mf="mfDataTable" [mfRowsOnPage]="10" (mfPageChange)="queryDatas($event)">
       <thead>
       <tr>
         <th style="width: 5%">

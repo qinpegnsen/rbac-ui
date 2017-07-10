@@ -24,7 +24,7 @@ export interface DataEvent {
     selector: 'table[mfData]',
     exportAs: 'mfDataTable'
 })
-export class DataTable implements OnChanges, DoCheck {
+export class DataTable implements OnChanges{
 
     private diff: IterableDiffer<any>;
     @Input("mfData") public inputData: any[] = [];
@@ -44,7 +44,7 @@ export class DataTable implements OnChanges, DoCheck {
     public data: any[];
 
     public onSortChange = new ReplaySubject<SortEvent>(1);
-    @Output("mfSortOrderChange") public onPageChange = new EventEmitter<PageEvent>();
+    @Output("mfPageChange") public onPageChange = new EventEmitter<PageEvent>();
 
     public constructor(private differs: IterableDiffers) {
         this.diff = differs.find([]).create(null);
@@ -71,6 +71,12 @@ export class DataTable implements OnChanges, DoCheck {
 
     public setPage(activePage: number, rowsOnPage: number): void {
         if (this.rowsOnPage !== rowsOnPage || this.activePage !== activePage) {
+            console.log("activePage1",activePage);
+            console.log("rowsOnPage",rowsOnPage);
+            console.log("this.totalRow",this.totalRow);
+          // let lastPage = Math.ceil(this.totalRow / this.rowsOnPage);
+          // this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
+          this.activePage = this.activePage || 1;
             this.activePage = this.activePage !== activePage ? activePage : this.calculateNewActivePage(this.rowsOnPage, rowsOnPage);
             this.rowsOnPage = rowsOnPage;
             this.mustRecalculateData = true;
@@ -85,6 +91,8 @@ export class DataTable implements OnChanges, DoCheck {
               dataLength: this.totalRow
             })
         }
+        console.log("inputData",this.inputData);
+        this.data = this.inputData;
     }
 
     private calculateNewActivePage(previousRowsOnPage: number, currentRowsOnPage: number): number {
@@ -103,20 +111,18 @@ export class DataTable implements OnChanges, DoCheck {
             rowsOnPage: this.rowsOnPage,
             dataLength: this.totalRow
         });
-      console.log("page2",{
-        activePage: this.activePage,
-        rowsOnPage: this.rowsOnPage,
-        dataLength: this.totalRow
-      })
     }
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
-            // console.log("ngOnChanges","ngOnChanges");
         if (changes["rowsOnPage"]) {
-            this.rowsOnPage = changes["rowsOnPage"].previousValue;
-            this.setPage(this.activePage, changes["rowsOnPage"].currentValue);
-            this.mustRecalculateData = true;
-        }
+            if(changes["rowsOnPage"].previousValue && this.rowsOnPage !== changes["rowsOnPage"].previousValue){
+                  this.rowsOnPage = changes["rowsOnPage"].previousValue;
+                  console.log("this.rowsOnPagechange",this.rowsOnPage);
+                  this.setPage(this.activePage, changes["rowsOnPage"].currentValue);
+                  this.mustRecalculateData = true;
+                }
+            }
+
         if (changes["sortBy"] || changes["sortOrder"]) {
             if (!_.includes(["asc", "desc"], this.sortOrder)) {
                 console.warn("angular2-datatable: value for input mfSortOrder must be one of ['asc', 'desc'], but is:", this.sortOrder);
@@ -127,26 +133,20 @@ export class DataTable implements OnChanges, DoCheck {
             }
             this.mustRecalculateData = true;
         }
-        // if (changes["inputData"]) {
-        //     console.log("inputData",this.inputData);
-        //     this.inputData = changes["inputData"].currentValue || [];
-        //     console.log("inputData",this.inputData);
-        //     this.recalculatePage();
-        //     this.mustRecalculateData = true;
-        // }
     }
 
     public ngDoCheck(): any {
         let changes = this.diff.diff(this.inputData);
         if (changes) {
-          console.log("ngDoCheck",changes);
-            this.recalculatePage();
-            this.mustRecalculateData = true;
+          // console.log("ngDoCheck",changes);
+          //   this.recalculatePage();
+          //   this.mustRecalculateData = true;
+          this.setPage(1,this.rowsOnPage);
         }
-        if (this.mustRecalculateData) {
-            this.fillData();
-            this.mustRecalculateData = false;
-        }
+        // if (this.mustRecalculateData) {
+        //     this.fillData();
+        //     this.mustRecalculateData = false;
+        // }
     }
 
     private fillData(): void {

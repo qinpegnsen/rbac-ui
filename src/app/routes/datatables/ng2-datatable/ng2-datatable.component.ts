@@ -16,17 +16,23 @@ export class Ng2DatatableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.queryDatas();
+    let me = this;
+    this.queryDatas(1);
+    window.setTimeout(() => {
+      me.singleData = _.slice(me.singleData, 1, 20);
+      me.data.totalRow = 20
+    }, 3000)
   }
 
-  private queryDatas() {
+  public queryDatas(event) {
+    console.log("event", event);
     let me = this;
     this.ajax.get({
       url: "/elder/listcondition",
       data: {},
       success: (data) => {
         if (!isNull(data)) {
-          Object.assign(me.data,data);
+          Object.assign(me.data, data);
           me.singleData = data.voList;
           console.log("data", me.data);
         }
