@@ -21,8 +21,10 @@ export class Paginator implements OnChanges {
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
         this.mfTable = this.inputMfTable || this.injectMfTable;
-        this.onPageChangeSubscriber(this.mfTable.getPage());
-        this.mfTable.onPageChange.subscribe(this.onPageChangeSubscriber);
+        console.log("changes",changes);
+        this.onSubscriber(this.mfTable.getPage());
+        this.mfTable.pageInit.subscribe(this.onSubscriber);
+        this.mfTable.pageChange.subscribe(this.onSubscriber);
     }
 
     public setPage(pageNumber: number): void {
@@ -33,7 +35,8 @@ export class Paginator implements OnChanges {
         this.mfTable.setPage(this.activePage, rowsOnPage);
     }
 
-    private onPageChangeSubscriber = (event: PageEvent)=> {
+    private onSubscriber = (event: PageEvent)=> {
+      console.log("event111",event);
         this.activePage = event.activePage;
         this.rowsOnPage = event.rowsOnPage;
         this.dataLength = event.dataLength;

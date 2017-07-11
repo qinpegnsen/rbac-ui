@@ -11,6 +11,7 @@ export interface SortEvent {
 }
 
 export interface PageEvent {
+    event: string;
     activePage: number;
     rowsOnPage: number;
     dataLength: number;
@@ -35,6 +36,7 @@ export class DataTable implements OnChanges{
     @Input("mfSortOrder") public sortOrder = "asc";
     @Output("mfSortByChange") public sortByChange = new EventEmitter<string|string[]>();
     @Output("mfSortOrderChange") public sortOrderChange = new EventEmitter<string>();
+    @Output("mfPageChange") public pageChange = new EventEmitter<PageEvent>();
 
     @Input("mfRowsOnPage") public rowsOnPage = 1000;
     @Input("mfActivePage") public activePage = 1;
@@ -44,7 +46,7 @@ export class DataTable implements OnChanges{
     public data: any[];
 
     public onSortChange = new ReplaySubject<SortEvent>(1);
-    @Output("mfPageChange") public onPageChange = new EventEmitter<PageEvent>();
+    public pageInit = new EventEmitter<PageEvent>();
 
     public constructor(private differs: IterableDiffers) {
         this.diff = differs.find([]).create(null);
@@ -66,62 +68,61 @@ export class DataTable implements OnChanges{
     }
 
     public getPage(): PageEvent {
-        return {activePage: this.activePage, rowsOnPage: this.rowsOnPage, dataLength: this.totalRow};
+        return {event:'getpage',activePage: this.activePage, rowsOnPage: this.rowsOnPage, dataLength: this.totalRow};
     }
 
     public setPage(activePage: number, rowsOnPage: number): void {
+      console.log("setPage执行",this.rowsOnPage,rowsOnPage,this.activePage,activePage);
         if (this.rowsOnPage !== rowsOnPage || this.activePage !== activePage) {
-            console.log("activePage1",activePage);
-            console.log("rowsOnPage",rowsOnPage);
-            console.log("this.totalRow",this.totalRow);
-          // let lastPage = Math.ceil(this.totalRow / this.rowsOnPage);
-          // this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
-          this.activePage = this.activePage || 1;
-            this.activePage = this.activePage !== activePage ? activePage : this.calculateNewActivePage(this.rowsOnPage, rowsOnPage);
+            if(isNaN(activePage)){
+                this.activePage = 1;
+            }else{
+                this.activePage = this.activePage !== activePage ? activePage : this.calculateNewActivePage(this.rowsOnPage, rowsOnPage);
+            }
             this.rowsOnPage = rowsOnPage;
-            this.mustRecalculateData = true;
-            this.onPageChange.emit({
-                activePage: this.activePage,
-                rowsOnPage: this.rowsOnPage,
-                dataLength: this.totalRow
-            });
-            console.log("page1",{
+            console.log("activePage",this.activePage);
+
+          console.log("this.mfTable.pageInit",this.pageInit);
+          console.log("this.mfTable.onPageChange",this.pageChange);
+            this.pageChange.emit({
+              event:"pageChange",
               activePage: this.activePage,
               rowsOnPage: this.rowsOnPage,
               dataLength: this.totalRow
-            })
+            });
         }
-        console.log("inputData",this.inputData);
         this.data = this.inputData;
     }
 
     private calculateNewActivePage(previousRowsOnPage: number, currentRowsOnPage: number): number {
         let firstRowOnPage = (this.activePage - 1) * previousRowsOnPage + 1;
         let newActivePage = Math.ceil(firstRowOnPage / currentRowsOnPage);
-        return newActivePage;
+        // return isNaN(newActivePage)?1:newActivePage;
+      return newActivePage;
     }
 
     private recalculatePage() {
+
         let lastPage = Math.ceil(this.totalRow / this.rowsOnPage);
         this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
         this.activePage = this.activePage || 1;
 
-        this.onPageChange.emit({
+        this.pageInit.emit({
+            event:"pageInit",
             activePage: this.activePage,
             rowsOnPage: this.rowsOnPage,
             dataLength: this.totalRow
         });
+        this.data = this.inputData;
     }
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
         if (changes["rowsOnPage"]) {
-            if(changes["rowsOnPage"].previousValue && this.rowsOnPage !== changes["rowsOnPage"].previousValue){
-                  this.rowsOnPage = changes["rowsOnPage"].previousValue;
-                  console.log("this.rowsOnPagechange",this.rowsOnPage);
-                  this.setPage(this.activePage, changes["rowsOnPage"].currentValue);
-                  this.mustRecalculateData = true;
-                }
-            }
+              if(typeof changes["rowsOnPage"].previousValue !=="undefined"){
+                this.rowsOnPage = changes["rowsOnPage"].previousValue;
+                this.setPage(this.activePage, changes["rowsOnPage"].currentValue);
+              }
+        }
 
         if (changes["sortBy"] || changes["sortOrder"]) {
             if (!_.includes(["asc", "desc"], this.sortOrder)) {
@@ -133,20 +134,12 @@ export class DataTable implements OnChanges{
             }
             this.mustRecalculateData = true;
         }
-    }
-
-    public ngDoCheck(): any {
-        let changes = this.diff.diff(this.inputData);
-        if (changes) {
-          // console.log("ngDoCheck",changes);
-          //   this.recalculatePage();
-          //   this.mustRecalculateData = true;
-          this.setPage(1,this.rowsOnPage);
+        if (changes["inputData"]) {
+            if(!changes["inputData"].firstChange){
+                this.inputData = changes["inputData"].currentValue || [];
+                this.recalculatePage();
+            }
         }
-        // if (this.mustRecalculateData) {
-        //     this.fillData();
-        //     this.mustRecalculateData = false;
-        // }
     }
 
     private fillData(): void {
