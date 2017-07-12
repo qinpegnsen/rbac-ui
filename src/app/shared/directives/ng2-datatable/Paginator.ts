@@ -1,13 +1,14 @@
-import {Component, Input, SimpleChange, OnChanges, Optional} from "@angular/core";
+import {Component, Input, SimpleChange, OnChanges, Optional, OnInit} from "@angular/core";
 import {DataTable, PageEvent} from "./DataTable";
 
 @Component({
     selector: "mfPaginator",
     template: `<ng-content></ng-content>`
 })
-export class Paginator implements OnChanges {
+export class Paginator implements OnInit {
 
-    @Input("mfTable") inputMfTable: DataTable;
+
+  @Input("mfTable") inputMfTable: DataTable;
 
     private mfTable: DataTable;
 
@@ -18,13 +19,13 @@ export class Paginator implements OnChanges {
 
     public constructor(@Optional() private injectMfTable: DataTable) {
     }
-
-    public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
-        this.mfTable = this.inputMfTable || this.injectMfTable;
-        console.log("changes",changes);
-        this.onSubscriber(this.mfTable.getPage());
-        this.mfTable.pageInit.subscribe(this.onSubscriber);
-        this.mfTable.pageChange.subscribe(this.onSubscriber);
+    ngOnInit(): void {
+        window.setTimeout(()=>{
+          this.mfTable = this.inputMfTable || this.injectMfTable;
+          this.onSubscriber(this.mfTable.getPage());
+          this.mfTable.pageInit.subscribe(this.onSubscriber);
+          this.mfTable.pageChange.subscribe(this.onSubscriber);
+        },500);
     }
 
     public setPage(pageNumber: number): void {
@@ -36,7 +37,6 @@ export class Paginator implements OnChanges {
     }
 
     private onSubscriber = (event: PageEvent)=> {
-      console.log("event111",event);
         this.activePage = event.activePage;
         this.rowsOnPage = event.rowsOnPage;
         this.dataLength = event.dataLength;

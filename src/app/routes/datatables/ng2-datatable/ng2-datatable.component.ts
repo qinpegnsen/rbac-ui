@@ -19,18 +19,17 @@ export class Ng2DatatableComponent implements OnInit {
   ngOnInit() {
     let me = this;
     this.queryDatas();
-    window.setTimeout(() => {
-      me.singleData = _.slice(me.singleData, 1, 20);
-    }, 5000)
   }
 
   public queryDatas(event?:PageEvent) {
     console.log("页面端event", event);
-    let me = this;
+    let me = this,activePage = 1;
+    if(typeof event !== "undefined") activePage =event.activePage;
+
     this.ajax.get({
       url: "/elder/listcondition",
       data: {
-        curPage:event.activePage
+        curPage:activePage
       },
       success: (data) => {
         if (!isNull(data)) {
