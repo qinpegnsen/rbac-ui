@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {DataTable, SortEvent} from "./DataTable";
 
 @Component({
-    selector: "mfDefaultSorter",
+    selector: "rzhDefaultSorter",
     template: `
         <a style="cursor: pointer" (click)="sort()" class="text-nowrap">
             <ng-content></ng-content>

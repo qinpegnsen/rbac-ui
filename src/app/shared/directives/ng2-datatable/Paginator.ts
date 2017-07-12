@@ -24,7 +24,6 @@ export class Paginator implements OnInit {
           this.mfTable = this.inputMfTable || this.injectMfTable;
           this.onSubscriber(this.mfTable.getPage());
           this.mfTable.pageInit.subscribe(this.onSubscriber);
-          this.mfTable.pageChange.subscribe(this.onSubscriber);
         },500);
     }
 

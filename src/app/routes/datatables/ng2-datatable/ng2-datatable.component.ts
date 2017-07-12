@@ -11,8 +11,6 @@ import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 })
 export class Ng2DatatableComponent implements OnInit {
   private data: Page = new Page();
-  private singleData: any;
-
   private buttonConfig;
 
   constructor(private ajax: AjaxService) {
@@ -70,8 +68,7 @@ export class Ng2DatatableComponent implements OnInit {
       },
       success: (data) => {
         if (!isNull(data)) {
-          Object.assign(me.data, data);
-          me.singleData = data.voList;
+          me.data = new Page(data);
         }
       },
       error: (data) => {

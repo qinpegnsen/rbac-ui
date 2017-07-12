@@ -3,7 +3,7 @@ import {DataTable} from "./DataTable";
 import * as _ from "lodash";
 
 @Component({
-    selector: "mfBootstrapPaginator",
+    selector: "rzhBootstrapPaginator",
     template: `
     <mfPaginator #p [mfTable]="mfTable">
         <ul class="pagination" *ngIf="p.dataLength > p.rowsOnPage">

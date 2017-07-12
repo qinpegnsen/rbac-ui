@@ -22,22 +22,21 @@ export interface DataEvent {
 }
 
 @Directive({
-    selector: 'table[mfData]',
-    exportAs: 'mfDataTable'
+    selector: 'table[rzhData]',
+    exportAs: 'rzhDataTable'
 })
 export class DataTable implements OnChanges{
 
-    private diff: IterableDiffer<any>;
-    @Input("mfData") public inputData: any[] = [];
-    @Input("mfTotalRow") public totalRow: number = 0;
-    @Input("mfRowsOnPage") public rowsOnPage = 20;
-    @Input("mfActivePage") public activePage = 1;
+    @Input("rzhData") public inputData: any = {};
+    public totalRow: number = 0;
+    public rowsOnPage = 20;
+    public activePage = 1;
 
-    @Input("mfSortBy") public sortBy: string|string[] = "";
-    @Input("mfSortOrder") public sortOrder = "asc";
-    @Output("mfSortByChange") public sortByChange = new EventEmitter<string|string[]>();
-    @Output("mfSortOrderChange") public sortOrderChange = new EventEmitter<string>();
-    @Output("mfPageChange") public pageChange = new EventEmitter<PageEvent>();
+    @Input("sortBy") public sortBy: string|string[] = "";
+    @Input("sortOrder") public sortOrder = "asc";
+    @Output("sortByChange") public sortByChange = new EventEmitter<string|string[]>();
+    @Output("sortOrderChange") public sortOrderChange = new EventEmitter<string>();
+    @Output("pageChange") public pageChange = new EventEmitter<PageEvent>();
 
     private mustRecalculateData = false;
 
@@ -47,7 +46,6 @@ export class DataTable implements OnChanges{
     public pageInit = new EventEmitter<PageEvent>();
 
     public constructor(private differs: IterableDiffers) {
-        this.diff = differs.find([]).create(null);
     }
 
     public getSort(): SortEvent {
@@ -88,7 +86,7 @@ export class DataTable implements OnChanges{
               dataLength: this.totalRow
             });
         }
-        this.data = this.inputData;
+        this.data = this.inputData.voList;
     }
 
     private calculateNewActivePage(previousRowsOnPage: number, currentRowsOnPage: number): number {
@@ -109,11 +107,16 @@ export class DataTable implements OnChanges{
             rowsOnPage: this.rowsOnPage,
             dataLength: this.totalRow
         });
-        this.data = this.inputData;
+        this.data = this.inputData.voList;
+    }
+    private initParams(){
+      this.activePage = this.inputData.curPage;
+      this.totalRow = this.inputData.totalRow;
+      this.rowsOnPage = this.inputData.pageSize;
     }
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
-      // console.log("onchange",changes)
+        // console.log("onchange",changes)
         if (changes["rowsOnPage"]) {
               if(typeof changes["rowsOnPage"].previousValue !=="undefined"){
                 // console.log('changes["rowsOnPage"].currentValue',changes["rowsOnPage"].currentValue);
@@ -139,28 +142,27 @@ export class DataTable implements OnChanges{
           }
         }
         if (changes["inputData"]) {
-            if(!changes["inputData"].firstChange){
-                this.inputData = changes["inputData"].currentValue || [];
-                this.recalculatePage();
-            }
+            this.inputData = changes["inputData"].currentValue || [];
+            this.initParams();
+            this.recalculatePage();
         }
     }
 
-    private fillData(): void {
-        this.activePage = this.activePage;
-        this.rowsOnPage = this.rowsOnPage;
-
-        let offset = (this.activePage - 1) * this.rowsOnPage;
-        let data = this.inputData;
-        var sortBy = this.sortBy;
-        if (typeof sortBy === 'string' || sortBy instanceof String) {
-            data = _.orderBy(data, this.caseInsensitiveIteratee(<string>sortBy), [this.sortOrder]);
-        } else {
-            data = _.orderBy(data, sortBy, [this.sortOrder]);
-        }
-        data = _.slice(data, offset, offset + this.rowsOnPage);
-        this.data = data;
-    }
+    // private fillData(): void {
+    //     this.activePage = this.activePage;
+    //     this.rowsOnPage = this.rowsOnPage;
+	//
+    //     let offset = (this.activePage - 1) * this.rowsOnPage;
+    //     let data = this.inputData;
+    //     var sortBy = this.sortBy;
+    //     if (typeof sortBy === 'string' || sortBy instanceof String) {
+    //         data = _.orderBy(data, this.caseInsensitiveIteratee(<string>sortBy), [this.sortOrder]);
+    //     } else {
+    //         data = _.orderBy(data, sortBy, [this.sortOrder]);
+    //     }
+    //     data = _.slice(data, offset, offset + this.rowsOnPage);
+    //     this.data = data;
+    // }
 
     private caseInsensitiveIteratee(sortBy: string) {
         return (row: any): any => {
