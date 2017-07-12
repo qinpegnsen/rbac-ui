@@ -70,7 +70,7 @@ export class DataTable implements OnChanges{
     }
 
     public setPage(activePage: number, rowsOnPage: number): void {
-        console.log("setPage执行",this.rowsOnPage,rowsOnPage,this.activePage,activePage);
+        // console.log("setPage执行",this.rowsOnPage,rowsOnPage,this.activePage,activePage);
         if (this.rowsOnPage !== rowsOnPage || this.activePage !== activePage) {
             if(isNaN(activePage)){
                 this.activePage = 1;
@@ -78,9 +78,9 @@ export class DataTable implements OnChanges{
                 this.activePage = this.activePage !== activePage ? activePage : this.calculateNewActivePage(this.rowsOnPage, rowsOnPage);
             }
             this.rowsOnPage = rowsOnPage;
-            console.log("activePage",this.activePage);
-            console.log("this.mfTable.pageInit",this.pageInit);
-            console.log("this.mfTable.onPageChange",this.pageChange);
+            // console.log("activePage",this.activePage);
+            // console.log("this.mfTable.pageInit",this.pageInit);
+            // console.log("this.mfTable.onPageChange",this.pageChange);
             this.pageChange.emit({
               event:"pageChange",
               activePage: this.activePage,
@@ -102,7 +102,7 @@ export class DataTable implements OnChanges{
         let lastPage = Math.ceil(this.totalRow / this.rowsOnPage);
         this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
         this.activePage = this.activePage || 1;
-        console.log("初始化页面");
+        // console.log("初始化页面");
         this.pageInit.emit({
             event:"pageInit",
             activePage: this.activePage,
@@ -113,10 +113,10 @@ export class DataTable implements OnChanges{
     }
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
-      console.log("onchange",changes)
+      // console.log("onchange",changes)
         if (changes["rowsOnPage"]) {
               if(typeof changes["rowsOnPage"].previousValue !=="undefined"){
-                console.log('changes["rowsOnPage"].currentValue',changes["rowsOnPage"].currentValue);
+                // console.log('changes["rowsOnPage"].currentValue',changes["rowsOnPage"].currentValue);
                 this.rowsOnPage = changes["rowsOnPage"].previousValue;
                 this.setPage(this.activePage, changes["rowsOnPage"].currentValue);
               }

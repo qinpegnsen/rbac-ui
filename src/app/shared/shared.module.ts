@@ -31,6 +31,7 @@ import { NowDirective } from './directives/now/now.directive';
 import { ScrollableDirective } from './directives/scrollable/scrollable.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import {DataTableModule} from "./directives/ng2-datatable/DataTableModule";
+import {RzhButtonsModule} from "../routes/buttons/rzh-buttons.module";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -55,7 +56,8 @@ import {DataTableModule} from "./directives/ng2-datatable/DataTableModule";
         TooltipModule.forRoot(),
         TypeaheadModule.forRoot(),
         ToasterModule,
-        DataTableModule
+        DataTableModule,
+        RzhButtonsModule
     ],
     providers: [
         ColorsService
@@ -93,6 +95,7 @@ import {DataTableModule} from "./directives/ng2-datatable/DataTableModule";
         TypeaheadModule,
         ToasterModule,
         DataTableModule,
+        RzhButtonsModule,
         FlotDirective,
         SparklineDirective,
         EasypiechartDirective,

@@ -1,6 +1,8 @@
 import { LayoutComponent } from '../layout/layout.component';
 import {LoginComponent} from "./pages/login/login.component";
 import {PagesComponent} from "./pages/pages/pages.component";
+import {TestComponent} from "./buttons/test/test.component";
+
 
 export const routes = [
 
@@ -15,7 +17,7 @@ export const routes = [
             { path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule' },
             { path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule' },
             { path: 'navtree', loadChildren: './navtree/navtree.module#NavtreeModule' },
-            { path: 'buttons', loadChildren: './buttons/buttons.module#ButtonsModule' }
+            { path: 'buttons', component:TestComponent }
         ]
     },
     {
