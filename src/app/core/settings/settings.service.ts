@@ -92,12 +92,21 @@ export class SettingsService {
   showRightPage(width?) {
     let me = this;
     setTimeout(() => {
-      if ($(window).width() > 768 && !isNullOrUndefined(width)) { //pc模式下,可以自定义宽度
-        console.log("width",width);
-        $('.rightpage').css('width', width);
-      }
-      me.layout.operationpageOpen = true;
+      if ($(window).width() > 768 && !isNullOrUndefined(width)) $('.rightpage').css('width', width); //pc模式下,可以自定义宽度
+      me.layout.operationpageOpen = true;  //开启右侧页面
+      $("html").removeClass("csstransforms3d"); //剔除动画效果，此效果和浮动冲突
+      $("app-offsidebar").hide();
     }, 10);
   }
 
+
+  /**
+   * 关闭右侧页面 by 立坤
+   * @param
+   */
+  closeRightPage() {
+    this.layout.operationpageOpen = false; //关闭右侧滑动页面
+    $("html").addClass("csstransforms3d"); //加入样式，动态滑动效果
+    $("app-offsidebar").show();
+  }
 }

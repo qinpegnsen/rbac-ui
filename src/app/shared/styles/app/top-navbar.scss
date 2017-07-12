@@ -81,6 +81,7 @@ $nav-top-item-desktop-active:   $nav-top-item-mobile-active;
     .brand-logo-collapsed {
       > img {
         margin: 0 auto;
+        max-height: 35px; //添加最大高度 by 立坤
       }
     }
     .brand-logo {
@@ -89,7 +90,8 @@ $nav-top-item-desktop-active:   $nav-top-item-mobile-active;
     }
     .brand-logo-collapsed {
       display: none;
-      padding: 6px 15px;
+      //padding: 6px 15px;
+      padding: 10px 3px; //修改浮动  by 立坤
     }
   }
 

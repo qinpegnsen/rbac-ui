@@ -20,7 +20,7 @@ export class RightpageComponent implements OnInit {
 
   // 取消
   cancel(){
-    this.settings.layout.operationpageOpen = false; //关闭右侧滑动页面
+    this.settings.closeRightPage(); //关闭右侧滑动页面
     this.router.navigate(['/operationpage']);
   }
 
