@@ -79,7 +79,7 @@ const SystemMain = {
 const datatables = {
   text: '列表',
   link: '/datatables',
-  icon: 'icon-speedometer',
+  icon: 'icon-chart',
   submenu: [
     {
       text: 'datatables',
@@ -99,7 +99,7 @@ const msg = {
 const echarts = {
   text: 'echarts图表',
   link: '/echarts',
-  icon: 'icon-chart'
+  icon: 'fa fa-bar-chart'
 };
 const operationpage = {
   text: '操作页面',
@@ -109,12 +109,12 @@ const operationpage = {
 const navtree = {
   text: '树',
   link: '/navtree',
-  icon: 'icon-directions'
+  icon: 'fa fa-code-fork'
 };
 const buttons = {
   text: '按钮',
   link: '/buttons',
-  icon: 'icon-doc'
+  icon: 'fa fa-toggle-off'
 };
 /**
  * 菜单配置

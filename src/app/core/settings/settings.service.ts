@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {isNullOrUndefined} from 'util';
+import {CookieService} from 'angular2-cookie/core';
 declare var $: any;
 
 @Injectable()
@@ -9,14 +10,18 @@ export class SettingsService {
   public app: any;
   public layout: any;
 
-  constructor() {
+  constructor(private _cookieService: CookieService) {
 
-    // User Settings
-    // -----------------------------------
+    /**
+     * 用户信息（当前登录用户）
+     * 获取用户cookie信息并展示
+     */
+    let loginInfo: any = this._cookieService.getObject('loginInfo'), name = '游客', job = '无';
+    if (!isNullOrUndefined(loginInfo)) name = loginInfo.name, job = loginInfo.department;
     this.user = {
-      name: '爱馨',
-      job: 'ng-developer',
-      picture: 'assets/img/user/02.jpg'
+      name: name,
+      job: job,
+      picture: 'assets/img/user/user.png'
     };
 
     // App Settings
@@ -94,8 +99,8 @@ export class SettingsService {
     setTimeout(() => {
       if ($(window).width() > 768 && !isNullOrUndefined(width)) $('.rightpage').css('width', width); //pc模式下,可以自定义宽度
       me.layout.operationpageOpen = true;  //开启右侧页面
-      $("html").removeClass("csstransforms3d"); //剔除动画效果，此效果和浮动冲突
-      $("app-offsidebar").hide();
+      $('html').removeClass('csstransforms3d'); //剔除动画效果，此效果和浮动冲突
+      $('app-offsidebar').hide();
     }, 10);
   }
 
@@ -106,7 +111,7 @@ export class SettingsService {
    */
   closeRightPage() {
     this.layout.operationpageOpen = false; //关闭右侧滑动页面
-    $("html").addClass("csstransforms3d"); //加入样式，动态滑动效果
-    $("app-offsidebar").show();
+    $('html').addClass('csstransforms3d'); //加入样式，动态滑动效果
+    $('app-offsidebar').show();
   }
 }

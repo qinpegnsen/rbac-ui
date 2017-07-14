@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import '../../../../assets/login/js/supersized.3.2.7.min.js'
-import {AjaxService} from "../../../core/services/ajax.service";
+import {AjaxService} from '../../../core/services/ajax.service';
 import {Location} from '@angular/common';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
+import {SettingsService} from '../../../core/settings/settings.service';
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
   public password: string;
   public authMsg: string;
 
-  constructor(private ajax: AjaxService, private localtion: Location,private router:Router) {
+  constructor(private ajax: AjaxService, private localtion: Location, private router: Router, private _cookieService: CookieService,private setting:SettingsService) {
   }
 
   ngOnInit() {
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
     }, 200)
   }
 
+  // 登录页效果渲染
   private initSupersized() {
     $.supersized({
       // Functionality
@@ -52,6 +55,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  // 用户登录
   public login() {
     let me = this;
     me.ajax.post({
@@ -62,7 +66,10 @@ export class LoginComponent implements OnInit {
       },
       success: (result) => {
         if (result.success) {
-          me.router.navigate(['/home'],{ replaceUrl: true }); //路由跳转
+          let user =  result.data.user;
+          me._cookieService.putObject('loginInfo', user); //用户信息存入cookie
+          me.setting.user.name = user.name,me.setting.user.job = user.department; //修改user变量
+          me.router.navigate(['/home'], {replaceUrl: true}); //路由跳转
         }
       },
       error: (result) => {
