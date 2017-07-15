@@ -44,9 +44,9 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    captureTimeout: 60000, // it was already there
+    captureTimeout: 60000,
     browserDisconnectTimeout : 60000,
     browserDisconnectTolerance : 1,
-    browserNoActivityTimeout : 60000 //by default 10000
+    browserNoActivityTimeout : 60000
   });
 };

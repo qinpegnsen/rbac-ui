@@ -15,32 +15,30 @@ import {Router} from "@angular/router";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  navCollapsed = true; // for horizontal layout
-  menuItems = []; // for horizontal layout
-
+  navCollapsed = true;
+  menuItems = [];
   isNavSearchVisible: boolean;
-  @ViewChild('fsbutton') fsbutton;  // the fullscreen button
+  @ViewChild('fsbutton') fsbutton;
 
   constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService, private ajax: AjaxService, private router: Router) {
-
-    // show only a few items on demo
-    this.menuItems = menu.getMenu().slice(0, 4); // for horizontal layout
-
+    // 只显示指定的
+    this.menuItems = menu.getMenu().slice(0, 4);
   }
 
   ngOnInit() {
     this.isNavSearchVisible = false;
-    if (browser.msie) { // Not supported under IE
+    if (browser.msie) { // 不支持ie
       this.fsbutton.nativeElement.style.display = 'none';
     }
   }
 
+  //显示、隐藏当前登录的用户信息
   toggleUserBlock(event) {
     event.preventDefault();
     this.userblockService.toggleVisibility();
   }
 
+  //开启全局搜索
   openNavSearch(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -60,6 +58,7 @@ export class HeaderComponent implements OnInit {
     this.settings.layout.offsidebarOpen = !this.settings.layout.offsidebarOpen;
   }
 
+  //显示隐藏侧边栏
   toggleCollapsedSideabar() {
     this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
   }
@@ -68,12 +67,9 @@ export class HeaderComponent implements OnInit {
     return this.settings.layout.isCollapsedText;
   }
 
+  //全屏
   toggleFullScreen(event) {
-
-    if (screenfull.enabled) {
-      screenfull.toggle();
-    }
-    // Switch icon indicator
+    if (screenfull.enabled) screenfull.toggle();
     let el = $(this.fsbutton.nativeElement);
     if (screenfull.isFullscreen) {
       el.children('em').removeClass('fa-expand').addClass('fa-compress');

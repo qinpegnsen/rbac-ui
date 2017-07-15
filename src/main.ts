@@ -9,6 +9,7 @@ if (environment.production) {
     enableProdMode();
 }
 
+// 项目启动入口模块
 let p = platformBrowserDynamic().bootstrapModule(AppModule);
 p.then(() => { (<any>window).appBootstrap && (<any>window).appBootstrap(); })
 // .catch(err => console.error(err));

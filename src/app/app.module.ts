@@ -23,12 +23,12 @@ export function createTranslateLoader(http: Http) {
         AppComponent
     ],
     imports: [
-        HttpModule,
+        HttpModule, //http 请求
         BrowserAnimationsModule, // required for ng2-tag-input
-        CoreModule,
-        LayoutModule,
-        SharedModule.forRoot(),
-        RoutesModule,
+        CoreModule, //核心模块，该模块注入了项目必须的服务
+        LayoutModule, //框架组成：头、左侧栏、底
+        SharedModule.forRoot(), //公用模块
+        RoutesModule, //路由模块
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

@@ -3,9 +3,8 @@ import {LoginComponent} from "./pages/login/login.component";
 import {PagesComponent} from "./pages/pages/pages.component";
 import {TestComponent} from "./buttons/test/test.component";
 
-
+// 设置路由指向
 export const routes = [
-
     {
         path: '',
         component: LayoutComponent,
@@ -28,8 +27,6 @@ export const routes = [
             { path: 'login', component: LoginComponent }
         ]
     },
-
-    // Not found
+    // 路由指向找不到时，指向这里
     { path: '**', redirectTo: 'home' }
-
 ];

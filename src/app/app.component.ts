@@ -12,7 +12,7 @@ declare var $: any;
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
+    //动态样式
     @HostBinding('class.layout-fixed') get isFixed() { return this.settings.layout.isFixed; };
     @HostBinding('class.aside-collapsed') get isCollapsed() { return this.settings.layout.isCollapsed; };
     @HostBinding('class.layout-boxed') get isBoxed() { return this.settings.layout.isBoxed; };
@@ -33,9 +33,10 @@ export class AppComponent implements OnInit {
         this.checkLogin();
     }
 
+    // 检测登录状态并引流
     private checkLogin(){
         let url = this.location.path();
-        let loginCookie = this.cookieService.get("AIXIN_LGTICKET")
+        let loginCookie = this.cookieService.get("AIXIN_LGTICKET");
         if(url !== "/pages/login"){
           if(!loginCookie) this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
         }else{
