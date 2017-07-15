@@ -102,7 +102,7 @@ app-root, .wrapper {
     height: 100%;
     margin-left: 0;
     // overflow: hidden;
-    z-index: $z-index-main-section;
+    z-index: $z-index-main-section+11;
     background-color: $content-bg;
     margin-bottom: $footer-hg !important; // ensure a space for the footer
   }

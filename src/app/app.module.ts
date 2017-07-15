@@ -5,13 +5,13 @@ import {HttpModule, Http} from '@angular/http';
 import {TranslateService, TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 
-import { CoreModule } from './core/core.module';
-import { LayoutModule } from './layout/layout.module';
-import { SharedModule } from './shared/shared.module';
-import { RoutesModule } from './routes/routes.module';
-import { CookieService } from "_angular2-cookie@1.2.6@angular2-cookie";
+import {CoreModule} from './core/core.module';
+import {LayoutModule} from './layout/layout.module';
+import {SharedModule} from './shared/shared.module';
+import {RoutesModule} from './routes/routes.module';
+import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: Http) {
@@ -19,25 +19,26 @@ export function createTranslateLoader(http: Http) {
 }
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        HttpModule, //http 请求
-        BrowserAnimationsModule, // required for ng2-tag-input
-        CoreModule, //核心模块，该模块注入了项目必须的服务
-        LayoutModule, //框架组成：头、左侧栏、底
-        SharedModule.forRoot(), //公用模块
-        RoutesModule, //路由模块
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [Http]
-            }
-        })
-    ],
-    providers: [CookieService],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    HttpModule, //http 请求
+    BrowserAnimationsModule, // required for ng2-tag-input
+    CoreModule, //核心模块，该模块注入了项目必须的服务
+    LayoutModule, //框架组成：头、左侧栏、底
+    SharedModule.forRoot(), //公用模块
+    RoutesModule, //路由模块
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [Http]
+      }
+    })
+  ],
+  providers: [CookieService],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
