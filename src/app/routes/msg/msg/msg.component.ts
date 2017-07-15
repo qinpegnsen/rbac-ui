@@ -125,7 +125,7 @@ export class MsgComponent implements OnInit {
   /************************************************弹框提醒 end ***************************************************************************/
   //成功消息
   msgSuccess() {
-    this.toasterService.pop("success", "成功提示", "成功消息，类型：success");
+    this.toasterService.pop("success", "成功提示", "成功消息，类型：succes");
   }
   //失败消息
   msgError() {
