@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import '../../../../assets/login/js/supersized.3.2.7.min.js'
-import {AjaxService} from '../../../core/services/ajax.service';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
 import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
 import {SettingsService} from '../../../core/settings/settings.service';
+import {AjaxService} from '../../../core/services/ajax.service';
 declare var $: any;
 @Component({
   selector: 'app-login',

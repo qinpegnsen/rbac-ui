@@ -1,6 +1,10 @@
-// https://angular.io/styleguide#!#04-12
+/**
+ * 加载完成判断
+ * @param parentModule   输出模块
+ * @param moduleName     模块名字
+ */
 export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
   if (parentModule) {
-    throw new Error(`${moduleName} has already been loaded. Import Core modules in the AppModule only.`);
+    throw new Error(`${moduleName} 已经加载。核心模块入口是AppModule.`);
   }
 }
