@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TableService} from '../../../core/list/table.service';
-import {AjaxService} from '../../../core/services/ajax.service';
 import {Router} from '@angular/router';
+import {AjaxService} from '../../../core/services/ajax.service';
 const swal = require('sweetalert');
 
 @Component({

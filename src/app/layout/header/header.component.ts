@@ -2,12 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 const screenfull = require('screenfull');
 const browser = require('jquery.browser');
 declare var $: any;
-
 import {UserblockService} from '../sidebar/userblock/userblock.service';
 import {SettingsService} from '../../core/settings/settings.service';
 import {MenuService} from '../../core/menu/menu.service';
-import {AjaxService} from "../../core/services/ajax.service";
 import {Router} from "@angular/router";
+import {AjaxService} from '../../core/services/ajax.service';
 
 @Component({
   selector: 'app-header',

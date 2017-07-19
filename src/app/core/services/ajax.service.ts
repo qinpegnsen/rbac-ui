@@ -6,16 +6,16 @@ declare var $: any;
 
 @Injectable()
 export class AjaxService {
-  constructor(private route:Router,private maskservice: MaskService) {
+  constructor(private route: Router, private maskservice: MaskService) {
   }
 
   //get方式提交，一般用于查询
   public get(config) {
     if (!config) {
-      console.log("ajax调用参数不能为空");
+      console.log('ajax调用参数不能为空');
       return;
     }
-    config.method = "get";  //设定提交方式为get
+    config.method = 'get';  //设定提交方式为get
     this.post(config);   //执行ajax
   };
 
@@ -23,11 +23,10 @@ export class AjaxService {
   public post(config) {
     let _this = this;
     if (!config) {
-      console.log("ajax调用参数不能为空");
+      console.log('ajax调用参数不能为空');
       return;
     }
-    var async = true, method = "post", dataType = 'json', maskIcon = 'ball-scale-ripple-multiple',
-      width = $(window).width(), height = $(window).height();
+    var async = true, method = 'post', dataType = 'json', maskIcon = 'ball-scale-ripple-multiple';
     if (!config.hasOwnProperty('async')) config.async = async;
     if (!config.method) config.method = method;
     if (!config.dataType) config.dataType = dataType;
@@ -59,7 +58,7 @@ export class AjaxService {
       //隐藏遮罩层
       if (config.mask === true) _this.maskservice.hideMask();
       //回调
-      if (typeof error === "function") {
+      if (typeof error === 'function') {
         error(result, status, xhr);
       }
     };
@@ -69,11 +68,11 @@ export class AjaxService {
   //put方式提交，一般用于更新，会返回更新的所有信息
   public put(config) {
     if (!config) {
-      console.log("ajax调用参数不能为空");
+      console.log('ajax调用参数不能为空');
       return;
     }
     if (!config.data) {
-      console.log("更新数据不能为空");
+      console.log('更新数据不能为空');
     }
     config.data._method = "put";
     this.post(config);   //执行ajax

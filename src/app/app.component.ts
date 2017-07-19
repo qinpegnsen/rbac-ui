@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
         if(url !== "/pages/login"){
           if(!loginCookie) this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
         }else{
-            if(loginCookie) this.router.navigate(['/home'],{ replaceUrl: true }); //路由跳转
+          if(loginCookie) this.router.navigate(['/home'],{ replaceUrl: true }); //路由跳转
         }
     }
 }
