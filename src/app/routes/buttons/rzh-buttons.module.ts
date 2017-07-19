@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ButtonsComponent} from "./buttons/buttons.component";
-import {TestComponent} from "./test/test.component";
+import {ButtonDemoComponent} from "./buttonDemo/button-demo.component";
 
 @NgModule({
   imports: [
@@ -9,11 +9,11 @@ import {TestComponent} from "./test/test.component";
   ],
   declarations: [
     ButtonsComponent,
-    TestComponent
+    ButtonDemoComponent
   ],
   exports:[
     ButtonsComponent,
-    TestComponent
+    ButtonDemoComponent
   ]
 })
 export class RzhButtonsModule {

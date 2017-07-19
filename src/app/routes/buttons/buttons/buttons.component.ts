@@ -23,7 +23,7 @@ interface ButtonConfig{
 export class ButtonsComponent implements OnInit {
   private id: any;
   private text: string = ""; //按钮文字
-  private title: string; //title文字
+  private title: string = ""; //title文字
   private type: any;   //按钮类型
   private size: any;   //按钮大小
   private iconsClass: string; //自定义按钮图标
@@ -57,7 +57,7 @@ export class ButtonsComponent implements OnInit {
   ngOnInit() {
     this.id = "buttons_" + Math.random().toString();  //生成随机id
     this.text = this.config.text || "";  //设置按钮文字
-    this.title = this.title === '' ? this.text : this.config.title; //设置按钮title
+    this.title = this.config.title == undefined ? this.text : this.config.title; //设置按钮title
     this.type = this.config.type; //设置按钮类型
     this.size = this.config.size; //设置按钮大小
 

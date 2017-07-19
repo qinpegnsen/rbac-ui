@@ -53,7 +53,8 @@ export class Ng2DatatableComponent implements OnInit {
       alert("delete");
   }
   private details(){
-      alert("details");  }
+      alert("details");
+  }
 
 
   public queryDatas(event?:PageEvent) {
