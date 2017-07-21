@@ -5,14 +5,14 @@ const PROXY_CONFIG = [
       "/elder",
       "/staff"
     ],
-    target: "http://192.168.10.119:8081",   //拦截 context配置路径，经过此地址
+    target: "http://192.168.10.110:8086",   //拦截 context配置路径，经过此地址
     secure: false
   },
   {
     context: [
       "/upload"
     ],
-    target: "http://192.168.10.119:8083",   //拦截 context配置路径，经过此地址
+    target: "http://192.168.10.110:8083",   //拦截 context配置路径，经过此地址
     secure: false
   }
 ];
