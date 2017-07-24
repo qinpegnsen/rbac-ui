@@ -9,15 +9,15 @@ const system = {
   submenu: [
     {
       text: '平台系统',
-      link: '/system/v1'
+      link: '/main/system/v1'
     },
     {
       text: '管理员管理',
-      link: '/account/v1'
+      link: '/main/account/v1'
     },
     {
       text: '密码修改',
-      link: '/system/v2'
+      link: '/main/system/v2'
     }
   ]
 };
@@ -28,7 +28,7 @@ const system = {
  */
 const organ = {
   text: '组织架构',
-  link: '/organ',
+  link: '/main/organ',
   icon: 'fa fa-sitemap text-center'
 };
 
@@ -38,7 +38,7 @@ const organ = {
  */
 const limit = {
   text: '权限管理',
-  link: '/limit',
+  link: '/main/limit',
   icon: 'fa fa-lock text-center'
 };
 
@@ -48,7 +48,7 @@ const limit = {
  */
 const role = {
   text: '角色管理',
-  link: '/role',
+  link: '/main/role',
   icon: 'fa fa-group text-center'
 };
 

@@ -6,10 +6,10 @@ import {ButtonDemoComponent} from "./buttons/buttonDemo/button-demo.component";
 // 设置路由指向
 export const routes = [
   {
-    path: '',
+    path: 'main',
     component: LayoutComponent,
     children: [
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
+      {path: '', redirectTo: '/main/home', pathMatch: 'full'},
       {path: 'home', loadChildren: './home/home.module#HomeModule'},
       {path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule'},
       {path: 'msg', loadChildren: './msg/msg.module#MsgModule'},
@@ -23,10 +23,10 @@ export const routes = [
     path: 'pages',
     component: PagesComponent,
     children: [
-      {path: '', redirectTo: 'login', pathMatch: 'full'},
+      {path: '', redirectTo: '/main/home', pathMatch: 'full'},
       {path: 'login', component: LoginComponent}
     ]
   },
   // 路由指向找不到时，指向这里
-  {path: '**', redirectTo: 'home'}
+  {path: '**', redirectTo: '/main/home'}
 ];
