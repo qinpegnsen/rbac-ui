@@ -93,27 +93,27 @@ const datatables = {
 };
 const msg = {
   text: '弹框和消息通知',
-  link: '/msg',
+  link: '/main/msg',
   icon: 'icon-volume-2'
 };
 const echarts = {
   text: 'echarts图表',
-  link: '/echarts',
+  link: '/main/echarts',
   icon: 'fa fa-bar-chart'
 };
 const operationpage = {
   text: '操作页面',
-  link: '/operationpage',
+  link: '/main/operationpage',
   icon: 'icon-doc'
 };
 const navtree = {
   text: '树',
-  link: '/navtree',
+  link: '/main/navtree',
   icon: 'fa fa-code-fork'
 };
 const buttons = {
   text: '按钮',
-  link: '/buttons',
+  link: '/main/buttons',
   icon: 'fa fa-toggle-off'
 };
 /**
