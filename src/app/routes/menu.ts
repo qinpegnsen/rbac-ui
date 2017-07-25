@@ -78,16 +78,16 @@ const SystemMain = {
 };
 const datatables = {
   text: '列表',
-  link: '/datatables',
+  link: '/main/datatables',
   icon: 'icon-chart',
   submenu: [
     {
       text: 'datatables',
-      link: '/datatables/datatable'
+      link: '/main/datatables/datatable'
     },
     {
       text: 'ng2-datatable',
-      link: '/datatables/ng2-datatable'
+      link: '/main/datatables/ng2-datatable'
     }
   ]
 };
