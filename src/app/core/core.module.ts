@@ -8,6 +8,7 @@ import {TableService} from './list/table.service';
 import {AjaxService} from './services/ajax.service';
 import {MaskService} from './services/mask.service';
 import {throwIfAlreadyLoaded} from './module-import-guard';
+import {RzhtoolsService} from "./services/rzhtools.service";
 
 @NgModule({
   imports: [],
@@ -19,7 +20,8 @@ import {throwIfAlreadyLoaded} from './module-import-guard';
     PatternService,
     TableService,
     MaskService,
-    AjaxService
+    AjaxService,
+    RzhtoolsService
   ],
   declarations: [],
   exports: []

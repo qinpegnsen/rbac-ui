@@ -1,14 +1,17 @@
 import {Injectable} from "@angular/core";
-import {isNull} from "util";
+import {isNull, isNullOrUndefined} from "util";
 import {areaJSON} from "./area";
+import {AjaxService} from "./ajax.service";
+import {any} from "codelyzer/util/function";
 
 @Injectable()
 export class RzhtoolsService {
 
   private areaJson: any;
+  private enumData = {};
 
   // Angular2框架负责注入对象
-  constructor() {
+  constructor(private ajax: AjaxService) {
     this.areaJson = areaJSON;
   }
 
@@ -17,7 +20,7 @@ export class RzhtoolsService {
    * @param idCard
    * @returns {*}
    */
-  public identify(idCard:string) {
+  public identify(idCard: string) {
     let isTrue = false;
     let info = "身份证号格式错误";      //返回结果中的提示信息
     let resultMap = new Map();    //返回map对象
@@ -56,7 +59,7 @@ export class RzhtoolsService {
    * @param idCard
    * @returns {boolean}
    */
-  public verify(idCard:string) {
+  public verify(idCard: string) {
     if (isNull(idCard)) return false;
     idCard = idCard.toString(); //转化为字符串
 
@@ -130,7 +133,7 @@ export class RzhtoolsService {
       }
       // 去除老数据
       if (!isSelectOld && !isNull(areaLevelOne)) {
-        let newAreaArys:Array<BasicArea> = new Array;
+        let newAreaArys: Array<BasicArea> = new Array;
         for (let i in areaLevelOne.children) {
           if (areaLevelOne.children[i].isNew == 1) {
             newAreaArys.push(areaLevelOne.children[i]);
@@ -231,7 +234,7 @@ export class RzhtoolsService {
    * @param card15
    * @returns {string}
    */
-  private card15To17 = function (card15:string) {
+  private card15To17 = function (card15: string) {
     return card15.substring(0, 6) + "19" + card15.substring(6);
   };
 
@@ -271,16 +274,68 @@ export class RzhtoolsService {
     else level = 3;
     return level;
   }
+
+
+  /**
+   * 根据类型标示获取枚举信息
+   * @param code 类型标示（如：1001、1002、1003....）
+   * @returns {any}
+   */
+  public getEnumData = function (code) {
+    let _this = this;
+    if (!_this.enumData.hasOwnProperty(code)) {
+      this.ajax.get({
+        async: false,
+        url: '/res/enum/' + code,
+        success: function (result) {
+          if (isNullOrUndefined(result)) return ""; else _this.enumData[code] = result;
+        }
+      });
+    }
+    return _this.enumData[code];
+  }
+
+  /**
+   * 根据类型标示获取枚举list信息
+   * code 类型标示（如：1001、1002、1003....）
+   * @param code
+   * @returns {Array<any>}
+   */
+  public getEnumDataList = function (code) {
+    let list: Array<any> = new Array<any>();
+    let enumInfo = this.getEnumData(code);
+    for (var prop in enumInfo) {
+      if (enumInfo.hasOwnProperty(prop)) list.push({"key": prop, "val": enumInfo[prop]})
+    }
+    return list;
+  }
+
+  /**
+   * 根据类型标示和key获取信息值
+   * @param code （如：1001、1002、1003....）
+   * @param key （如：ILLNESSCASE、TYPELESS、NURSING....）
+   * @returns {any}
+   */
+  public getEnumDataValByKey = function (code, key) {
+    var enumData = this.getEnumData(code);
+    if (enumData != null && enumData != "" && enumData != undefined) {
+      if (enumData[key] != null && enumData[key] != "" && enumData[key] != undefined) return enumData[key];
+      else return "";
+    } else {
+      return "";
+    }
+  };
+
 }
 
 @Injectable()
-export class BasicArea{
-  areaCode:string;    // 区域编号
-  areaName:string;    // 区域名字
-  fullName:string;    // 全名称
-  isNew:number;       // 是否新区域编号
-  level:number;       // 区域级别
-  sheng:string;       // 省级编号，不足后补 0000
-  shi:string;         // 市级编号，不足后补 00
-  children:Array<BasicArea>;  //当前区域下子集
+export class BasicArea {
+  areaCode: string;    // 区域编号
+  areaName: string;    // 区域名字
+  fullName: string;    // 全名称
+  isNew: number;       // 是否新区域编号
+  level: number;       // 区域级别
+  sheng: string;       // 省级编号，不足后补 0000
+  shi: string;         // 市级编号，不足后补 00
+  children: Array<BasicArea>;  //当前区域下子集
 }

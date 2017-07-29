@@ -1,4 +1,5 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
+import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 
 @Component({
   selector: 'app-operationpage',
@@ -6,15 +7,17 @@ import {Component, HostBinding, OnInit} from '@angular/core';
   styleUrls: ['./operationpage.component.scss']
 })
 export class OperationpageComponent implements OnInit {
-  // @HostBinding('class.offsidebar-open') get offsidebarOpen() { return this.settings.layout.offsidebarOpen; };
+  public menu_info:Array<any>; //枚举信息
+  public menu_info_json: string; //枚举信息 json
+  public menu_info_val:string; //枚举信息值
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private rzhtools: RzhtoolsService) {
+    this.menu_info = rzhtools.getEnumDataList("1003"); //获取信息list
+    this.menu_info_json = JSON.stringify(rzhtools.getEnumData("1003")); //获取信息 map
+    this.menu_info_val = rzhtools.getEnumDataValByKey("1003","ILLNESSCASE"); //获取信息值
   }
 
-  operationInfo(){
-
+  ngOnInit() {
   }
 
 }
