@@ -11,7 +11,9 @@ export const routes = [
     children: [
       {path: '', redirectTo: '/main/home', pathMatch: 'full'},
       {path: 'home', loadChildren: './home/home.module#HomeModule'},
+      {path: 'organ', loadChildren: './organ/organ.module#OrganModule'},
       {path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule'},
+      {path: 'system', loadChildren: './system/system.module#SystemModule'},
       {path: 'msg', loadChildren: './msg/msg.module#MsgModule'},
       {path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule'},
       {path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule'},

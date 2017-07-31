@@ -9,7 +9,7 @@ const system = {
   submenu: [
     {
       text: '平台系统',
-      link: '/main/system/v1'
+      link: '/main/system/sys-platform'
     },
     {
       text: '管理员管理',

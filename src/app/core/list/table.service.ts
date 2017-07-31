@@ -115,7 +115,7 @@ export class TableService {
     if (isString(paramOrUrl)) {
       paramList = {
         // bStateSave: true,                   //状态保存，使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容
-        processing: true,                    //加载数据时显示正在加载信息
+        processing: false,                    //加载数据时显示正在加载信息
         searching: true,                     //显示/屏蔽搜索框
         lengthChange: false,                //显示、屏蔽每页显示条数
         autoWidth: false,                   //是否自动宽度
