@@ -1,0 +1,108 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <p class="header left">管理员</p>
+    <app-buttons class="right" [config]="addButton" routerLink="addAdmin"></app-buttons>
+  </div>
+  <!--路由嵌套 begin-->
+  <router-outlet></router-outlet>
+  <!--路由嵌套 end-->
+</div>
+<div class="panel panel-default">
+  <div class="panel-body pt-lg pb0 ng-scope" ng-if="search">
+    <fieldset>
+      <div class="form-group mb0 clearfix">
+        <div class="left col-md-4 col-xs-8 mb-lg p0">
+          <label class="label-width left t-right lh35">选择机构：</label>
+          <div class="col-xs-7">
+            <app-select-organ [required]="false" (selectedData)="getOrganCode($event)"></app-select-organ>
+          </div>
+        </div>
+        <div class="left col-md-4 col-xs-8 mb-lg p0">
+          <label class="left t-right lh35 label-width">选择区域：</label>
+          <div class="col-xs-7">
+            <app-select-area [required]="false" (myData)="getAreaData($event)"></app-select-area>
+          </div>
+        </div>
+        <div class="left col-md-4 col-xs-8 mb-lg p0">
+          <label class="label-width mb0 left t-right lh35">按姓名查找：</label>
+          <div class="col-xs-7">
+            <input type="text" [(ngModel)]="mgrName" class="search-control form-control border-b-grey ng-pristine ng-valid ng-touched" placeholder="请输入管理员姓名">
+          </div>
+          <div class="left t-center">
+            <span class="ng-scope">
+              <button type="button" title="搜索" id="toSearch" (click)="queryDatas($event)" class="btn btn-primary btn-sm bar-h3-btn ng-scope">
+                <em class="icon-magnifier fa-fw"></em></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body ofxs">
+    <table class="table table-striped mw1000" #adminsData="rzhDataTable"  [rzhData]="admins" (pageChange)="queryDatas($event)">
+      <thead>
+      <tr>
+        <th class="unselectable t-center sort-num">
+          序号
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="mgrName">姓名</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="vatar">头像</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="phone">手机号</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-2 col-md-2 unselectable t-center">
+          <rzhDefaultSorter by="idcard">身份证号</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="loginCode">登录账号</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="home">住址</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="state">状态</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="crtime">创建时间</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">其他操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let admin of adminsData.data;let i = index" class="t-center">
+        <td>{{i+1}}</td>
+        <td>{{admin.mgrName}}</td>
+        <td>{{admin.vatar}}</td>
+        <td>{{admin.phone}}</td>
+        <td>{{admin.idcard}}</td>
+        <td>{{admin.loginCode}}</td>
+        <td>{{admin.home}}</td>
+        <td>{{admin.state}} <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateState(admin.mgrCode)" title="修改"></button></td>
+        <td>{{switchTime(admin.crtime)}}</td>
+        <td>
+          <button class="btn btn-primary fa fa-pencil btn-sm" (click)="updateAdmin(admin.mgrCode)" title="修改"></button>
+          <button class="btn btn-green icon-magnifier-add btn-sm" (click)="adminDetail(admin.mgrCode)" title="详情"></button>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="7">
+          <div class="col-lg-3 col-md-4 col-sm-5">
+            <div class="text-muted"><strong>第 {{admins.genStartRow()}} 至 {{admins.genEndRow()}} 条，共 {{admins.totalRow}} 条</strong></div>
+          </div>
+          <div class="col-lg-7 col-mg-6 col-sm-5">
+            <div style="float: right"><rzhBootstrapPaginator></rzhBootstrapPaginator></div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

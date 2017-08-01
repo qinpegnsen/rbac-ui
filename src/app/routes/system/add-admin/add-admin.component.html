@@ -1,0 +1,214 @@
+<div class="rightpage">
+  <form class="form-validate form-horizontal" #addAdmin="ngForm" style="height: 100%">
+    <!-- START panel-->
+    <div class="panel-default">
+      <!--可编辑表单 start-->
+      <div class="panel-body"  *ngIf="!adminDetail">
+        <fieldset class="b0">
+          <legend>{{pageTitle}}</legend>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>选择机构</label>
+            <div class="col-sm-7">
+              <app-select-organ [required]="true" [organCode]="admin.orgCode" (selectedData)="getOrganCode($event)"></app-select-organ>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>区域</label>
+            <div class="col-sm-7">
+              <app-select-area [required]="true" (myData)="getAreaData($event)"></app-select-area>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>姓名</label>
+            <div class="col-sm-7">
+              <input class="form-control" type="text" name="mgrName" required [(ngModel)]="admin.mgrName" #mgrName="ngModel" placeholder="请输入机构名称"/>
+            </div>
+          </div>
+          <div [hidden]="mgrName.valid || mgrName.pristine"
+               class="col-sm-8 right text-danger">
+            请输入管理员姓名
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>负责人电话</label>
+            <div class="col-sm-7">
+              <input class="form-control" type="text" name="phone" required [(ngModel)]="admin.phone" #phone="ngModel" pattern="^1[3|4|5|6|7|8]\d{9}$" placeholder="请输入管理员手机号"/>
+            </div>
+          </div>
+          <div [hidden]="phone.valid || phone.pristine"
+               class="col-sm-8 right text-danger">
+            请输入正确的号码
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>身份证号</label>
+            <div class="col-sm-7">
+              <input class="form-control" type="text" required name="idcard" [(ngModel)]="admin.idcard" #idcard="ngModel" placeholder="请填写身份证号"/>
+            </div>
+          </div>
+          <div [hidden]="idcard.valid || idcard.pristine"
+               class="col-sm-8 right text-danger">
+            请填写身份证号
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>登录帐号</label>
+            <div class="col-sm-7">
+              <input class="form-control" type="text" name="loginCode" required [(ngModel)]="admin.loginCode" #loginCode="ngModel" placeholder="请输入登陆帐号"/>
+            </div>
+          </div>
+          <div [hidden]="loginCode.valid || loginCode.pristine"
+               class="col-sm-8 right text-danger">
+            请输入登陆帐号
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>请输入密码</label>
+            <div class="col-sm-7">
+              <input class="form-control" type="text" name="pwd" required [(ngModel)]="admin.pwd" #pwd="ngModel" placeholder="请输入密码"/>
+            </div>
+          </div>
+          <div [hidden]="pwd.valid || pwd.pristine"
+               class="col-sm-8 right text-danger">
+            请输入密码
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">头像</label>
+            <div class="col-sm-7">
+              <input class="form-control" type="text" name="avatar" [(ngModel)]="admin.avatar" #remarks="ngModel" placeholder="头像"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">住址</label>
+            <div class="col-sm-7">
+              <input class="form-control" type="text" name="remarks" [(ngModel)]="admin.home" #home="ngModel" placeholder="住址"/>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <!--可编辑表单 end-->
+
+      <!--展示详情 start-->
+      <div class="panel-body" *ngIf="adminDetail">
+        <fieldset class="b0">
+          <legend>{{pageTitle}}</legend>
+        </fieldset>
+        <ul class="org-items">
+          <li class="org-item">
+            <span class="item-hd col-sm-4">机构代码：</span>
+            <p class="item-bd col-sm-7">{{admin.orgCode}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">区域：</span>
+            <p class="item-bd col-sm-7">{{admin.areaCode}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">手机号：</span>
+            <p class="item-bd col-sm-7">{{admin.phone}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">管理员姓名：</span>
+            <p class="item-bd col-sm-7">{{admin.mgrName}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">身份证号：</span>
+            <p class="item-bd col-sm-7">{{admin.idcard}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">登陆帐号：</span>
+            <p class="item-bd col-sm-7">{{admin.loginCode}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">登录密码：</span>
+            <p class="item-bd col-sm-7">{{admin.pwd}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">状态：</span>
+            <p class="item-bd col-sm-7">{{admin.state}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">头像：</span>
+            <p class="item-bd col-sm-7">{{admin.avatar}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">住址：</span>
+            <p class="item-bd col-sm-7">{{admin.home}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">创建时间：</span>
+            <p class="item-bd col-sm-7">{{switchTime(admin.crtime)}}</p>
+          </li>
+          <li class="org-item">
+            <span class="item-hd col-sm-4">修改时间：</span>
+            <p class="item-bd col-sm-7">{{switchTime(admin.uptime)}}</p>
+          </li>
+        </ul>
+      </div>
+      <!--展示详情 end-->
+
+      <!--修改状态 start-->
+      <div class="panel-body"  *ngIf="updateState">
+        <fieldset class="b0">
+          <legend>{{pageTitle}}</legend>
+        </fieldset>
+
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">管理员姓名</label>
+            <div class="col-sm-7">
+              <input class="form-control" readonly [value]="admin.mgrName" />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label"><i>*</i>机构状态</label>
+            <div class="col-sm-7">
+              <select class="form-control" name="state" required [(ngModel)]="admin.state" #state="ngModel">
+                <option value="" disabled [selected]="state==''">请选择机构状态</option>
+                <option [value]="adminState.key" [selected]="value==state" *ngFor="let adminState of adminStates">{{adminState.val}}</option>
+              </select>
+            </div>
+          </div>
+          <div [hidden]="state.valid || state.pristine"
+               class="col-sm-8 right text-danger">
+            请选择机构类型
+          </div>
+        </fieldset>
+      </div>
+      <!--修改状态 end-->
+
+      <!--btns-->
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+
+        <!--添加系统-->
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitAdminData()" *ngIf="!adminDetail" [disabled]="!addAdmin.form.valid" >提交</button>
+
+        <!--修改系统-->
+        <button class="ml btn btn-info pull-left" type="submit" (click)="toUpdateAdmin()" *ngIf="adminDetail">修改管理员</button>
+
+        <!--修改状态-->
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitAdminData()" *ngIf="updateState">修改状态</button>
+      </div>
+    </div>
+
+    <!-- END panel-->
+  </form>
+</div>

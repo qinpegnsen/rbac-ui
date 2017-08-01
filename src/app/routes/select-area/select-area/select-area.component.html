@@ -1,4 +1,4 @@
-<input class="form-control" [value]="selectedArea" (click)="showSelectArea()" type="text" name="adr" [(ngModel)]="adr" placeholder="请选择地址"/>
+<input class="form-control" (focus)="showSelectArea()" [required]="required" [(ngModel)]="adr" type="text" name="adr" placeholder="请选择地址"/>
 <div class="slectArea" *ngIf="show">
   <div class="area-list">
     <button type="button" *ngFor="let area of areas" area-code="area.areaCode" (click)="getArea(area.fullName,area.areaCode,area.isNew)" class="area-item btn btn-default"><em class="elderCity-class-for-sel mr icon-arrow-right"></em>{{area.areaName}}</button>

@@ -1,5 +1,6 @@
-import { Component,EventEmitter, Input, Output, OnInit } from '@angular/core';
+
 import {Router} from '@angular/router';
+import {Component,EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {SettingsService} from "../../../core/settings/settings.service";
 
@@ -12,9 +13,12 @@ import {SettingsService} from "../../../core/settings/settings.service";
 export class SelectAreaComponent implements OnInit {
   private show: boolean = false;
   private areas: any;
-  private areaCode: string;
-  private selectedArea: string = '';
-  //@Output() onChanged = new EventEmitter<string>();
+  private areaCode: string = '';
+  private adr: string = '';
+
+  @Input() private required:boolean;
+
+  @Output() myData = new EventEmitter();
 
 
   constructor(private area: RzhtoolsService,public settings: SettingsService,private router:Router) { }
@@ -22,17 +26,17 @@ export class SelectAreaComponent implements OnInit {
   ngOnInit() {
   }
 
-  /*// 获取地区列表
+
+  // 获取地区列表
   getArea(fullName,myAreaCode,isOld){
     let me = this;
     me.show = true;
     me.areas = me.area.getAreaByCode(myAreaCode,isOld).children;
-    me.selectedArea = fullName;
+    me.adr = fullName;
     me.areaCode = myAreaCode;
     if (me.areas == undefined){
-      me.cityConfirm()
+      me.cityConfirm();
     }
-    this.onChanged.emit(selectedArea,areaCode);
     console.log(me.areas)
   }
 
@@ -41,7 +45,6 @@ export class SelectAreaComponent implements OnInit {
     let me = this;
     if(me.show) return;
     me.show = true;
-    me.selectedArea = '';
     me.areas = me.area.getAreaByCode('');
   }
 
@@ -49,8 +52,16 @@ export class SelectAreaComponent implements OnInit {
   freshCitys(){
     this.areas = this.area.getAreaByCode('');
   }
+
   //确定选择城市
   cityConfirm(){
     this.show = false;
-  }*/
+    if(this.adr == ''){
+      this.areaCode = ''
+    }
+    this.myData.emit({
+      areaCode:this.areaCode,
+      adr:this.adr
+    });
+  }
 }

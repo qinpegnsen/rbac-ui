@@ -13,11 +13,11 @@ const system = {
     },
     {
       text: '管理员管理',
-      link: '/main/account/v1'
+      link: '/main/system/admins'
     },
     {
       text: '密码修改',
-      link: '/main/system/v2'
+      link: '/main/system/password'
     }
   ]
 };

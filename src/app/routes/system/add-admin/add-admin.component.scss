@@ -1,0 +1,62 @@
+@media screen and (max-width: 766px){
+  .rightpage{
+    padding-top:120px;
+  }
+}
+.rightpage fieldset{
+  padding-bottom:12px;
+  margin-bottom:12px;
+}
+.rightpage label i{
+  font-weight: normal;
+  color: #f44336;
+  letter-spacing: 2px;
+}
+.panel-body{
+  padding-bottom: 60px;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.org-items{
+  padding:10px;
+}
+.org-item{
+  list-style:none;
+  font-size:14px;
+  width: 100%;
+  line-height: 20px;
+  padding:10px 0;
+  border-bottom:1px dashed #e1e1e1;
+}
+.org-item p{
+  margin-bottom: 0;
+}
+.org-item:after{
+  content: "";
+  height: 0;
+  display: block;
+  clear: both;
+}
+.item-hd{
+  font-weight: bold;
+  text-align: right;
+  //min-width: 130px;
+}
+.item-bd{
+  margin: 0;
+  word-wrap: break-word;
+}
+

@@ -1,0 +1,89 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <p class="header left">组织架构</p>
+    <app-buttons class="right" [config]="addButton" routerLink="addOrgan"></app-buttons>
+  </div>
+  <!--路由嵌套 begin-->
+  <router-outlet></router-outlet>
+  <!--路由嵌套 end-->
+</div>
+<div class="panel panel-default">
+  <div class="panel-body pl0 pr0 ng-scope" ng-if="search">
+    <fieldset>
+      <div class="form-group mb0">
+        <label class="label-width left t-right lh35">查找：</label>
+        <div class="col-lg-5 col-md-5 col-sm-4 col-xs-5">
+          <input type="text" [(ngModel)]="searchKey" class="form-control border-b-grey ng-pristine ng-valid ng-touched" placeholder="机构名称">
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 left t-center">
+          <span class="ng-scope">
+            <button type="button" title="搜索" id="toSearch" (click)="queryDatas($event)" class="btn btn-primary bar-h3-btn mr ng-scope">
+            <em class="icon-magnifier fa-fw mr-sm"></em>搜索</button>
+          </span>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table table-striped" #dataTable="rzhDataTable"  [rzhData]="organs" (pageChange)="queryDatas($event)">
+      <thead>
+      <tr>
+        <th class="unselectable t-center sort-num">
+          序号
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="orgName">机构名称</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="orgBoss">机构负责人</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="tel">负责人电话</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-2 col-md-2 unselectable t-center">
+          <rzhDefaultSorter by="adr">区域名称</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="orgSign">机构性质</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="state">机构状态</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-1 col-md-1 unselectable t-center">
+          <rzhDefaultSorter by="crtime">添加时间</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-2 col-md-2 unselectable t-center">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let organ of dataTable.data;let i = index" class="t-center">
+        <td>{{i+1}}</td>
+        <td>{{organ.orgName}}</td>
+        <td>{{organ.orgBoss}} <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateBoss(organ.orgCode)" title="修改"></button></td>
+        <td>{{organ.tel}}</td>
+        <td>{{organ.adr}}</td>
+        <td>{{switchType(organ.type)}} <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateType(organ.orgCode)" title="修改"></button></td>
+        <td>{{switchState(organ.state)}} <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateState(organ.orgCode)" title="修改"></button></td>
+        <td>{{switchTime(organ.crtime)}}</td>
+        <td>
+          <app-buttons [config]="option" (callback)="option.callback($event,organ.orgCode)" *ngFor="let option of buttonConfig"></app-buttons>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="7">
+          <div class="col-lg-3 col-md-4 col-sm-5">
+            <div class="text-muted"><strong>第 {{organs.genStartRow()}} 至 {{organs.genEndRow()}} 条，共 {{organs.totalRow}} 条</strong></div>
+          </div>
+          <div class="col-lg-7 col-mg-6 col-sm-5">
+            <div style="float: right"><rzhBootstrapPaginator></rzhBootstrapPaginator></div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
