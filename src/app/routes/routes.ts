@@ -16,6 +16,7 @@ export const routes = [
       {path: 'msg', loadChildren: './msg/msg.module#MsgModule'},
       {path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule'},
       {path: 'role', loadChildren: './role/role.module#RoleModule'},
+      {path: 'limit', loadChildren: './limit/limit.module#LimitModule'},
       {path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule'},
       {path: 'navtree', loadChildren: './navtree/navtree.module#NavtreeModule'},
       {path: 'buttons', component: ButtonDemoComponent}

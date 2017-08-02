@@ -6,7 +6,7 @@ import * as _ from "lodash";
     selector: "rzhBootstrapPaginator",
     template: `
     <mfPaginator #p [mfTable]="mfTable">
-        <ul class="pagination" *ngIf="p.dataLength > p.rowsOnPage">
+        <ul class="pagination mt mb0 visible-lg-block" *ngIf="p.dataLength > p.rowsOnPage">
             <li class="page-item" [class.disabled]="p.activePage <= 1" (click)="p.setPage(1)">
                 <a class="page-link" style="cursor: pointer">&laquo;</a>
             </li>
