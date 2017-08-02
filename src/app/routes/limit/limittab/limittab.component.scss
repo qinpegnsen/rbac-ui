@@ -1,0 +1,12 @@
+//定义表格间距
+.table tbody tr td{ padding:5px 8px}
+//定义表头间距
+.table thead tr th{ padding:8px}
+
+#ceshi .mat-tab-group .mat-tab-body-wrapper{
+  display: block;
+}
+
+#ceshi .mat-tab-body-wrapper .mat-tab-body{
+  display: inline;
+}

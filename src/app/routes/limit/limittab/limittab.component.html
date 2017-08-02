@@ -1,0 +1,208 @@
+<tabset [justified]="true">
+  <tab (select)="pageMenus()">
+    <ng-template tabHeading>页面元素</ng-template>
+    <table class="table table-striped" #dataTable2="rzhDataTable" [rzhData]="menuData" (pageChange)="pageMenus($event)">
+      <thead>
+      <tr>
+        <th style="width: 5%; padding-left: 10px">
+          序号
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="pageName">页面名称</rzhDefaultSorter>
+        </th>
+        <th style="width: 15%">
+          <rzhDefaultSorter by="preCode">上级页面</rzhDefaultSorter>
+        </th>
+        <th style="width: 15%">
+          <rzhDefaultSorter by="icon">页面图标</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="level">级别</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="note">备注</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="order">菜单顺序</rzhDefaultSorter>
+        </th>
+        <th style="width:15%">
+          <!--添加页面元素-->
+          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+        </th>
+      </tr>
+
+      </thead>
+      <tbody>
+      <tr *ngFor="let elder2 of dataTable2.data;let ii = index">
+        <td style="padding-left: 20px">{{ii+1}}</td>
+        <td>{{elder2.pageName}}</td>
+        <td>{{elder2.preCode}}</td>
+        <td>{{elder2.icon}}</td>
+        <td>{{elder2.level}}</td>
+        <td>{{elder2.note}}</td>
+        <td>{{elder2.order}}</td>
+        <td>
+          <!--修改页面元素的列表-->
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <!--页面元素的是否启用-->
+              <span class="col-sm-5">
+              <label class="switch">
+                <input type="checkbox" [checked]="elder2.isUse=='Y'" (change)="upPagedateState(elder2)" title="是否启动"/>
+                <span></span>
+              </label>
+            </span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="5">
+          <div class="col-sm-5">
+            <div class="text-muted"><strong>第 {{menuData.genStartRow()}} 至 {{menuData.genEndRow()}} 条，共 {{menuData.totalRow}} 条</strong></div>
+          </div>
+          <div class="col-sm-7">
+            <div style="float: right">
+              <rzhBootstrapPaginator></rzhBootstrapPaginator>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </tab>
+  <tab (select)="operationDatas()">
+    <ng-template tabHeading>功能操作</ng-template>
+    <table class="table table-striped" #dataTable3="rzhDataTable" [rzhData]="operationData" (pageChange)="operationDatas($event)">
+      <thead>
+      <tr>
+        <th style="width: 5%">
+          序号
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="optName">操作名称</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="tacklUrl">拦截URL</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="preCode">上级操作</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="preType">上级类型</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="ord">排序</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="note">排序</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="remarks">备注</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <!--添加功能操作-->
+          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:4}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let elder3 of dataTable3.data;let iii = index">
+        <td style="padding-left: 20px">{{iii+1}}</td>
+        <td>{{elder3.optName}}</td>
+        <td>{{elder3.menu}}</td>
+        <td>{{elder3.preCode}}</td>
+        <td>{{elder3.preType}}</td>
+        <td>{{elder3.ord}}</td>
+        <td>{{elder3.remarks}}</td>
+        <td>{{elder3.remarks}}</td>
+        <td>
+          <!--修改功能操作的列表-->
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:3}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <!--功能操作的是否启用-->
+            <span class="col-sm-5">
+              <label class="switch">
+                <input type="checkbox" [checked]="elder3.isUse=='Y'" (change)="upOptdateState(elder3)" title="是否启动"/>
+                <span></span>
+              </label>
+            </span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="5">
+          <div class="col-sm-5">
+            <div class="text-muted"><strong>第 {{operationData.genStartRow()}} 至 {{operationData.genEndRow()}} 条，共 {{operationData.totalRow}} 条</strong></div>
+          </div>
+          <div class="col-sm-7">
+            <div style="float: right">
+              <rzhBootstrapPaginator></rzhBootstrapPaginator>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </tab>
+  <tab (select)="controlDatas()">
+    <ng-template tabHeading>文件控制</ng-template>
+    <table class="table table-striped" #dataTable4="rzhDataTable" [rzhData]="controlData" (pageChange)="controlDatas($event)">
+      <thead>
+      <tr>
+        <th class="col-lg-1  unselectable t-center">
+          序号
+        </th>
+        <th class="col-lg-2  unselectable t-center">
+          <rzhDefaultSorter by="fileName">文件名称</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-3  unselectable t-center">
+          <rzhDefaultSorter by="fileUrl">文件URL</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-2  unselectable t-center">
+          <rzhDefaultSorter by="type">文件类型</rzhDefaultSorter>
+        </th>
+        <th class="col-lg-2  unselectable t-center">
+          <!--添加文件控制-->
+          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:6}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+        </th>
+        <th class="col-lg-1  unselectable t-center"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let elder4 of dataTable4.data;let iiii = index">
+        <td style="padding-left: 20px">{{iiii+1}}</td>
+        <td>{{elder4.fileName}}</td>
+        <td>{{elder4.fileUrl}}</td>
+        <td>{{elder4.type}}</td>
+        <td>
+          <!--修改文件控制的列表-->
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:5}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <!--文件控制的是否启用-->
+            <span class="col-sm-5">
+              <label class="switch">
+                <input type="checkbox" [checked]="elder4.isUse=='Y'" (change)="upFiledateState(elder4)" title="是否启动"/>
+                <span></span>
+              </label>
+            </span>
+        </td>
+      </tr>
+      </tbody>
+
+      <tfoot>
+      <tr>
+        <td colspan="5">
+          <div class="col-sm-5">
+            <div class="text-muted"><strong>第 {{controlData.genStartRow()}} 至 {{controlData.genEndRow()}} 条，共 {{controlData.totalRow}} 条</strong></div>
+          </div>
+          <div class="col-sm-7">
+            <div style="float: right">
+              <rzhBootstrapPaginator></rzhBootstrapPaginator>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </tab>
+</tabset>
+

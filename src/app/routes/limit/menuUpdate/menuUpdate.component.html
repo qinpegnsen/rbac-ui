@@ -1,0 +1,369 @@
+
+<!--修改菜单-->
+<div class="rightpage" *ngIf="this.queryId!=1">
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm">
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <fieldset class="b0">
+          <legend>修改菜单</legend>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 菜单编码</label>
+            <div class="col-sm-8">
+              <input class="form-control" required [(ngModel)]="limitForm.menuCode" name="menuCode"
+                     #menuCode="ngModel" type="text"/>
+              <div [hidden]="menuCode.valid || menuCode.pristine"
+                   class="alert alert-danger">
+                菜单编码是必填项，请填写菜单编码
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 菜单名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" required name="menuName" [(ngModel)]="limitForm.menuName"
+                     #menuName="ngModel" type="text"/>
+              <div [hidden]="menuName.valid || name.pristine"
+                   class="alert alert-danger">
+                菜单名称是必填项，请填写菜单名称
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 菜单URL</label>
+            <div class="col-sm-8">
+              <input class="form-control" required name="menuUrl" [(ngModel)]="limitForm.menuUrl"
+                     #menuUrl="ngModel" type="text"/>
+              <div [hidden]="menuUrl.valid || menuUrl.pristine"
+                   class="alert alert-danger">
+                url是必填项，请填写url路径
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">上级菜单</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">菜单图标</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
+            <div class="col-sm-8">
+              <input class="form-control" required name="level" [(ngModel)]="limitForm.level" level="level"
+                     #level="ngModel" type="text"/>
+              <div [hidden]="level.valid || level.pristine"
+                   class="alert alert-danger">
+                级别是必填项，请填写级别
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">菜单顺序</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text"/>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="submit">提交信息</button>
+      </div>
+    </div>
+    <!-- END panel-->
+  </form>
+</div>
+
+
+<!--修改页面-->
+<div class="rightpage" *ngIf="this.queryId==1">
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addRoleGroup(addLimitForm.value)"
+  >
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <fieldset class="b0">
+          <legend>修改页面</legend>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 页面编码</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="pageCode"
+                     #pageCode="ngModel" type="text"/>
+              <div [hidden]="pageCode.valid || pageCode.pristine"
+                   class="alert alert-danger">
+                页面编码是必填项，请填写页面编码
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 页面名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="pageName"
+                     #pageName="ngModel" type="text"/>
+              <div [hidden]="pageName.valid || pageName.pristine"
+                   class="alert alert-danger">
+                页面名称是必填项，请填写页面名称
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">上级页面</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">页面图标</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="icon" #icon="ngModel" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="level"
+                     #level="ngModel" type="text"/>
+              <div [hidden]="level.valid || level.pristine"
+                   class="alert alert-danger">
+                级别是必填项，请填写级别
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="remarks" #remarks="ngModel"  ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">排序</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="ord" #ord="ngModel"  ngModel/>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="submit"  [disabled]="!addLimitForm.form.valid">提交信息</button>
+      </div>
+    </div>
+    <!-- END panel-->
+  </form>
+</div>
+
+
+<!--修改操作-->
+<div class="rightpage" *ngIf="this.queryId==3">
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addRoleGroup(addLimitForm.value)"
+  >
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <fieldset class="b0">
+          <legend>修改操作</legend>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 操作编码</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="optCode"
+                     #optCode="ngModel" type="text"/>
+              <div [hidden]="optCode.valid || optCode.pristine"
+                   class="alert alert-danger">
+                操作编码是必填项，请填写操作编码
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 操作名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="optName"
+                     #optName="ngModel" type="text"/>
+              <div [hidden]="optName.valid || optName.pristine"
+                   class="alert alert-danger">
+                操作名称是必填项，请填写操作名称
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 操作URL</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="tacklUrl"
+                     #tacklUrl="ngModel" type="text"/>
+              <div [hidden]="tacklUrl.valid || tacklUrl.pristine"
+                   class="alert alert-danger">
+                操作URL是必填项，请填写操作URL
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">上级操作</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">上级类型</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="preType" #preType="ngModel"  ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 排序</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="ord"
+                     #ord="ngModel" type="text"/>
+              <div [hidden]="ord.valid || ord.pristine"
+                   class="alert alert-danger">
+                排序是必填项，请填写排序
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="remarks" #remarks="ngModel"  ngModel/>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="submit"  [disabled]="!addLimitForm.form.valid">提交信息</button>
+      </div>
+    </div>
+    <!-- END panel-->
+  </form>
+</div>
+
+
+<!--修改文件控制-->
+<div class="rightpage" *ngIf="this.queryId==5">
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addRoleGroup(addLimitForm.value)"
+  >
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <fieldset class="b0">
+          <legend>修改文件控制</legend>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 文件编码</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="fileCode"
+                     #fileCode="ngModel" type="text"/>
+              <div [hidden]="fileCode.valid || fileCode.pristine"
+                   class="alert alert-danger">
+                文件编码是必填项，请填写文件编码
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 文件名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="fileName"
+                     #fileName="ngModel" type="text"/>
+              <div [hidden]="fileName.valid || fileName.pristine"
+                   class="alert alert-danger">
+                文件名称是必填项，请填写文件名称
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 文件URL</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="fileUrl"
+                     #fileUrl="ngModel" type="text"/>
+              <div [hidden]="fileUrl.valid || fileUrl.pristine"
+                   class="alert alert-danger">
+                文件URL是必填项，请填写文件URL
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 文件类型</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="type"
+                     #type="ngModel" type="text"/>
+              <div [hidden]="type.valid || type.pristine"
+                   class="alert alert-danger">
+                排序是必填项，请填写排序
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="submit"  [disabled]="!addLimitForm.form.valid">提交信息</button>
+      </div>
+    </div>
+    <!-- END panel-->
+  </form>
+</div>
