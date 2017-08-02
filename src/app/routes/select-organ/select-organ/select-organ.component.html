@@ -1,4 +1,4 @@
 <select name="orgCode" [required]="required" [(ngModel)]="orgCode" class="form-control" (change)="selected()">
   <option value="" disabled selected>请选择机构</option>
-  <option *ngFor="let organ of organs" [value]="organ.orgCode" [selected]="value==organCode">{{organ.orgName}}</option>
+  <option *ngFor="let organ of organs" [value]="organ.orgCode" [selected]="organ.orgCode==organCode">{{organ.orgName}}</option>
 </select>

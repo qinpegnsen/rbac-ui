@@ -13,7 +13,7 @@ import {SharedModule} from './shared/shared.module';
 import {RoutesModule} from './routes/routes.module';
 import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
 import { OpaqueToken } from '@angular/core';
-export const BASE_URL = new OpaqueToken('BASE_URL');
+
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,8 +37,7 @@ export function createTranslateLoader(http: Http) {
     })
   ],
   providers: [
-    CookieService,
-    {provide: BASE_URL,  useValue:   'http://192.168.10.110:8082'}
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

@@ -21,6 +21,7 @@ export class SelectOrganComponent implements OnInit {
   constructor(private ajax: AjaxService, private router:Router) { }
 
   ngOnInit() {
+    console.log("█ this.organCode ►►►",  this.organCode);
 
     this.ajax.get({
       url: "/organ/list",

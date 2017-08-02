@@ -7,28 +7,16 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {PatternService} from "../../../core/forms/pattern.service";
+import {AddorganService} from "./addorgan.service";
 
 
 const swal = require('sweetalert');
-/*interface AddOrganData{
-  orgName: string;
-  areaCode: string;
-  tel: string;
-  orgBoss: string;
-  type: string;
-  adr?: string;
-  bossPhone?: string;
-  duty?: string;
-  remarks?: string;
-  orgLogo?: string;
-  preCode?: string;
-}*/
 
 @Component({
   selector: 'app-addorgan',
   templateUrl: './addorgan.component.html',
   styleUrls: ['./addorgan.component.scss'],
-  providers: [RzhtoolsService,PatternService,Location]
+  providers: [RzhtoolsService,PatternService,Location,AddorganService]
 })
 export class AddorganComponent implements OnInit {
   private orgTypes:any;
@@ -57,9 +45,8 @@ export class AddorganComponent implements OnInit {
   private path: string;
   private pageTitle:string;
 
-  private addOrgan:boolean = false;
+  private Organ:boolean = false;
   private detail:boolean = false;
-  private updateOrgan:boolean = false;
   private updateState:boolean = false;
   private updateType:boolean = false;
   private updateBoss:boolean = false;
@@ -68,10 +55,10 @@ export class AddorganComponent implements OnInit {
 
   //@Output() outputvalue = new EventEmitter<boolean>();
 
-  constructor(private ajax: AjaxService, private area: RzhtoolsService,
+  constructor(private area: RzhtoolsService,
               private pattern: PatternService, public settings: SettingsService,
               private route: ActivatedRoute, private router:Router,
-              private Location: Location) {
+              private Location: Location, private addOrganService: AddorganService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
@@ -86,8 +73,8 @@ export class AddorganComponent implements OnInit {
         case "addOrgan":
           //console.log("█ \"添加机构\" ►►►",  "添加机构");
           this.pageTitle = "添加机构";
-          this.addOrgan = true;
-          this.getOrgTypes(); //获取机构类型
+          this.Organ = true;
+          this.orgTypes = this.addOrganService.getOrgTypes(); //获取机构类型
           break;
 
         //查看机构详情
@@ -96,17 +83,17 @@ export class AddorganComponent implements OnInit {
           this.detail = true;//属于查看详情，需要隐藏可编辑表单
           this.pageTitle = "机构详情";
           this.getOrgCode();  //获取机构代码orgCode
-          this.getOrgDetailByCode();  //通过orgCode获取机构详细信息
+          this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
 
         //修改机构信息
         case "updateOrgan":
           //console.log("█ \"修改机构信息\" ►►►",  "修改机构信息");
-          this.updateOrgan = true;
+          this.Organ = true;
           this.pageTitle = "修改机构信息";
-          this.getOrgTypes(); //获取机构类型列表
+          this.orgTypes = this.addOrganService.getOrgTypes(); //获取机构类型列表
           this.getOrgCode();  //获取机构代码orgCode
-          this.getOrgDetailByCode();  //通过orgCode获取机构详细信息
+          this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
 
         //修改机构负责人
@@ -115,7 +102,7 @@ export class AddorganComponent implements OnInit {
           this.updateBoss = true;
           this.pageTitle = "修改机构负责人";
           this.getOrgCode();  //获取机构代码orgCode
-          this.getOrgDetailByCode();  //通过orgCode获取机构详细信息
+          this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
 
         //修改机构类型
@@ -123,9 +110,9 @@ export class AddorganComponent implements OnInit {
           //console.log("█ \"修改机构类型\" ►►►",  "修改机构类型");
           this.updateType = true;
           this.pageTitle = "修改机构类型";
-          this.getOrgTypes(); //获取机构类型列表
+          this.orgTypes = this.addOrganService.getOrgTypes(); //获取机构类型列表
           this.getOrgCode();  //获取机构代码orgCode
-          this.getOrgDetailByCode();  //通过orgCode获取机构详细信息
+          this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
 
         //修改机构状态
@@ -133,9 +120,9 @@ export class AddorganComponent implements OnInit {
           //console.log("█ \"修改机构状态\" ►►►",  "修改机构状态");
           this.updateState = true;
           this.pageTitle = "修改机构状态";
-          this.getOrgStates(); //获取机构状态列表
+          this.orgStates = this.addOrganService.getOrgStates(); //获取机构状态列表
           this.getOrgCode();  //获取机构代码orgCode
-          this.getOrgDetailByCode();  //通过orgCode获取机构详细信息
+          this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
 
         //添加角色或角色组
@@ -144,7 +131,7 @@ export class AddorganComponent implements OnInit {
           this.addRolesRelation = true;
           this.pageTitle = "添加角色或角色组";
           this.getOrgCode();  //获取机构代码orgCode
-          this.getOrgDetailByCode();  //通过orgCode获取机构详细信息
+          this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
       }
     });
@@ -161,52 +148,6 @@ export class AddorganComponent implements OnInit {
   toUpdateOrgan(){
     this.settings.closeRightPage(); //关闭右侧滑动页面
     this.router.navigate(['/main/organ/updateOrgan',this.orgCode], { replaceUrl: true });
-  }
-
-  //获取机构类型
-  getOrgTypes(){
-    this.ajax.get({
-      url: '/organ/typelist',
-      success: (res) => {
-        this.orgTypes = res;
-        console.log("█ res ►►►",  res);
-      },
-      error: (res) => {
-        console.log("get orgTypes error");
-      }
-    });
-  }
-
-  //获取机构状态
-  getOrgStates(){
-    this.ajax.get({
-      url: '/organ/statelist',
-      success: (res) => {
-        this.orgStates = res;
-        console.log("█ res ►►►",  res);
-      },
-      error: (res) => {
-        console.log("get orgStates error");
-      }
-    });
-  }
-
-  //通过orgCode获取机构详细信息
-  getOrgDetailByCode(){
-    this.ajax.get({
-      url: '/organ/load',
-      data:{
-        orgCode: this.orgCode
-      },
-      success: (res) => {
-        if(res.success){
-          this.organ = res.data;
-        }
-      },
-      error: (res) => {
-        console.log("get orgTypes error");
-      }
-    });
   }
 
  // 获取地区列表
@@ -296,37 +237,12 @@ export class AddorganComponent implements OnInit {
         break;
     }
     console.log("█ submitData ►►►",  submitData);
-    me.ajax.post({
-      url: submitUrl,
-      data: submitData,
-      success: (res) => {
-        console.log("█ res ►►►",  res);
-        if (res.success){
-          this.cancel(); //路由跳转
-          swal({
-            title: '提交成功!',
-            text: '列表已自动更新',
-            type: 'success',
-            timer: 2000, //关闭时间，单位：毫秒
-            showConfirmButton: false  //不显示按钮
-          });
-          //this.outputvalue.emit(true);//提交成功后向父组件传值
-        }else{
-          let errorMsg = res.data.substring(res.data.indexOf('$$')+2,res.data.indexOf('@@'))
-          swal(res.info, errorMsg, 'error');
-        }
-      },
-      error: (res) => {
-        console.log("post organ error");
-      }
-    })
+    this.addOrganService.submitData(submitUrl,submitData)
   }
 
   // 取消
   cancel(){
-    this.settings.closeRightPage(); //关闭右侧滑动页面
-    this.Location.back();
-    this.router.navigate(['/main/organ']);
+    this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面,返回上级路由
   }
 
 }

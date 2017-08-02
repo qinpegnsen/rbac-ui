@@ -50,6 +50,7 @@ export class SelectAreaComponent implements OnInit {
 
   //重置城市信息
   freshCitys(){
+    this.adr = '';
     this.areas = this.area.getAreaByCode('');
   }
 

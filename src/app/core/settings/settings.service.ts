@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {isNullOrUndefined} from 'util';
 import {CookieService} from 'angular2-cookie/core';
+import { Location }from '@angular/common';
 declare var $: any;
 
 @Injectable()
@@ -10,7 +11,7 @@ export class SettingsService {
   public app: any;
   public layout: any;
 
-  constructor(private _cookieService: CookieService) {
+  constructor(private _cookieService: CookieService, private location: Location) {
 
     /**
      * 用户信息（当前登录用户）
@@ -104,7 +105,6 @@ export class SettingsService {
     }, 10);
   }
 
-
   /**
    * 关闭右侧页面 by 立坤
    * @param
@@ -113,5 +113,18 @@ export class SettingsService {
     this.layout.operationpageOpen = false; //关闭右侧滑动页面
     $('html').addClass('csstransforms3d'); //加入样式，动态滑动效果
     $('app-offsidebar').show();
+  }
+
+  /**
+   * 关闭右侧页面并返回上级路由
+   * 针对路由跳转的右弹窗
+   * by 高洁
+   */
+  closeRightPageAndRouteBack(){
+    this.closeRightPage();//关闭右侧滑动页面
+    let that = this;
+    setTimeout(function(){
+      that.location.back();//返回上级路由
+    },100)
   }
 }

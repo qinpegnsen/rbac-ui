@@ -124,7 +124,8 @@ export class OrganComponent implements OnInit {
       url: "/organ/listpage",
       data: {
         curPage:activePage,
-        orgName: me.searchKey
+        orgName: me.searchKey,
+        pageSize: '8'
       },
       success: (res) => {
         if (!isNull(res)) {

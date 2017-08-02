@@ -1,6 +1,3 @@
-.panel{
-  margin-bottom:12px;
-}
 .panel.panel-default{
   border-top-width:1px;
 }
@@ -12,33 +9,13 @@
   -ms-user-select: none;
   user-select: none;
 }
-.t-center{
-  text-align: center;
-}
-.t-right{
-  text-align: right;
-}
 .sort-num{
   width: 3%;
   min-width: 50px;
 }
 
-.header{
-  margin: 0;
-  font-size:16px;
-  line-height:33px;
-}
-.left{
-  float: left;
-}
-.right{
-  float: right;
-}
 .lh35{
   line-height: 35px;
-}
-.mt10{
-  margin-top: 10px;
 }
 .label-width{
   width: 10%;
@@ -49,8 +26,4 @@
   border-top: none;
   border-left: none;
   border-right: none;
-}
-fieldset{
-  padding-bottom:0;
-  margin-bottom: 0;
 }

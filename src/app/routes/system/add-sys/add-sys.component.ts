@@ -142,8 +142,6 @@ export class AddSysComponent implements OnInit {
 
   // 取消
   cancel(){
-    this.settings.closeRightPage(); //关闭右侧滑动页面
-    this.Location.back();
-    this.router.navigate(['/main/system/sys-platform']);
+    this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
 }

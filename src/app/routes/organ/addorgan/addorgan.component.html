@@ -3,7 +3,7 @@
     <!-- START panel-->
     <div class="panel-default">
       <!--可编辑表单 start-->
-      <div class="panel-body" *ngIf="addOrgan || updateOrgan">
+      <div class="panel-body" *ngIf="Organ">
         <fieldset class="b0">
           <legend>{{pageTitle}}</legend>
         </fieldset>
@@ -358,13 +358,13 @@
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
 
         <!--添加机构-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="addOrgan || updateOrgan" [disabled]="!addOrganForm.form.valid" >提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="Organ" [disabled]="!addOrganForm.form.valid" >提交信息</button>
 
         <!--从详情转修改-->
         <button class="ml btn btn-info pull-left" type="button" (click)="toUpdateOrgan()" *ngIf="detail">修改机构信息</button>
 
         <!--修改机构负责人-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateBoss">确认修改负责人</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateBoss" [disabled]="!addOrganForm.form.valid">确认修改负责人</button>
 
         <!--修改机构状态-->
         <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateState">确认修改状态</button>

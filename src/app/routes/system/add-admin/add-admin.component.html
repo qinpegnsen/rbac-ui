@@ -3,7 +3,7 @@
     <!-- START panel-->
     <div class="panel-default">
       <!--可编辑表单 start-->
-      <div class="panel-body"  *ngIf="!adminDetail">
+      <div class="panel-body"  *ngIf="Admin">
         <fieldset class="b0">
           <legend>{{pageTitle}}</legend>
         </fieldset>
@@ -108,7 +108,7 @@
         <fieldset class="b0">
           <legend>{{pageTitle}}</legend>
         </fieldset>
-        <ul class="org-items">
+        <ul class="org-items p">
           <li class="org-item">
             <span class="item-hd col-sm-4">机构代码：</span>
             <p class="item-bd col-sm-7">{{admin.orgCode}}</p>
@@ -161,8 +161,8 @@
       </div>
       <!--展示详情 end-->
 
-      <!--修改状态 start-->
-      <div class="panel-body"  *ngIf="updateState">
+      <!--修改密码 start-->
+      <div class="panel-body"  *ngIf="updatePwd">
         <fieldset class="b0">
           <legend>{{pageTitle}}</legend>
         </fieldset>
@@ -178,34 +178,29 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-4 control-label"><i>*</i>机构状态</label>
+            <label class="col-sm-4 control-label"><i>*</i>新密码</label>
             <div class="col-sm-7">
-              <select class="form-control" name="state" required [(ngModel)]="admin.state" #state="ngModel">
-                <option value="" disabled [selected]="state==''">请选择机构状态</option>
-                <option [value]="adminState.key" [selected]="value==state" *ngFor="let adminState of adminStates">{{adminState.val}}</option>
-              </select>
+              <input class="form-control" type="text" name="newpwd" required [(ngModel)]="admin.newpwd" #newpwd="ngModel" placeholder="请输入新密码"/>
             </div>
           </div>
-          <div [hidden]="state.valid || state.pristine"
+          <div [hidden]="newpwd.valid || newpwd.pristine"
                class="col-sm-8 right text-danger">
-            请选择机构类型
+            请输入新密码
           </div>
         </fieldset>
       </div>
-      <!--修改状态 end-->
+      <!--修改密码 end-->
 
       <!--btns-->
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
 
         <!--添加系统-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitAdminData()" *ngIf="!adminDetail" [disabled]="!addAdmin.form.valid" >提交</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitAdminData()" *ngIf="!adminDetail && !updateState" [disabled]="!addAdmin.form.valid" >提交</button>
 
         <!--修改系统-->
         <button class="ml btn btn-info pull-left" type="submit" (click)="toUpdateAdmin()" *ngIf="adminDetail">修改管理员</button>
 
-        <!--修改状态-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitAdminData()" *ngIf="updateState">修改状态</button>
       </div>
     </div>
 

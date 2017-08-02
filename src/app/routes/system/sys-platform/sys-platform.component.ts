@@ -34,58 +34,40 @@ export class SysPlatformComponent implements OnInit {
 
   //停用/启用系统
   quitSystem(checked,sysCode){
-    console.log("█ checked ►►►",  checked);
-    let submitUrl, successText, tipTitle, tipMsg;
+    let submitUrl, successText;
     if(checked) {
-      submitUrl = '/sys/updateToN';
-      tipTitle = '确定要启用该系统吗？';
-      tipMsg = '';
+      submitUrl = '/sys/updateToY';
       successText = '该系统已启用';
-
     }else{
       submitUrl = '/sys/updateToN';
-      tipTitle = '确定要停用该系统吗？';
-      tipMsg = '停用之后将不能重新启用';
       successText = '该系统已停用';
     };
-      swal({
-        title: tipTitle,
-        text: tipMsg,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: '是的',
-        cancelButtonText: '取消',
-        closeOnConfirm: false
-      }, (isConfirm) => {
-        if(isConfirm){
-          this.ajax.post({
-            url: submitUrl,
-            data:{
-              sysCode: sysCode
-            },
-            success: (res) => {
-              if(res.success){
-                swal({
-                  title: '提交成功!',
-                  text: successText,
-                  type: 'success',
-                  timer: 2000, //关闭时间，单位：毫秒
-                  showConfirmButton: false  //不显示按钮
-                });
-              }
-            },
-            error: (res) => {
-              console.log("停用/启用系统 error");
-              //console.log("█ res ►►►",  res);
-              //let errorMsg = res.data.substring(res.data.indexOf('$$')+2,res.data.indexOf('@@'))
-              //swal(res.info, errorMsg, 'error');
-            }
+    console.log("█ checked ►►►",  checked);
+    console.log("█ sysCode ►►►",  sysCode);
+    console.log("█ submitUrl ►►►",  submitUrl);
+    this.ajax.post({
+      url: submitUrl,
+      data:{
+        sysCode: sysCode
+      },
+      success: (res) => {
+        if(res.success){
+          swal({
+            title: '提交成功!',
+            text: successText,
+            type: 'success',
+            timer: 2000, //关闭时间，单位：毫秒
+            showConfirmButton: false  //不显示按钮
           });
-        }else{
-
         }
-      });
+      },
+      error: (res) => {
+        console.log("停用/启用系统 error");
+        //console.log("█ res ►►►",  res);
+        //let errorMsg = res.data.substring(res.data.indexOf('$$')+2,res.data.indexOf('@@'))
+        //swal(res.info, errorMsg, 'error');
+      }
+    });
   }
 
   //转换时间
@@ -112,7 +94,8 @@ export class SysPlatformComponent implements OnInit {
       url: "/sys/listpage",
       data: {
         curPage:activePage,
-        sysName: me.searchKey
+        sysName: me.searchKey,
+        pageSize: '8'
       },
       success: (res) => {
         if (!isNull(res)) {

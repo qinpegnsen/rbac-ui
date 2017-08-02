@@ -1,56 +1,52 @@
-<div class="panel panel-default">
-  <div class="panel-body">
-    <p class="header left">平台系统</p>
-    <app-buttons class="right" [config]="addButton" routerLink="addSystem"></app-buttons>
-  </div>
-  <!--路由嵌套 begin-->
-  <router-outlet></router-outlet>
-  <!--路由嵌套 end-->
+<div class="content-heading mb-lg">
+  平台系统
+  <app-buttons class="pull-right" [config]="addButton" routerLink="addSystem"></app-buttons>
 </div>
-<div class="panel panel-default">
-  <div class="panel-body pl0 pr0 ng-scope" ng-if="search">
-    <fieldset>
-      <div class="form-group mb0">
-        <label class="label-width left t-right lh35">查找：</label>
-        <div class="col-lg-5 col-md-5 col-sm-4 col-xs-5">
-          <input type="text" [(ngModel)]="searchKey" class="form-control border-b-grey ng-pristine ng-valid ng-touched" placeholder="系统名称">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 left t-center">
-          <span class="ng-scope">
-            <button type="button" title="搜索" id="toSearch" (click)="queryDatas($event)" class="btn btn-primary bar-h3-btn mr ng-scope">
-              <em class="icon-magnifier fa-fw mr-sm"></em>搜索</button>
-          </span>
-        </div>
+<div class="panel mb">
+  <div class="panel-body p ng-scope" ng-if="search">
+    <div class="form-group mb0">
+      <label class="col-sm-1 mb0 lh36 pull-left text-right">查找：</label>
+      <div class="col-sm-5">
+        <input type="text" [(ngModel)]="searchKey" class="form-control bt0 bl0 br0 border-b-grey ng-pristine ng-valid ng-touched"
+               (change)="queryDatas($event)" placeholder="系统名称">
       </div>
-    </fieldset>
+      <div class="col-sm-1 pull-left text-center">
+          <span class="ng-scope">
+            <button type="button" title="搜索" id="toSearch" (click)="queryDatas($event)"
+                    class="btn btn-primary bar-h3-btn mr ng-scope">
+              <em class="icon-magnifier fa-fw"></em>搜索
+            </button>
+          </span>
+      </div>
+    </div>
   </div>
 </div>
 <div class="panel panel-default">
   <div class="panel-body">
-    <table class="table table-striped" #systems="rzhDataTable"  [rzhData]="sys" (pageChange)="queryDatas($event)">
+    <table class="table table-striped" #systems="rzhDataTable" [rzhData]="sys" (pageChange)="queryDatas($event)">
       <thead>
       <tr>
-        <th class="unselectable t-center sort-num">
+        <th class="col-md-1 unselectable text-center sort-num">
           序号
         </th>
-        <th class="col-lg-2 col-md-2 unselectable t-center">
+        <th class="col-md-2 unselectable text-center">
           <rzhDefaultSorter by="sysName">系统名称</rzhDefaultSorter>
         </th>
-        <th class="col-lg-3 col-md-3 unselectable t-center">
+        <th class="col-md-2 unselectable text-center">
           <rzhDefaultSorter by="orgBoss">系统网址</rzhDefaultSorter>
         </th>
-        <th class="col-lg-2 col-md-2 unselectable t-center">
+        <th class="col-md-2 unselectable text-center">
           <rzhDefaultSorter by="orgSign">备注</rzhDefaultSorter>
         </th>
-        <th class="col-lg-2 col-md-2 unselectable t-center">
+        <th class="col-md-2 unselectable text-center">
           <rzhDefaultSorter by="adr">创建时间</rzhDefaultSorter>
         </th>
-        <th class="col-lg-1 col-md-1 unselectable t-center">开启/关闭</th>
-        <th class="col-lg-2 col-md-2 unselectable t-center">其他操作</th>
+        <th class="col-md-1 unselectable text-center">开启/关闭</th>
+        <th class="col-md-2 unselectable text-center">其他操作</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let sys of systems.data;let i = index" class="t-center">
+      <tr *ngFor="let sys of systems.data;let i = index" class="text-center">
         <td>{{i+1}}</td>
         <td>{{sys.sysName}}</td>
         <td>{{sys.sysUrl}}</td>
@@ -58,24 +54,29 @@
         <td>{{switchTime(sys.crtime)}}</td>
         <td>
           <label class="switch switch-lg" title="停/启用">
-            <input [checked]="check == 'Y'" [(ngModel)]="sys.isUse" #check="ngModel" type="checkbox" (change)="quitSystem(check.viewModel,sys.sysCode)">
+            <input [checked]="!check.viewModel" [(ngModel)]="sys.isUse" #check="ngModel" type="checkbox"
+                   (change)="quitSystem(check.viewModel,sys.sysCode)">
             <span></span>
           </label>
         </td>
         <td>
           <button class="btn btn-primary fa fa-pencil btn-sm" (click)="changeSysInfo(sys.sysCode)" title="修改"></button>
-          <button class="btn btn-green icon-magnifier-add btn-sm" (click)="lookSysDetail(sys.sysCode)" title="详情"></button>
+          <button class="btn btn-green icon-magnifier-add btn-sm" (click)="lookSysDetail(sys.sysCode)"
+                  title="详情"></button>
         </td>
       </tr>
       </tbody>
       <tfoot>
       <tr>
         <td colspan="7">
-          <div class="col-lg-3 col-md-4 col-sm-5">
-            <div class="text-muted"><strong>第 {{sys.genStartRow()}} 至 {{sys.genEndRow()}} 条，共 {{sys.totalRow}} 条</strong></div>
+          <div class="col-sm-5">
+            <div class="text-muted"><strong>第 {{sys.genStartRow()}} 至 {{sys.genEndRow()}} 条，共 {{sys.totalRow}}
+              条</strong></div>
           </div>
-          <div class="col-lg-7 col-mg-6 col-sm-5">
-            <div style="float: right"><rzhBootstrapPaginator></rzhBootstrapPaginator></div>
+          <div class="col-sm-5">
+            <div style="float: right">
+              <rzhBootstrapPaginator></rzhBootstrapPaginator>
+            </div>
           </div>
         </td>
       </tr>
@@ -83,3 +84,7 @@
     </table>
   </div>
 </div>
+
+<!--路由嵌套 begin-->
+<router-outlet></router-outlet>
+<!--路由嵌套 end-->
