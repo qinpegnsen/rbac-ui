@@ -1,0 +1,81 @@
+.tab {
+  color: #1f1f1f;
+  font-size: 16px;
+}
+
+//选择系统样式
+.system {
+  display: float;
+  font-size: 16px;
+}
+
+.controll, .options {
+  float: left;
+  line-height: 32px;
+}
+
+.controll {
+  margin-right: 15px;
+}
+
+.options {
+  width: 198px;
+  height: 32px;
+}
+
+.system:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+//角色组,角色样式
+.role-group-ctrl, .role-ctrl, .row {
+  height: 100%;
+}
+
+.role-group-ctrl {
+  border-right: 1px solid #eee;
+}
+
+.title {
+  display: float;
+  margin-bottom: 12px;
+}
+
+.title:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
+.title span:first-child {
+  float: left;
+  color: #1f1f1f;
+  font-size: 16px;
+}
+
+.title span:last-child {
+  float: right;
+  width: 96px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  line-height: 28px;
+  text-align: center;
+  color: #445066;
+  font-size: 14px;
+  border: none;
+}
+
+.cont {
+  border: 1px solid #eee;
+  width: 100%;
+  height: 90%;
+}
+
+th, td {
+  text-align: center;
+}
+
+

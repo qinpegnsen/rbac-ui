@@ -2,7 +2,6 @@ import {LayoutComponent} from '../layout/layout.component';
 import {LoginComponent} from './pages/login/login.component';
 import {PagesComponent} from './pages/pages/pages.component';
 import {ButtonDemoComponent} from "./buttons/buttonDemo/button-demo.component";
-
 // 设置路由指向
 export const routes = [
   {
@@ -16,6 +15,7 @@ export const routes = [
       {path: 'system', loadChildren: './system/system.module#SystemModule'},
       {path: 'msg', loadChildren: './msg/msg.module#MsgModule'},
       {path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule'},
+      {path: 'role', loadChildren: './role/role.module#RoleModule'},
       {path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule'},
       {path: 'navtree', loadChildren: './navtree/navtree.module#NavtreeModule'},
       {path: 'buttons', component: ButtonDemoComponent}

@@ -1,0 +1,105 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span class="tab" >角色管理</span>
+  </div>
+</div>
+<div class="form-group system">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="controll">选择系统</div>
+      <div class="options">
+        <select class="form-control"  #sys (change)="onSelectSys(sys)">
+          <option [value]="item.sysCode" *ngFor="let item of sysList" class="sysCode">{{item.sysName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="controll">选择机构</div>
+      <div class="options">
+        <select class="form-control"  #org >
+          <option value="请选择机构">请选择机构</option>
+          <option [value]="item.orgName" *ngFor="let item of orgList" class="sysCode">{{item.orgName}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid panel panel-default"  [style.height.px]="'600'">
+  <div class="row panel-body">
+    <div class="role-group-ctrl col-lg-4">
+      <div class="title">
+        <span>角色组管理</span>  <span><a class="btn btn-info" routerLink="rightpage" [queryParams]="{id:1,sysCode:sysCode}">新增角色组</a></span>
+      </div>
+      <div class="cont">
+        <table class="table table-striped" #dataTable="rzhDataTable"  [rzhData]="data" (pageChange)="queryDatas($event)">
+          <thead>
+          <tr>
+            <th style="width: 5%">
+              序号
+            </th>
+            <th style="width: 30%" >
+              <rzhDefaultSorter by="name" >机构名称</rzhDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <rzhDefaultSorter by="email" >角色组名</rzhDefaultSorter>
+            </th>
+            <th style="width: 25%">
+              <rzhDefaultSorter by="email" >角色组状态</rzhDefaultSorter>
+            </th>
+            <th style="width: 20%">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let elder of dataTable.data;let i = index" (click)="selectRole(elder.roleGroupCode,elder.roleGroupName)">
+            <td>{{i+1}}</td>
+            <td>{{elder.orgName}}</td>
+            <td>{{elder.roleGroupName}}</td>
+            <td>
+              <!--修改角色组停启用状态-->
+              <span class="col-sm-5">
+                <label class="switch">
+                  <input type="checkbox" [checked]="elder.isUse=='Y'" (change)="updateRoleGroupState(elder)" />
+                  <span></span>
+                </label>
+              </span>
+            </td>
+            <td class="row">
+              <!--绑定角色组-->
+              <div class="col-xs-6">
+                <app-buttons [config]="option" routerLink="rightpage" [queryParams]="{id:3}"  *ngFor="let option of buttonConfig"></app-buttons>
+              </div>
+              <!--修改角色组名称,把信息传过去在弹窗页面修改-->
+              <div class="col-xs-6">
+                <app-buttons [config]="option" routerLink="rightpage" [queryParams]="{id:4,roleGroupCode:elder.roleGroupCode,roleGroupName:elder.roleGroupName}"  *ngFor="let option of buttonConfig1" ></app-buttons>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="5">
+              <div class="col-sm-5">
+                <div class="text-muted"><strong>第 {{data.genStartRow()}} 至 {{data.genEndRow()}} 条，共 {{data.totalRow}} 条</strong></div>
+              </div>
+              <div class="col-sm-7">
+                <div style="float: right"><rzhBootstrapPaginator></rzhBootstrapPaginator></div>
+              </div>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="role-ctrl col-lg-8">
+      <div class="title">
+        <span>{{sysNamea}}当前的角色组是：{{roleGroupName}}</span>  <span><a class="btn btn-info" routerLink="rightpage" [queryParams]="{id:2,sysCode:sysCode,orgCode:orgCode,sysName:sysNamea}">新增角色</a></span>
+      </div>
+      <div class="cont">
+        <app-roleman [sysCode]="sysCode" [roleGroupCode]="roleGroupCode" ></app-roleman>
+      </div>
+    </div>
+  </div>
+</div>
+<!--路由嵌套 begin-->
+<router-outlet></router-outlet>
+<!--路由嵌套 end-->

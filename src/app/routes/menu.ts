@@ -48,8 +48,18 @@ const limit = {
  */
 const role = {
   text: '角色管理',
-  link: '/main/role',
-  icon: 'fa fa-group text-center'
+  icon: 'fa fa-group text-center',
+  alert: 'child',
+  submenu: [
+    {
+      text: '角色组管理',
+      link: '/main/role/roleGroup'
+    },
+    {
+      text: '角色管理',
+      link: '/main/role/role'
+    }
+  ]
 };
 
 /**
