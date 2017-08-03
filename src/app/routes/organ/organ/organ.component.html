@@ -26,7 +26,7 @@
     <table class="table table-striped" #dataTable="rzhDataTable" [rzhData]="organs" (pageChange)="queryDatas($event)">
       <thead>
       <tr>
-        <th class="unselectable text-center sort-num">
+        <th class="unselectable text-center w5">
           序号
         </th>
         <th class="col-md-1 unselectable text-center">
@@ -47,9 +47,7 @@
         <th class="col-md-1 unselectable text-center">
           <rzhDefaultSorter by="state">机构状态</rzhDefaultSorter>
         </th>
-        <th class="col-md-1 unselectable text-center">
-          <rzhDefaultSorter by="crtime">添加时间</rzhDefaultSorter>
-        </th>
+        <th class="col-md-1 unselectable text-center">修改状态</th>
         <th class="col-md-2 unselectable text-center">操作</th>
       </tr>
       </thead>
@@ -61,14 +59,18 @@
           <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateBoss(organ.orgCode)" title="修改"></button>
         </td>
         <td>{{organ.tel}}</td>
-        <td>{{organ.adr}}</td>
+        <td>{{showAreaName(organ.areaCode)}}</td>
         <td>{{switchType(organ.type)}}
           <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateType(organ.orgCode)" title="修改"></button>
         </td>
-        <td>{{switchState(organ.state)}}
-          <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateState(organ.orgCode)" title="修改"></button>
+        <td>{{switchState(organ.state)}}</td>
+        <td>
+          <button class="btn btn-info btn-sm fa fa-pause" *ngIf="organ.state=='NOTCERT'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
+          <button class="btn btn-info btn-sm fa fa-pause" *ngIf="organ.state=='OPEN'" title="暂停" (click)="changeState('PAUSE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-sm fa fa-play" *ngIf="organ.state=='PAUSE'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
+          <button class="btn btn-info btn-sm fa fa-square" *ngIf="organ.state=='PAUSE'" title="关闭" (click)="changeState('CLOSE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-sm fa fa-trash" *ngIf="organ.state=='CLOSE'" title="删除" (click)="changeState('DELETE',organ.orgCode)"></button>
         </td>
-        <td>{{switchTime(organ.crtime)}}</td>
         <td>
           <app-buttons [config]="option" (callback)="option.callback($event,organ.orgCode)"
                        *ngFor="let option of buttonConfig"></app-buttons>

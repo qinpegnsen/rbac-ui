@@ -6,7 +6,6 @@ import {SharedModule} from "../../shared/shared.module";
 import { AddSysComponent } from './add-sys/add-sys.component';
 import { AdminsComponent } from './admins/admins.component';
 import { AddAdminComponent } from './add-admin/add-admin.component';
-import {SelectAreaComponent} from "../select-area/select-area/select-area.component";
 import {SelectOrganComponent} from "../select-organ/select-organ/select-organ.component";
 
 
@@ -31,6 +30,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule
   ],
-  declarations: [SysPlatformComponent, AddSysComponent, AdminsComponent, AddAdminComponent, SelectAreaComponent,SelectOrganComponent]
+  declarations: [SysPlatformComponent, AddSysComponent, AdminsComponent, AddAdminComponent,SelectOrganComponent]
 })
 export class SystemModule { }

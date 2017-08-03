@@ -91,6 +91,18 @@ export class SettingsService {
   }
 
   /**
+   * 13位时间戳转换成标准时间('2017/7/31 14:16:47')
+   * by 高洁
+   */
+  switchTime(time){
+    if(!isNullOrUndefined(time)){
+      return new Date(parseInt(time)).toLocaleString('chinese',{hour12:false});
+    }else{
+      return ''
+    }
+  }
+
+  /**
    * 显示右侧页面 by 立坤
    * width是定义pc端下宽度，不传默认宽度是50%，可以传“30%”表示百分比宽度，可以传“500px”表示固定宽度
    * @param width

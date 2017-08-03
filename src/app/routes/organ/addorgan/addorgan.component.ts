@@ -1,13 +1,12 @@
 
 import 'rxjs/add/operator/switchMap';
 import { Component, Input, Output, OnInit } from '@angular/core';
-import { Location }from '@angular/common';
 import {SettingsService} from "../../../core/settings/settings.service";
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {AjaxService} from "../../../core/services/ajax.service";
-import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {PatternService} from "../../../core/forms/pattern.service";
 import {AddorganService} from "./addorgan.service";
+import {AddAdminService} from "../../system/add-admin/add-admin.service";
+import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 
 
 const swal = require('sweetalert');
@@ -16,7 +15,7 @@ const swal = require('sweetalert');
   selector: 'app-addorgan',
   templateUrl: './addorgan.component.html',
   styleUrls: ['./addorgan.component.scss'],
-  providers: [RzhtoolsService,PatternService,Location,AddorganService]
+  providers: [AddorganService,AddAdminService,RzhtoolsService]
 })
 export class AddorganComponent implements OnInit {
   private orgTypes:any;
@@ -33,8 +32,8 @@ export class AddorganComponent implements OnInit {
     remarks: '',
     orgLogo: '',
     state: '',
-    crTime: '',
-    upTime: ''
+    crtime: '',
+    uptime: ''
   }
 
   private orgCode: string;
@@ -47,7 +46,6 @@ export class AddorganComponent implements OnInit {
 
   private Organ:boolean = false;
   private detail:boolean = false;
-  private updateState:boolean = false;
   private updateType:boolean = false;
   private updateBoss:boolean = false;
   private addRolesRelation:boolean = false;
@@ -55,10 +53,9 @@ export class AddorganComponent implements OnInit {
 
   //@Output() outputvalue = new EventEmitter<boolean>();
 
-  constructor(private area: RzhtoolsService,
-              private pattern: PatternService, public settings: SettingsService,
-              private route: ActivatedRoute, private router:Router,
-              private Location: Location, private addOrganService: AddorganService) {
+  constructor(private patterns: PatternService,private tools: RzhtoolsService,
+              public settings: SettingsService,private addAdminService: AddAdminService,
+              private route: ActivatedRoute, private router:Router, private addOrganService: AddorganService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
@@ -115,16 +112,6 @@ export class AddorganComponent implements OnInit {
           this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
 
-        //修改机构状态
-        case "updateState":
-          //console.log("█ \"修改机构状态\" ►►►",  "修改机构状态");
-          this.updateState = true;
-          this.pageTitle = "修改机构状态";
-          this.orgStates = this.addOrganService.getOrgStates(); //获取机构状态列表
-          this.getOrgCode();  //获取机构代码orgCode
-          this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
-          break;
-
         //添加角色或角色组
         case "addRolesRelation":
           //console.log("█ \"添加角色或角色组\" ►►►",  "添加角色或角色组");
@@ -138,51 +125,39 @@ export class AddorganComponent implements OnInit {
   }
 
   //获取机构代码(路由参数)
-  getOrgCode(){
-    this.route.params.subscribe(params => {
-      this.orgCode = params['orgCode'];
+  private getOrgCode(){
+    let me = this;
+    me.route.params.subscribe(params => {
+      me.orgCode = params['orgCode'];
     });
   }
 
-  //从详情去修改
-  toUpdateOrgan(){
-    this.settings.closeRightPage(); //关闭右侧滑动页面
-    this.router.navigate(['/main/organ/updateOrgan',this.orgCode], { replaceUrl: true });
-  }
-
- // 获取地区列表
- getArea(fullName,myAreaCode,isOld){
-   let me = this;
-   me.show = true;
-   me.areas = me.area.getAreaByCode(myAreaCode,isOld).children;
-   me.organ.adr = fullName;
-   me.organ.areaCode = myAreaCode;
-   if (me.areas == undefined){
-     me.cityConfirm();
-   }
-     console.log(me.areas)
- }
-
-  //显示城市选择器并获取省级列表
-  showSelectArea(){
+  //获取区域数据
+  private getAreaData(area){
+    console.log("█ area ►►►",  area);
     let me = this;
-    if(me.show) return;
-    me.show = true;
-    me.areas = me.area.getAreaByCode('');
+    me.organ.areaCode = area.areaCode;
   }
 
-  //重置城市信息
-  freshCitys(){
-    this.areas = this.area.getAreaByCode('');
+  /**
+   * 根据区域编码显示区域名
+   * @param areaCode
+   */
+  private showAreaName(areaCode){
+    let me = this;
+    let areaName = me.tools.getAreaByCode(areaCode).fullName;
+    return areaName;
   }
 
-  //确定选择城市
-  cityConfirm(){
-    this.show = false;
+  //从详情去修改
+  private toUpdateOrgan(){
+    let me = this;
+    me.settings.closeRightPage(); //关闭右侧滑动页面
+    me.router.navigate(['/main/organ/updateOrgan',this.orgCode], { replaceUrl: true });
   }
 
   //提交机构form
-  submitOrganData(){
+  private submitOrganData(){
     let me = this;
     let submitUrl,submitData;
     switch(this.path){
@@ -214,14 +189,6 @@ export class AddorganComponent implements OnInit {
           "type": me.organ.type
         };
         break;
-      //修改机构状态
-      case "updateState":
-        submitUrl = '/organ/updateState';
-        submitData = {
-          "orgCode":me.orgCode,
-          "state": me.organ.state
-        };
-        break;
       //添加角色或角色组
       case "addRolesRelation":
         submitUrl = '/organ/addRolesRelation';
@@ -237,7 +204,17 @@ export class AddorganComponent implements OnInit {
         break;
     }
     console.log("█ submitData ►►►",  submitData);
-    this.addOrganService.submitData(submitUrl,submitData)
+    me.addAdminService.submitRightPageData(submitUrl,submitData);
+  }
+
+  /**
+   * 转换时间
+   * @param time
+   * @returns {string|string}
+     */
+  switchTime(time){
+    let me = this,normTime = me.settings.switchTime(time);
+    return normTime;
   }
 
   // 取消

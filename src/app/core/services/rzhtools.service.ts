@@ -139,7 +139,7 @@ export class RzhtoolsService {
             newAreaArys.push(areaLevelOne.children[i]);
           }
         }
-        console.log("█ areaLevelOne ►►► ", areaLevelOne);
+        //console.log("█ areaLevelOne ►►► ", areaLevelOne);
         areaLevelOne.children = newAreaArys;
       }
     }

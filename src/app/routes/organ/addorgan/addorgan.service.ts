@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
-import {SettingsService} from "../../../core/settings/settings.service";
-import { Location }from '@angular/common';
-import { Router} from '@angular/router';
-const swal = require('sweetalert');
 
 @Injectable()
 export class AddorganService {
 
-  constructor(private ajax: AjaxService, public settings: SettingsService, private Location: Location, private router:Router) { }
-  //获取机构类型
+  constructor(private ajax: AjaxService) {
+
+  }
+
+  /**
+   * 获取机构类型
+   * @returns {any}
+     */
   getOrgTypes(){
     let orgTypes;
     this.ajax.get({
@@ -26,7 +28,10 @@ export class AddorganService {
     return orgTypes;
   }
 
-  //获取机构状态
+  /**
+   * 获取机构状态
+   * @returns {any}
+     */
   getOrgStates(){
     let orgStates;
     this.ajax.get({
@@ -43,7 +48,11 @@ export class AddorganService {
     return orgStates;
   }
 
-  //通过orgCode获取机构详细信息
+  /**
+   * 通过orgCode获取机构详细信息
+   * @param organCode
+   * @returns {any}
+     */
   getOrgDetailByCode(organCode){
     let organ;
     this.ajax.get({
@@ -55,6 +64,7 @@ export class AddorganService {
       success: (res) => {
         if(res.success){
           organ = res.data;
+          console.log("█ organ ►►►",  organ);
         }
       },
       error: (res) => {
@@ -64,30 +74,5 @@ export class AddorganService {
     return organ;
   }
 
-  submitData(submitUrl,submitData){
-    this.ajax.post({
-      url: submitUrl,
-      async: false,
-      data: submitData,
-      success: (res) => {
-        console.log("█ res ►►►",  res);
-        if (res.success){
-          this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
-          swal({
-            title: '提交成功!',
-            text: '列表已自动更新',
-            type: 'success',
-            timer: 2000, //关闭时间，单位：毫秒
-            showConfirmButton: false  //不显示按钮
-          });
-        }else{
-          let errorMsg = res.data.substring(res.data.indexOf('$$')+2,res.data.indexOf('@@'))
-          swal(res.info, errorMsg, 'error');
-        }
-      },
-      error: (res) => {
-        console.log("post organ error");
-      }
-    })
-  }
+
 }

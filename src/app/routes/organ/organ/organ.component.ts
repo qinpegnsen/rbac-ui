@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {isNull} from "util";
-import {AjaxService} from "../../../core/services/ajax.service";
 import {Router} from '@angular/router';
 import {Page} from "../../../core/page/page";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
-const swal = require('sweetalert');
+import {OrganService} from "./organ.service";
+import {SettingsService} from "../../../core/settings/settings.service";
+import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 
 @Component({
   selector: 'app-organ',
   templateUrl: './organ.component.html',
-  styleUrls: ['./organ.component.scss']
+  styleUrls: ['./organ.component.scss'],
+  providers:[OrganService,RzhtoolsService]
 })
 export class OrganComponent implements OnInit {
   private table;
@@ -18,7 +20,8 @@ export class OrganComponent implements OnInit {
   private addButton;
   public searchKey:string = '';
 
-  constructor(private ajax: AjaxService, private router:Router) {  }
+  constructor( private router:Router, public settings: SettingsService,
+               private organService:OrganService,private tools: RzhtoolsService) {  }
 
   ngOnInit() {
 
@@ -70,16 +73,12 @@ export class OrganComponent implements OnInit {
     this.router.navigate(['/main/organ/updateBoss',orgCode]);
   }
 
-  private updateState(orgCode){
-    this.router.navigate(['/main/organ/updateState',orgCode]);
-  }
-
   private updateType(orgCode){
     this.router.navigate(['/main/organ/updateType',orgCode]);
   }
 
   //转换机构类型
-  switchType(typeKey){
+  private switchType(typeKey){
     switch(typeKey){
       case 'LEAGUE':
             return "加盟";
@@ -95,8 +94,8 @@ export class OrganComponent implements OnInit {
   }
 
   //转换机构状态
-  switchState(typeKey){
-    switch(typeKey){
+  private switchState(state){
+    switch(state){
       case 'NOTCERT':
         return "未认证";
       case 'OPEN':
@@ -110,49 +109,31 @@ export class OrganComponent implements OnInit {
     }
   }
 
-  //转换时间
-  switchTime(time){
-    //return new Date(parseInt(time)).toLocaleString().replace(/:\d{1,2}$/,' ');
-    return new Date(parseInt(time)).toLocaleString('chinese',{hour12:false});
+  /**
+   * 改变机构状态
+   * @param state
+   * @param orgCode
+     */
+  changeState(state,orgCode){
+    this.organService.changeState(state,orgCode)
+  }
+
+  /**
+   * 根据区域编码显示区域名
+   * @param areaCode
+   */
+  showAreaName(areaCode){
+    let me = this;
+    let areaName = me.tools.getAreaByCode(areaCode).fullName;
+    return areaName;
   }
 
   //查询机构列表
   private queryDatas(event?:PageEvent) {
     let me = this,activePage = 1;
     if(typeof event !== "undefined") activePage =event.activePage;
-    this.ajax.get({
-      url: "/organ/listpage",
-      data: {
-        curPage:activePage,
-        orgName: me.searchKey,
-        pageSize: '8'
-      },
-      success: (res) => {
-        if (!isNull(res)) {
-          me.organs = new Page(res);
-        }
-      },
-      error: (res) => {
-        console.log('organs', res);
-      }
-    });
+    let result = me.organService.getOrganListpage(activePage,this.searchKey);//查询机构列表
+    me.organs = new Page(result);
   }
 
-  // 登录
-  login() {
-    this.ajax.post({
-      url: '/login/login',
-      data: {
-        'staffno': 'admin',
-        'pwd': '888888'
-      },
-      success: (data) => {
-        swal('登录成功！', '信息列表已自动更新...', 'success');
-        console.log('data', data);
-      },
-      error: (data) => {
-        console.log('data', data);
-      }
-    });
-  }
 }

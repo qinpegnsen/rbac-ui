@@ -1,8 +1,6 @@
 
-import {Router} from '@angular/router';
 import {Component,EventEmitter, Input, Output, OnInit} from '@angular/core';
-import {RzhtoolsService} from "../../../core/services/rzhtools.service";
-import {SettingsService} from "../../../core/settings/settings.service";
+import {RzhtoolsService} from "../../../../core/services/rzhtools.service";
 
 @Component({
   selector: 'app-select-area',
@@ -21,7 +19,7 @@ export class SelectAreaComponent implements OnInit {
   @Output() myData = new EventEmitter();
 
 
-  constructor(private area: RzhtoolsService,public settings: SettingsService,private router:Router) { }
+  constructor(private tools: RzhtoolsService) { }
 
   ngOnInit() {
   }
@@ -31,7 +29,7 @@ export class SelectAreaComponent implements OnInit {
   getArea(fullName,myAreaCode,isOld){
     let me = this;
     me.show = true;
-    me.areas = me.area.getAreaByCode(myAreaCode,isOld).children;
+    me.areas = me.tools.getAreaByCode(myAreaCode,isOld).children;
     me.adr = fullName;
     me.areaCode = myAreaCode;
     if (me.areas == undefined){
@@ -45,13 +43,13 @@ export class SelectAreaComponent implements OnInit {
     let me = this;
     if(me.show) return;
     me.show = true;
-    me.areas = me.area.getAreaByCode('');
+    me.areas = me.tools.getAreaByCode('');
   }
 
   //重置城市信息
   freshCitys(){
     this.adr = '';
-    this.areas = this.area.getAreaByCode('');
+    this.areas = this.tools.getAreaByCode('');
   }
 
   //确定选择城市

@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Location }from '@angular/common';
-import {AjaxService} from "../../../core/services/ajax.service";
 import {SettingsService} from "../../../core/settings/settings.service";
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {isNull} from "util";
-const swal = require('sweetalert');
+import {AddAdminService} from "./add-admin.service";
+import {AddorganService} from "../../organ/addorgan/addorgan.service";
 
 @Component({
   selector: 'app-add-admin',
   templateUrl: './add-admin.component.html',
-  styleUrls: ['./add-admin.component.scss']
+  styleUrls: ['./add-admin.component.scss'],
+  providers: [AddAdminService,AddorganService]
 })
 export class AddAdminComponent implements OnInit {
   private pageTitle:string = '';
@@ -36,9 +35,9 @@ export class AddAdminComponent implements OnInit {
     newpwd:''
   }
 
-  constructor(private ajax: AjaxService,public settings: SettingsService,
-              private route: ActivatedRoute, private router:Router,
-              private Location: Location) {
+  constructor(public settings: SettingsService,
+              private route: ActivatedRoute, private router:Router,private addOrgan:AddorganService,
+              private addAdminService:AddAdminService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
@@ -61,7 +60,7 @@ export class AddAdminComponent implements OnInit {
           this.adminDetail = true;//属于查看详情，需要隐藏可编辑表单
           this.pageTitle = "管理员信息";
           this.getMgrCode();//获取管理员代码(路由参数)
-          this.getAdminDetail()//获取某个管理员详情
+          this.admin = this.addAdminService.getAdminDetail(this.admin.mgrCode)//获取某个管理员详情
           break;
 
         //修改管理员信息
@@ -70,8 +69,8 @@ export class AddAdminComponent implements OnInit {
           this.pageTitle = "修改管理员信息";
           this.Admin = true;
           this.getMgrCode();//获取系统代码(路由参数)
-          this.getAdminDetail()//获取某个管理员详情
-          this.getOrgDetailByCode();
+          this.admin = this.addAdminService.getAdminDetail(this.admin.mgrCode)//获取某个管理员详情
+          this.admin.orgName = this.addOrgan.getOrgDetailByCode(this.admin.orgCode).orgName;//根据机构编码获取某个机构名字
           break;
 
         //修改管理员密码
@@ -80,7 +79,7 @@ export class AddAdminComponent implements OnInit {
           this.pageTitle = "修改密码";
           this.updatePwd = true;
           this.getMgrCode();//获取管理员编码(路由参数)
-          this.getAdminDetail()//获取某个管理员详情
+          this.admin = this.addAdminService.getAdminDetail(this.admin.mgrCode)//获取某个管理员详情
           break;
       }
     });
@@ -106,13 +105,13 @@ export class AddAdminComponent implements OnInit {
     this.admin.orgCode = orgCode;
   }
 
-  //转换时间
+  /**
+   * 转换时间
+   * @param time
+     */
   switchTime(time){
-    if(!isNull(time)){
-      return new Date(parseInt(time)).toLocaleString('chinese',{hour12:false});
-    }else{
-      return ''
-    }
+    let me = this,normTime = me.settings.switchTime(time);
+    return normTime;
   }
 
   //从详情去修改
@@ -121,43 +120,6 @@ export class AddAdminComponent implements OnInit {
     this.router.navigate(['/main/system/admins/updateAdmin',this.admin.mgrCode], { replaceUrl: true });
   }
 
-  //获取某个系统详情
-  private getAdminDetail(){
-    this.ajax.get({
-      url: '/orgManager/load',
-      data:{
-        mgrCode: this.admin.mgrCode
-      },
-      success: (res) => {
-        if(res.success){
-          this.admin = res.data;
-          console.log("█ res ►►►",  res);
-        }
-      },
-      error: (res) => {
-        console.log("get systemDetail error");
-      }
-    });
-  }
-
-  //通过orgCode获取机构详细信息
-  private getOrgDetailByCode(){
-    this.ajax.get({
-      url: '/organ/load',
-      data:{
-        orgCode: this.admin.orgCode
-      },
-      success: (res) => {
-        if(res.success){
-          this.admin.orgName = res.data.orgName;
-          console.log("█ this.admin.orgName ►►►", this.admin.orgName);
-        }
-      },
-      error: (res) => {
-        console.log("get orgTypes error");
-      }
-    });
-  }
 
   //提交表单
   private submitAdminData(){
@@ -189,44 +151,7 @@ export class AddAdminComponent implements OnInit {
         break;
     }
     console.log("█ submitData ►►►",  submitData);
-    me.ajax.post({
-      url: submitUrl,
-      data: submitData,
-      success: (res) => {
-        console.log("█ res ►►►",  res);
-        if (res.success){
-          this.cancel(); //路由跳转
-          swal({
-            title: '提交成功!',
-            text: '列表已自动更新',
-            type: 'success',
-            timer: 2000, //关闭时间，单位：毫秒
-            showConfirmButton: false  //不显示按钮
-          });
-          //this.outputvalue.emit(true);//提交成功后向父组件传值
-        }else{
-          let errorMsg = res.data.substring(res.data.indexOf('$$')+2,res.data.indexOf('@@'))
-          swal(res.info, errorMsg, 'error');
-        }
-      },
-      error: (res) => {
-        console.log("post system error");
-      }
-    })
-  }
-
-  //获取管理员状态列表
-  private getAdminStateList(){
-    this.ajax.get({
-      url: '/orgManager/statelist',
-      success: (res) => {
-        this.adminStates = res;
-        console.log("█ res ►►►",  res);
-      },
-      error: (res) => {
-        console.log("getAdminStateList error");
-      }
-    });
+    me.addAdminService.submitRightPageData(submitUrl,submitData)
   }
 
   // 取消
