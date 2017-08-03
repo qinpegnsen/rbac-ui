@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input ,OnChanges,SimpleChanges} from '@angular/core';
 import {Page} from "../../../core/page/page";
 import {Router} from '@angular/router';
 import {AjaxService} from "../../../core/services/ajax.service";
@@ -14,12 +14,16 @@ const swal = require('sweetalert');
   templateUrl: './limittab.component.html',
   styleUrls: ['./limittab.component.scss']
 })
-export class LimittabComponent implements OnInit {
+export class LimittabComponent implements OnInit ,OnChanges {
   private menuData:Page = new Page();
   private operationData:Page = new Page();
   private controlData:Page = new Page();
   private tableButtonConfig:Array<object>;  //列表按钮配置
   private tableButtonConfig1:Array<object>;  //列表按钮配置
+  @Input()
+  public sysCode;//获取系统编码
+  @Input()
+  public menuCode;//获取权限菜单编码
   constructor(private ajax:AjaxService, private router:Router) {
     let _this = this;
     //多按钮配置
@@ -42,10 +46,25 @@ export class LimittabComponent implements OnInit {
     ]
   }
 
+
+
   ngOnInit() {
     this.pageMenus(); //页面元素信息加载
   }
 
+  //钩子，输入属性变化的时候调用页面元素
+  ngOnChanges(changes: SimpleChanges): void {
+    //当sysCode变化的时候再次调动
+    if(changes["sysCode"] && this.sysCode){
+      this.pageMenus();
+      this.operationDatas();
+      this.controlDatas();
+    }else if(changes["menuCode"] && this.menuCode){
+      this.pageMenus();
+      this.operationDatas();
+      this.controlDatas();
+    }
+  }
 
   //页面元素分页分页列表
   public pageMenus(event?:PageEvent) {
@@ -56,11 +75,15 @@ export class LimittabComponent implements OnInit {
       url: "/limitPage/listpage",
       data: {
         curPage: activePage,
-        pageSize:'3'
+        pageSize:'3',
+        sysCode:this.sysCode,
+        menuCode:this.menuCode
       },
       success: (data) => {
         if (!isNull(data)) {
           me.menuData = new Page(data);
+          console.log(11)
+          console.log(data)
         }
       },
       error: (data) => {
@@ -78,15 +101,19 @@ export class LimittabComponent implements OnInit {
       url: "/limitOpt/listpage",
       data: {
         curPage: activePage,
-        pageSize:'3'
+        pageSize:'3',
+        sysCode:this.sysCode,
+        menuCode:this.menuCode
       },
       success: (data) => {
         if (!isNull(data)) {
           me.operationData = new Page(data);
+          console.log(data)
         }
       },
       error: (data) => {
         console.log('data', data);
+        console.log('页面控制分页列表错误');
       }
     });
   }
@@ -101,15 +128,20 @@ export class LimittabComponent implements OnInit {
       url: "/limitFile/listpage",
       data: {
         curPage: activePage,
-        pageSize:'3'
+        pageSize:'3',
+        sysCode:this.sysCode,
+        menuCode:this.menuCode
       },
       success: (data) => {
         if (!isNull(data)) {
           me.controlData = new Page(data);
+          console.log(data);
+          console.log(this.menuCode);
+
         }
       },
       error: (data) => {
-        console.log('data', data);
+        console.log("文件控制错误");
       }
     });
   }

@@ -27,27 +27,27 @@
         </th>
         <th style="width:15%">
           <!--添加页面元素-->
-          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
       </tr>
 
       </thead>
       <tbody>
-      <tr *ngFor="let elder2 of dataTable2.data;let ii = index">
-        <td style="padding-left: 20px">{{ii+1}}</td>
-        <td>{{elder2.pageName}}</td>
-        <td>{{elder2.preCode}}</td>
-        <td>{{elder2.icon}}</td>
-        <td>{{elder2.level}}</td>
-        <td>{{elder2.note}}</td>
-        <td>{{elder2.order}}</td>
+      <tr *ngFor="let page of dataTable2.data;let x = index">
+        <td style="padding-left: 20px">{{x+1}}</td>
+        <td>{{page.pageName}}</td>
+        <td>{{page.preCode}}</td>
+        <td>{{page.icon}}</td>
+        <td>{{page.level}}</td>
+        <td>{{page.note}}</td>
+        <td>{{page.order}}</td>
         <td>
           <!--修改页面元素的列表-->
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--页面元素的是否启用-->
               <span class="col-sm-5">
               <label class="switch">
-                <input type="checkbox" [checked]="elder2.isUse=='Y'" (change)="upPagedateState(elder2)" title="是否启动"/>
+                <input type="checkbox" [checked]="page.isUse=='Y'" (change)="upPagedateState(page)" title="是否启动"/>
                 <span></span>
               </label>
             </span>
@@ -56,7 +56,7 @@
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="5">
+        <td colspan="4">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{menuData.genStartRow()}} 至 {{menuData.genEndRow()}} 条，共 {{menuData.totalRow}} 条</strong></div>
           </div>
@@ -101,27 +101,27 @@
         </th>
         <th style="width: 10%">
           <!--添加功能操作-->
-          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:4}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:4,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let elder3 of dataTable3.data;let iii = index">
-        <td style="padding-left: 20px">{{iii+1}}</td>
-        <td>{{elder3.optName}}</td>
-        <td>{{elder3.menu}}</td>
-        <td>{{elder3.preCode}}</td>
-        <td>{{elder3.preType}}</td>
-        <td>{{elder3.ord}}</td>
-        <td>{{elder3.remarks}}</td>
-        <td>{{elder3.remarks}}</td>
+      <tr *ngFor="let opt of dataTable3.data;let z = index">
+        <td style="padding-left: 20px">{{z+1}}</td>
+        <td>{{opt.optName}}</td>
+        <td>{{opt.menu}}</td>
+        <td>{{opt.preCode}}</td>
+        <td>{{opt.preType}}</td>
+        <td>{{opt.ord}}</td>
+        <td>{{opt.remarks}}</td>
+        <td>{{opt.remarks}}</td>
         <td>
           <!--修改功能操作的列表-->
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:3}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--功能操作的是否启用-->
             <span class="col-sm-5">
               <label class="switch">
-                <input type="checkbox" [checked]="elder3.isUse=='Y'" (change)="upOptdateState(elder3)" title="是否启动"/>
+                <input type="checkbox" [checked]="opt.isUse=='Y'" (change)="upOptdateState(opt)" title="是否启动"/>
                 <span></span>
               </label>
             </span>
@@ -163,24 +163,24 @@
         </th>
         <th class="col-lg-2  unselectable t-center">
           <!--添加文件控制-->
-          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:6}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:6,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
         <th class="col-lg-1  unselectable t-center"></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let elder4 of dataTable4.data;let iiii = index">
-        <td style="padding-left: 20px">{{iiii+1}}</td>
-        <td>{{elder4.fileName}}</td>
-        <td>{{elder4.fileUrl}}</td>
-        <td>{{elder4.type}}</td>
+      <tr *ngFor="let file of dataTable4.data;let y = index">
+        <td style="padding-left: 20px">{{y+1}}</td>
+        <td>{{file.fileName}}</td>
+        <td>{{file.fileUrl}}</td>
+        <td>{{file.type}}</td>
         <td>
           <!--修改文件控制的列表-->
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:5}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--文件控制的是否启用-->
             <span class="col-sm-5">
               <label class="switch">
-                <input type="checkbox" [checked]="elder4.isUse=='Y'" (change)="upFiledateState(elder4)" title="是否启动"/>
+                <input type="checkbox" [checked]="file.isUse=='Y'" (change)="upFiledateState(file)" title="是否启动"/>
                 <span></span>
               </label>
             </span>
@@ -190,7 +190,7 @@
 
       <tfoot>
       <tr>
-        <td colspan="5">
+        <td colspan="3">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{controlData.genStartRow()}} 至 {{controlData.genEndRow()}} 条，共 {{controlData.totalRow}} 条</strong></div>
           </div>

@@ -24,10 +24,12 @@ export class LimitComponent implements OnInit {
   public sysList;
   private addButton:object;  //添加按钮配置
   private tableButtonConfig: Array<object>;  //列表按钮配置
-  private sysCode;//系统编码
+  private sysCode:string;//系统编码
+  private menuCode;//权限菜单编码
 
   constructor(private ajax: AjaxService,private router: Router,private limitService:LimitService) {
     var _this = this;
+    /*let sysCode = _this.sysCode;
     //单按钮配置
     this.addButton={
       text: "添加菜单",
@@ -36,9 +38,12 @@ export class LimitComponent implements OnInit {
       callback: function (result) {
         $(".mat-tab-group .mat-tab-body-wrapper").css({"display":"block"});
         $(".mat-tab-group .mat-tab-body-wrapper .mat-tab-body").css({"display":"inline"});
-        _this.router.navigate(['/main/limit/addMenu']);
+        result.then((id)=>{
+          _this.router.navigate(['/main/limit/addMenu',sysCode]);
+        })
+        //_this.router.navigate(['/main/limit/addMenu',sysCode]);
       }
-    };
+    };*/
 
     //多按钮配置
     this.tableButtonConfig = [
@@ -58,17 +63,39 @@ export class LimitComponent implements OnInit {
     console.log(this.router);
   }
 
-  //菜单根据系统的选择
+  //系统发生变化的时候再次调用，改变权限菜单
   onSelectlimit(sys): void {
     this.sysCode = sys.value;
     this.queryDatas();
-    console.log(this.sysCode);
   }
+
+  //权限菜单发生变化的时候再次调用，改变页面元素
+  onSelecttable(men): void {
+    this.menuCode = men;
+    this.queryDatas();
+  }
+
 
 
   ngOnInit() {
 
-    //选择系统
+    var _this = this;
+    //单按钮配置
+    this.addButton={
+      text: "添加菜单",
+      title: "添加菜单",
+      type: "add",
+      callback: function (result) {
+        let sysCode = _this.sysCode;
+        $(".mat-tab-group .mat-tab-body-wrapper").css({"display":"block"});
+        $(".mat-tab-group .mat-tab-body-wrapper .mat-tab-body").css({"display":"inline"});
+        /*result.then((id)=>{
+          _this.router.navigate(['/main/limit/addMenu']);
+        })*/
+        //_this.router.navigate(['/main/limit/addMenu',sysCode]);
+      }
+    };
+    //选择系统列表
     this.sysList = this.limitService.sysList();
     console.log("█ sysList ►►►", this.sysList );
 
@@ -88,7 +115,7 @@ export class LimitComponent implements OnInit {
   }
 
 
-  //添加菜单
+  //添加菜单列表
   public queryDatas(event?:PageEvent) {
     let me = this,activePage = 1;
     if(typeof event !== "undefined") activePage =event.activePage;
@@ -99,7 +126,6 @@ export class LimitComponent implements OnInit {
       curPage:activePage,
       pageSize:'3',
       sysCode:this.sysCode
-
     },
     success: (data) => {
       console.log('data', data);

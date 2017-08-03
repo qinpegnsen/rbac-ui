@@ -23,21 +23,30 @@ export class MenuAddComponent implements OnInit {
   }
 
   // 构造 初始化
-  constructor(private ajax:AjaxService, public settings: SettingsService,private router:Router, private routeInfo: ActivatedRoute) {
+  constructor(private ajax:AjaxService, public settings: SettingsService,private router:Router, private routeInfo: ActivatedRoute,private route: ActivatedRoute) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
   ngOnInit() {
     //获取路由的参数
-    this.queryId=this.routeInfo.snapshot.queryParams['id']
+    this.queryId=this.routeInfo.snapshot.queryParams['id'];
+
+    //获取菜单编码
+    /*this.route.params.subscribe(params => {
+      console.log("█ params ►►►", params );
+      this.limitForm.sysCode = params['sysCode'];
+    });*/
+
+    this.limitForm.sysCode=this.routeInfo.snapshot.queryParams['sysCode'];
+    console.log("█ sysCode ►►►", this.limitForm.sysCode );
+
   }
 
 
 
   // 取消
   cancel(){
-    this.settings.closeRightPage(); //关闭右侧滑动页面
-    this.router.navigate(['/main/limit']);
+    this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
 
 
@@ -45,13 +54,13 @@ export class MenuAddComponent implements OnInit {
   addRoleGroup(value){
     console.log(value);
 
-    //添加页面元素
+    //添加页面元素列表
     if(this.queryId==2){
       console.log(value);
       this.ajax.post({
         url: '/limitPage/add',
         data: {
-          'sysCode':value.sysCode ,
+          'sysCode':this.limitForm.sysCode ,
           'pageName':value.pageName ,
           'preCode': value.preCode,
           'icon': value.icon,
@@ -75,12 +84,12 @@ export class MenuAddComponent implements OnInit {
         }
       });
     }
-    //添加功能操作
+    //添加功能操作列表
     else if(this.queryId==4){
       this.ajax.post({
         url: '/limitOpt/add',
         data: {
-          'sysCode':value.sysCode ,
+          'sysCode':this.limitForm.sysCode ,
           'optName':value.optName ,
           'tacklUrl': value.tacklUrl,
           'preCode': value.preCode,
@@ -104,12 +113,12 @@ export class MenuAddComponent implements OnInit {
         }
       });
     }
-    //添加文件控制
+    //添加文件控制列表
     else if(this.queryId==6){
       this.ajax.post({
         url: '/limitFile/add',
         data: {
-          'sysCode':value.sysCode ,
+          'sysCode':this.limitForm.sysCode ,
           'fileName':value.fileName ,
           'fileUrl': value.fileUrl,
           'type': value.type
