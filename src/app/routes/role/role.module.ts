@@ -5,6 +5,8 @@ import {RoleComponent} from "./role/role.component";
 import {RightpageComponent} from './rightpage/rightpage.component';
 import {SharedModule} from "../../shared/shared.module";
 import { RolemanComponent } from './roleman/roleman.component';
+import { BingRoleComponent } from './bing-role/bing-role.component';
+import { SelectModule } from 'ng2-select';
 
 
 // 子路由，用于页面嵌套显示
@@ -23,9 +25,10 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    SharedModule
+    SharedModule,
+    SelectModule
   ],
-  declarations: [RoleComponent,RightpageComponent, RolemanComponent],
+  declarations: [RoleComponent,RightpageComponent, RolemanComponent, BingRoleComponent],
   providers: [],
 })
 export class RoleModule { }

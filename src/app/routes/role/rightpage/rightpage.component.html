@@ -7,6 +7,7 @@
         <fieldset class="b0">
           <legend *ngIf="queryId==1">新增角色组{{sysCode}}</legend>
           <legend *ngIf="queryId==2">新增角色</legend>
+          <legend *ngIf="queryId==3">为角色组关联角色编码集</legend>
           <legend *ngIf="queryId==4">
             修改角色组信息>{{roleGroupName}}
           </legend>
@@ -15,13 +16,15 @@
         <input type="hidden" ngModel [value]="sysCode" name="sysCode">
         <input type="hidden" ngModel [value]="roleGroupCode" name="roleGroupCode">
         <input type="hidden" ngModel [value]="roleCode" name="roleCode">
-        <fieldset *ngIf="queryId!=4" [hidden]="queryId==5">
+
+        <fieldset *ngIf="queryId!=4" [hidden]="queryId==5" [hidden]="queryId==3">
           <div class="form-group">
             <label class="col-sm-3 control-label">系统名称</label>
             <div class="col-sm-8">
               <select class="form-control" type="text" ngModel  name="sysCode"  required #sysCode="ngModel" >
                 <option [value]="item.sysCode" *ngFor="let item of sysData">{{item.sysName}}</option>
               </select>
+              <input type="hidden" name="sysName" value="item.sysCode">
               <div [hidden]="sysCode.valid"
                    class="alert alert-danger">
                 系统名称是必填项
@@ -29,19 +32,23 @@
             </div>
           </div>
         </fieldset>
-        <fieldset *ngIf="queryId!=4" [hidden]="queryId==5">
+        <fieldset *ngIf="queryId!=4" [hidden]="queryId==5" [hidden]="queryId==3">
           <div class="form-group">
-            <label class="col-sm-3 control-label">机构编码</label>
+            <label class="col-sm-3 control-label">选择机构</label>
             <div class="col-sm-8">
               <select class="form-control" type="text" ngModel  name="orgCode"  required #orgCode="ngModel" >
                 <option [value]="item.orgCode" *ngFor="let item of orgData">{{item.orgName}}</option>
               </select>
-              <!--<input class="form-control" type="text" ngModel  name="orgCode"  required #orgCode="ngModel"/>-->
               <div [hidden]="orgCode.valid"
                    class="alert alert-danger">
                 机构编码是必填项
               </div>
             </div>
+          </div>
+        </fieldset>
+        <fieldset *ngIf="queryId==3">
+          <div class="form-group">
+            <app-bing-role [sysCode]="sysCode" ></app-bing-role>
           </div>
         </fieldset>
         <fieldset *ngIf="queryId==1||queryId==4">
@@ -82,8 +89,9 @@
               </div>
             </div>
           </div>
+
         </fieldset>
-        <fieldset>
+        <fieldset [hidden]="queryId==3">
           <div class="form-group">
             <label class="col-sm-3 control-label">备注</label>
             <div class="col-sm-8">

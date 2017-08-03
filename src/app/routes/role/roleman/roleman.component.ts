@@ -53,13 +53,22 @@ export class RolemanComponent implements OnInit,OnChanges {
 
   //输入属性的变化只能在这个钩子里面写
   ngOnChanges(changes: SimpleChanges): void {
-    //当sysCode变化的时候再次调动
-    if(changes["sysCode"] && this.sysCode){
-      this.queryDatasBySyscode()
-    }
-    //当roleGroupCode变化的时候再次调动
-    if(changes["roleGroupCode"] && this.roleGroupCode){
-      this.queryDatasByroleGroupCode()
+  //当sysCode变化的时候再次调动
+  if(changes["sysCode"] && this.sysCode){
+    this.queryDatasBySyscode()
+  }
+  //当roleGroupCode变化的时候再次调动
+  if(changes["roleGroupCode"] && this.roleGroupCode){
+    this.queryDatasByroleGroupCode()
+  }
+}
+
+
+  queryRoleList(event){
+    if(this.sysCode){
+      this.queryDatasBySyscode(event)
+    }else if(this.roleGroupCode){
+      this.queryDatasByroleGroupCode(event)
     }
   }
 
@@ -72,13 +81,14 @@ export class RolemanComponent implements OnInit,OnChanges {
       data: {
         curPage: activePage,
         sysCode: this.sysCode,
-        pageSize:4
+        pageSize:2
       },
       success: (data) => {
         if (!isNull(data)) {
           me.data = new Page(data);
-          // console.log(data)
-          // console.log("我是根据系统编码查询出来的角色列表")
+          console.log(this.sysCode);
+          console.log("█ data ►►►",  data);
+          console.log("我是根据系统编码查询出来的角色列表")
         }
       },
       error: (data) => {
@@ -102,6 +112,7 @@ export class RolemanComponent implements OnInit,OnChanges {
         if (!isNull(data)) {
           me.data = new Page(data);
           console.log(data)
+          console.log("█ this.roleGroupCode ►►►",  this.roleGroupCode);
           console.log("我是根据角色组的编码慢查询出来的角色列表")
           // console.log(data)
         }

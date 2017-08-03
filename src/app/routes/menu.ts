@@ -47,7 +47,7 @@ const limit = {
  * @type {{text: string; link: string; icon: string}}
  */
 const role = {
-  text: '角色管理',
+  text: '角色组管理',
   icon: 'fa fa-group text-center',
   alert: 'child',
   submenu: [

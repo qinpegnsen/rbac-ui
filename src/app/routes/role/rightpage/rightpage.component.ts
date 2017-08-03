@@ -18,6 +18,7 @@ export class RightpageComponent implements OnInit {
   private roleCode:string;
   private roleName:string;
   public orgData;
+  public roleListData;
   public sysData;
   // 构造 初始化
   constructor(public settings: SettingsService,private router:Router,private ajax: AjaxService, private routeInfo: ActivatedRoute,private Location: Location) {
@@ -32,7 +33,7 @@ export class RightpageComponent implements OnInit {
     //修改角色组要获取的参数
     this.roleGroupCode=this.routeInfo.snapshot.queryParams['roleGroupCode']
     this.roleGroupName=this.routeInfo.snapshot.queryParams['roleGroupName']
-    //修改角色组要获取的参数
+    //修改角色要获取的参数
     this.roleCode=this.routeInfo.snapshot.queryParams['roleCode']
     this.roleName=this.routeInfo.snapshot.queryParams['roleName']
 
@@ -58,6 +59,20 @@ export class RightpageComponent implements OnInit {
       },
       success: (data) => {
         this.orgData=data;
+      },
+      error: (data) => {
+        console.log("error");
+      }
+    });
+
+    //初始化的时候获取当前机构的所有的角色列表
+    this.ajax.get({
+      url: '/role/list',
+      data: {
+        sysCode:this.sysCode
+      },
+      success: (data) => {
+        this.roleListData=data;
         console.log(data)
       },
       error: (data) => {
@@ -68,9 +83,7 @@ export class RightpageComponent implements OnInit {
 
   // 取消
   cancel(){
-    this.settings.closeRightPage(); //关闭右侧滑动页面
-    this.Location.back();//
-    this.router.navigate(['/main/role']);
+    this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
 
   //根据路由参数的不同，加载不同的页面，调取不同的接口
@@ -109,6 +122,7 @@ export class RightpageComponent implements OnInit {
           console.log(data)
         },
         error: (data) => {
+          console.log(value.sysName)
           console.log("error");
         }
       });

@@ -1,15 +1,15 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <table class="table table-striped" #dataTable="rzhDataTable"  [rzhData]="data" (pageChange)="queryDatasByroleGroupCode($event)">
+    <table class="table table-striped" #dataTable="rzhDataTable"  [rzhData]="data" (pageChange)="queryRoleList($event)">
       <thead>
       <tr>
         <th style="width: 5%">
           序号
         </th>
-        <th style="width: 20%">
+        <th style="width: 18%">
           <rzhDefaultSorter by="name">系统名称</rzhDefaultSorter>
         </th>
-        <th style="width: 20%">
+        <th style="width: 18%">
           <rzhDefaultSorter>机构编码</rzhDefaultSorter>
         </th>
         <th style="width: 15%">
@@ -19,7 +19,7 @@
           <rzhDefaultSorter by="city">备注</rzhDefaultSorter>
         </th>
         <th style="width: 10%">权限分配</th>
-        <th style="width: 5%">停启用</th>
+        <th style="width: 9%">停启用</th>
         <th style="width: 5%">修改</th>
       </tr>
       </thead>

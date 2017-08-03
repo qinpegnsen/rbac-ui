@@ -13,7 +13,7 @@ const swal = require('sweetalert');
 })
 export class RoleComponent implements OnInit {
   public sysList;
-  public sysNamea;
+  public sysName;
   public orgList;
   public sysCode;
   public orgCode;
@@ -39,8 +39,8 @@ export class RoleComponent implements OnInit {
       success: (data) => {
         this.sysCode = data[0].sysCode;
         this.sysList = data;
-        this.sysNamea=data[0].sysName;
-        console.log(this.sysNamea)
+        this.sysName=data[0].sysName;
+        console.log(this.sysName)
         this.queryDatas();
       },
       error: (data) => {
@@ -117,7 +117,7 @@ export class RoleComponent implements OnInit {
   }
   //这个事件两个作用 1，改变角色的title 2 根据系统的编码查询角色列表
   selectRole(roleGroupCode,roleGroupName){
-    this.roleGroupName=roleGroupName;
+    this.roleGroupName='当前的角色组是:'+roleGroupName;
     this.roleGroupCode=roleGroupCode;
   }
   //修改角色组的状态

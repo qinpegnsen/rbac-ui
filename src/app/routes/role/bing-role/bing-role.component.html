@@ -1,0 +1,14 @@
+<fieldset>
+  <div class="form-group mb">
+    <div class="col-sm-6">
+      <label class="mt">Multiple</label>
+{{sysCode}}
+      <!--<ng-select  ></ng-select>-->
+      <ng-select (data)="value"[multiple]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="请选择要关联的角色"></ng-select>
+    </div>
+  </div>
+</fieldset>
+
+
+
+
