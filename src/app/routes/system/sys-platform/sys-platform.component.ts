@@ -41,12 +41,6 @@ export class SysPlatformComponent implements OnInit {
     me.systemService.openOrCloseSys(submitUrl,sysCode)
   }
 
-  //转换时间
-  switchTime(time){
-    let me = this,normTime = me.settings.switchTime(time);
-    return normTime;
-  }
-
   //修改系统信息按钮跳转事件
   changeSysInfo(sysCode){
     this.router.navigate(['/main/system/sys-platform/updateSystem',sysCode]);
@@ -66,7 +60,7 @@ export class SysPlatformComponent implements OnInit {
       sysName: me.searchKey,
       pageSize: '10'
     };
-    let sysList = me.systemService.getSystemList(requestParams);
+    let sysList = me.systemService.getSystemListPage(requestParams);
     me.sys = new Page(sysList);
   }
 }

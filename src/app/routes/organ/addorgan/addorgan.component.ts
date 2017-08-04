@@ -7,6 +7,7 @@ import {PatternService} from "../../../core/forms/pattern.service";
 import {AddorganService} from "./addorgan.service";
 import {AddAdminService} from "../../system/add-admin/add-admin.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
+import {isNullOrUndefined} from 'util';
 
 
 const swal = require('sweetalert');
@@ -20,21 +21,7 @@ const swal = require('sweetalert');
 export class AddorganComponent implements OnInit {
   private orgTypes:any;
   private orgStates:any;
-  private organ = {
-    orgName: '',
-    areaCode: '',
-    tel: '',
-    orgBoss: '',
-    type: '',
-    adr: '',
-    bossPhone: '',
-    duty: '',
-    remarks: '',
-    orgLogo: '',
-    state: '',
-    crtime: '',
-    uptime: ''
-  }
+  private organ = {};
 
   private orgCode: string;
   private roleGroupCode: string = '';
@@ -136,17 +123,7 @@ export class AddorganComponent implements OnInit {
   private getAreaData(area){
     console.log("█ area ►►►",  area);
     let me = this;
-    me.organ.areaCode = area.areaCode;
-  }
-
-  /**
-   * 根据区域编码显示区域名
-   * @param areaCode
-   */
-  private showAreaName(areaCode){
-    let me = this;
-    let areaName = me.tools.getAreaByCode(areaCode).fullName;
-    return areaName;
+    me.organ['areaCode'] = area.areaCode;
   }
 
   //从详情去修改
@@ -177,8 +154,8 @@ export class AddorganComponent implements OnInit {
         submitUrl = '/organ/updateBoss';
         submitData = {
           "orgCode":me.orgCode,
-          "orgBoss": me.organ.orgBoss,
-          "bossPhone": me.organ.bossPhone
+          "orgBoss": me.organ['orgBoss'],
+          "bossPhone": me.organ['bossPhone']
         };
         break;
       //修改机构类型
@@ -186,7 +163,7 @@ export class AddorganComponent implements OnInit {
         submitUrl = '/organ/updateType';
         submitData = {
           "orgCode":me.orgCode,
-          "type": me.organ.type
+          "type": me.organ['type']
         };
         break;
       //添加角色或角色组
@@ -205,16 +182,6 @@ export class AddorganComponent implements OnInit {
     }
     console.log("█ submitData ►►►",  submitData);
     me.addAdminService.submitRightPageData(submitUrl,submitData);
-  }
-
-  /**
-   * 转换时间
-   * @param time
-   * @returns {string|string}
-     */
-  switchTime(time){
-    let me = this,normTime = me.settings.switchTime(time);
-    return normTime;
   }
 
   // 取消

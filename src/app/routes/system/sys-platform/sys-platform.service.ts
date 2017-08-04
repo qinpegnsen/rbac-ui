@@ -36,7 +36,12 @@ export class SysPlatformService {
     });
   }
 
-  getSystemList(requestParams){
+  /**
+   * 获取系统列表，分页
+   * @param requestParams
+   * @returns {any}
+     */
+  getSystemListPage(requestParams){
     let list;
     this.ajax.get({
       url: "/sys/listpage",
@@ -49,6 +54,28 @@ export class SysPlatformService {
       },
       error: (res) => {
         console.log('organs', res);
+      }
+    });
+    return list;
+  }
+  /**
+   * 获取系统列表，不分页
+   * @param requestParams
+   * @returns {any}
+   */
+  getSystemList(){
+    let list;
+    this.ajax.get({
+      url: "/sys/list",
+      async: false,
+      data: '',
+      success: (res) => {
+        if (!isNull(res)) {
+          list = res;
+        }
+      },
+      error: (res) => {
+        console.log('getSystemList error');
       }
     });
     return list;

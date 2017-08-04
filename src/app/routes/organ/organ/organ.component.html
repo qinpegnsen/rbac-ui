@@ -48,7 +48,7 @@
           <rzhDefaultSorter by="state">机构状态</rzhDefaultSorter>
         </th>
         <th class="col-md-1 unselectable text-center">修改状态</th>
-        <th class="col-md-2 unselectable text-center">操作</th>
+        <th class="col-md-1 unselectable text-center">操作</th>
       </tr>
       </thead>
       <tbody>
@@ -59,11 +59,11 @@
           <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateBoss(organ.orgCode)" title="修改"></button>
         </td>
         <td>{{organ.tel}}</td>
-        <td>{{showAreaName(organ.areaCode)}}</td>
-        <td>{{switchType(organ.type)}}
+        <td>{{organ.areaCode | areaName}}</td>
+        <td>{{organ.type | rzhState:'1007'}}
           <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateType(organ.orgCode)" title="修改"></button>
         </td>
-        <td>{{switchState(organ.state)}}</td>
+        <td>{{organ.state | rzhState:'1008'}}</td>
         <td>
           <button class="btn btn-info btn-sm fa fa-pause" *ngIf="organ.state=='NOTCERT'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
           <button class="btn btn-info btn-sm fa fa-pause" *ngIf="organ.state=='OPEN'" title="暂停" (click)="changeState('PAUSE',organ.orgCode)"></button>

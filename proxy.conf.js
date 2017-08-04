@@ -14,7 +14,8 @@ const PROXY_CONFIG = [
       "/roleGroup",
       "/staff",
       "/role",
-      "/sys"
+      "/sys",
+      "/res"
     ],
     target: "http://192.168.10.110:8082",   //拦截 context配置路径，经过此地址
     secure: false

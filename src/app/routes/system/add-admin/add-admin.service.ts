@@ -62,4 +62,32 @@ export class AddAdminService {
     })
   }
 
+  /**
+   * 获取角色或角色组方法
+   * @param mgrCode
+   * @param orgCode
+   * @returns {any}
+     */
+  getRoleOrGroupList(sysCode,orgCode){
+    let list;
+    this.ajax.post({
+      url: '/orgManager/addRolesRelation',
+      async:false,
+      data:{
+        sysCode: sysCode,
+        orgCode: orgCode
+      },
+      success: (res) => {
+        if(res.success){
+          list = res.data;
+          console.log("█ rolelist ►►►",  res);
+        }
+      },
+      error: (res) => {
+        console.log("get systemDetail error");
+      }
+    });
+    return list;
+  }
+
 }

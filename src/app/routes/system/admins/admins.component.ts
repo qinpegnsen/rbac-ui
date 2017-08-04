@@ -4,15 +4,17 @@ import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {Router} from '@angular/router';
 import {AdminsService} from "./admins.service";
 import {SettingsService} from "../../../core/settings/settings.service";
+import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 
 @Component({
   selector: 'app-admins',
   templateUrl: './admins.component.html',
   styleUrls: ['./admins.component.scss'],
-  providers: [AdminsService]
+  providers: [AdminsService, RzhtoolsService]
 })
 export class AdminsComponent implements OnInit {
   private addButton;
+  private buttonConfig;
   private orgCode:string = '';
   private mgrName:string = '';
   private areaCode:string = '';
@@ -21,12 +23,42 @@ export class AdminsComponent implements OnInit {
   constructor(private router:Router, private admin:AdminsService, public settings: SettingsService) { }
 
   ngOnInit() {
-    this.queryDatas();//获取管理员表格数据
-    this.addButton = {
+    let me = this;
+    me.queryDatas();//获取管理员表格数据
+    me.addButton = {
       type:"add",
       text:"新增管理员",
       title:'新增管理员'
     };
+    me.buttonConfig = [
+      {
+        title:"编辑",
+        type: "update",
+        callback:function(result,mgrCode){
+          result.then((id)=>{
+            me.router.navigate(['/main/system/admins/updateAdmin',mgrCode]);
+          })
+        }
+      },
+      {
+        title:"详情",
+        type: "details",
+        callback:function(result,mgrCode) {
+          result.then((id)=> {
+            me.router.navigate(['/main/system/admins/adminDetail',mgrCode]);
+          })
+        }
+      },
+      {
+        title:"角色分配",
+        type: "add",
+        callback:function(result,mgrCode) {
+          result.then((id)=> {
+            me.router.navigate(['/main/system/admins/allotRole',mgrCode]);
+          })
+        }
+      }
+    ];
   }
 
   //从子组件获取所选区域数据
@@ -46,32 +78,6 @@ export class AdminsComponent implements OnInit {
     this.queryDatas()//获取管理员表格数据
   }
 
-
-  /**
-   * 转换时间
-   * @param time
-     */
-  switchTime(time){
-    let me = this,normTime = me.settings.switchTime(time);
-    return normTime;
-  }
-
-  /**
-   * 修改管理员信息按钮跳转事件
-   * @param mgrCode
-     */
-  private updateAdmin(mgrCode){
-    this.router.navigate(['/main/system/admins/updateAdmin',mgrCode]);
-  }
-
-  /**
-   * 查看某个管理员详情
-   * @param mgrCode
-     */
-  private adminDetail(mgrCode){
-    this.router.navigate(['/main/system/admins/adminDetail',mgrCode]);
-  }
-
   /**
    * 修改密码
    * @param mgrCode
@@ -80,25 +86,6 @@ export class AdminsComponent implements OnInit {
     this.router.navigate(['/main/system/admins/updatePwd',mgrCode]);
   }
 
-  /**
-   * 转换管理员状态
-   * @param stateKey
-   * @returns {string}
-     */
-  switchState(stateKey){
-    switch(stateKey){
-      case 'OPEN':
-        return "开启";
-      case 'PAUSE':
-        return "暂停";
-      case 'SUPER':
-        return "超管";
-      case 'FREEZE':
-        return "冻结";
-      case 'DELETE':
-        return "删除"
-    }
-  }
 
   /**
    * 修改管理员状态

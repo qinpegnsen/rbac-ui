@@ -51,7 +51,7 @@
         <td>{{sys.sysName}}</td>
         <td>{{sys.sysUrl}}</td>
         <td>{{sys.remarks}}</td>
-        <td>{{switchTime(sys.crtime)}}</td>
+        <td>{{sys.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>
         <td>
           <label class="switch switch-lg" title="停/启用">
             <input [checked]="check == 'Y'" [(ngModel)]="sys.isUse" #check="ngModel" type="checkbox"

@@ -23,6 +23,7 @@ export class SelectAreaComponent implements OnInit {
   constructor(private tools: RzhtoolsService) { }
 
   ngOnInit() {
+    //console.log("█ required ►►►", this.required);
   }
 
 
@@ -36,7 +37,7 @@ export class SelectAreaComponent implements OnInit {
     if (isNullOrUndefined(me.areas) || me.areas.length == 0){
       me.cityConfirm();
     }
-    console.log(me.tools.getAreaByCode(myAreaCode,isOld))
+    //console.log(me.tools.getAreaByCode(myAreaCode,isOld))
   }
 
   //显示城市选择器并获取省级列表

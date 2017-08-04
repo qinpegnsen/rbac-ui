@@ -33,6 +33,10 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import {DataTableModule} from "./directives/ng2-datatable/DataTableModule";
 import {RzhButtonsModule} from "../routes/buttons/rzh-buttons.module";
 import {SelectAreaModule} from "./directives/select-area/select-area.module";
+import { StatePipe } from './pipe/state.pipe';
+import { AreaNamePipe } from './pipe/area-name.pipe';
+import { OrganTypePipe } from './pipe/organ-type.pipe';
+import { SelectModule } from 'ng2-select';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -59,7 +63,8 @@ import {SelectAreaModule} from "./directives/select-area/select-area.module";
     ToasterModule,
     DataTableModule,
     RzhButtonsModule,
-    SelectAreaModule
+    SelectAreaModule,
+    SelectModule
   ],
   providers: [
     ColorsService
@@ -72,7 +77,10 @@ import {SelectAreaModule} from "./directives/select-area/select-area.module";
     VectormapDirective,
     NowDirective,
     ScrollableDirective,
-    JqcloudDirective
+    JqcloudDirective,
+    StatePipe,
+    AreaNamePipe,
+    OrganTypePipe
   ],
   exports: [
     CommonModule,
@@ -106,7 +114,11 @@ import {SelectAreaModule} from "./directives/select-area/select-area.module";
     NowDirective,
     ScrollableDirective,
     JqcloudDirective,
-    SelectAreaModule
+    SelectAreaModule,
+    StatePipe,
+    AreaNamePipe,
+    OrganTypePipe,
+    SelectModule
   ]
 })
 

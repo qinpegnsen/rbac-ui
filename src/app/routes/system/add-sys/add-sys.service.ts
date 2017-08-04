@@ -21,6 +21,7 @@ export class AddSysService {
       success: (res) => {
         if(res.success){
           result = res.data;
+          console.log("█ res ►►►",  res);
           //this.system = res.data;
         }
       },

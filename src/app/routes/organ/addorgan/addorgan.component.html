@@ -56,7 +56,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>电话</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="tel" required [(ngModel)]="organ.tel" #tel="ngModel" [pattern]="patterns.telephone" placeholder="请输入机构电话"/>
+              <input class="form-control" type="text" name="tel" required [(ngModel)]="organ.tel" #tel="ngModel" [pattern]="patterns.tel" placeholder="请输入机构电话"/>
             </div>
           </div>
           <div [hidden]="tel.valid || tel.pristine"
@@ -93,8 +93,8 @@
             <label class="col-sm-4 control-label"><i>*</i>类型</label>
             <div class="col-sm-7">
               <select class="form-control" name="type" required [(ngModel)]="organ.type" #type="ngModel">
-                <option value="" disabled [selected]="type==''">请选择机构类型</option>
-                <option [value]="orgType.key" [selected]="value==type" *ngFor="let orgType of orgTypes">{{orgType.val}}</option>
+                <option value="" disabled>请选择机构类型</option>
+                <option [value]="orgType.key" *ngFor="let orgType of orgTypes">{{orgType.val}}</option>
               </select>
             </div>
           </div>
@@ -245,7 +245,7 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">机构类型：</span>
-            <p class="item-bd col-sm-7">{{organ.type}}</p>
+            <p class="item-bd col-sm-7">{{organ.type | rzhState:'1007'}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">机构Sign：</span>
@@ -253,7 +253,7 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">机构状态：</span>
-            <p class="item-bd col-sm-7">{{organ.state}}</p>
+            <p class="item-bd col-sm-7">{{organ.state | rzhState:'1008' }}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">机构代码：</span>
@@ -277,7 +277,7 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">区域地址：</span>
-            <p class="item-bd col-sm-7">{{showAreaName(organ.areaCode)}}</p>
+            <p class="item-bd col-sm-7">{{organ.areaCode | areaName}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">详细地址：</span>
@@ -289,11 +289,11 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">创建时间：</span>
-            <p class="item-bd col-sm-7">{{switchTime(organ.crtime)}}</p>
+            <p class="item-bd col-sm-7">{{organ.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">修改时间：</span>
-            <p class="item-bd col-sm-7">{{switchTime(organ.uptime)}}</p>
+            <p class="item-bd col-sm-7">{{organ.uptime | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">备注：</span>

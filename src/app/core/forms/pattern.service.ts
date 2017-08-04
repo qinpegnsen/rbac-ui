@@ -13,6 +13,7 @@ export class PatternService {
   public buno: string; //营业执照
   public backcard: string; //银行卡
   public chinese: string; //中文
+  public tel:string;//手机号和固话
 
   constructor() {
     this.num = '^[0-9]*$'; //数字正则
@@ -23,6 +24,8 @@ export class PatternService {
     this.buno = '^(([a-zA-Z0-9]{8}-[a-zA-Z0-9])|([a-zA-Z0-9]{18})|([a-zA-Z0-9]{15}))$'; //营业执照正则（三网合一）
     this.backcard = '^([0-9]{16}|[0-9]{19})$'; //银行卡正则（三网合一）
     this.chinese = '^[\u4e00-\u9fa5]{0,}$'; //中文正则（三网合一）
+    this.tel = '(^1[0-9]{10}$)|(^((^[0-9]{3,4}-[0-9]{7,8}$)|(^[0-9]{7,8}$))$)';//手机号和固话同时验证
+
   }
 
 }

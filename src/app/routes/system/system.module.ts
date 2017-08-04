@@ -18,6 +18,7 @@ const adminsChildRoutes: Routes = [
   {path: 'addAdmin', component: AddAdminComponent},
   {path: 'adminDetail/:mgrCode', component: AddAdminComponent},
   {path: 'updateAdmin/:mgrCode', component: AddAdminComponent},
+  {path: 'allotRole/:mgrCode', component: AddAdminComponent},
   {path: 'updatePwd/:mgrCode', component: AddAdminComponent}
 ];
 const routes: Routes = [

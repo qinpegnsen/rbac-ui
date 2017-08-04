@@ -90,17 +90,6 @@ export class SettingsService {
     return this.setLayoutSetting(name, !this.getLayoutSetting(name));
   }
 
-  /**
-   * 13位时间戳转换成标准时间('2017/7/31 14:16:47')
-   * by 高洁
-   */
-  switchTime(time){
-    if(!isNullOrUndefined(time)){
-      return new Date(parseInt(time)).toLocaleString('chinese',{hour12:false});
-    }else{
-      return ''
-    }
-  }
 
   /**
    * 显示右侧页面 by 立坤

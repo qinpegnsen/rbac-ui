@@ -75,11 +75,11 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">创建时间：</span>
-            <p class="item-bd col-sm-7">{{system.crtime}}</p>
+            <p class="item-bd col-sm-7">{{system.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">修改时间：</span>
-            <p class="item-bd col-sm-7">{{system.uptime}}</p>
+            <p class="item-bd col-sm-7">{{system.uptime | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">备注：</span>

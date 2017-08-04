@@ -73,6 +73,4 @@ export class AddorganService {
     });
     return organ;
   }
-
-
 }

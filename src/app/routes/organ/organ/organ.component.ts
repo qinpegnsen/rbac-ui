@@ -51,15 +51,6 @@ export class OrganComponent implements OnInit {
             me.router.navigate(['/main/organ/orgDetail',orgCode]);
           })
         }
-      },
-      {
-        title:"角色分配",
-        type: "build",
-        callback:function(result,orgCode) {
-          result.then((id)=> {
-            me.router.navigate(['/main/organ/addRolesRelation',orgCode]);
-          })
-        }
       }
     ];
 
@@ -77,38 +68,6 @@ export class OrganComponent implements OnInit {
     this.router.navigate(['/main/organ/updateType',orgCode]);
   }
 
-  //转换机构类型
-  private switchType(typeKey){
-    switch(typeKey){
-      case 'LEAGUE':
-            return "加盟";
-      case 'DIRECT':
-            return"直营";
-      case 'COOPERATE':
-            return "合作";
-      case 'SUPER':
-            return"超管";
-      default:
-            return"其他"
-    }
-  }
-
-  //转换机构状态
-  private switchState(state){
-    switch(state){
-      case 'NOTCERT':
-        return "未认证";
-      case 'OPEN':
-        return"经营";
-      case 'PAUSE':
-        return "暂停";
-      case 'CLOSE':
-        return"关闭";
-      case 'DELETE':
-        return"删除"
-    }
-  }
-
   /**
    * 改变机构状态
    * @param state
@@ -118,15 +77,6 @@ export class OrganComponent implements OnInit {
     this.organService.changeState(state,orgCode)
   }
 
-  /**
-   * 根据区域编码显示区域名
-   * @param areaCode
-   */
-  showAreaName(areaCode){
-    let me = this;
-    let areaName = me.tools.getAreaByCode(areaCode).fullName;
-    return areaName;
-  }
 
   //查询机构列表
   private queryDatas(event?:PageEvent) {
