@@ -1,6 +1,7 @@
 
 import {Component,EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {RzhtoolsService} from "../../../../core/services/rzhtools.service";
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-select-area',
@@ -32,10 +33,10 @@ export class SelectAreaComponent implements OnInit {
     me.areas = me.tools.getAreaByCode(myAreaCode,isOld).children;
     me.adr = fullName;
     me.areaCode = myAreaCode;
-    if (me.areas == undefined){
+    if (isNullOrUndefined(me.areas) || me.areas.length == 0){
       me.cityConfirm();
     }
-    console.log(me.areas)
+    console.log(me.tools.getAreaByCode(myAreaCode,isOld))
   }
 
   //显示城市选择器并获取省级列表
