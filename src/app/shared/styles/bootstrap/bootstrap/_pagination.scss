@@ -52,7 +52,7 @@
     &,
     &:hover,
     &:focus {
-      z-index: 3;
+      //z-index: 3;  //处理层级冲突 by 立坤
       color: $pagination-active-color;
       background-color: $pagination-active-bg;
       border-color: $pagination-active-border;

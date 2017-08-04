@@ -86,13 +86,11 @@ export class RolemanComponent implements OnInit,OnChanges {
       success: (data) => {
         if (!isNull(data)) {
           me.data = new Page(data);
-          console.log(this.sysCode);
-          console.log("█ data ►►►",  data);
-          console.log("我是根据系统编码查询出来的角色列表")
+
         }
       },
       error: (data) => {
-        console.log('根据系统编码变化的角色列表错误');
+
       }
     });
   }
@@ -111,10 +109,6 @@ export class RolemanComponent implements OnInit,OnChanges {
       success: (data) => {
         if (!isNull(data)) {
           me.data = new Page(data);
-          console.log(data)
-          console.log("█ this.roleGroupCode ►►►",  this.roleGroupCode);
-          console.log("我是根据角色组的编码慢查询出来的角色列表")
-          // console.log(data)
         }
       },
       error: (data) => {
@@ -138,7 +132,7 @@ export class RolemanComponent implements OnInit,OnChanges {
         'isUse': data.isUse
       },
       success: (data) => {
-        swal('成功提醒', '成功，状态：success', 'success');
+        swal('操作成功', '成功，状态：success', 'success');
         console.log("角色的停启用状态修改成功")
       },
       error: (data) => {

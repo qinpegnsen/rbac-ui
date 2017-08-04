@@ -3,6 +3,7 @@ import {SettingsService} from '../../../core/settings/settings.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AjaxService} from "../../../core/services/ajax.service";
 import { Location }from '@angular/common';
+import {RoleComponent} from "../role/role.component";
 const swal = require('sweetalert');
 @Component({
   selector: 'app-rightpage',
@@ -13,6 +14,7 @@ const swal = require('sweetalert');
 export class RightpageComponent implements OnInit {
   private queryId:number;
   private sysCode:string;
+  private sysName:string;
   private roleGroupCode:string;
   private roleGroupName:string;
   private roleCode:string;
@@ -20,22 +22,23 @@ export class RightpageComponent implements OnInit {
   public orgData;
   public roleListData;
   public sysData;
+  public roleCodes=[];
   // 构造 初始化
-  constructor(public settings: SettingsService,private router:Router,private ajax: AjaxService, private routeInfo: ActivatedRoute,private Location: Location) {
+  constructor(public settings: SettingsService,private router:Router,private ajax: AjaxService, private routeInfo: ActivatedRoute,private Location: Location,private roleComponent:RoleComponent) {
       this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
   ngOnInit() {
     //根据id的不同呈现不同的页面
-    this.queryId=this.routeInfo.snapshot.queryParams['id']
-
-    this.sysCode=this.routeInfo.snapshot.queryParams['sysCode']
+    this.queryId=this.routeInfo.snapshot.queryParams['id'];
+    this.sysCode=this.routeInfo.snapshot.queryParams['sysCode'];
+    this.sysName=this.routeInfo.snapshot.queryParams['sysName'];
     //修改角色组要获取的参数
-    this.roleGroupCode=this.routeInfo.snapshot.queryParams['roleGroupCode']
-    this.roleGroupName=this.routeInfo.snapshot.queryParams['roleGroupName']
+    this.roleGroupCode=this.routeInfo.snapshot.queryParams['roleGroupCode'];
+    this.roleGroupName=this.routeInfo.snapshot.queryParams['roleGroupName'];
     //修改角色要获取的参数
-    this.roleCode=this.routeInfo.snapshot.queryParams['roleCode']
-    this.roleName=this.routeInfo.snapshot.queryParams['roleName']
+    this.roleCode=this.routeInfo.snapshot.queryParams['roleCode'];
+    this.roleName=this.routeInfo.snapshot.queryParams['roleName'];
 
     //获取系统列表的信息
     this.ajax.get({
@@ -66,67 +69,77 @@ export class RightpageComponent implements OnInit {
     });
 
     //初始化的时候获取当前机构的所有的角色列表
-    this.ajax.get({
-      url: '/role/list',
-      data: {
-        sysCode:this.sysCode
-      },
-      success: (data) => {
-        this.roleListData=data;
-        console.log(data)
-      },
-      error: (data) => {
-        console.log("error");
-      }
-    });
+    // this.ajax.get({
+    //   url: '/role/list',
+    //   data: {
+    //     sysCode:this.sysCode
+    //   },
+    //   success: (data) => {
+    //     this.roleListData=data;
+    //   },
+    //   error: (data) => {
+    //     console.log(this.sysCode)
+    //     console.log("role/list  error");
+    //   }
+    // });
   }
 
   // 取消
   cancel(){
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
+  //提交
+  closePage(){
+    this.settings.closeRightPage(); //关闭右侧滑动页面
+    this.router.navigate(['/main/role/roleGroup']);
+  }
+
+  //获取到bing-role传递过来的角色编码集
+  getRoleCodes(roleCodes){
+   this.roleCodes.push(roleCodes)
+  }
 
   //根据路由参数的不同，加载不同的页面，调取不同的接口
   updateMssage(value){
-    console.log(value)
     if(this.queryId==1){//新增角色组
       this.ajax.post({
         url: '/roleGroup/add',
         data: {
           'sysCode':value.sysCode ,
-          'sysName': value.sysName,
           'orgCode': value.orgCode,
           'roleGroupName': value.roleGroupName,
           'remarks':value.remarks
         },
         success: (data) => {
-          // this.dialogSuccess()
-          swal('成功提醒', '成功，状态：success', 'success');
-          console.log("新增角色组成功")
+          if(data.success){
+            swal('成功提醒', '成功，状态：success', 'success');
+          }else{
+            swal('失败提醒', '失败，状态：fail', 'fail');
+          }
         },
         error: (data) => {
           console.log("新增角色组失败");
         }
       });
-    }else if(this.queryId==2){ //新增角色
+    }else if(this.queryId==2){ //绑定角色
       this.ajax.post({
-        url: '/role/add',
+        url: '/roleGroup/addRelation',
         data: {
-          'sysCode':value.sysCode ,
-          'sysName': value.sysName,
-          'orgCode': value.orgCode,
-          'roleName': value.roleName,
-          'remarks':value.remarks
+          'roleGroupCode':this.roleGroupCode ,
+          'roleCodes':this.roleCodes.join(',')
         },
         success: (data) => {
-          console.log(data)
+          if(data.success){
+            swal('成功提醒', '成功，状态：success', 'success');
+          }else{
+            swal('失败提醒', '失败，状态：fail', 'fail');
+          }
         },
         error: (data) => {
-          console.log(value.sysName)
-          console.log("error");
+          console.log("绑定角色失败");
         }
       });
-    }else if(this.queryId==4){ //修改角色组
+    }else if(this.queryId==3){ //修改角色组
       this.ajax.put({
         url: '/roleGroup/update',
         data: {
@@ -135,14 +148,17 @@ export class RightpageComponent implements OnInit {
           'remarks': value.orgCode
         },
         success: (data) => {
-          console.log(data)
-          swal('成功提醒', '成功，状态：success', 'success');
+          if(data.success){
+            swal('成功提醒', '成功，状态：success', 'success');
+          }else{
+            swal('失败提醒', '失败，状态：fail', 'fail');
+          }
         },
         error: (data) => {
           console.log("修改角色组失败");
         }
       });
-    }else if(this.queryId==5){ //修改角色
+    }else if(this.queryId==4){ //修改角色
       this.ajax.put({
         url: '/role/update',
         data: {
@@ -151,13 +167,18 @@ export class RightpageComponent implements OnInit {
           'remarks': value.remarks
         },
         success: (data) => {
-          console.log(data)
+          if(data.success){
+            swal('成功提醒', '成功，状态：success', 'success');
+          }else{
+            swal('失败提醒', '失败，状态：fail', 'fail');
+          }
         },
         error: (data) => {
-          console.log("error");
+          console.log("修改角色失败");
         }
       });
     }
+    this.closePage();//调用关闭页面的方法
   }
 
 }

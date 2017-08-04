@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {FormControl} from "@angular/forms";
 @Component({
@@ -10,19 +10,14 @@ import {FormControl} from "@angular/forms";
 export class BingRoleComponent implements OnInit {
     @Input()
      public sysCode;
+    @Output()
+     public roleCodes=new EventEmitter();
+    //存放的数据
      public items;
-
-    // public items: Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
-    // 'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
-    // 'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin',
-    // 'Düsseldorf', 'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg',
-    // 'Hamburg', 'Hannover', 'Helsinki', 'Kraków', 'Leeds', 'Leipzig', 'Lisbon',
-    // 'London', 'Madrid', 'Manchester', 'Marseille', 'Milan', 'Munich', 'Málaga',
-    // 'Naples', 'Palermo', 'Paris', 'Poznań', 'Prague', 'Riga', 'Rome',
-    // 'Rotterdam', 'Seville', 'Sheffield', 'Sofia', 'Stockholm', 'Stuttgart',
-    // 'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
-    // 'Zagreb', 'Zaragoza', 'Łódź'];
+  //存角色名字的数组
+  public roleCode;
   public  newArrRoleName=[];
+  //存角色编码的数组
   public  newArrRoleCode=[];
   constructor(private ajax: AjaxService) {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -32,14 +27,14 @@ export class BingRoleComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //查询当前系统下的角色列表
     this.ajax.get({
       url: "/role/listpage",
       data: {
         sysCode: this.sysCode
       },
       success: (data) => {
-
-
         for(var i=0;i<data.voList.length;i++){
           this.newArrRoleName.push(data.voList[i]['roleName'])
           this.newArrRoleCode.push(data.voList[i]['roleCode'])
@@ -50,16 +45,12 @@ export class BingRoleComponent implements OnInit {
         console.log(this.newArrRoleCode)
         console.log(this.newArrRoleName)
 
-
       },
       error: (data) => {
         console.log('根据系统编码变化的角色列表错误');
       }
     });
-
-
   }
-
 
   // Color Picker
   colorDemo1 = '#555555';
@@ -68,7 +59,6 @@ export class BingRoleComponent implements OnInit {
   colorDemo4 = '#555555';
 
   // ng2Select
-
 
   public value: any = {};
   public _disabledV: string = '0';
@@ -85,13 +75,26 @@ export class BingRoleComponent implements OnInit {
 
   public selected(value: any): void {
     let roleText= value.text;
-    for(var j=0;j<roleText.length;j++){
-      console.log(roleText[j])
+    console.log(roleText)
+    //存储所选择的下标，然后根据下标查询编码
+    let roleIndex;
+    //查询出来的角色的编码
+
+    //这个循环的结果是找出点击出来的角色的下标
+      for(let j=0;j<this.newArrRoleName.length;j++){
+        if(this.newArrRoleName[j]==roleText){
+          roleIndex=j;
+        }
+      }
+
+    //根据角色的下标查询出角色的编码
+    for(let z=0;z<this.newArrRoleCode.length;z++){
+        if(z==roleIndex){
+          this.roleCode=this.newArrRoleCode[z]
+        }
     }
-    // for(var i=0;i<this.newArrRoleName.length;i++){
-    //
-    // }
-    // console.log('Selected value is: ', value.text);
+    //把获取到得角色编码发射出去
+    this.roleCodes.emit(this.roleCode)
   }
 
   public removed(value: any): void {
@@ -104,6 +107,7 @@ export class BingRoleComponent implements OnInit {
 
   public refreshValue(value: any): void {
     this.value = value;
+
   }
 
   // TextMask

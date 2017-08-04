@@ -40,11 +40,10 @@ export class RoleComponent implements OnInit {
         this.sysCode = data[0].sysCode;
         this.sysList = data;
         this.sysName=data[0].sysName;
-        console.log(this.sysName)
         this.queryDatas();
       },
       error: (data) => {
-        console.log("error");
+        console.log("sys/list  error");
       }
     });
     //机构列表的接口
@@ -55,7 +54,6 @@ export class RoleComponent implements OnInit {
       },
       success: (data) => {
         this.orgList = data;
-        console.log(data)
       },
       error: (data) => {
         console.log("/organ/list    error");
@@ -133,8 +131,15 @@ export class RoleComponent implements OnInit {
         'roleGroupCode': data.roleGroupCode,
         'isUse': data.isUse
       },
-      success: (data) => {
-        swal('成功提醒', '成功，状态：success', 'success');
+      success: () => {
+        // console.log(data.isUse)
+        // let text='';
+        // if(data.isUse="N"){
+        //   text="停用成功"
+        // }else if(data.isUse="Y"){
+        //   text="启用成功"
+        // }
+        swal("启用成功", '成功，状态：success', 'success');
       },
       error: (data) => {
         console.log("修改角色组的状态失败");
