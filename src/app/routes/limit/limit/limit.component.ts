@@ -26,6 +26,7 @@ export class LimitComponent implements OnInit {
   private tableButtonConfig: Array<object>;  //列表按钮配置
   private sysCode:string;//系统编码
   private menuCode;//权限菜单编码
+  private buttonConfig;//权限菜单列表中的添加按钮
 
   constructor(private ajax: AjaxService,private router: Router,private limitService:LimitService) {
     var _this = this;
@@ -59,8 +60,14 @@ export class LimitComponent implements OnInit {
         }
       }
     ];
-
-    console.log(this.router);
+    //权限菜单列表中的添加按钮
+    this.buttonConfig = [
+      {
+        title: "添加菜单",
+        type: "add",
+        size:'xs',
+      }
+    ];
   }
 
   //系统发生变化的时候再次调用，改变权限菜单
@@ -72,7 +79,7 @@ export class LimitComponent implements OnInit {
   //权限菜单发生变化的时候再次调用，改变页面元素
   onSelecttable(men): void {
     this.menuCode = men;
-    this.queryDatas();
+    //this.queryDatas();
   }
 
 
@@ -116,28 +123,28 @@ export class LimitComponent implements OnInit {
 
 
   //添加菜单列表
-  public queryDatas(event?:PageEvent) {
+  private queryDatas(event?:PageEvent) {
     let me = this,activePage = 1;
     if(typeof event !== "undefined") activePage =event.activePage;
 
     this.ajax.get({
-    url: "/limitMenu/listpage",
-    data: {
-      curPage:activePage,
-      pageSize:'3',
-      sysCode:this.sysCode
-    },
-    success: (data) => {
-      console.log('data', data);
-      if (!isNull(data)) {
-        me.data = new Page(data);
+      url: "/limitMenu/listpage",
+      data: {
+        curPage:activePage,
+        pageSize:'3',
+        sysCode:this.sysCode
+      },
+      success: (data) => {
+        console.log('data', data);
+        if (!isNull(data)) {
+          me.data = new Page(data);
+        }
+      },
+      error: (data) => {
+        console.log('data', data);
       }
-    },
-    error: (data) => {
-      console.log('data', data);
-    }
-  });
-}
+    });
+  }
 
 
     /**

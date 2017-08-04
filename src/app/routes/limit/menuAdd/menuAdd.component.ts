@@ -51,7 +51,7 @@ export class MenuAddComponent implements OnInit {
 
 
 
-  addRoleGroup(value){
+  addLimitList(value){
     console.log(value);
 
     //添加页面元素列表
@@ -61,12 +61,12 @@ export class MenuAddComponent implements OnInit {
         url: '/limitPage/add',
         data: {
           'sysCode':this.limitForm.sysCode ,
-          'pageName':value.pageName ,
-          'preCode': value.preCode,
-          'icon': value.icon,
-          'level': value.level,
-          'remarks':value.remarks,
-          'ord':value.ord
+          'pavalue':value.pageName ,
+          'prvalue': value.preCode,
+          'value': value.icon,
+          //'value': value.level,
+          'rvalue':value.remarks,
+        'valued':value.ord
         },
         success: (res) => {
           console.log("█ res ►►►",  res);

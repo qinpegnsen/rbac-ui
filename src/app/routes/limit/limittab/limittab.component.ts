@@ -20,6 +20,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
   private controlData:Page = new Page();
   private tableButtonConfig:Array<object>;  //列表按钮配置
   private tableButtonConfig1:Array<object>;  //列表按钮配置
+  private buttonConfig;//页面列表中的添加按钮
   @Input()
   public sysCode;//获取系统编码
   @Input()
@@ -44,6 +45,14 @@ export class LimittabComponent implements OnInit ,OnChanges {
         //btnClass:"btn btn-success",
       }
     ]
+    //页面元素列表中的添加按钮
+    this.buttonConfig = [
+      {
+        title: "添加菜单",
+        type: "add",
+        size:'xs',
+      }
+    ];
   }
 
 

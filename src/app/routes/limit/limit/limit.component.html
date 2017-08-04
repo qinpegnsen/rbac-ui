@@ -48,12 +48,12 @@
         <rzhDefaultSorter by="a">是否启动</rzhDefaultSorter>
       </th>
       <th class="col-lg-0  unselectable t-center">
-        <rzhDefaultSorter by="b">修改</rzhDefaultSorter>
+        <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
       </th>
     </thead>
     <tbody>
     <tr *ngFor="let menu of dataTable.data;let i = index" #men (click)="onSelecttable(menu.menuCode)">
-      <td><a href="#" title="点击">{{i+1}}</a></td>
+      <td style="padding-left: 20px"><a href="#" title="点击">{{i+1}}</a></td>
       <td>{{menu.menuName}}</td>
       <td>{{menu.menuUrl}}</td>
       <td>{{menu.preMenuCode}}</td>
@@ -73,6 +73,8 @@
       <td>
         <!--菜单权限列表的修改-->
         <app-buttons [config]="option" (callback)="option.callback($event,menu.menuCode)" *ngFor="let option of tableButtonConfig"></app-buttons>
+        <!--菜单权限子列表项的添加-->
+        <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu"  [queryParams]="{sysCode:sysCode}"></app-buttons>
       </td>
     </tr>
     </tbody>

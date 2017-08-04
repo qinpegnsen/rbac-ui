@@ -1,7 +1,7 @@
 
 <!--添加权限菜单-->
 <div class="rightpage" *ngIf="this.queryId!=2">
-  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addRoleGroup(addLimitForm.value)">
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm">
     <!-- START panel-->
     <div class="panel-default">
       <div class="panel-body">
@@ -50,14 +50,6 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label">上级菜单</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text" name="preMenuCode" ngModel [(ngModel)]="limitForm.preMenuCode"/>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
             <label class="col-sm-3 control-label">菜单图标</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="menuIcon" ngModel [(ngModel)]="limitForm.menuIcon"/>
@@ -96,7 +88,7 @@
       </div>
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
-        <button class="ml btn btn-info pull-left" type="submit"  [disabled]="!addLimitForm.form.valid">提交信息</button>
+        <button class="ml btn btn-info pull-left" type="button"  [disabled]="!addLimitForm.form.valid"(click)="addLimitList(addLimitForm.value)" >提交信息</button>
       </div>
     </div>
     <!-- END panel-->
@@ -106,7 +98,7 @@
 
 <!--添加页面元素-->
 <div class="rightpage" *ngIf="this.queryId==2">
-  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addRoleGroup(addLimitForm.value)"
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)"
   >
     <!-- START panel-->
     <div class="panel-default">
@@ -199,7 +191,7 @@
 
 <!--添加功能操作-->
 <div class="rightpage" *ngIf="this.queryId==4">
-  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addRoleGroup(addLimitForm.value)"
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)"
   >
     <!-- START panel-->
     <div class="panel-default">
@@ -298,7 +290,7 @@
 
 <!--添加文件控制-->
 <div class="rightpage" *ngIf="this.queryId==6">
-  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addRoleGroup(addLimitForm.value)"
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)"
   >
     <!-- START panel-->
     <div class="panel-default">
@@ -333,9 +325,9 @@
             </div>
           </div>
         </fieldset>
-        <fieldset>
+       <!-- <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 文件URL</label>
+            <label class="col-sm-3 control-label"> <i>*</i> 上传文件编码</label>
             <div class="col-sm-8">
               <input class="form-control" required ngModel name="fileUrl"
                      #fileUrl="ngModel" type="text"/>
@@ -345,19 +337,7 @@
               </div>
             </div>
           </div>
-        </fieldset><fieldset>
-        <div class="form-group">
-          <label class="col-sm-3 control-label"> <i>*</i> 文件类型</label>
-          <div class="col-sm-8">
-            <input class="form-control" required ngModel name="type"
-                   #type="ngModel" type="text"/>
-            <div [hidden]="type.valid || type.pristine"
-                 class="alert alert-danger">
-              文件类型是必填项，请填写文件类型
-            </div>
-          </div>
-        </div>
-      </fieldset>
+        </fieldset>-->
       </div>
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>

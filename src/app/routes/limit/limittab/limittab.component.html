@@ -25,7 +25,13 @@
         <th style="width: 10%">
           <rzhDefaultSorter by="order">菜单顺序</rzhDefaultSorter>
         </th>
-        <th style="width:15%">
+        <th style="width: 10%">
+          <rzhDefaultSorter by="a">是否启动</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
+        </th>
+        <th style="width:10%">
           <!--添加页面元素-->
           <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
@@ -42,8 +48,6 @@
         <td>{{page.note}}</td>
         <td>{{page.order}}</td>
         <td>
-          <!--修改页面元素的列表-->
-          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--页面元素的是否启用-->
               <span class="col-sm-5">
               <label class="switch">
@@ -52,11 +56,18 @@
               </label>
             </span>
         </td>
+        <td>
+          <!--修改页面元素的列表-->
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1,pageCode:page.pageCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <!--页面元素子列表项的添加-->
+          <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu"  [queryParams]="{sysCode:sysCode}"></app-buttons>
+        </td>
+
       </tr>
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="4">
+        <td colspan="5">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{menuData.genStartRow()}} 至 {{menuData.genEndRow()}} 条，共 {{menuData.totalRow}} 条</strong></div>
           </div>
@@ -100,6 +111,12 @@
           <rzhDefaultSorter by="remarks">备注</rzhDefaultSorter>
         </th>
         <th style="width: 10%">
+          <rzhDefaultSorter by="a">是否启动</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
           <!--添加功能操作-->
           <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:4,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
@@ -116,15 +133,19 @@
         <td>{{opt.remarks}}</td>
         <td>{{opt.remarks}}</td>
         <td>
-          <!--修改功能操作的列表-->
-          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:3}" *ngFor="let option of tableButtonConfig"></app-buttons>
-          <!--功能操作的是否启用-->
+        <!--功能操作的是否启用-->
             <span class="col-sm-5">
               <label class="switch">
                 <input type="checkbox" [checked]="opt.isUse=='Y'" (change)="upOptdateState(opt)" title="是否启动"/>
                 <span></span>
               </label>
             </span>
+        </td>
+        <td>
+          <!--修改功能操作的列表-->
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:3,optCode:opt.optCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <!--功能操作子列表项的添加-->
+          <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu"  [queryParams]="{sysCode:sysCode}"></app-buttons>
         </td>
       </tr>
       </tbody>
@@ -161,6 +182,12 @@
         <th class="col-lg-2  unselectable t-center">
           <rzhDefaultSorter by="type">文件类型</rzhDefaultSorter>
         </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="a">是否启动</rzhDefaultSorter>
+        </th>
+        <th style="width: 10%">
+          <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
+        </th>
         <th class="col-lg-2  unselectable t-center">
           <!--添加文件控制-->
           <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:6,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
@@ -175,8 +202,6 @@
         <td>{{file.fileUrl}}</td>
         <td>{{file.type}}</td>
         <td>
-          <!--修改文件控制的列表-->
-          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:5}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--文件控制的是否启用-->
             <span class="col-sm-5">
               <label class="switch">
@@ -185,6 +210,13 @@
               </label>
             </span>
         </td>
+        <td>
+          <!--修改文件控制的列表-->
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:5,fileCode:file.fileCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <!--文件控制子列表项的添加-->
+          <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu"  [queryParams]="{sysCode:sysCode}"></app-buttons>
+          </td>
+
       </tr>
       </tbody>
 
