@@ -1,92 +1,3 @@
-<!--新增角色组和新增角色的页面-->
-<!--<div class="rightpage">-->
-  <!--<form class="form-validate form-horizontal" style="height: 100%" #dataForm="ngForm">-->
-    <!--&lt;!&ndash; START panel&ndash;&gt;-->
-    <!--<div class="panel-default">-->
-      <!--<div class="panel-body">-->
-        <!--<fieldset class="b0">-->
-          <!--<legend *ngIf="queryId==1">新增角色组</legend>-->
-          <!--<legend *ngIf="queryId==2">新增角色</legend>-->
-          <!--<legend *ngIf="queryId==3">为角色组关联角色编码集}</legend>-->
-          <!--<legend *ngIf="queryId==4">-->
-            <!--修改角色组信息>{{roleGroupName}}-->
-          <!--</legend>-->
-          <!--<legend *ngIf="queryId==5">修改角色信息</legend>-->
-        <!--</fieldset>-->
-        <!--<input type="hidden" ngModel [value]="sysCode" name="sysCode">-->
-
-
-        <!--<input type="hidden" ngModel [value]="sysName" name="sysName">-->
-
-        <!--<fieldset *ngIf="queryId!=4" [hidden]="queryId==5" [hidden]="queryId==3">-->
-          <!--<div class="form-group">-->
-            <!--<label class="col-sm-3 control-label">系统名称</label>-->
-            <!--<div class="col-sm-8">-->
-              <!--<select class="form-control" type="text" ngModel  name="sysCode"  required #sysCodet="ngModel" >-->
-                <!--<option [value]="item.sysCode" *ngFor="let item of sysData">{{item.sysName}}</option>-->
-              <!--</select>-->
-              <!--<input type="hidden" name="sysName" value="item.sysCode">-->
-              <!--<div [hidden]="sysCodet.valid"-->
-                   <!--class="alert alert-danger">-->
-                <!--系统名称是必填项-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</fieldset>-->
-        <!--<fieldset *ngIf="queryId!=4" [hidden]="queryId==5" [hidden]="queryId==3">-->
-          <!--<div class="form-group">-->
-            <!--<label class="col-sm-3 control-label">选择机构</label>-->
-            <!--<div class="col-sm-8">-->
-              <!--<select class="form-control" type="text" ngModel  name="orgCode"  required #orgCodet="ngModel" >-->
-                <!--<option [value]="item.orgCode" *ngFor="let item of orgData">{{item.orgName}}</option>-->
-              <!--</select>-->
-              <!--<div [hidden]="orgCodet.valid"-->
-                   <!--class="alert alert-danger">-->
-                <!--机构编码是必填项-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</fieldset>-->
-        <!--<fieldset *ngIf="queryId==3">-->
-          <!--<div class="form-group">-->
-            <!--<app-bing-role [sysCode]="sysCode" (roleCodes)="getRoleCodes($event)"></app-bing-role>-->
-          <!--</div>-->
-        <!--</fieldset>-->
-        <!--<fieldset *ngIf="queryId==1||queryId==4">-->
-        <!--<div class="form-group">-->
-          <!--<label class="col-sm-3 control-label">角色组名称</label>-->
-          <!--<div class="col-sm-8">-->
-            <!--<input class="form-control" type="text" ngModel #roleGroupNamet="ngModel" [(ngModel)]="roleGroupName"  name="roleGroupName"-->
-                   <!--required/>-->
-            <!--<div [hidden]="roleGroupNamet.valid"-->
-                 <!--class="alert alert-danger">-->
-              <!--角色组名称是必填项-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</fieldset>-->
-        <!---->
-        <!---->
-        <!--<fieldset [hidden]="queryId==3">-->
-          <!--<div class="form-group">-->
-            <!--<label class="col-sm-3 control-label">备注</label>-->
-            <!--<div class="col-sm-8">-->
-              <!--<input class="form-control" type="text" ngModel  name="remarks"-->
-                      <!--#remarks="ngModel"/>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</fieldset>-->
-      <!--</div>-->
-      <!--<div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">-->
-        <!--<button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>-->
-        <!--<button class="ml btn btn-info pull-left" type="submit" (click)="updateMssage(dataForm.value)">提交信息</button>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; END panel&ndash;&gt;-->
-  <!--</form>-->
-<!--</div>-->
-
-
 <!--新增角色组-->
 <div class="rightpage"  *ngIf="queryId==1">
   <form class="form-validate form-horizontal" style="height: 100%" #dataForm="ngForm" (ngSubmit)="updateMssage(dataForm.value)">
@@ -94,27 +5,25 @@
     <div class="panel-default">
       <div class="panel-body">
         <fieldset class="b0">
-          <legend *ngIf="queryId==1">新增角色组</legend>
+          <legend>新增角色组</legend>
         </fieldset>
-
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label">选择系统</label>
+            <label class="col-sm-3 control-label"><i>*</i>选择系统</label>
             <div class="col-sm-8">
               <select class="form-control" type="text" ngModel  name="sysCode"  required #sysCodet="ngModel" >
                 <option [value]="item.sysCode" *ngFor="let item of sysData">{{item.sysName}}</option>
               </select>
               <div [hidden]="sysCodet.valid"
                    class="alert alert-danger">
-                机构编码是必填项
+                选择系统是必填项
               </div>
             </div>
           </div>
         </fieldset>
-
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label">角色组名称</label>
+            <label class="col-sm-3 control-label"><i>*</i>角色组名称</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" ngModel #roleGroupNamet="ngModel" [(ngModel)]="roleGroupName"  name="roleGroupName"
                      required/>
@@ -127,16 +36,6 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label">选择机构</label>
-            <div class="col-sm-8">
-              <select class="form-control" type="text" ngModel  name="orgCode"  required #orgCodet="ngModel" >
-                <option [value]="item.orgCode" *ngFor="let item of orgData">{{item.orgName}}</option>
-              </select>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
             <label class="col-sm-3 control-label">备注</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" ngModel  name="remarks"
@@ -144,7 +43,6 @@
             </div>
           </div>
         </fieldset>
-
       </div>
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
@@ -161,14 +59,24 @@
     <!-- START panel-->
     <div class="panel-default">
       <div class="panel-body">
-        <fieldset class="b0">
           <legend>
-            修改角色组信息
+            绑定角色
           </legend>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">当前角色组</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" value="{{roleGroupName}}" disabled
+              />
+            </div>
+          </div>
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <app-bing-role [sysCode]="sysCode" (roleCodes)="getRoleCodes($event)"></app-bing-role>
+            <label class="col-sm-3 control-label">为角色组绑定角色</label>
+            <div class="col-sm-8">
+              <app-bing-role [sysCode]="sysCode" (roleCodes)="getRoleCodes($event)"></app-bing-role>
+            </div>
           </div>
         </fieldset>
 
@@ -275,3 +183,96 @@
   </form>
 </div>
 
+<!--新增角色-->
+<div class="rightpage"  *ngIf="queryId==5">
+  <form class="form-validate form-horizontal" style="height: 100%" #dataForm="ngForm" (ngSubmit)="updateMssage(dataForm.value)">
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <fieldset class="b0">
+          <legend>新增角色</legend>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><i>*</i>选择系统</label>
+            <div class="col-sm-8">
+              <select class="form-control" type="text" ngModel  name="sysCode"  required #sysCodet="ngModel" >
+                <option [value]="item.sysCode" *ngFor="let item of sysData">{{item.sysName}}</option>
+              </select>
+              <div [hidden]="sysCodet.valid"
+                   class="alert alert-danger">
+                选择系统是必填项
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><i>*</i>角色名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" ngModel #roleNamet="ngModel" [(ngModel)]="roleGroupName"  name="roleName"
+                     required/>
+              <div [hidden]="roleNamet.valid"
+                   class="alert alert-danger">
+                角色组名是必填项
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" ngModel  name="remarks"
+                     #remarks="ngModel"/>
+            </div>
+          </div>
+        </fieldset>
+
+      </div>
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="submit" >提交信息</button>
+      </div>
+    </div>
+    <!-- END panel-->
+  </form>
+</div>
+
+<!--分配权限-->
+<div class="rightpage"  *ngIf="queryId==6">
+  <form class="form-validate form-horizontal" style="height: 100%" #dataForm="ngForm" (ngSubmit)="updateMssage(dataForm.value)">
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <legend>
+          分配权限
+        </legend>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">当前角色名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" value="{{roleName}}" disabled
+                     />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">为角色分配权限</label>
+            <div class="col-sm-8">
+              <app-dis-auth (bingLimit)="getRoleLimit($event)"></app-dis-auth>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="submit" >提交信息</button>
+      </div>
+    </div>
+    <!-- END panel-->
+  </form>
+</div>

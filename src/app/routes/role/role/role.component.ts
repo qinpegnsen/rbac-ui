@@ -14,15 +14,18 @@ const swal = require('sweetalert');
 export class RoleComponent implements OnInit {
   public sysList;
   public sysName;
-  public orgList;
   public sysCode;
+
+  public orgList;
   public orgCode;
 
   //初始化角色管理的title
-  public roleGroupName:string="角色管理";
+  public roleGroupName;
+  public roleGroupNameText;
   public roleGroupCode;
 
   private data: Page = new Page();
+  private addButton;
   private buttonConfig;
   private buttonConfig1;
 
@@ -59,6 +62,12 @@ export class RoleComponent implements OnInit {
         console.log("/organ/list    error");
       }
     });
+
+    this.addButton = {
+      type:"add",
+      text:"新增角色组",
+      title:'新增角色组'
+    };
     //添加按钮配置
     this.buttonConfig = [
       {
@@ -100,7 +109,7 @@ export class RoleComponent implements OnInit {
       data: {
         curPage: activePage,
         sysCode: this.sysCode,
-        pageSize:6
+        pageSize:8
       },
       success: (data) => {
         if (!isNull(data)) {
@@ -115,7 +124,8 @@ export class RoleComponent implements OnInit {
   }
   //这个事件两个作用 1，改变角色的title 2 根据系统的编码查询角色列表
   selectRole(roleGroupCode,roleGroupName){
-    this.roleGroupName='当前的角色组是:'+roleGroupName;
+    this.roleGroupNameText='当前的角色组是：'+roleGroupName;
+    this.roleGroupName=roleGroupName;
     this.roleGroupCode=roleGroupCode;
   }
   //修改角色组的状态
@@ -132,14 +142,13 @@ export class RoleComponent implements OnInit {
         'isUse': data.isUse
       },
       success: () => {
-        // console.log(data.isUse)
-        // let text='';
-        // if(data.isUse="N"){
-        //   text="停用成功"
-        // }else if(data.isUse="Y"){
-        //   text="启用成功"
-        // }
-        swal("启用成功", '成功，状态：success', 'success');
+        let text='';
+        if(data.isUse=="N"){
+          text="停用成功"
+        }else if(data.isUse=="Y"){
+          text="启用成功"
+        }
+        swal(text,'','success');
       },
       error: (data) => {
         console.log("修改角色组的状态失败");

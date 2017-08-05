@@ -13,21 +13,17 @@ export class BingRoleComponent implements OnInit {
     @Output()
      public roleCodes=new EventEmitter();
     //存放的数据
-     public items;
-  //存角色名字的数组
-  public roleCode;
-  public  newArrRoleName=[];
-  //存角色编码的数组
-  public  newArrRoleCode=[];
+     public items:Array<object>;
+     //临时的数组用来存放编码，之后截取
+     public string;
+
   constructor(private ajax: AjaxService) {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     this.myModel = '';
     this.modelWithValue = '5554441234';
     this.formControlInput.setValue('5555551234');
   }
-
   ngOnInit() {
-
     //查询当前系统下的角色列表
     this.ajax.get({
       url: "/role/listpage",
@@ -35,16 +31,15 @@ export class BingRoleComponent implements OnInit {
         sysCode: this.sysCode
       },
       success: (data) => {
+        let obj={},temp=[];//这里必须得声明临时变量来转换一下，要不然不能push
         for(var i=0;i<data.voList.length;i++){
-          this.newArrRoleName.push(data.voList[i]['roleName'])
-          this.newArrRoleCode.push(data.voList[i]['roleCode'])
+          obj={
+            id:data.voList[i]['roleCode'],
+            text:data.voList[i]['roleName']
+          }
+          temp.push(obj);
         }
-
-        this.items=this.newArrRoleName;
-
-        console.log(this.newArrRoleCode)
-        console.log(this.newArrRoleName)
-
+        this.items = temp;
       },
       error: (data) => {
         console.log('根据系统编码变化的角色列表错误');
@@ -59,7 +54,19 @@ export class BingRoleComponent implements OnInit {
   colorDemo4 = '#555555';
 
   // ng2Select
-
+  /**
+   * 对事件进行监听，然后发射
+   * **/
+  public refreshValue(value: any): void {
+    this.value = this.itemsToString(value);
+    this.roleCodes.emit(this.value)
+  }
+  public itemsToString(value:Array<any> = []):string {
+    return value
+      .map((item:any) => {
+        return item.id;
+      }).join(',');
+  }
   public value: any = {};
   public _disabledV: string = '0';
   public disabled: boolean = false;
@@ -73,42 +80,21 @@ export class BingRoleComponent implements OnInit {
     this.disabled = this._disabledV === '1';
   }
 
-  public selected(value: any): void {
-    let roleText= value.text;
-    console.log(roleText)
-    //存储所选择的下标，然后根据下标查询编码
-    let roleIndex;
-    //查询出来的角色的编码
+  public selected(obj,value): void {
 
-    //这个循环的结果是找出点击出来的角色的下标
-      for(let j=0;j<this.newArrRoleName.length;j++){
-        if(this.newArrRoleName[j]==roleText){
-          roleIndex=j;
-        }
-      }
 
-    //根据角色的下标查询出角色的编码
-    for(let z=0;z<this.newArrRoleCode.length;z++){
-        if(z==roleIndex){
-          this.roleCode=this.newArrRoleCode[z]
-        }
-    }
-    //把获取到得角色编码发射出去
-    this.roleCodes.emit(this.roleCode)
   }
 
-  public removed(value: any): void {
-    console.log('Removed value is: ', value);
-  }
+
+
+  public removed(obj,value: any): void {
+
+}
 
   public typed(value: any): void {
     console.log('New search input: ', value);
   }
 
-  public refreshValue(value: any): void {
-    this.value = value;
-
-  }
 
   // TextMask
   public myModel: string;

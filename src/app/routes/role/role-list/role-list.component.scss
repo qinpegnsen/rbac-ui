@@ -1,0 +1,21 @@
+//选择系统样式
+.system {
+  display: float;
+  font-size: 16px;
+}
+
+.controll, .options {
+  float: left;
+  line-height: 32px;
+}
+
+.controll {
+  margin-right: 15px;
+}
+
+.options {
+  width: 198px;
+  height: 32px;
+}
+
+

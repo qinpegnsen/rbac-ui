@@ -1,4 +1,8 @@
-<div class="panel panel-default">
+<div>
+  <div class="title">
+    <span>{{roleGroupName}}</span>
+    <span *ngIf="!roleGroupName">当前系统下的所有角色</span>
+  </div>
   <div class="panel-body">
     <table class="table table-striped" #dataTable="rzhDataTable"  [rzhData]="data" (pageChange)="queryRoleList($event)">
       <thead>
@@ -32,19 +36,14 @@
         <td>{{elder.remarks}}</td>
         <td>
           <!--角色权限分配-->
-          <div class="form-group">
-            <app-buttons class="col-sm-4" [config]="option" (callback)="option.callback($event)" *ngFor="let option of buttonConfig"></app-buttons>
-
-          </div>
+            <app-buttons class="" [config]="option" routerLink="rightpage" [queryParams]="{id:6,roleCode:elder.roleCode,roleName:elder.roleName}" (callback)="option.callback($event)" *ngFor="let option of buttonConfig"></app-buttons>
         </td>
         <td>
           <!--角色停启用-->
-          <span class="col-sm-5">
               <label class="switch">
                 <input type="checkbox" [checked]="elder.isUse=='Y'" (change)="updateRoleState(elder)"/>
                 <span></span>
               </label>
-            </span>
         </td>
         <td>
           <!--修改角色-->
@@ -54,12 +53,12 @@
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="5">
-          <div class="col-sm-5">
+        <td colspan="8">
+          <div class="col-sm-2">
             <div class="text-muted"><strong>第 {{data.genStartRow()}} 至 {{data.genEndRow()}} 条，共 {{data.totalRow}} 条</strong></div>
           </div>
-          <div class="col-sm-7">
-            <div style="float: right"><rzhBootstrapPaginator></rzhBootstrapPaginator></div>
+          <div class="col-sm-10">
+            <div class="pull-right"><rzhBootstrapPaginator></rzhBootstrapPaginator></div>
           </div>
         </td>
       </tr>

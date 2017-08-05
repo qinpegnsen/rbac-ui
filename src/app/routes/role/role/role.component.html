@@ -1,7 +1,5 @@
-<div class="panel panel-default">
-  <div class="panel-body">
-    <span class="tab">角色管理</span>
-  </div>
+<div class="content-heading mb-lg">
+  角色组管理
 </div>
 <div class="form-group system">
   <div class="row">
@@ -22,7 +20,7 @@
       <div class="title">
         <span>角色组管理</span>
         <span>
-          <a class="btn btn-info" routerLink="rightpage" [queryParams]="{id:1,sysCode:sysCode}">新增角色组</a>
+           <app-buttons class="pull-right" [config]="addButton" routerLink="rightpage" [queryParams]="{id:1,sysCode:sysCode,sysName:sysName}"></app-buttons>
         </span>
       </div>
       <div class="cont">
@@ -32,13 +30,10 @@
             <th style="width: 5%">
               序号
             </th>
-            <th style="width: 30%">
-              <rzhDefaultSorter by="name">机构名称</rzhDefaultSorter>
-            </th>
-            <th style="width: 20%">
+            <th style="width: 45%">
               <rzhDefaultSorter by="email">角色组名</rzhDefaultSorter>
             </th>
-            <th style="width: 25%">
+            <th style="width: 30%">
               <rzhDefaultSorter by="email">角色组状态</rzhDefaultSorter>
             </th>
             <th style="width: 20%">操作</th>
@@ -48,22 +43,21 @@
           <tr *ngFor="let elder of dataTable.data;let i = index"
               (click)="selectRole(elder.roleGroupCode,elder.roleGroupName)">
             <td>{{i+1}}</td>
-            <td>{{elder.orgName}}</td>
             <td>{{elder.roleGroupName}}</td>
             <td>
               <!--修改角色组停启用状态-->
-              <span class="col-sm-5">
+
                 <label class="switch">
                   <input type="checkbox" [checked]="elder.isUse=='Y'" (change)="updateRoleGroupState(elder)"/>
                   <span></span>
                 </label>
-              </span>
+
             </td>
             <td class="row">
               <!--绑定角色组-->
-              <div class="col-xs-6">
+              <div class="col-xs-6 text-center">
                 <app-buttons [config]="option" routerLink="rightpage"
-                             [queryParams]="{id:2,sysCode:elder.sysCode,roleGroupCode:roleGroupCode}"
+                             [queryParams]="{id:2,sysCode:elder.sysCode,roleGroupCode:roleGroupCode,roleGroupName:roleGroupName}"
                              *ngFor="let option of buttonConfig"></app-buttons>
               </div>
               <!--修改角色组名称,把信息传过去在弹窗页面修改-->
@@ -93,9 +87,9 @@
         </table>
       </div>
     </div>
-    <div class="role-ctrl col-lg-8">
+    <div class="role-ctrl col-lg-8 import">
       <div class="cont">
-        <app-roleman [sysCode]="sysCode" [roleGroupCode]="roleGroupCode"></app-roleman>
+        <app-roleman [sysCode]="sysCode" [roleGroupCode]="roleGroupCode" [roleGroupName]="roleGroupNameText"></app-roleman>
       </div>
     </div>
   </div>

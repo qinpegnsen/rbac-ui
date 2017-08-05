@@ -1,0 +1,29 @@
+<div class="content-heading mb-lg">
+  角色管理
+</div>
+<div class="form-group system">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="controll">选择系统</div>
+      <div class="options">
+        <select class="form-control" #sys (change)="onSelectSys(sys)">
+          <option [value]="item.sysCode" *ngFor="let item of sysList" class="sysCode">{{item.sysName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <app-buttons class="pull-right" [config]="addButton" routerLink="rightpage" [queryParams]="{id:5,sysCode:sysCode}"></app-buttons>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid panel panel-default" [style.height.px]="'600'">
+  <div class="row panel-body">
+    <div class="role-ctrl col-lg-12">
+        <app-roleman [sysCode]="sysCode" ></app-roleman>
+    </div>
+  </div>
+</div>
+<!--路由嵌套 begin-->
+<router-outlet></router-outlet>
+<!--路由嵌套 end-->

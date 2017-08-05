@@ -1,3 +1,31 @@
 th, td {
   text-align: center;
 }
+.title {
+  display: float;
+  margin: 12px;
+}
+.title:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
+.title span:first-child {
+  float: left;
+  color: #1f1f1f;
+  font-size: 16px;
+}
+.title span:last-child {
+  float: left;
+  color: #1f1f1f;
+  font-size: 16px;
+}
+.clearLeft:after{
+  display: block;
+  content: "";
+  clear:both !important;
+}
+
+
+

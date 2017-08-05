@@ -57,7 +57,7 @@ const role = {
     },
     {
       text: '角色管理',
-      link: '/main/role/role'
+      link: '/main/role/roleList'
     }
   ]
 };

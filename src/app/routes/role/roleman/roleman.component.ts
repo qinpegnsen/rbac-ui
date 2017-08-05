@@ -14,7 +14,10 @@ export class RolemanComponent implements OnInit,OnChanges {
   private buttonConfig; private buttonConfig1;
   @Input()
   public sysCode;
-  @Input() roleGroupCode;
+  @Input()
+  public roleGroupCode;
+  @Input()
+  public roleGroupName="当前系统下的所有角色";
   public roleCode;
   constructor(private ajax: AjaxService) {
 
@@ -81,7 +84,7 @@ export class RolemanComponent implements OnInit,OnChanges {
       data: {
         curPage: activePage,
         sysCode: this.sysCode,
-        pageSize:2
+        pageSize:8
       },
       success: (data) => {
         if (!isNull(data)) {
@@ -104,7 +107,7 @@ export class RolemanComponent implements OnInit,OnChanges {
       data: {
         curPage: activePage,
         roleGroupCode: this.roleGroupCode,
-        pageSize:2
+        pageSize:8
       },
       success: (data) => {
         if (!isNull(data)) {
@@ -124,16 +127,21 @@ export class RolemanComponent implements OnInit,OnChanges {
     }else if(data.isUse=="N"){
       data.isUse="Y"
     }
-    console.log(data.isUse)
+
     this.ajax.post({
       url: '/role/updateState',
       data: {
         'roleCode': data.roleCode,
         'isUse': data.isUse
       },
-      success: (data) => {
-        swal('操作成功', '成功，状态：success', 'success');
-        console.log("角色的停启用状态修改成功")
+      success: () => {
+        let text='';
+        if(data.isUse=="N"){
+          text="停用成功"
+        }else if(data.isUse=="Y"){
+          text="启用成功"
+        }
+        swal(text,'','success');
       },
       error: (data) => {
         console.log("error");

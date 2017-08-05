@@ -8,18 +8,18 @@ import { RolemanComponent } from './roleman/roleman.component';
 import { BingRoleComponent } from './bing-role/bing-role.component';
 import { SelectModule } from 'ng2-select';
 import { DisAuthComponent } from './dis-auth/dis-auth.component';
+import { RoleListComponent } from './role-list/role-list.component';
 
 
 // 子路由，用于页面嵌套显示
 const appChildRoutes: Routes = [
   {path: 'rightpage', component: RightpageComponent}
-
 ];
 
 // 父路由，用于页面嵌套显示
 const routes: Routes = [
   {path: 'roleGroup', component: RoleComponent, children: appChildRoutes},
-  {path: 'role', component: RolemanComponent, children: appChildRoutes},
+  {path: 'roleList', component: RoleListComponent, children: appChildRoutes},
 ];
 
 @NgModule({
@@ -29,7 +29,7 @@ const routes: Routes = [
     SharedModule,
     SelectModule
   ],
-  declarations: [RoleComponent,RightpageComponent, RolemanComponent, BingRoleComponent, DisAuthComponent],
-  providers: [],
+  declarations: [RoleComponent,RightpageComponent, RolemanComponent, BingRoleComponent, DisAuthComponent, RoleListComponent],
+  providers: [RoleComponent,RoleListComponent],
 })
 export class RoleModule { }
