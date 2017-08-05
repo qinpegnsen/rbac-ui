@@ -80,17 +80,51 @@ export class AddAdminService {
         orgCode: orgCode
       },
       success: (res) => {
-          list = res;
-          console.log("█ rolelist ►►►", res);
+        if(res.success){
+          //list = res.data;
+          console.log("█ addRolesRelation ►►►",  res);
+        }
       },
       error: (res) => {
-        console.log("get systemDetail error");
+        console.log("get addRolesRelation error");
       }
     });
     return list;
   }
 
+  /**
+   * 获取角色列表
+   * @param sysCode
+   * @param orgCode
+   * @returns {any}
+     */
   getRoleList(sysCode:string,orgCode?:string){
+    let list;
+    this.ajax.get({
+      url: '/role/list',
+      async:false,
+      data:{
+        sysCode: sysCode,
+        orgCode: orgCode
+      },
+      success: (res) => {
+        list = res;
+        console.log("█ getRoleList ►►►",  res);
+      },
+      error: (res) => {
+        console.log("get getRoleList error");
+      }
+    });
+    return list;
+  }
+
+  /**
+   * 获取角色组列表
+   * @param sysCode
+   * @param orgCode
+   * @returns {any}
+   */
+  getRoleGroupList(sysCode:string,orgCode?:string){
     let list;
     this.ajax.get({
       url: '/role/list',
