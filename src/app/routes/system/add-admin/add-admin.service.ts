@@ -69,8 +69,8 @@ export class AddAdminService {
    * @param mgrCode
    * @param orgCode
    * @returns {any}
-   */
-  getRoleOrGroupList(sysCode, orgCode) {
+     */
+  addRolesRelation(sysCode,orgCode){
     let list;
     this.ajax.post({
       url: '/orgManager/addRolesRelation',
@@ -80,10 +80,8 @@ export class AddAdminService {
         orgCode: orgCode
       },
       success: (res) => {
-        if (res.success) {
-          list = res.data;
+          list = res;
           console.log("█ rolelist ►►►", res);
-        }
       },
       error: (res) => {
         console.log("get systemDetail error");
@@ -92,4 +90,23 @@ export class AddAdminService {
     return list;
   }
 
+  getRoleList(sysCode:string,orgCode?:string){
+    let list;
+    this.ajax.get({
+      url: '/role/list',
+      async:false,
+      data:{
+        sysCode: sysCode,
+        orgCode: orgCode
+      },
+      success: (res) => {
+        list = res;
+        console.log("█ getRoleList ►►►",  res);
+      },
+      error: (res) => {
+        console.log("get getRoleList error");
+      }
+    });
+    return list;
+  }
 }
