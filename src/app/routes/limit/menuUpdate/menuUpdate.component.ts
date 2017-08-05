@@ -11,10 +11,16 @@ const swal = require('sweetalert');
 })
 export class MenuUpdateComponent implements OnInit {
 
-  private queryId;
-  private limitForm = {};
-  private pageForm = {};
+  private queryId;//获取修改按钮的ID
+  private limitForm = {};//获取权限菜单列表里的参数
+  private pageForm = {};//获取权限页面列表里的参数
+  private optForm = {};//获取功能操作列表里的参数
+  private fileForm = {};//获取功能操作列表里的参数
 
+
+  /**
+   * 构造 初始化
+   * **/
   constructor(public ajax:AjaxService, public settings:SettingsService, private router:Router, private route:ActivatedRoute, private routeInfo:ActivatedRoute) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
@@ -60,7 +66,7 @@ export class MenuUpdateComponent implements OnInit {
         break;
     }
     /**
-     * 请求详细数据，并显示
+     * 请求详细数据，并显示(权限菜单)
      */
     this.ajax.get({
       url: requestUrl,
@@ -78,32 +84,102 @@ export class MenuUpdateComponent implements OnInit {
       error: (res) => {
         console.log("post limit error");
       }
+    });
+
+
+    /**
+     * 请求详细数据，并显示(页面元素)
+     */
+    this.ajax.get({
+      url: requestUrl,
+      async: false, //同步请求
+      data: requestData,
+      success: (res) => {
+        if (res.success) {
+          console.log("█ res ►►►",  res);
+          this.pageForm = res.data, this.pageForm['pageCode'] = pc;
+        } else {
+          let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+          swal(res.info, errorMsg, 'error');
+        }
+      },
+      error: (res) => {
+        console.log("post limit error");
+      }
+    });
+
+
+    /**
+     * 请求详细数据，并显示(功能操作)
+     */
+    this.ajax.get({
+      url: requestUrl,
+      async: false, //同步请求
+      data: requestData,
+      success: (res) => {
+        if (res.success) {
+          console.log("█ res ►►►",  res);
+          this.optForm = res.data, this.optForm['pageCode'] = oc;
+        } else {
+          let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+          swal(res.info, errorMsg, 'error');
+        }
+      },
+      error: (res) => {
+        console.log("post limit error");
+      }
     })
 
+
+    /**
+     * 请求详细数据，并显示(文件控制)
+     */
+    this.ajax.get({
+      url: requestUrl,
+      async: false, //同步请求
+      data: requestData,
+      success: (res) => {
+        if (res.success) {
+          console.log("█ res ►►►",  res);
+          this.fileForm = res.data, this.fileForm['pageCode'] = fc;
+        } else {
+          let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+          swal(res.info, errorMsg, 'error');
+        }
+      },
+      error: (res) => {
+        console.log("post limit error");
+      }
+    })
   }
 
-  // 取消
+  /**
+   * 关闭子页面（取消）
+   * **/
   cancel() {
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
 
-  //修改
-
-  submitLimitData() {
+  /**
+   * 修改（菜单、页面元素、功能操作、文件控制）
+   * **/
+  addLimitList() {
 
     let me = this, submitData;
     let submitUrl = '/limitMenu/update';
-    console.log("█ submitUrl ►►►", submitUrl);
     if (this.queryId == '1') {
       submitUrl = '/limitPage/update';
       submitData = me.pageForm;
     }else if(this.queryId=='3'){
       submitUrl = '/limitOpt/update';
+      submitData = me.optForm;
     }else if(this.queryId=='5'){
       submitUrl = '/limitFile/update';
+      submitData = me.fileForm;
     } else {
       submitData = me.limitForm;
     }
+console.log("█ submitData ►►►", submitData );
 
     me.ajax.post({
       url: submitUrl,
@@ -112,7 +188,7 @@ export class MenuUpdateComponent implements OnInit {
         console.log("█ res ►►►", res);
         if (res.success) {
           this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
-          swal('提交成功！', '列表已自动更新...', 'success');
+          swal('提交成功！', '列表已自动更新');
           //this.outputvalue.emit(true);//提交成功后向父组件传值
         } else {
           let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -120,7 +196,8 @@ export class MenuUpdateComponent implements OnInit {
         }
       },
       error: (res) => {
-        console.log("post limit error");
+        console.log(res)
+        swal('提交失败！');
       }
     })
   }

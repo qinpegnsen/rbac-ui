@@ -1,37 +1,41 @@
+
+<!--权限菜单下的tab（页面元素，功能操作，文件控制）begin-->
 <tabset [justified]="true">
+
+  <!--页面元素begin-->
   <tab (select)="pageMenus()">
     <ng-template tabHeading>页面元素</ng-template>
     <table class="table table-striped" #dataTable2="rzhDataTable" [rzhData]="menuData" (pageChange)="pageMenus($event)">
       <thead>
       <tr>
-        <th style="width: 5%; padding-left: 10px">
+        <th class="w5 text-center">
           序号
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="pageName">页面名称</rzhDefaultSorter>
         </th>
-        <th style="width: 15%">
+        <th class="w15 text-center">
           <rzhDefaultSorter by="preCode">上级页面</rzhDefaultSorter>
         </th>
-        <th style="width: 15%">
+        <th class="w15 text-center">
           <rzhDefaultSorter by="icon">页面图标</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="level">级别</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="note">备注</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="order">菜单顺序</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="a">是否启动</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
         </th>
-        <th style="width:10%">
+        <th class="w10 text-center">
           <!--添加页面元素-->
           <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
@@ -39,8 +43,8 @@
 
       </thead>
       <tbody>
-      <tr *ngFor="let page of dataTable2.data;let x = index">
-        <td style="padding-left: 20px">{{x+1}}</td>
+      <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center">
+        <td>{{x+1}}</td>
         <td>{{page.pageName}}</td>
         <td>{{page.preCode}}</td>
         <td>{{page.icon}}</td>
@@ -49,18 +53,18 @@
         <td>{{page.order}}</td>
         <td>
           <!--页面元素的是否启用-->
-              <span class="col-sm-5">
+
               <label class="switch">
                 <input type="checkbox" [checked]="page.isUse=='Y'" (change)="upPagedateState(page)" title="是否启动"/>
                 <span></span>
               </label>
-            </span>
+
         </td>
         <td>
           <!--修改页面元素的列表-->
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1,pageCode:page.pageCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--页面元素子列表项的添加-->
-          <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu"  [queryParams]="{sysCode:sysCode}"></app-buttons>
+          <app-buttons [config]="option" *ngFor="let option of buttonConfig" ></app-buttons>
         </td>
 
       </tr>
@@ -81,49 +85,52 @@
       </tfoot>
     </table>
   </tab>
+  <!--页面元素end-->
+
+  <!--功能操作begin-->
   <tab (select)="operationDatas()">
     <ng-template tabHeading>功能操作</ng-template>
     <table class="table table-striped" #dataTable3="rzhDataTable" [rzhData]="operationData" (pageChange)="operationDatas($event)">
       <thead>
       <tr>
-        <th style="width: 5%">
+        <th class="w5 text-center">
           序号
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="optName">操作名称</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="tacklUrl">拦截URL</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="preCode">上级操作</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="preType">上级类型</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="ord">排序</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="note">排序</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="remarks">备注</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="a">是否启动</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
         </th>
-        <th style="width: 10%">
+        <th class="w10 text-center">
           <!--添加功能操作-->
           <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:4,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let opt of dataTable3.data;let z = index">
+      <tr *ngFor="let opt of dataTable3.data;let z = index" class="text-center">
         <td style="padding-left: 20px">{{z+1}}</td>
         <td>{{opt.optName}}</td>
         <td>{{opt.menu}}</td>
@@ -134,12 +141,12 @@
         <td>{{opt.remarks}}</td>
         <td>
         <!--功能操作的是否启用-->
-            <span class="col-sm-5">
+
               <label class="switch">
                 <input type="checkbox" [checked]="opt.isUse=='Y'" (change)="upOptdateState(opt)" title="是否启动"/>
                 <span></span>
               </label>
-            </span>
+
         </td>
         <td>
           <!--修改功能操作的列表-->
@@ -165,6 +172,9 @@
       </tfoot>
     </table>
   </tab>
+  <!--功能操作end-->
+
+  <!--文件控制begin-->
   <tab (select)="controlDatas()">
     <ng-template tabHeading>文件控制</ng-template>
     <table class="table table-striped" #dataTable4="rzhDataTable" [rzhData]="controlData" (pageChange)="controlDatas($event)">
@@ -236,5 +246,6 @@
       </tfoot>
     </table>
   </tab>
+  <!--文件控制end-->
 </tabset>
-
+<!--权限菜单下的tab（页面元素，功能操作，文件控制）end-->

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {LimitComponent} from "./limit/limit.component";
-
+import { FileUploadModule } from 'ng2-file-upload';
 import {RouterModule, Routes} from '@angular/router';
 import {share} from "rxjs/operator/share";
 import {SharedModule} from "../../shared/shared.module";
@@ -13,15 +13,14 @@ import {MenuUpdateComponent} from "./menuUpdate/menuUpdate.component";
 const routes:Routes = [
   {
     path: '',
-    component: LimitComponent, children:
-    [
-      {path:""},
-      {path: 'addMenu', component: MenuAddComponent}, // 子路由，添加菜单，用于页面嵌套显示
-      {path: 'upMenu/:menuCode', component: MenuUpdateComponent} , // 子路由，修改菜单，用于页面嵌套显示
-      {path: 'menuAdd', component: MenuAddComponent},//子路由，添加菜单ID,用于页面嵌套显示
-      {path: 'menuUpdate', component: MenuUpdateComponent},//子路由，修改菜单ID,用于页面嵌套显示
+    component: LimitComponent, children: [
+    {path: ""},
+    {path: 'addMenu', component: MenuAddComponent}, // 子路由，添加菜单，用于页面嵌套显示
+    {path: 'upMenu/:menuCode', component: MenuUpdateComponent}, // 子路由，修改菜单，用于页面嵌套显示
+    {path: 'menuAdd', component: MenuAddComponent},//子路由，添加菜单ID,用于页面嵌套显示
+    {path: 'menuUpdate', component: MenuUpdateComponent},//子路由，修改菜单ID,用于页面嵌套显示
 
-    ]
+  ]
   }
 ];
 
@@ -40,7 +39,8 @@ const routes:Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    SharedModule
+    SharedModule,
+    FileUploadModule
   ],
   declarations: [LimitComponent, MenuAddComponent, MenuUpdateComponent, LimittabComponent]
 })

@@ -1,5 +1,4 @@
-
-<!--添加权限菜单-->
+<!--添加权限菜单begin-->
 <div class="rightpage" *ngIf="this.queryId!=2">
   <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm">
     <!-- START panel-->
@@ -8,25 +7,12 @@
         <fieldset class="b0">
           <legend>添加菜单</legend>
         </fieldset>
-
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 系统编码</label>
-            <div class="col-sm-8">
-              <input class="form-control" required  [(ngModel)]="limitForm.sysCode" name="sysCode"
-                     #sysCode="ngModel" type="text"/>
-              <div [hidden]="sysCode.valid || sysCode.pristine"
-                   class="alert alert-danger">
-                菜单名称是必填项，请填写菜单名称
-              </div>
-            </div>
-          </div>
-        </fieldset>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode" #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 菜单名称</label>
             <div class="col-sm-8">
-              <input class="form-control" required  [(ngModel)]="limitForm.menuName" name="menuName"
+              <input class="form-control" required [(ngModel)]="limitForm.menuName" name="menuName"
                      #menuName="ngModel" type="text"/>
               <div [hidden]="menuName.valid || menuName.pristine"
                    class="alert alert-danger">
@@ -81,22 +67,24 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">菜单顺序</label>
             <div class="col-sm-8">
-              <input class="form-control" type="text" name="ord"  [(ngModel)]="limitForm.ord" ngModel/>
+              <input class="form-control" type="text" name="ord" [(ngModel)]="limitForm.ord" ngModel/>
             </div>
           </div>
         </fieldset>
       </div>
+      <!--按钮的操作begin-->
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
-        <button class="ml btn btn-info pull-left" type="button"  [disabled]="!addLimitForm.form.valid"(click)="addLimitList(addLimitForm.value)" >提交信息</button>
+        <button class="ml btn btn-info pull-left" type="button" [disabled]="!addLimitForm.form.valid" (click)="addLimitList(addLimitForm.value)">提交信息</button>
       </div>
+      <!--按钮的操作end-->
     </div>
     <!-- END panel-->
   </form>
 </div>
+<!--添加权限菜单end-->
 
-
-<!--添加页面元素-->
+<!--添加页面元素begin-->
 <div class="rightpage" *ngIf="this.queryId==2">
   <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)"
   >
@@ -106,20 +94,8 @@
         <fieldset class="b0">
           <legend>添加页面</legend>
         </fieldset>
-
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 系统编码</label>
-            <div class="col-sm-8">
-              <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode"
-                     #sysCode="ngModel" type="text"/>
-              <div [hidden]="sysCode.valid || sysCode.pristine"
-                   class="alert alert-danger">
-                页面名称是必填项，请填写页面名称
-              </div>
-            </div>
-          </div>
-        </fieldset>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode"
+               #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 页面名称</label>
@@ -137,7 +113,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">上级页面</label>
             <div class="col-sm-8">
-              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel />
+              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel/>
             </div>
           </div>
         </fieldset>
@@ -174,22 +150,24 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">排序</label>
             <div class="col-sm-8">
-              <input class="form-control" type="text" name="ord" #ord="ngModel"  ngModel/>
+              <input class="form-control" type="text" name="ord" #ord="ngModel" ngModel/>
             </div>
           </div>
         </fieldset>
       </div>
+      <!--按钮的操作begin-->
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
-        <button class="ml btn btn-info pull-left" type="submit"  [disabled]="!addLimitForm.form.valid">提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" [disabled]="!addLimitForm.form.valid">提交信息</button>
       </div>
+      <!--按钮的操作end-->
     </div>
     <!-- END panel-->
   </form>
 </div>
+<!--添加页面元素end-->
 
-
-<!--添加功能操作-->
+<!--添加功能操作begin-->
 <div class="rightpage" *ngIf="this.queryId==4">
   <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)"
   >
@@ -199,20 +177,8 @@
         <fieldset class="b0">
           <legend>添加功能操作</legend>
         </fieldset>
-
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 系统编码</label>
-            <div class="col-sm-8">
-              <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode"
-                     #sysCode="ngModel" type="text"/>
-              <div [hidden]="sysCode.valid || sysCode.pristine"
-                   class="alert alert-danger">
-                系统编码是必填项，请填写系统编码
-              </div>
-            </div>
-          </div>
-        </fieldset>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode"
+               #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 操作名称</label>
@@ -273,79 +239,98 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">备注</label>
             <div class="col-sm-8">
-              <input class="form-control" type="text" name="remarks" #remarks="ngModel"  ngModel/>
+              <input class="form-control" type="text" name="remarks" #remarks="ngModel" ngModel/>
             </div>
           </div>
         </fieldset>
       </div>
+      <!--按钮的操作begin-->
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
-        <button class="ml btn btn-info pull-left" type="submit"  [disabled]="!addLimitForm.form.valid">提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" [disabled]="!addLimitForm.form.valid">提交信息</button>
       </div>
+      <!--按钮的操作end-->
     </div>
     <!-- END panel-->
   </form>
 </div>
+<!--添加功能操作end-->
 
-
-<!--添加文件控制-->
+<!--添加文件控制begin-->
 <div class="rightpage" *ngIf="this.queryId==6">
-  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)"
-  >
-    <!-- START panel-->
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)">
     <div class="panel-default">
       <div class="panel-body">
         <fieldset class="b0">
           <legend>添加文件控制</legend>
         </fieldset>
-
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode"
+               #sysCode="ngModel" type="hidden"/>
         <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 系统编码</label>
-            <div class="col-sm-8">
-              <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode"
-                     #sysCode="ngModel" type="text"/>
-              <div [hidden]="sysCode.valid || sysCode.pristine"
-                   class="alert alert-danger">
-                系统编码是必填项，请填写系统编码
-              </div>
-            </div>
+          <input class="form-control" placeholder="文件名称" required ngModel name="fileName"
+                 #fileName="ngModel" type="text"/>
+          <div [hidden]="fileName.valid || fileName.pristine"
+               class="alert alert-danger">
+            文件名称是必填项，请填写文件名称
           </div>
         </fieldset>
+        <!--上传组件 begin-->
         <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 文件名称</label>
-            <div class="col-sm-8">
-              <input class="form-control" required ngModel name="fileName"
-                     #fileName="ngModel" type="text"/>
-              <div [hidden]="fileName.valid || fileName.pristine"
-                   class="alert alert-danger">
-                文件名称是必填项，请填写文件名称
+          <p class="pull-right label label-info ng-binding ng-scope" *ngIf="uploader?.queue?.length">文件数: {{ uploader?.queue?.length }}</p>
+          <h4 class="page-header mt0 text-warning"><i class="icon-cloud-upload mr"></i>上传文件 </h4>
+          <table class="table">
+            <thead>
+            <tr>
+              <th width="50%">文件名</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of uploader.queue">
+              <td><strong>{{ item?.file?.name }}</strong></td>
+              <td nowrap>
+                <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                  <span class="icon-close mr"></span> 取消
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                  <span class="icon-trash mr"></span> 删除
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div>
+            <div>
+              <i class="icon-clock mr5"></i>进度:
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
               </div>
             </div>
+            <div for="file1" class="file-upload pull-left mr5">
+              <button type="button" class="btn btn-info btn-s"><i class="icon-cloud-upload mr"></i>选择文件</button>
+              <!--多选-->
+              <!--<input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple/>-->
+              <input id="file1" type="file" ng2FileSelect [uploader]="uploader"/>
+            </div>
+            <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+              <span class="icon-close mr"></span>全部取消
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+              <span class="icon-trash mr"></span>全部删除
+            </button>
           </div>
         </fieldset>
-       <!-- <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 上传文件编码</label>
-            <div class="col-sm-8">
-              <input class="form-control" required ngModel name="fileUrl"
-                     #fileUrl="ngModel" type="text"/>
-              <div [hidden]="fileUrl.valid || fileUrl.pristine"
-                   class="alert alert-danger">
-                文件URL是必填项，请填写文件URL
-              </div>
-            </div>
-          </div>
-        </fieldset>-->
+        <!--上传组件 end-->
       </div>
+
+      <!--操作按钮 begin-->
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
-        <button class="ml btn btn-info pull-left" type="submit"  [disabled]="!addLimitForm.form.valid">提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" [disabled]="!addLimitForm.form.valid">提交信息</button>
       </div>
+      <!--操作按钮 end-->
     </div>
-    <!-- END panel-->
   </form>
 </div>
-
+<!--添加文件控制end-->
 

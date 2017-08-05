@@ -41,8 +41,6 @@ export class LimittabComponent implements OnInit ,OnChanges {
       {
         title: "添加",
         type: "add",
-        //iconsClass:"icon-handbag",
-        //btnClass:"btn btn-success",
       }
     ]
     //页面元素列表中的添加按钮
@@ -61,7 +59,9 @@ export class LimittabComponent implements OnInit ,OnChanges {
     this.pageMenus(); //页面元素信息加载
   }
 
-  //钩子，输入属性变化的时候调用页面元素
+  /**
+   * 钩子，输入属性变化的时候调用页面元素
+   * **/
   ngOnChanges(changes: SimpleChanges): void {
     //当sysCode变化的时候再次调动
     if(changes["sysCode"] && this.sysCode){
@@ -75,7 +75,9 @@ export class LimittabComponent implements OnInit ,OnChanges {
     }
   }
 
-  //页面元素分页分页列表
+  /**
+   * 页面元素分页分页列表
+   * **/
   public pageMenus(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
@@ -91,8 +93,6 @@ export class LimittabComponent implements OnInit ,OnChanges {
       success: (data) => {
         if (!isNull(data)) {
           me.menuData = new Page(data);
-          console.log(11)
-          console.log(data)
         }
       },
       error: (data) => {
@@ -102,7 +102,9 @@ export class LimittabComponent implements OnInit ,OnChanges {
   }
 
 
-  //页面控制分页列表
+  /**
+   * 页面控制分页列表
+   * **/
   public operationDatas(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
@@ -128,7 +130,9 @@ export class LimittabComponent implements OnInit ,OnChanges {
   }
 
 
-  //文件控制分页列表
+  /**
+   * 文件控制分页列表
+   * **/
   public controlDatas(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
@@ -175,12 +179,10 @@ export class LimittabComponent implements OnInit ,OnChanges {
         'state': data.isUse
       },
       success: (data) => {
-        console.log("页面元素状态已经改变")
-        swal('成功提醒', '成功，状态：success', 'success');
-        console.log(data);
+        swal('成功提醒', '成功');
       },
       error: (data) => {
-        console.log("error");
+        swal('失败提醒', '失败');
       }
     });
   }
@@ -190,8 +192,6 @@ export class LimittabComponent implements OnInit ,OnChanges {
    * 修改功能操作状态
    */
   upOptdateState(data){
-    console.log(1);
-    console.log(data);
     if(data.isUse=="Y"){
       data.isUse="N"
     }else if(data.isUse=="N"){
@@ -205,12 +205,10 @@ export class LimittabComponent implements OnInit ,OnChanges {
         'state': data.isUse
       },
       success: (data) => {
-        console.log("功能操作状态已经改变")
-        swal('成功提醒', '成功，状态：success', 'success');
-        console.log(data);
+        swal('成功提醒', '成功');
       },
       error: (data) => {
-        console.log("error");
+        swal('失败提醒', '失败');
       }
     });
   }
@@ -221,14 +219,11 @@ export class LimittabComponent implements OnInit ,OnChanges {
    * 修改文件控制状态
    */
   upFiledateState(data){
-    console.log(1);
-    console.log(data);
     if(data.isUse=="Y"){
       data.isUse="N"
     }else if(data.isUse=="N"){
       data.isUse="Y"
     }
-    console.log(data);
     this.ajax.post({
       url: '/limitFile/updateState',
       data: {
@@ -236,12 +231,10 @@ export class LimittabComponent implements OnInit ,OnChanges {
         'state': data.isUse
       },
       success: (data) => {
-        console.log("文件控制状态已经改变")
-        swal('成功提醒', '成功，状态：success', 'success');
-        console.log(data);
+        swal('成功提醒', '成功');
       },
       error: (data) => {
-        console.log("error");
+        swal('失败提醒', '失败');
       }
     });
   }
