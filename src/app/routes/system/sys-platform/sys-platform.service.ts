@@ -19,6 +19,7 @@ export class SysPlatformService {
       data:{
         sysCode: sysCode
       },
+      async: false,
       success: (res) => {
         if(res.success){
           swal({
@@ -45,8 +46,8 @@ export class SysPlatformService {
     let list;
     this.ajax.get({
       url: "/sys/listpage",
-      async: false,
       data: requestParams,
+      async: false,
       success: (res) => {
         if (!isNull(res)) {
           list = res;

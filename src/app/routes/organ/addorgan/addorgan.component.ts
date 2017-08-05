@@ -8,7 +8,7 @@ import {AddorganService} from "./addorgan.service";
 import {AddAdminService} from "../../system/add-admin/add-admin.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {isNullOrUndefined} from 'util';
-
+import {OrganComponent} from "../organ/organ.component";
 
 const swal = require('sweetalert');
 
@@ -40,7 +40,7 @@ export class AddorganComponent implements OnInit {
 
   //@Output() outputvalue = new EventEmitter<boolean>();
 
-  constructor(private patterns: PatternService,private tools: RzhtoolsService,
+  constructor(private patterns: PatternService,private tools: RzhtoolsService,private _parent:OrganComponent,
               public settings: SettingsService,private addAdminService: AddAdminService,
               private route: ActivatedRoute, private router:Router, private addOrganService: AddorganService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
@@ -140,6 +140,10 @@ export class AddorganComponent implements OnInit {
     switch(this.path){
       //添加机构
       case "addOrgan":
+        if(isNullOrUndefined(me.organ['areaCode'])){
+          swal('请选择区域', '区域参数必填', 'error');
+          return
+        }
         submitUrl = '/organ/add';
         submitData = me.organ;
         break;
@@ -182,6 +186,7 @@ export class AddorganComponent implements OnInit {
     }
     console.log("█ submitData ►►►",  submitData);
     me.addAdminService.submitRightPageData(submitUrl,submitData);
+    me._parent.ngOnInit()
   }
 
   // 取消

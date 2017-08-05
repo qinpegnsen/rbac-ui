@@ -93,7 +93,8 @@ export class AdminsComponent implements OnInit {
    * @param mgrCode
      */
   changeState(state,mgrCode){
-    this.admin.changeOrgManagerState(state,mgrCode)
+    this.admin.changeOrgManagerState(state,mgrCode);
+    this.queryDatas()
   }
 
   /**

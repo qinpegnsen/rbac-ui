@@ -32,13 +32,15 @@ export class SysPlatformComponent implements OnInit {
 
   //停用/启用系统
   quitSystem(checked,sysCode){
-    let me = this,submitUrl, successText;
-    if(checked) {
+    let me = this,submitUrl;
+    console.log("█ checked ►►►",  checked);
+    if(!checked) {
       submitUrl = '/sys/updateToY';
     }else{
       submitUrl = '/sys/updateToN';
     };
-    me.systemService.openOrCloseSys(submitUrl,sysCode)
+    me.systemService.openOrCloseSys(submitUrl,sysCode);
+    me.queryDatas()
   }
 
   //修改系统信息按钮跳转事件

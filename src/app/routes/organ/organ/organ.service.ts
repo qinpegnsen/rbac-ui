@@ -44,8 +44,10 @@ export class OrganService {
    * @param orgCode
      */
   changeState(state,orgCode){
-    this.ajax.post({
+    let me = this;
+    me.ajax.post({
       url: '/organ/updateState',
+      async:false,
       data: {
         orgCode: orgCode,
         state: state
@@ -58,7 +60,6 @@ export class OrganService {
           timer: 2000, //关闭时间，单位：毫秒
           showConfirmButton: false  //不显示按钮
         });
-        console.log('data', data);
       },
       error: (data) => {
         console.log('data', data);

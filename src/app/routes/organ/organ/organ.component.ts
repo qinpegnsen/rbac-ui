@@ -15,7 +15,7 @@ import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 })
 export class OrganComponent implements OnInit {
   private table;
-  private organs: Page = new Page();
+  public organs: Page = new Page();
   private buttonConfig;
   private addButton;
   public searchKey:string = '';
@@ -74,12 +74,13 @@ export class OrganComponent implements OnInit {
    * @param orgCode
      */
   changeState(state,orgCode){
-    this.organService.changeState(state,orgCode)
+    this.organService.changeState(state,orgCode);
+    this.queryDatas()
   }
 
 
   //查询机构列表
-  private queryDatas(event?:PageEvent) {
+  queryDatas(event?:PageEvent) {
     let me = this,activePage = 1;
     if(typeof event !== "undefined") activePage =event.activePage;
     let result = me.organService.getOrganListpage(activePage,this.searchKey);//查询机构列表

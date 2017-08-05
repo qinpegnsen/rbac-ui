@@ -7,6 +7,8 @@ import {AdminsService} from "../admins/admins.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {PatternService} from "../../../core/forms/pattern.service";
 import {SysPlatformService} from "../sys-platform/sys-platform.service";
+import {AdminsComponent} from "../admins/admins.component";
+
 
 @Component({
   selector: 'app-add-admin',
@@ -16,20 +18,23 @@ import {SysPlatformService} from "../sys-platform/sys-platform.service";
 })
 export class AddAdminComponent implements OnInit,OnChanges {
   private pageTitle:string = '';
-  private path:string;
-  private Admin:boolean = false;
-  private adminDetail:boolean = false;
-  private updatePwd:boolean = false;
-  private adminStates:string;
-  private systems:string;
-  private adr:string = '';
-  private newpwd:string;
-  private sysCode:string;
-  private admin = { }
+  private path:string;//当前路由
+  private Admin:boolean = false;//添加/修改管理员
+  private adminDetail:boolean = false;//查看详情
+  private updatePwd:boolean = false;//修改密码
+  private allotRoleOrGroup = false;//分配角色或角色组
+  private systems:string;//系统列表
+  private adr:string = '';//地址
+  private newpwd:string;//新密码
+  private sysCode:string;//系统编码
+  private admin = { };
+  private tempList = [];
 
-  constructor(public settings:SettingsService, private adminsService:AdminsService, private tools:RzhtoolsService,
-              private route:ActivatedRoute, private router:Router, private addOrgan:AddorganService,private systemService:SysPlatformService,
-              private patterns: PatternService,private addAdminService:AddAdminService) {
+  constructor(public settings:SettingsService, private adminsService:AdminsService,
+              private tools:RzhtoolsService,private router:Router,
+              private route:ActivatedRoute,  private systemService:SysPlatformService,
+              private addOrgan:AddorganService,private patterns: PatternService,
+              private adminsComponent:AdminsComponent,private addAdminService:AddAdminService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
@@ -38,7 +43,8 @@ export class AddAdminComponent implements OnInit,OnChanges {
   }
 
   // ng2Select
-  public items: Array<string>;
+  public Role: Array<object> = [{id:"1",text:"第一个option"},{id:"2",text:"第二个option"}];
+  public Group: Array<object> = [{id:"1",text:"第一个组"},{id:"2",text:"第二个组"}];
 
   public value: any = {};
   public _disabledV: string = '0';
@@ -53,11 +59,17 @@ export class AddAdminComponent implements OnInit,OnChanges {
     this.disabled = this._disabledV === '1';
   }
 
-  public selected(value: any): void {
+  public selectedRole(value: any): void {
+    console.log('Selected value is: ', value);
+  }
+  public selectedGroup(value: any): void {
     console.log('Selected value is: ', value);
   }
 
-  public removed(value: any): void {
+  public removedRole(value: any): void {
+    console.log('Removed value is: ', value);
+  }
+  public removedGroup(value: any): void {
     console.log('Removed value is: ', value);
   }
 
@@ -65,9 +77,13 @@ export class AddAdminComponent implements OnInit,OnChanges {
     console.log('New search input: ', value);
   }
 
-  public refreshValue(value: any): void {
+  public refreshValueRole(value: any): void {
     this.value = value;
   }
+  public refreshValueGroup(value: any): void {
+    this.value = value;
+  }
+
 
   ngOnInit() {
     //获取当前路由
@@ -114,19 +130,29 @@ export class AddAdminComponent implements OnInit,OnChanges {
         case "allotRole":
           console.log("█ \"分配角色或角色组\" ►►►", "分配角色或角色组");
           this.pageTitle = "分配角色或角色组";
+          this.allotRoleOrGroup = true;
           this.getMgrCode();//获取管理员编码(路由参数)
           this.admin = this.addAdminService.getAdminDetail(this.admin['mgrCode'])//获取某个管理员详情
-          let orgCode = this.admin['orgCode'];
-          this.systems = this.systemService.getSystemList();
-          //this.items = this.addAdminService.getRoleOrGroupList(this.sysCode,orgCode);
+          this.systems = this.systemService.getSystemList();//系统列表
           break;
       }
     });
 
   }
 
-  private getSysList(){
 
+  private selectedChange(){
+    this.tempList = this.addAdminService.getRoleList(this.sysCode);
+    let items = [],obj = {};
+    for (var i=0; i<this.tempList.length; i++){
+      obj = {
+        id:this.tempList[i].roleCode,
+        text:this.tempList[i].roleName
+      };
+      items.push(obj);
+    }
+    this.Role = items;
+    console.log("█ this.Role ►►►",  this.Role);
   }
 
 
@@ -218,7 +244,8 @@ export class AddAdminComponent implements OnInit,OnChanges {
         break;
     }
     console.log("█ submitData ►►►", submitData);
-    me.addAdminService.submitRightPageData(submitUrl, submitData)
+    me.addAdminService.submitRightPageData(submitUrl, submitData);
+    me.adminsComponent.ngOnInit()
   }
 
   // 取消

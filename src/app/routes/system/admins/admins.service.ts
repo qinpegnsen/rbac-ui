@@ -39,13 +39,14 @@ export class AdminsService {
   changeOrgManagerState(state,mgrCode){
     this.ajax.post({
       url: "/orgManager/updateState",
+      async:false,
       data: {
         mgrCode:mgrCode,
         state: state,
       },
       success: (res) => {
+        console.log("█ res ►►►",  res);
         if (res.success) {
-          console.log("█ res ►►►",  res);
           swal({
             title: '修改成功!',
             text: res.info,
@@ -54,8 +55,8 @@ export class AdminsService {
             showConfirmButton: false  //不显示按钮
           });
         }else{
-          let errorMsg = res.data.substring(res.data.indexOf('$$')+2,res.data.indexOf('@@'))
-          swal(res.info, errorMsg, 'error');
+          //let errorMsg = res.data.substring(res.data.indexOf('$$')+2,res.data.indexOf('@@'))
+          swal(res.info, '', 'error');
         }
       },
       error: (res) => {

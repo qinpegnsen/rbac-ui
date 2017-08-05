@@ -54,8 +54,8 @@
         <td>{{sys.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>
         <td>
           <label class="switch switch-lg" title="停/启用">
-            <input [checked]="check == 'Y'" [(ngModel)]="sys.isUse" #check="ngModel" type="checkbox"
-                   (change)="quitSystem(check.viewModel,sys.sysCode)">
+            <input [checked]="sys.isUse=='Y'" type="checkbox"
+                   (change)="quitSystem(sys.isUse=='Y',sys.sysCode)">
             <span></span>
           </label>
         </td>

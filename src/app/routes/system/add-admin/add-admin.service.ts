@@ -40,6 +40,7 @@ export class AddAdminService {
     me.ajax.post({
       url: submitUrl,
       data: submitData,
+      async:false,
       success: (res) => {
         console.log("█ res ►►►",  res);
         if (res.success){
@@ -68,7 +69,7 @@ export class AddAdminService {
    * @param orgCode
    * @returns {any}
      */
-  getRoleOrGroupList(sysCode,orgCode){
+  addRolesRelation(sysCode,orgCode){
     let list;
     this.ajax.post({
       url: '/orgManager/addRolesRelation',
@@ -79,15 +80,35 @@ export class AddAdminService {
       },
       success: (res) => {
         if(res.success){
-          list = res.data;
-          console.log("█ rolelist ►►►",  res);
+          //list = res.data;
+          console.log("█ addRolesRelation ►►►",  res);
         }
       },
       error: (res) => {
-        console.log("get systemDetail error");
+        console.log("get addRolesRelation error");
       }
     });
     return list;
   }
 
+
+  getRoleList(sysCode:string,orgCode?:string){
+    let list;
+    this.ajax.get({
+      url: '/role/list',
+      async:false,
+      data:{
+        sysCode: sysCode,
+        orgCode: orgCode
+      },
+      success: (res) => {
+        list = res;
+        console.log("█ getRoleList ►►►",  res);
+      },
+      error: (res) => {
+        console.log("get getRoleList error");
+      }
+    });
+    return list;
+  }
 }

@@ -201,7 +201,7 @@
       <!--修改密码 end-->
 
       <!--分配角色或角色组 start-->
-      <div class="panel-body">
+      <div class="panel-body" *ngIf="allotRoleOrGroup">
         <fieldset class="b0">
           <legend>{{pageTitle}}</legend>
         </fieldset>
@@ -218,20 +218,31 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">选择系统</label>
             <div class="col-sm-7">
-              <select class="form-control" name="sysCode" [required]="required" [(ngModel)]="sysCode" (change)="selected()">
-                <option value="" disabled selected>请选择系统</option>
-                <option *ngFor="let sys of systems" [value]="sys.sysCode" [selected]="sys.sysCode==sysCode">{{sys.sysName}}</option>
+              <select class="form-control" name="sysCode" [required]="required" [(ngModel)]="sysCode"
+                      (change)="selectedChange()">
+                <option *ngFor="let sys of systems" [value]="sys.sysCode" [selected]="sys.sysCode==sysCode">
+                  {{sys.sysName}}
+                </option>
               </select>
             </div>
           </div>
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-4 control-label">选择</label>
-            <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="请选择角色或角色组"></ng-select>
+            <label class="col-sm-4 control-label">选择角色</label>
+            <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Role" [disabled]="disabled"
+                       (data)="refreshValueRole($event)" (selected)="selectedRole($event)" (removed)="removedRole($event)"
+                       placeholder="请选择角色"></ng-select>
           </div>
         </fieldset>
-
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">选择角色组</label>
+            <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Group" [disabled]="disabled"
+                       (data)="refreshValueGroup($event)" (selected)="selectedGroup($event)" (removed)="removedGroup($event)"
+                       placeholder="请选择角色组"></ng-select>
+          </div>
+        </fieldset>
       </div>
       <!--分配角色或角色组 end-->
 
@@ -239,15 +250,18 @@
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
 
-        <!--添加系统-->
+        <!--添加管理员 -->
         <button class="ml btn btn-info pull-left" type="submit" (click)="submitAdminData()"
-                *ngIf="!adminDetail && !updateState" [disabled]="!addAdmin.form.valid">提交
+                *ngIf="Admin" [disabled]="!addAdmin.form.valid">提交
         </button>
 
-        <!--修改系统-->
+        <!--修改管理员-->
         <button class="ml btn btn-info pull-left" type="submit" (click)="toUpdateAdmin()" *ngIf="adminDetail">修改管理员
         </button>
 
+        <!--分配角色或角色组-->
+        <button class="ml btn btn-info pull-left" type="submit" (click)="allotRoleOrGroup()" *ngIf="allotRoleOrGroup">分配角色或角色组
+        </button>
       </div>
     </div>
 

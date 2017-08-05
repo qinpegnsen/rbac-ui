@@ -35,7 +35,6 @@ import {RzhButtonsModule} from "../routes/buttons/rzh-buttons.module";
 import {SelectAreaModule} from "./directives/select-area/select-area.module";
 import { StatePipe } from './pipe/state.pipe';
 import { AreaNamePipe } from './pipe/area-name.pipe';
-import { OrganTypePipe } from './pipe/organ-type.pipe';
 import { SelectModule } from 'ng2-select';
 
 // https://angular.io/styleguide#!#04-10
@@ -79,8 +78,7 @@ import { SelectModule } from 'ng2-select';
     ScrollableDirective,
     JqcloudDirective,
     StatePipe,
-    AreaNamePipe,
-    OrganTypePipe
+    AreaNamePipe
   ],
   exports: [
     CommonModule,
@@ -117,7 +115,6 @@ import { SelectModule } from 'ng2-select';
     SelectAreaModule,
     StatePipe,
     AreaNamePipe,
-    OrganTypePipe,
     SelectModule
   ]
 })
