@@ -11,7 +11,8 @@ const appChildRoutes: Routes = [
   {path: 'updateOrgan/:orgCode', component: AddorganComponent},
   {path: 'orgDetail/:orgCode', component: AddorganComponent},
   {path: 'updateBoss/:orgCode', component: AddorganComponent},
-  {path: 'updateType/:orgCode', component: AddorganComponent}
+  {path: 'updateType/:orgCode', component: AddorganComponent},
+  {path: 'allotRole/:orgCode', component: AddorganComponent}
 ];
 // 父路由，用于页面嵌套显示
 const routes:Routes = [

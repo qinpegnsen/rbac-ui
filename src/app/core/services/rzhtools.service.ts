@@ -263,7 +263,7 @@ export class RzhtoolsService {
    */
   private getAreaLevel = function (areaCode) {
     let level = 0;
-    if (isNull(areaCode)) {
+    if (isNullOrUndefined(areaCode)) {
       return level;
     }
     areaCode = areaCode.toString();

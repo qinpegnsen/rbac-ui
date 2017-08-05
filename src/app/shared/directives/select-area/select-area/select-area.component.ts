@@ -15,12 +15,14 @@ export class SelectAreaComponent implements OnInit {
   private areaCode: string = '';
   private adr: string = '';
   @Input() private required: boolean;
+  @Input() private selectedAreaName: string;
   @Output() myData = new EventEmitter();
 
   constructor(private tools: RzhtoolsService) {
   };
 
   ngOnInit() {
+    if (this.selectedAreaName != '' || !isNullOrUndefined(this.selectedAreaName))this.adr = this.selectedAreaName;
     /**
      * 点击区域选框外页面时，关闭选框
      * @type {SelectAreaComponent}

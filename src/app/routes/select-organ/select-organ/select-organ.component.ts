@@ -2,7 +2,7 @@
 import {AjaxService} from "../../../core/services/ajax.service";
 import { Component,EventEmitter, Input, Output, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {isNull} from "util";
+import {isNull,isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-select-organ',
@@ -11,7 +11,7 @@ import {isNull} from "util";
 })
 export class SelectOrganComponent implements OnInit {
   private organs:any;
-  private orgCode:string;
+  private orgCode:string = '';//初始化，为了让select框默认选中value=''的option
 
   @Input() private required:boolean;
   @Input() private organCode:string;
@@ -21,7 +21,7 @@ export class SelectOrganComponent implements OnInit {
   constructor(private ajax: AjaxService, private router:Router) { }
 
   ngOnInit() {
-    console.log("█ this.organCode ►►►",  this.organCode);
+    if (this.organCode != '' || !isNullOrUndefined(this.organCode))this.orgCode = this.organCode;
 
     this.ajax.get({
       url: "/organ/list",

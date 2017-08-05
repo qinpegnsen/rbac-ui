@@ -9,6 +9,7 @@ import {AddAdminService} from "../../system/add-admin/add-admin.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {isNullOrUndefined} from 'util';
 import {OrganComponent} from "../organ/organ.component";
+import {SysPlatformService} from "../../system/sys-platform/sys-platform.service";
 
 const swal = require('sweetalert');
 
@@ -16,42 +17,71 @@ const swal = require('sweetalert');
   selector: 'app-addorgan',
   templateUrl: './addorgan.component.html',
   styleUrls: ['./addorgan.component.scss'],
-  providers: [AddorganService,AddAdminService,RzhtoolsService]
+  providers: [AddorganService,AddAdminService,RzhtoolsService,SysPlatformService]
 })
 export class AddorganComponent implements OnInit {
-  private orgTypes:any;
-  private orgStates:any;
-  private organ = {};
-
-  private orgCode: string;
-  private roleGroupCode: string = '';
-  private roleCode: string = '';
-  private show: boolean = false;
-  private areas: any;
-  private path: string;
-  private pageTitle:string;
-
-  private Organ:boolean = false;
-  private detail:boolean = false;
-  private updateType:boolean = false;
-  private updateBoss:boolean = false;
-  private addRolesRelation:boolean = false;
-  private role:boolean = true;
-
-  //@Output() outputvalue = new EventEmitter<boolean>();
 
   constructor(private patterns: PatternService,private tools: RzhtoolsService,private _parent:OrganComponent,
-              public settings: SettingsService,private addAdminService: AddAdminService,
+              public settings: SettingsService,private addAdminService: AddAdminService,private systemService:SysPlatformService,
               private route: ActivatedRoute, private router:Router, private addOrganService: AddorganService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
+  private orgTypes:any;//机构类型，选择类型时需要
+  private orgStates:any;//机构类型
+  private organ = {};//机构
+
+  private orgCode: string;//机构编码
+  private systems: any;//系统列表
+  private sysCode: string;//系统编码，分配角色或角色组时选择系统
+  private path: string;//路由
+  private pageTitle:string;右弹窗标题
+
+  private Organ:boolean = false;//是否是添加或修改机构
+  private detail:boolean = false;//是否是查看详情
+  private updateType:boolean = false;//是否是修改机构类型
+  private updateBoss:boolean = false;//是否是修改机构负责人
+  private addRolesRelation:boolean = false;//是否是分配角色或角色组
+
+  // ng2Select start
+  private Role: Array<object>;//角色数组
+  private Group: Array<object>;//角色组数组
+  private selectedRoleStr:string;//已选角色拼接字符串
+  private selectedGroupStr:string;//已选角色组拼接字符串
+
+  private value:any = [];
+
+  private refreshValueRole(value: any): void {
+    this.selectedRoleStr = this.itemsToString(value);
+    //console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
+  }
+  private refreshValueGroup(value: any): void {
+    this.selectedGroupStr = this.itemsToString(value);
+    //console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
+  }
+
+  /**
+   * 将已经选择的角色或组的编码拼成字符串
+   * @param value
+   * @returns {string}
+     */
+  public itemsToString(value:Array<any> = []):string {
+    return value
+      .map((item:any) => {
+        return item.id;
+      }).join(',');
+  }
+  // ng2Select end
+
   ngOnInit() {
+    this.organ['type'] = '';//初始化，为了让select框默认选中value=''的option
+    this.organ['state'] = '';//初始化，为了让select框默认选中value=''的option
+
 
     //获取当前路由
     this.route.url.subscribe(urls => {
       this.path = urls[0].path;
-      console.log("█ this.path ►►►",  this.path);
+      //console.log("█ this.path ►►►",  this.path);
       switch(this.path){
         //添加机构
         case "addOrgan":
@@ -100,16 +130,60 @@ export class AddorganComponent implements OnInit {
           break;
 
         //添加角色或角色组
-        case "addRolesRelation":
+        case "allotRole":
           //console.log("█ \"添加角色或角色组\" ►►►",  "添加角色或角色组");
           this.addRolesRelation = true;
           this.pageTitle = "添加角色或角色组";
           this.getOrgCode();  //获取机构代码orgCode
           this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
+          this.systems = this.systemService.getSystemList();//系统列表
           break;
       }
     });
   }
+
+  /**
+   * 当选择的系统改变的时候
+   */
+  private selectedChange(){
+    this.getRoleList();//获取角色列表
+    this.getRoleGroupList();//获取角色组列表
+  }
+
+  /**
+   * 获取角色列表
+   */
+  private getRoleList(){
+    let oldArray = this.addAdminService.getRoleList(this.sysCode);
+    let newArray = [],obj = {};
+    for (var i=0; i<oldArray.length; i++){
+      obj = {
+        id:oldArray[i].roleCode,
+        text:oldArray[i].roleName
+      };
+      newArray.push(obj);
+    }
+    this.Role = newArray;
+    //console.log("█ this.Role ►►►",  this.Role);
+  }
+
+  /**
+   * 获取角色组列表
+   */
+  private getRoleGroupList(){
+    let oldArray = this.addAdminService.getRoleGroupList(this.sysCode);
+    let newArray = [],obj = {};
+    for (var i=0; i<oldArray.length; i++){
+      obj = {
+        id:oldArray[i].roleGroupCode,
+        text:oldArray[i].roleGroupName
+      };
+      newArray.push(obj);
+    }
+    this.Group = newArray;
+    //console.log("█ this.Group ►►►",  this.Group);
+  }
+
 
   //获取机构代码(路由参数)
   private getOrgCode(){
@@ -121,7 +195,7 @@ export class AddorganComponent implements OnInit {
 
   //获取区域数据
   private getAreaData(area){
-    console.log("█ area ►►►",  area);
+    //console.log("█ area ►►►",  area);
     let me = this;
     me.organ['areaCode'] = area.areaCode;
   }
@@ -171,22 +245,22 @@ export class AddorganComponent implements OnInit {
         };
         break;
       //添加角色或角色组
-      case "addRolesRelation":
+      case "allotRole":
         submitUrl = '/organ/addRolesRelation';
-        if(me.roleCode == '' && me.roleGroupCode == ''){
+        if(me.selectedRoleStr == '' && me.selectedGroupStr == ''){
           swal('信息不完善', '角色和角色组编码不能同时为空', 'info');
           return;
         };
         submitData = {
           "orgCode":me.orgCode,
-          "roleCode": me.roleCode,
-          "roleGroupCode": me.roleGroupCode
+          "roleCodes": me.selectedRoleStr,
+          "roleGroupCodes": me.selectedGroupStr
         };
         break;
     }
-    console.log("█ submitData ►►►",  submitData);
-    me.addAdminService.submitRightPageData(submitUrl,submitData);
-    me._parent.ngOnInit()
+    //console.log("█ submitData ►►►",  submitData);
+    me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+    me._parent.ngOnInit();//刷新父页面数据
   }
 
   // 取消

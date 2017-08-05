@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {SettingsService} from "../../../core/settings/settings.service";
+import {isNullOrUndefined} from 'util';
 const swal = require('sweetalert');
 
 @Injectable()
@@ -9,7 +10,11 @@ export class AddAdminService {
   constructor(private ajax: AjaxService, public settings: SettingsService) {
   }
 
-  //获取某个系统详情
+  /**
+   * 获取某个系统详情
+   * @param mgrCode
+   * @returns {any}
+     */
   getAdminDetail(mgrCode) {
     let result;
     this.ajax.get({
@@ -21,7 +26,7 @@ export class AddAdminService {
       success: (res) => {
         if (res.success) {
           result = res.data;
-          console.log("█ res ►►►", res);
+          //console.log("█ res ►►►", res);
         }
       },
       error: (res) => {
@@ -43,7 +48,7 @@ export class AddAdminService {
       data: submitData,
       async: false,
       success: (res) => {
-        console.log("█ res ►►►", res);
+        //console.log("█ res ►►►", res);
         if (res.success) {
           this.settings.closeRightPageAndRouteBack()//关闭右侧页面并返回上级路由
           swal({
@@ -54,7 +59,12 @@ export class AddAdminService {
             showConfirmButton: false  //不显示按钮
           });
         } else {
-          let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+          let errorMsg;
+          if(isNullOrUndefined(res.data)){
+            errorMsg = res.info
+          }else {
+            errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+          }
           swal(res.info, errorMsg, 'error');
         }
       },
@@ -64,33 +74,6 @@ export class AddAdminService {
     })
   }
 
-  /**
-   * 获取角色或角色组方法
-   * @param mgrCode
-   * @param orgCode
-   * @returns {any}
-     */
-  addRolesRelation(sysCode,orgCode){
-    let list;
-    this.ajax.post({
-      url: '/orgManager/addRolesRelation',
-      async: false,
-      data: {
-        sysCode: sysCode,
-        orgCode: orgCode
-      },
-      success: (res) => {
-        if(res.success){
-          //list = res.data;
-          console.log("█ addRolesRelation ►►►",  res);
-        }
-      },
-      error: (res) => {
-        console.log("get addRolesRelation error");
-      }
-    });
-    return list;
-  }
 
   /**
    * 获取角色列表
@@ -109,7 +92,7 @@ export class AddAdminService {
       },
       success: (res) => {
         list = res;
-        console.log("█ getRoleList ►►►",  res);
+        //console.log("█ getRoleList ►►►",  res);
       },
       error: (res) => {
         console.log("get getRoleList error");
@@ -124,21 +107,22 @@ export class AddAdminService {
    * @param orgCode
    * @returns {any}
    */
-  getRoleGroupList(sysCode:string,orgCode?:string){
+  getRoleGroupList(sysCode:string,orgCode?:string,roleGroupName?:string){
     let list;
     this.ajax.get({
-      url: '/role/list',
+      url: '/roleGroup/list',
       async:false,
       data:{
         sysCode: sysCode,
-        orgCode: orgCode
+        orgCode: orgCode,
+        roleGroupName:roleGroupName
       },
       success: (res) => {
         list = res;
-        console.log("█ getRoleList ►►►",  res);
+        //console.log("█ getRoleGroupList ►►►",  res);
       },
       error: (res) => {
-        console.log("get getRoleList error");
+        console.log("get getRoleGroupList error");
       }
     });
     return list;

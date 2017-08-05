@@ -30,10 +30,14 @@ export class SysPlatformComponent implements OnInit {
 
   }
 
-  //停用/启用系统
+  /**
+   * 停用/启用系统
+   * @param checked
+   * @param sysCode
+     */
   quitSystem(checked,sysCode){
     let me = this,submitUrl;
-    console.log("█ checked ►►►",  checked);
+    //console.log("█ checked ►►►",  checked);
     if(!checked) {
       submitUrl = '/sys/updateToY';
     }else{
@@ -43,17 +47,26 @@ export class SysPlatformComponent implements OnInit {
     me.queryDatas()
   }
 
-  //修改系统信息按钮跳转事件
+  /**
+   * 修改系统信息按钮跳转事件
+   * @param sysCode
+     */
   changeSysInfo(sysCode){
     this.router.navigate(['/main/system/sys-platform/updateSystem',sysCode]);
   }
 
-  //查看某个系统详情
+  /**
+   * 查看某个系统详情
+   * @param sysCode
+     */
   lookSysDetail(sysCode){
     this.router.navigate(['/main/system/sys-platform/sysDetail',sysCode]);
   }
 
-  //查询系统列表
+  /**
+   * 查询系统列表
+   * @param event
+     */
   private queryDatas(event?:PageEvent) {
     let me = this,activePage = 1,requestParams;
     if(typeof event !== "undefined") activePage =event.activePage;

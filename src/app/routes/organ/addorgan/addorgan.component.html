@@ -12,7 +12,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>机构名称</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="orgName" required [(ngModel)]="organ.orgName" #orgName="ngModel" placeholder="请输入机构名称"/>
+              <input class="form-control" type="text" name="orgName" required [(ngModel)]="organ.orgName"
+                     #orgName="ngModel" placeholder="请输入机构名称"/>
             </div>
           </div>
           <div [hidden]="orgName.valid || orgName.pristine"
@@ -32,7 +33,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">上级机构编码</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="preCode" [(ngModel)]="organ.preCode" placeholder="请填写上级机构编码"/>
+              <input class="form-control" type="text" name="preCode" [(ngModel)]="organ.preCode"
+                     placeholder="请填写上级机构编码"/>
             </div>
           </div>
         </fieldset>
@@ -40,7 +42,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>区域</label>
             <div class="col-sm-7">
-              <app-select-area [required]="true" (myData)="getAreaData($event)"></app-select-area>
+              <app-select-area [required]="true" [selectedAreaName]="organ.areaCode | areaName" (myData)="getAreaData($event)"></app-select-area>
             </div>
           </div>
         </fieldset>
@@ -56,7 +58,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>电话</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="tel" required [(ngModel)]="organ.tel" #tel="ngModel" [pattern]="patterns.tel" placeholder="请输入机构电话"/>
+              <input class="form-control" type="text" name="tel" required [(ngModel)]="organ.tel" #tel="ngModel"
+                     [pattern]="patterns.tel" placeholder="请输入机构电话"/>
             </div>
           </div>
           <div [hidden]="tel.valid || tel.pristine"
@@ -68,7 +71,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>负责人</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="orgBoss" required [(ngModel)]="organ.orgBoss" #orgBoss="ngModel" placeholder="请输入负责人姓名"/>
+              <input class="form-control" type="text" name="orgBoss" required [(ngModel)]="organ.orgBoss"
+                     #orgBoss="ngModel" placeholder="请输入负责人姓名"/>
             </div>
           </div>
           <div [hidden]="orgBoss.valid || orgBoss.pristine"
@@ -80,7 +84,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>负责人电话</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="bossPhone" required [(ngModel)]="organ.bossPhone" #bossPhone="ngModel" [pattern]="patterns.phone" placeholder="请输入负责人电话"/>
+              <input class="form-control" type="text" name="bossPhone" required [(ngModel)]="organ.bossPhone"
+                     #bossPhone="ngModel" [pattern]="patterns.phone" placeholder="请输入负责人电话"/>
             </div>
           </div>
           <div [hidden]="bossPhone.valid || bossPhone.pristine"
@@ -107,7 +112,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">机构职责</label>
             <div class="col-sm-7">
-              <input class="form-control" name="duty" id="duty" [(ngModel)]="organ.duty" placeholder="请选择机构职责" />
+              <input class="form-control" name="duty" id="duty" [(ngModel)]="organ.duty" placeholder="请选择机构职责"/>
             </div>
           </div>
         </fieldset>
@@ -132,7 +137,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">机构名称</label>
             <div class="col-sm-7">
-              <input class="form-control" readonly [value]="organ.orgName" />
+              <input class="form-control" readonly [value]="organ.orgName"/>
             </div>
           </div>
         </fieldset>
@@ -140,7 +145,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>负责人</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="orgBoss" required [(ngModel)]="organ.orgBoss" #orgBoss="ngModel" placeholder="请输入负责人姓名"/>
+              <input class="form-control" type="text" name="orgBoss" required [(ngModel)]="organ.orgBoss"
+                     #orgBoss="ngModel" placeholder="请输入负责人姓名"/>
             </div>
           </div>
           <div [hidden]="orgBoss.valid || orgBoss.pristine"
@@ -152,7 +158,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>负责人电话</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="bossPhone" required [(ngModel)]="organ.bossPhone" #bossPhone="ngModel" [pattern]="patterns.phone" placeholder="请输入负责人电话"/>
+              <input class="form-control" type="text" name="bossPhone" required [(ngModel)]="organ.bossPhone"
+                     #bossPhone="ngModel" [pattern]="patterns.phone" placeholder="请输入负责人电话"/>
             </div>
           </div>
           <div [hidden]="bossPhone.valid || bossPhone.pristine"
@@ -173,7 +180,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">机构名称</label>
             <div class="col-sm-7">
-              <input class="form-control" readonly [value]="organ.orgName" />
+              <input class="form-control" readonly [value]="organ.orgName"/>
             </div>
           </div>
         </fieldset>
@@ -182,8 +189,10 @@
             <label class="col-sm-4 control-label"><i>*</i>类型</label>
             <div class="col-sm-7">
               <select class="form-control" name="type" required [(ngModel)]="organ.type" #type="ngModel">
-                <option value="" disabled [selected]="type==''">请选择机构类型</option>
-                <option [value]="orgType.key" [selected]="value==type" *ngFor="let orgType of orgTypes">{{orgType.val}}</option>
+                <option value="" disabled>请选择机构类型</option>
+                <option [value]="orgType.key" *ngFor="let orgType of orgTypes">
+                  {{orgType.val}}
+                </option>
               </select>
             </div>
           </div>
@@ -205,25 +214,38 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">机构名称</label>
             <div class="col-sm-7">
-              <input class="form-control" readonly [value]="organ.orgName" />
-            </div>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-4 control-label">角色编码</label>
-            <div class="col-sm-7">
-              <input class="form-control" type="text" name="roleCode" [(ngModel)]="roleCode" placeholder="请输入角色编码"/>
+              <input class="form-control" readonly [value]="organ.orgName"/>
             </div>
           </div>
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-4 control-label">角色组编码</label>
+            <label class="col-sm-4 control-label">选择系统</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="roleGroupCode" [(ngModel)]="roleGroupCode" placeholder="请输入角色组编码"/>
+              <select class="form-control" name="sysCode" required [(ngModel)]="sysCode"
+                      (change)="selectedChange()">
+                <option value="" disabled>请选择系统</option>
+                <option *ngFor="let sys of systems" [value]="sys.sysCode">
+                  {{sys.sysName}}
+                </option>
+              </select>
             </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">选择角色</label>
+            <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Role"
+                       [disabled]="!addOrganForm.form.valid"
+                       (data)="refreshValueRole($event)" placeholder="请选择角色"></ng-select>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">选择角色组</label>
+            <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Group"
+                       [disabled]="!addOrganForm.form.valid"
+                       (data)="refreshValueGroup($event)" placeholder="请选择角色组"></ng-select>
           </div>
         </fieldset>
       </div>
@@ -308,22 +330,34 @@
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
 
         <!--添加机构-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="Organ" [disabled]="!addOrganForm.form.valid" >提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="Organ"
+                [disabled]="!addOrganForm.form.valid">提交信息
+        </button>
 
         <!--从详情转修改-->
-        <button class="ml btn btn-info pull-left" type="button" (click)="toUpdateOrgan()" *ngIf="detail">修改机构信息</button>
+        <button class="ml btn btn-info pull-left" type="button" (click)="toUpdateOrgan()" *ngIf="detail"
+                [disabled]="!addOrganForm.form.valid">修改机构信息
+        </button>
 
         <!--修改机构负责人-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateBoss" [disabled]="!addOrganForm.form.valid">确认修改负责人</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateBoss"
+                [disabled]="!addOrganForm.form.valid">确认修改负责人
+        </button>
 
         <!--修改机构状态-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateState">确认修改状态</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateState"
+                [disabled]="!addOrganForm.form.valid">确认修改状态
+        </button>
 
         <!--修改机构类型-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateType">确认修改类型</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="updateType"
+                [disabled]="!addOrganForm.form.valid">确认修改类型
+        </button>
 
         <!--修改机构类型-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="addRolesRelation">确认添加</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitOrganData()" *ngIf="addRolesRelation"
+                [disabled]="!addOrganForm.form.valid">确认添加
+        </button>
       </div>
     </div>
 

@@ -26,7 +26,7 @@
     <table class="table table-striped" #systems="rzhDataTable" [rzhData]="sys" (pageChange)="queryDatas($event)">
       <thead>
       <tr>
-        <th class="col-md-1 unselectable text-center sort-num">
+        <th class="w5 unselectable text-center sort-num">
           序号
         </th>
         <th class="col-md-2 unselectable text-center">
@@ -53,15 +53,15 @@
         <td>{{sys.remarks}}</td>
         <td>{{sys.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>
         <td>
-          <label class="switch switch-lg" title="停/启用">
+          <label class="switch switch-md" title="停/启用">
             <input [checked]="sys.isUse=='Y'" type="checkbox"
                    (change)="quitSystem(sys.isUse=='Y',sys.sysCode)">
             <span></span>
           </label>
         </td>
         <td>
-          <button class="btn btn-primary fa fa-pencil btn-sm" (click)="changeSysInfo(sys.sysCode)" title="修改"></button>
-          <button class="btn btn-green icon-magnifier-add btn-sm" (click)="lookSysDetail(sys.sysCode)"
+          <button class="btn btn-primary fa fa-pencil btn-xs" (click)="changeSysInfo(sys.sysCode)" title="修改"></button>
+          <button class="btn btn-green icon-magnifier-add btn-xs" (click)="lookSysDetail(sys.sysCode)"
                   title="详情"></button>
         </td>
       </tr>
@@ -73,8 +73,8 @@
             <div class="text-muted"><strong>第 {{sys.genStartRow()}} 至 {{sys.genEndRow()}} 条，共 {{sys.totalRow}}
               条</strong></div>
           </div>
-          <div class="col-sm-5">
-            <div style="float: right">
+          <div class="col-sm-7">
+            <div class="pull-right">
               <rzhBootstrapPaginator></rzhBootstrapPaginator>
             </div>
           </div>

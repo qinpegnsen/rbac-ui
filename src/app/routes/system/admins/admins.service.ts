@@ -45,7 +45,7 @@ export class AdminsService {
         state: state,
       },
       success: (res) => {
-        console.log("█ res ►►►",  res);
+        //console.log("█ res ►►►",  res);
         if (res.success) {
           swal({
             title: '修改成功!',

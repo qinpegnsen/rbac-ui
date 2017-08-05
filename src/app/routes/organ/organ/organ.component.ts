@@ -37,6 +37,7 @@ export class OrganComponent implements OnInit {
       {
         title:"编辑",
         type: "update",
+        size: "xs",
         callback:function(result,orgCode){
           result.then((id)=>{
             me.router.navigate(['/main/organ/updateOrgan',orgCode]);
@@ -46,9 +47,20 @@ export class OrganComponent implements OnInit {
       {
         title:"详情",
         type: "details",
+        size: "xs",
         callback:function(result,orgCode) {
           result.then((id)=> {
             me.router.navigate(['/main/organ/orgDetail',orgCode]);
+          })
+        }
+      },
+      {
+        title:"角色分配",
+        type: "add",
+        size: "xs",
+        callback:function(result,orgCode) {
+          result.then((id)=> {
+            me.router.navigate(['/main/organ/allotRole',orgCode]);
           })
         }
       }

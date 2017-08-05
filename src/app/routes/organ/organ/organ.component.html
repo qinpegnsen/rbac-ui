@@ -48,7 +48,7 @@
           <rzhDefaultSorter by="state">机构状态</rzhDefaultSorter>
         </th>
         <th class="col-md-1 unselectable text-center">修改状态</th>
-        <th class="col-md-1 unselectable text-center">操作</th>
+        <th class="col-md-2 unselectable text-center">操作</th>
       </tr>
       </thead>
       <tbody>
@@ -65,11 +65,11 @@
         </td>
         <td>{{organ.state | rzhState:'1008'}}</td>
         <td>
-          <button class="btn btn-info btn-sm fa fa-pause" *ngIf="organ.state=='NOTCERT'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
-          <button class="btn btn-info btn-sm fa fa-pause" *ngIf="organ.state=='OPEN'" title="暂停" (click)="changeState('PAUSE',organ.orgCode)"></button>
-          <button class="btn btn-info btn-sm fa fa-play" *ngIf="organ.state=='PAUSE'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
-          <button class="btn btn-info btn-sm fa fa-square" *ngIf="organ.state=='PAUSE'" title="关闭" (click)="changeState('CLOSE',organ.orgCode)"></button>
-          <button class="btn btn-info btn-sm fa fa-trash" *ngIf="organ.state=='CLOSE'" title="删除" (click)="changeState('DELETE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="organ.state=='NOTCERT'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="organ.state=='OPEN'" title="暂停" (click)="changeState('PAUSE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-play" *ngIf="organ.state=='PAUSE'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-square" *ngIf="organ.state=='PAUSE'" title="关闭" (click)="changeState('CLOSE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-trash" *ngIf="organ.state=='CLOSE'" title="删除" (click)="changeState('DELETE',organ.orgCode)"></button>
         </td>
         <td>
           <app-buttons [config]="option" (callback)="option.callback($event,organ.orgCode)"
@@ -79,13 +79,13 @@
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="7">
+        <td colspan="9">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{organs.genStartRow()}} 至 {{organs.genEndRow()}} 条，共 {{organs.totalRow}}
               条</strong></div>
           </div>
-          <div class="col-sm-5">
-            <div style="float: right">
+          <div class="col-sm-7">
+            <div class="pull-right">
               <rzhBootstrapPaginator></rzhBootstrapPaginator>
             </div>
           </div>

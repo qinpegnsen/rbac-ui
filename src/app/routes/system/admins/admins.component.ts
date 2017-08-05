@@ -34,6 +34,7 @@ export class AdminsComponent implements OnInit {
       {
         title:"编辑",
         type: "update",
+        size: "xs",
         callback:function(result,mgrCode){
           result.then((id)=>{
             me.router.navigate(['/main/system/admins/updateAdmin',mgrCode]);
@@ -43,6 +44,7 @@ export class AdminsComponent implements OnInit {
       {
         title:"详情",
         type: "details",
+        size: "xs",
         callback:function(result,mgrCode) {
           result.then((id)=> {
             me.router.navigate(['/main/system/admins/adminDetail',mgrCode]);
@@ -52,6 +54,7 @@ export class AdminsComponent implements OnInit {
       {
         title:"角色分配",
         type: "add",
+        size: "xs",
         callback:function(result,mgrCode) {
           result.then((id)=> {
             me.router.navigate(['/main/system/admins/allotRole',mgrCode]);
@@ -61,9 +64,12 @@ export class AdminsComponent implements OnInit {
     ];
   }
 
-  //从子组件获取所选区域数据
+  /**
+   * 从子组件获取所选区域数据
+   * @param outData
+     */
   getAreaData(outData){
-    console.log("█ outData ►►►",  outData);
+    //console.log("█ outData ►►►",  outData);
     this.areaCode = outData.areaCode;
     this.queryDatas()//获取管理员表格数据
   }
@@ -73,7 +79,7 @@ export class AdminsComponent implements OnInit {
    * @param orgCode
      */
   getOrganCode(orgCode){
-    console.log("█ orgCode ►►►",  orgCode);
+    //console.log("█ orgCode ►►►",  orgCode);
     this.orgCode = orgCode;
     this.queryDatas()//获取管理员表格数据
   }

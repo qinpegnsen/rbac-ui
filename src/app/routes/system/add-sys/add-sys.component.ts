@@ -38,13 +38,13 @@ export class AddSysComponent implements OnInit {
       switch(me.path) {
         //添加系统
         case "addSystem":
-          console.log("█ \"添加系统\" ►►►",  "添加系统");
+          //console.log("█ \"添加系统\" ►►►",  "添加系统");
           me.pageTitle = "添加系统";
           break;
 
         //查看系统详情
         case "sysDetail":
-          console.log("█ \"查看系统详情\" ►►►",  "查看系统详情");
+          //console.log("█ \"查看系统详情\" ►►►",  "查看系统详情");
           me.sysDetail = true;//属于查看详情，需要隐藏可编辑表单
           me.pageTitle = "系统详情";
           me.getSysCode();//获取系统代码(路由参数)
@@ -53,7 +53,7 @@ export class AddSysComponent implements OnInit {
 
         //修改系统信息
         case "updateSystem":
-          console.log("█ \"修改系统信息\" ►►►",  "修改系统信息");
+          //console.log("█ \"修改系统信息\" ►►►",  "修改系统信息");
           me.pageTitle = "修改系统";
           me.getSysCode();//获取系统代码(路由参数)
           me.system = me.addSysService.getSystemDetail(this.system['sysCode'])//获取某个系统详情
@@ -62,14 +62,19 @@ export class AddSysComponent implements OnInit {
 
     });
   }
-  //获取系统代码(路由参数)
+
+  /**
+   * 获取系统代码(路由参数)
+   */
   getSysCode(){
     this.route.params.subscribe(params => {
       this.system['sysCode'] = params['sysCode'];
     });
   }
 
-  //从详情去修改
+  /**
+   * 从详情去修改
+   */
   toUpdateSystem(){
     this.settings.closeRightPage(); //关闭右侧滑动页面
     this.router.navigate(['/main/system/sys-platform/updateSystem',this.system['sysCode']], { replaceUrl: true });
@@ -90,9 +95,9 @@ export class AddSysComponent implements OnInit {
         submitUrl = '/sys/update';
         break;
     }
-    console.log("█ submitData ►►►",  submitData);
-    me.addAdminService.submitRightPageData(submitUrl,submitData);
-    me.sysPlatformComponent.ngOnInit()
+    //console.log("█ submitData ►►►",  submitData);
+    me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+    me.sysPlatformComponent.ngOnInit()//刷新父页面数据
   }
 
   // 取消

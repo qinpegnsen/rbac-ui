@@ -19,7 +19,7 @@ export class AddorganService {
       async: false,
       success: (res) => {
         orgTypes = res;
-        console.log("█ res ►►►",  res);
+        //console.log("█ res ►►►",  res);
       },
       error: (res) => {
         console.log("get orgTypes error");
@@ -39,7 +39,7 @@ export class AddorganService {
       async: false,
       success: (res) => {
         orgStates = res;
-        console.log("█ res ►►►",  res);
+        //console.log("█ res ►►►",  res);
       },
       error: (res) => {
         console.log("get orgStates error");
@@ -64,7 +64,7 @@ export class AddorganService {
       success: (res) => {
         if(res.success){
           organ = res.data;
-          console.log("█ organ ►►►",  organ);
+          //console.log("█ organ ►►►",  organ);
         }
       },
       error: (res) => {

@@ -3,7 +3,7 @@
     <!-- START panel-->
     <div class="panel-default">
       <!--可编辑表单 start-->
-      <div class="panel-body"  *ngIf="!sysDetail">
+      <div class="panel-body" *ngIf="!sysDetail">
         <fieldset class="b0">
           <legend>{{pageTitle}}</legend>
         </fieldset>
@@ -12,11 +12,12 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>系统名称</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="sysName" required [(ngModel)]="system.sysName" #sysName="ngModel" placeholder="请输入系统名称"/>
+              <input class="form-control" type="text" name="sysName" required [(ngModel)]="system.sysName"
+                     #sysName="ngModel" placeholder="请输入系统名称"/>
             </div>
           </div>
           <div [hidden]="sysName.valid || sysName.pristine"
-               class="col-sm-8 right text-danger">
+               class="col-sm-8 pull-right text-danger">
             系统名称不可缺少
           </div>
         </fieldset>
@@ -24,11 +25,12 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>系统网址</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" required name="sysUrl" [(ngModel)]="system.sysUrl" #sysUrl="ngModel" placeholder="请填写系统网址"/>
+              <input class="form-control" type="text" required name="sysUrl" [(ngModel)]="system.sysUrl"
+                     #sysUrl="ngModel" placeholder="请填写系统网址"/>
             </div>
           </div>
           <div [hidden]="sysUrl.valid || sysUrl.pristine"
-               class="col-sm-8 right text-danger">
+               class="col-sm-8 pull-right text-danger">
             系统网址不可缺少
           </div>
         </fieldset>
@@ -36,7 +38,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">系统LOGO</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="sysLogo" [(ngModel)]="system.sysLogo" #sysLogo="ngModel" placeholder="请输入系统LOGO"/>
+              <input class="form-control" type="text" name="sysLogo" [(ngModel)]="system.sysLogo" #sysLogo="ngModel"
+                     placeholder="请输入系统LOGO"/>
             </div>
           </div>
         </fieldset>
@@ -44,7 +47,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">备注</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="remarks" [(ngModel)]="system.remarks" #remarks="ngModel" placeholder="备注"/>
+              <input class="form-control" type="text" name="remarks" [(ngModel)]="system.remarks" #remarks="ngModel"
+                     placeholder="备注"/>
             </div>
           </div>
         </fieldset>
@@ -94,10 +98,14 @@
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
 
         <!--添加系统-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="submitSysData()" *ngIf="!sysDetail" [disabled]="!addSystem.form.valid" >提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitSysData()" *ngIf="!sysDetail"
+                [disabled]="!addSystem.form.valid">提交信息
+        </button>
 
         <!--修改系统-->
-        <button class="ml btn btn-info pull-left" type="submit" (click)="toUpdateSystem()" *ngIf="sysDetail">修改信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" (click)="toUpdateSystem()" *ngIf="sysDetail"
+                [disabled]="!addSystem.form.valid">修改信息
+        </button>
       </div>
     </div>
 
