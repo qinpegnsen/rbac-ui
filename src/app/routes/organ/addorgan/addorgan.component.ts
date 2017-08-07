@@ -119,11 +119,11 @@ export class AddorganComponent implements OnInit {
           this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
 
-        //修改机构类型
+        //修改机构性质
         case "updateType":
-          //console.log("█ \"修改机构类型\" ►►►",  "修改机构类型");
+          //console.log("█ \"修改机构性质\" ►►►",  "修改机构性质");
           this.updateType = true;
-          this.pageTitle = "修改机构类型";
+          this.pageTitle = "修改机构性质";
           this.orgTypes = this.addOrganService.getOrgTypes(); //获取机构类型列表
           this.getOrgCode();  //获取机构代码orgCode
           this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息

@@ -256,6 +256,11 @@
                 *ngIf="Admin" [disabled]="!addAdmin.form.valid">提交
         </button>
 
+        <!--修改密码 -->
+        <button class="ml btn btn-info pull-left" type="submit" (click)="submitAdminData()"
+                *ngIf="updatePwd" [disabled]="!addAdmin.form.valid">修改密码
+        </button>
+
         <!--修改管理员-->
         <button class="ml btn btn-info pull-left" type="submit" (click)="toUpdateAdmin()" *ngIf="adminDetail"
                 [disabled]="!addAdmin.form.valid">修改管理员
