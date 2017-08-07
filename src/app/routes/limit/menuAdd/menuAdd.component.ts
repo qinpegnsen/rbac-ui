@@ -3,8 +3,10 @@ import {SettingsService} from '../../../core/settings/settings.service';
 import {ActivatedRoute,Router} from '@angular/router';
 import {AjaxService} from "../../../core/services/ajax.service";
 import { FileUploader } from 'ng2-file-upload';
+import {LimitComponent} from "../limit/limit.component";
+import {LimittabComponent} from "../limittab/limittab.component";
 const swal = require('sweetalert');
-const uploadUrl = "/upload/local/file";  //图片上传路径
+const uploadUrl = "/limitFile/uploadLimitFile";  //图片上传路径(调取上传的接口)
 
 @Component({
   selector: 'app-rightpage',
@@ -14,8 +16,13 @@ const uploadUrl = "/upload/local/file";  //图片上传路径
 })
 
 export class MenuAddComponent implements OnInit {
-  public uploader:FileUploader = new FileUploader({url: uploadUrl, queueLimit: 1}); //初始化上传方法
+  public uploader:FileUploader = new FileUploader({
+    url: uploadUrl,
+    itemAlias:"limitFile",
+    queueLimit: 1
+  }); //初始化上传方法
   private queryId:number;//获取添加，修改的ID
+  private uid;//声明保存获取到的暗码
   private limitForm = {
     sysCode: '',
     menuName: '',
@@ -30,10 +37,9 @@ export class MenuAddComponent implements OnInit {
   /**
    * 构造 初始化
    * **/
-  constructor(private ajax:AjaxService, public settings:SettingsService, private router:Router, private routeInfo:ActivatedRoute, private route:ActivatedRoute) {
+  constructor(private ajax:AjaxService, public settings:SettingsService, private router:Router, private routeInfo:ActivatedRoute, private route:ActivatedRoute, private limitComponent:LimitComponent, private limittabComponent:LimittabComponent) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
-
 
 
   ngOnInit() {
@@ -48,6 +54,31 @@ export class MenuAddComponent implements OnInit {
      });*/
 
     _this.limitForm.sysCode = _this.routeInfo.snapshot.queryParams['sysCode'];
+
+
+    /**
+     * 获得暗码
+     */
+    _this.ajax.get({
+      url: '/upload/basic/uid',
+      data: {},
+      success: (res) => {
+        console.log("█ res ►►►", res);
+        if (res.success) {
+          _this.uid = res.data;//把获取的暗码赋值给uid
+          console.log('获取的暗码成功！', _this.uid);
+          //_this.outputvalue.emit(true);//提交成功后向父组件传值
+        } else {
+          let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+          swal(res.info, errorMsg, 'error');
+        }
+      },
+      error: (data) => {
+        swal('提交失败');
+      }
+    });
+
+
   }
 
   /**
@@ -69,6 +100,7 @@ export class MenuAddComponent implements OnInit {
       console.log(value);
       _this.ajax.post({
         url: '/limitPage/add',
+        async: false,
         data: {
           'sysCode': _this.limitForm.sysCode,
           'pageName': value.pageName,
@@ -83,6 +115,8 @@ export class MenuAddComponent implements OnInit {
           if (res.success) {
             _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
             swal('提交成功！', '列表已自动更新');
+
+
             //_this.outputvalue.emit(true);//提交成功后向父组件传值
           } else {
             let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -92,7 +126,8 @@ export class MenuAddComponent implements OnInit {
         error: (data) => {
           swal('提交失败');
         }
-      });
+      })
+      _this.limittabComponent.pageMenus();
     }
     //添加功能操作列表
     else if (_this.queryId == 4) {
@@ -125,10 +160,15 @@ export class MenuAddComponent implements OnInit {
     }
     //添加文件控制列表
     else if (_this.queryId == 6) {
+
       /**
-       * 执行上传
+       * 构建form时，传入自定义参数
+       * @param item
        */
-      _this.uploader.uploadAll();
+      _this.uploader.onBuildItemForm = function(fileItem, form){
+        form.append('fileuuid', _this.uid);
+      };
+
       /**
        * 上传成功处理
        * @param item 成功的文件列表
@@ -139,7 +179,6 @@ export class MenuAddComponent implements OnInit {
       _this.uploader.onSuccessItem = function (item, response, status, headers) {
         let res = JSON.parse(response);
         if (res.success) {
-          let code = res.data;
           /**
            * 上传文件成功，保存数据库
            */
@@ -148,7 +187,7 @@ export class MenuAddComponent implements OnInit {
             data: {
               'sysCode': _this.limitForm.sysCode,
               'fileName': value.fileName,
-              'fileuuid': code
+              'fileuuid': _this.uid
             },
             success: (res) => {
               if (res.success) {
@@ -166,7 +205,7 @@ export class MenuAddComponent implements OnInit {
         } else {
           swal('上传失败', '文件上传失败！', 'error');
         }
-      }
+      };
       /**
        * 上传失败处理
        * @param item 失败的文件列表
@@ -176,7 +215,11 @@ export class MenuAddComponent implements OnInit {
        */
       _this.uploader.onErrorItem = function (item, response, status, headers) {
         swal('上传失败', '文件上传失败！', 'error');
-      }
+      };
+      /**
+       * 执行上传
+       */
+      _this.uploader.uploadAll();
 
     }
     //添加菜单
@@ -184,6 +227,7 @@ export class MenuAddComponent implements OnInit {
       let submitUrl = '/limitMenu/add';
       _this.ajax.post({
         url: submitUrl,
+        async: false,
         data: _this.limitForm,
         success: (res) => {
           if (res.success) {
@@ -199,7 +243,8 @@ export class MenuAddComponent implements OnInit {
           swal('提交失败！', '列表已自动更新');
         }
       })
+      _this.limitComponent.queryDatas();
     }
-  }
 
+  }
 }

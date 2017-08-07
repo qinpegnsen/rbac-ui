@@ -19,7 +19,9 @@ export class LimittabComponent implements OnInit ,OnChanges {
   private operationData:Page = new Page();
   private controlData:Page = new Page();
   private tableButtonConfig:Array<object>;  //列表按钮配置
-  private tableButtonConfig1:Array<object>;  //列表按钮配置
+  private tableButtonConfig1:Array<object>;  //页面添加列表按钮配置
+  private tableButtonConfig2:Array<object>;  //功能添加列表按钮配置
+  private tableButtonConfig3:Array<object>;  //文件添加列表按钮配置
   private buttonConfig;//页面列表中的添加按钮
   @Input()
   public sysCode;//获取系统编码
@@ -36,13 +38,28 @@ export class LimittabComponent implements OnInit ,OnChanges {
         //iconsClass:"icon-handbag",
         //btnClass:"btn btn-success",
       }
-    ]
+    ];
     this.tableButtonConfig1 = [
       {
+        text: "添加元素",
         title: "添加",
         type: "add",
       }
-    ]
+    ];
+    this.tableButtonConfig2 = [
+      {
+        text: "添加功能",
+        title: "添加",
+        type: "add",
+      }
+    ];
+    this.tableButtonConfig3 = [
+      {
+        text: "添加文件",
+        title: "添加",
+        type: "add",
+      }
+    ];
     //页面元素列表中的添加按钮
     this.buttonConfig = [
       {

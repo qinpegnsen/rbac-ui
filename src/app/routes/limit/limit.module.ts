@@ -8,6 +8,7 @@ import {SharedModule} from "../../shared/shared.module";
 import { LimittabComponent } from './limittab/limittab.component';
 import {MenuAddComponent} from "./menuAdd/menuAdd.component";
 import {MenuUpdateComponent} from "./menuUpdate/menuUpdate.component";
+import { LimitChildDirective } from './limit/limit-child.directive';
 
 // 父路由，用于页面嵌套显示
 const routes:Routes = [
@@ -19,7 +20,6 @@ const routes:Routes = [
     {path: 'upMenu/:menuCode', component: MenuUpdateComponent}, // 子路由，修改菜单，用于页面嵌套显示
     {path: 'menuAdd', component: MenuAddComponent},//子路由，添加菜单ID,用于页面嵌套显示
     {path: 'menuUpdate', component: MenuUpdateComponent},//子路由，修改菜单ID,用于页面嵌套显示
-
   ]
   }
 ];
@@ -42,7 +42,8 @@ const routes:Routes = [
     SharedModule,
     FileUploadModule
   ],
-  declarations: [LimitComponent, MenuAddComponent, MenuUpdateComponent, LimittabComponent]
+  declarations: [LimitComponent, MenuAddComponent, MenuUpdateComponent, LimittabComponent, LimitChildDirective],
+  providers: [LimitComponent,LimittabComponent]
 })
 export class LimitModule {
 }

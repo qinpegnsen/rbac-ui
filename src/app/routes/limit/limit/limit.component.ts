@@ -29,7 +29,7 @@ export class LimitComponent implements OnInit {
   private menuCode;//权限菜单编码
   private buttonConfig;//权限菜单列表中的添加按钮
 
-  constructor(private ajax:AjaxService, private router:Router, private limitService:LimitService,/*public dcl:DynamicComponentLoader, */public _injector:Injector) {
+  constructor(private ajax:AjaxService, private router:Router, private limitService:LimitService, /*public dcl:DynamicComponentLoader, */public _injector:Injector) {
     var _this = this;
     /*let sysCode = _this.sysCode;
      //单按钮配置
@@ -109,13 +109,6 @@ export class LimitComponent implements OnInit {
     this.queryDatas();
   }
 
-  /*loadAsRoot(type: Type, overrideSelectorOrNode: string|any, injector: Injector, onDispose?: () => void, projectableNodes?: any[][]) : Promise<ComponentRef<any>>;*/
-
-  ceshi(id) {
-    $("#"+id).after('<app-limittab [sysCode]="sysCode" [menuCode]="menuCode"></app-limittab>');
-  }
-
-
   /**
    * 单按钮点击
    * **/
@@ -133,27 +126,31 @@ export class LimitComponent implements OnInit {
   /**
    * 添加菜单列表
    * **/
-  private queryDatas(event?:PageEvent) {
+  public queryDatas(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
 
-    this.ajax.get({
-      url: "/limitMenu/listpage",
-      data: {
-        curPage: activePage,
-        pageSize: '3',
-        sysCode: this.sysCode
-      },
-      success: (data) => {
-        console.log('data', data);
-        if (!isNull(data)) {
-          me.data = new Page(data);
-        }
-      },
-      error: (data) => {
-        console.log('data', data);
-      }
-    });
+    let listInfos = this.limitService.queryMenuList(activePage, 3, me.sysCode);
+    me.data = new Page(listInfos);
+
+
+    //this.ajax.get({
+    //  url: "/limitMenu/listpage",
+    //  data: {
+    //    curPage: activePage,
+    //    pageSize: '3',
+    //    sysCode: this.sysCode
+    //  },
+    //  success: (data) => {
+    //    console.log('data', data);
+    //    if (!isNull(data)) {
+    //      me.data = new Page(data);
+    //    }
+    //  },
+    //  error: (data) => {
+    //    console.log('data', data);
+    //  }
+    //});
   }
 
 

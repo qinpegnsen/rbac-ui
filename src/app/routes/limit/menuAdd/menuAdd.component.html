@@ -274,6 +274,8 @@
             文件名称是必填项，请填写文件名称
           </div>
         </fieldset>
+        <!--<input class="form-control" required [(ngModel)]="limitForm.fileuuid" name="fileuuid"
+               #fileuuid="ngModel" type="hidden"/>-->
         <!--上传组件 begin-->
         <fieldset>
           <p class="pull-right label label-info ng-binding ng-scope" *ngIf="uploader?.queue?.length">文件数: {{ uploader?.queue?.length }}</p>

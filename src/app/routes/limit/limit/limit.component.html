@@ -77,8 +77,7 @@
         <app-buttons [config]="option" (callback)="option.callback($event,menu.menuCode)" *ngFor="let option of tableButtonConfig"></app-buttons>
         <!--菜单权限子列表项的添加-->
         <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu" [queryParams]="{sysCode:sysCode}"></app-buttons>
-
-        <button (click)="ceshi('menList'+i)">000</button>
+        <button class="btn btn-info btn-xs" title="查看子集" limitChild="{{menu.menuCode}}"><i class="fa fa-caret-down"></i></button>
       </td>
     </tr>
     </tbody>
