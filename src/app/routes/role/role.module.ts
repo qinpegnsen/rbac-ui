@@ -11,6 +11,9 @@ import { DisAuthComponent } from './dis-auth/dis-auth.component';
 import { RoleListComponent } from './role-list/role-list.component';
 
 
+
+
+
 // 子路由，用于页面嵌套显示
 const appChildRoutes: Routes = [
   {path: 'rightpage', component: RightpageComponent}
@@ -30,6 +33,6 @@ const routes: Routes = [
     SelectModule
   ],
   declarations: [RoleComponent,RightpageComponent, RolemanComponent, BingRoleComponent, DisAuthComponent, RoleListComponent],
-  providers: [RoleComponent,RoleListComponent],
+  providers: [RoleComponent,RolemanComponent,RoleListComponent],
 })
 export class RoleModule { }

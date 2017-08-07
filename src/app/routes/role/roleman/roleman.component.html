@@ -36,7 +36,7 @@
         <td>{{elder.remarks}}</td>
         <td>
           <!--角色权限分配-->
-            <app-buttons class="" [config]="option" routerLink="rightpage" [queryParams]="{id:6,roleCode:elder.roleCode,roleName:elder.roleName}" (callback)="option.callback($event)" *ngFor="let option of buttonConfig"></app-buttons>
+            <app-buttons class="" [config]="option" routerLink="rightpage" [queryParams]="{id:6,roleCode:elder.roleCode}" (callback)="option.callback($event)" *ngFor="let option of disAuthButton"></app-buttons>
         </td>
         <td>
           <!--角色停启用-->
@@ -47,7 +47,7 @@
         </td>
         <td>
           <!--修改角色-->
-          <app-buttons   [config]="option" routerLink="rightpage" [queryParams]="{id:4,roleCode:elder.roleCode,roleName:elder.roleName}"  *ngFor="let option of buttonConfig1" ></app-buttons>
+          <app-buttons   [config]="option" routerLink="rightpage" [queryParams]="{id:4,roleCode:elder.roleCode}"  *ngFor="let option of updateButton" ></app-buttons>
         </td>
       </tr>
       </tbody>
@@ -66,4 +66,3 @@
     </table>
   </div>
 </div>
-

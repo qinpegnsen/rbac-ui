@@ -12,28 +12,46 @@ const swal = require('sweetalert');
   styleUrls: ['./role.component.scss']
 })
 export class RoleComponent implements OnInit {
+  /**
+   * 系统列表的接口
+   * sysCode 初始化系统的编码，默认第一个，然后根据sysCode调用初始化的角色组列表和角色列表
+   * sysList 系统列表的数据
+   */
   public sysList;
-  public sysName;
   public sysCode;
 
-  public orgList;
-  public orgCode;
+  /**
+   * 3个button的按钮
+   * addGroupButton 添加角色组的按钮
+   *bingRoleButton  绑定角色按钮
+   */
+  private addGroupButton;
+  private bingRoleButton;
+  private updateButton;
 
-  //初始化角色管理的title
-  public roleGroupName;
+  /**
+   * 角色组点击的时候要传递给角色列表的属性
+   * roleGroupNameText 默认呈现的title
+   * roleGroupCode 角色组的编码
+   */
   public roleGroupNameText;
   public roleGroupCode;
 
+  //分页用到得data
   private data: Page = new Page();
-  private addButton;
-  private buttonConfig;
-  private buttonConfig1;
 
   constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute, private router: Router) {
   }
-  //初始化的时候获取系统列表的接口和机构的接口
+  /**
+   * 初始化的时候获取 系统列表的接口 和 机构的接口
+   */
   ngOnInit() {
-    //系统列表的接口，以及设置初始化的sysCode，然后根据sysCode调用初始化的角色组列表和角色列表
+    /**
+     * 系统列表的接口
+     * sysCode 初始化系统的编码，默认第一个，然后根据sysCode调用初始化的角色组列表和角色列表
+     * sysName 默认的第一个的名字
+     * sysList 系统列表的数据
+     */
     this.ajax.get({
       url: '/sys/list',
       data: {
@@ -42,34 +60,20 @@ export class RoleComponent implements OnInit {
       success: (data) => {
         this.sysCode = data[0].sysCode;
         this.sysList = data;
-        this.sysName=data[0].sysName;
-        this.queryDatas();
+        this.queryRoleGroupDatas();
       },
       error: (data) => {
         console.log("sys/list  error");
       }
     });
-    //机构列表的接口
-    this.ajax.get({
-      url: '/organ/list',
-      data: {
-        orgName:''
-      },
-      success: (data) => {
-        this.orgList = data;
-      },
-      error: (data) => {
-        console.log("/organ/list    error");
-      }
-    });
-
-    this.addButton = {
+    //添加角色组的按钮
+    this.addGroupButton = {
       type:"add",
       text:"新增角色组",
       title:'新增角色组'
     };
-    //添加按钮配置
-    this.buttonConfig = [
+    //绑定角色按钮
+    this.bingRoleButton = [
       {
         title: "绑定角色",
         type: "add",
@@ -82,7 +86,7 @@ export class RoleComponent implements OnInit {
       }
     ];
     //修改按钮配置
-    this.buttonConfig1 = [
+    this.updateButton= [
       {
         title: "修改",
         type: "update",
@@ -95,40 +99,55 @@ export class RoleComponent implements OnInit {
       }
     ];
   }
-  //系统发生变化的时候再次调用，改变角色组和角色的列表
+
+  /**
+   * 系统发生变化的时候，获取到当前的系统编码，然后在刷新列表
+   * @param sys
+   */
   onSelectSys(sys): void {
     this.sysCode = sys.value;
-    this.queryDatas();
+    this.queryRoleGroupDatas();
   }
-  //角色组列表分页
-  public queryDatas(event?: PageEvent) {
-    let me = this, activePage = 1;
-    if (typeof event !== "undefined") activePage = event.activePage;
-    this.ajax.get({
-      url: "/roleGroup/listpage",
-      data: {
-        curPage: activePage,
-        sysCode: this.sysCode,
-        pageSize:8
-      },
-      success: (data) => {
-        if (!isNull(data)) {
-          me.data = new Page(data);
 
-        }
-      },
-      error: (data) => {
-        console.log('角色组列表分页错误');
+  /**
+ * 角色组列表分页
+ * @param event
+ */
+public queryRoleGroupDatas(event?: PageEvent) {
+  let me = this, activePage = 1;
+  if (typeof event !== "undefined") activePage = event.activePage;
+  this.ajax.get({
+    url: "/roleGroup/listpage",
+    data: {
+      curPage: activePage,
+      sysCode: this.sysCode,
+      pageSize:8
+    },
+    success: (data) => {
+      if (!isNull(data)) {
+        me.data = new Page(data);
       }
-    });
-  }
-  //这个事件两个作用 1，改变角色的title 2 根据系统的编码查询角色列表
+    },
+    error: (data) => {
+      console.log('角色组列表分页错误');
+    }
+  });
+}
+
+  /**
+   * 角色组列表的点击事件
+   * @param roleGroupCode 角色组的编码
+   * @param roleGroupName 角色组的名字
+   */
   selectRole(roleGroupCode,roleGroupName){
     this.roleGroupNameText='当前的角色组是：'+roleGroupName;
-    this.roleGroupName=roleGroupName;
     this.roleGroupCode=roleGroupCode;
   }
-  //修改角色组的状态
+
+  /**
+   * 修改角色组的状态
+   * @param data 当前获取到得数据
+   */
   updateRoleGroupState(data){
     if(data.isUse=="Y"){
       data.isUse="N"

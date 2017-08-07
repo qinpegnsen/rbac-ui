@@ -20,21 +20,24 @@
       <div class="title">
         <span>角色组管理</span>
         <span>
-           <app-buttons class="pull-right" [config]="addButton" routerLink="rightpage" [queryParams]="{id:1,sysCode:sysCode,sysName:sysName}"></app-buttons>
+           <app-buttons class="pull-right" [config]="addGroupButton" routerLink="rightpage" [queryParams]="{id:1,sysCode:sysCode}"></app-buttons>
         </span>
       </div>
       <div class="cont">
-        <table class="table table-striped" #dataTable="rzhDataTable" [rzhData]="data" (pageChange)="queryDatas($event)">
+        <table class="table table-striped" #dataTable="rzhDataTable" [rzhData]="data" (pageChange)="queryRoleGroupDatas($event)">
           <thead>
           <tr>
             <th style="width: 5%">
               序号
             </th>
-            <th style="width: 45%">
+            <th style="width: 30%">
               <rzhDefaultSorter by="email">角色组名</rzhDefaultSorter>
             </th>
-            <th style="width: 30%">
+            <th style="width: 10%">
               <rzhDefaultSorter by="email">角色组状态</rzhDefaultSorter>
+            </th>
+            <th style="width: 35%">
+              <rzhDefaultSorter by="email">备注</rzhDefaultSorter>
             </th>
             <th style="width: 20%">操作</th>
           </tr>
@@ -46,25 +49,24 @@
             <td>{{elder.roleGroupName}}</td>
             <td>
               <!--修改角色组停启用状态-->
-
                 <label class="switch">
                   <input type="checkbox" [checked]="elder.isUse=='Y'" (change)="updateRoleGroupState(elder)"/>
                   <span></span>
                 </label>
-
             </td>
+            <td>{{elder.remarks}}</td>
             <td class="row">
-              <!--绑定角色组-->
+              <!--绑定角色-->
               <div class="col-xs-6 text-center">
                 <app-buttons [config]="option" routerLink="rightpage"
-                             [queryParams]="{id:2,sysCode:elder.sysCode,roleGroupCode:roleGroupCode,roleGroupName:roleGroupName}"
-                             *ngFor="let option of buttonConfig"></app-buttons>
+                             [queryParams]="{id:2,sysCode:elder.sysCode,roleGroupCode:elder.roleGroupCode}"
+                             *ngFor="let option of bingRoleButton"></app-buttons>
               </div>
               <!--修改角色组名称,把信息传过去在弹窗页面修改-->
               <div class="col-xs-6">
                 <app-buttons [config]="option" routerLink="rightpage"
-                             [queryParams]="{id:3,roleGroupCode:elder.roleGroupCode,roleGroupName:elder.roleGroupName}"
-                             *ngFor="let option of buttonConfig1"></app-buttons>
+                             [queryParams]="{id:3,roleGroupCode:elder.roleGroupCode}"
+                             *ngFor="let option of updateButton"></app-buttons>
               </div>
             </td>
           </tr>

@@ -8,8 +8,10 @@ import {FormControl} from "@angular/forms";
   encapsulation: ViewEncapsulation.None
 })
 export class BingRoleComponent implements OnInit {
+    //根据系统编码查询出当前系统下的角色
     @Input()
      public sysCode;
+
     @Output()
      public roleCodes=new EventEmitter();
     //存放的数据
@@ -26,23 +28,23 @@ export class BingRoleComponent implements OnInit {
   ngOnInit() {
     //查询当前系统下的角色列表
     this.ajax.get({
-      url: "/role/listpage",
+      url: "/role/list",
       data: {
         sysCode: this.sysCode
       },
       success: (data) => {
         let obj={},temp=[];//这里必须得声明临时变量来转换一下，要不然不能push
-        for(var i=0;i<data.voList.length;i++){
+        for(var i=0;i<data.length;i++){
           obj={
-            id:data.voList[i]['roleCode'],
-            text:data.voList[i]['roleName']
+            id:data[i]['roleCode'],
+            text:data[i]['roleName']
           }
           temp.push(obj);
         }
         this.items = temp;
       },
       error: (data) => {
-        console.log('根据系统编码变化的角色列表错误');
+         console.log('根据系统编码变化的角色列表错误');
       }
     });
   }
