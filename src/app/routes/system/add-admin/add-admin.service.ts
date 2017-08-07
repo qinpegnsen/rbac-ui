@@ -48,7 +48,7 @@ export class AddAdminService {
       data: submitData,
       async: false,
       success: (res) => {
-        //console.log("█ res ►►►", res);
+        console.log("█ res ►►►", res);
         if (res.success) {
           this.settings.closeRightPageAndRouteBack()//关闭右侧页面并返回上级路由
           swal({
@@ -74,39 +74,6 @@ export class AddAdminService {
     })
   }
 
-
-  /**
-   * 获取角色列表
-   * @param sysCode
-   * @param orgCode
-   * @returns {any}
-     */
-  getRoleList(sysCode:string,orgCode?:string){
-    let list;
-    this.ajax.get({
-      url: '/role/list',
-      async:false,
-      data:{
-        sysCode: sysCode,
-        orgCode: orgCode
-      },
-      success: (res) => {
-        list = res;
-        //console.log("█ getRoleList ►►►",  res);
-      },
-      error: (res) => {
-        console.log("get getRoleList error");
-      }
-    });
-    return list;
-  }
-
-  /**
-   * 获取角色组列表
-   * @param sysCode
-   * @param orgCode
-   * @returns {any}
-   */
   getRoleGroupList(sysCode:string,orgCode?:string,roleGroupName?:string){
     let list;
     this.ajax.get({
@@ -126,5 +93,58 @@ export class AddAdminService {
       }
     });
     return list;
+  }
+
+  /**
+   * 获取已有的角色和角色组列表
+   * @param mgrCode
+   * @param orgCode
+   * @returns {any}
+   */
+  getMyRoleAndGroupList(sysCode,mgrCode:string,orgCode:string){
+    let result;
+    this.ajax.post({
+      url: '/orgManager/myRolesList',
+      async:false,
+      data:{
+        mgrCode: mgrCode,
+        orgCode: orgCode,
+        sysCode: sysCode
+      },
+      success: (res) => {
+        result = res;
+        //console.log("█ getRoleAndGroupList ►►►",  res);
+      },
+      error: (res) => {
+        console.log("get getRoleAndGroupList error");
+      }
+    });
+    return result;
+  }
+  /**
+   * 获取角色和角色组列表
+   * @param mgrCode
+   * @param orgCode
+   * @returns {any}
+     */
+  getRoleAndGroupList(sysCode,mgrCode:string,orgCode:string){
+    let result;
+    this.ajax.post({
+      url: '/orgManager/rolesList',
+      async:false,
+      data:{
+        mgrCode: mgrCode,
+        orgCode: orgCode,
+        sysCode: sysCode
+      },
+      success: (res) => {
+        result = res;
+        //console.log("█ getRoleAndGroupList ►►►",  res);
+      },
+      error: (res) => {
+        console.log("get getRoleAndGroupList error");
+      }
+    });
+    return result;
   }
 }

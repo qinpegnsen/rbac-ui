@@ -25,6 +25,8 @@ export class OrganComponent implements OnInit {
 
   ngOnInit() {
 
+    //this.organService.login()
+
     let me = this;
     this.queryDatas();
     //按钮配置

@@ -56,24 +56,33 @@
         <td>{{i+1}}</td>
         <td>{{organ.orgName}}</td>
         <td>{{organ.orgBoss}}
-          <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateBoss(organ.orgCode)" title="修改"></button>
+          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN'"
+                  (click)="updateBoss(organ.orgCode)" title="修改"></button>
         </td>
         <td>{{organ.tel}}</td>
         <td>{{organ.areaCode | areaName}}</td>
         <td>{{organ.type | rzhState:'1007'}}
-          <button class="btn btn-default fa fa-pencil btn-xs" (click)="updateType(organ.orgCode)" title="修改"></button>
+          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN'"
+                  (click)="updateType(organ.orgCode)" title="修改"></button>
         </td>
         <td>{{organ.state | rzhState:'1008'}}</td>
         <td>
-          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="organ.state=='NOTCERT'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="organ.state=='OPEN'" title="暂停" (click)="changeState('PAUSE',organ.orgCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-play" *ngIf="organ.state=='PAUSE'" title="开启" (click)="changeState('OPEN',organ.orgCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-square" *ngIf="organ.state=='PAUSE'" title="关闭" (click)="changeState('CLOSE',organ.orgCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-trash" *ngIf="organ.state=='CLOSE'" title="删除" (click)="changeState('DELETE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="organ.state=='NOTCERT'" title="开启"
+                  (click)="changeState('OPEN',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="organ.state=='OPEN'" title="暂停"
+                  (click)="changeState('PAUSE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-play" *ngIf="organ.state=='PAUSE'" title="开启"
+                  (click)="changeState('OPEN',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-square" *ngIf="organ.state=='PAUSE'" title="关闭"
+                  (click)="changeState('CLOSE',organ.orgCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-trash" *ngIf="organ.state=='CLOSE'" title="删除"
+                  (click)="changeState('DEL',organ.orgCode)"></button>
         </td>
         <td>
-          <app-buttons [config]="option" (callback)="option.callback($event,organ.orgCode)"
-                       *ngFor="let option of buttonConfig"></app-buttons>
+          <div *ngIf="organ.state=='OPEN'">
+            <app-buttons [config]="option" (callback)="option.callback($event,organ.orgCode)"
+                         *ngFor="let option of buttonConfig"></app-buttons>
+          </div>
         </td>
       </tr>
       </tbody>

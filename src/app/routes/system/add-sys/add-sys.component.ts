@@ -97,7 +97,7 @@ export class AddSysComponent implements OnInit {
     }
     //console.log("█ submitData ►►►",  submitData);
     me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me.sysPlatformComponent.ngOnInit()//刷新父页面数据
+    me.sysPlatformComponent.queryDatas()//刷新父页面数据
   }
 
   // 取消

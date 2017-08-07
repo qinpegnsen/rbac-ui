@@ -38,6 +38,26 @@ export class OrganService {
     return organs;
   }
 
+
+  login(){
+    this.ajax.post({
+      url: '/login/login',
+      data: {
+        'loginCode': '1001',
+        'pwd': '888888'
+      },
+      success: (data) => {
+        // this.router.navigate(['/datatables'],{ replaceUrl: true }); //路由跳转
+        //this.table.draw(); //重新绘制表格
+        //swal('登录成功！', '信息列表已自动更新...', 'success');
+        console.log('data', data);
+      },
+      error: (data) => {
+        //console.log('data', data);
+      }
+    });
+  }
+
   /**
    * 修改机构状态
    * @param state

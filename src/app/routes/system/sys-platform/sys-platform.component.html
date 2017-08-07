@@ -60,9 +60,11 @@
           </label>
         </td>
         <td>
-          <button class="btn btn-primary fa fa-pencil btn-xs" (click)="changeSysInfo(sys.sysCode)" title="修改"></button>
-          <button class="btn btn-green icon-magnifier-add btn-xs" (click)="lookSysDetail(sys.sysCode)"
-                  title="详情"></button>
+          <div *ngIf="sys.isUse=='Y'">
+            <button class="btn btn-primary fa fa-pencil btn-xs" (click)="changeSysInfo(sys.sysCode)" title="修改"></button>
+            <button class="btn btn-green icon-magnifier-add btn-xs" (click)="lookSysDetail(sys.sysCode)"
+                    title="详情"></button>
+          </div>
         </td>
       </tr>
       </tbody>

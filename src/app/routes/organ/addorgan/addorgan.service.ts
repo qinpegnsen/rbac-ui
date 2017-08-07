@@ -73,4 +73,57 @@ export class AddorganService {
     });
     return organ;
   }
+
+
+  /**
+   * 获取已经分配的角色和角色组列表
+   * @param mgrCode
+   * @param orgCode
+   * @returns {any}
+   */
+  getMyRoleAndGroupList(sysCode:string,orgCode:string){
+    let result;
+    this.ajax.post({
+      url: '/organ/myRolesList',
+      async:false,
+      data:{
+        sysCode: sysCode,
+        orgCode: orgCode
+      },
+      success: (res) => {
+        result = res;
+        //console.log("█ getRoleAndGroupList ►►►",  res);
+      },
+      error: (res) => {
+        console.log("get getRoleAndGroupList error");
+      }
+    });
+    return result;
+  }
+
+  /**
+   * 获取未被分配的角色和角色组列表
+   * @param mgrCode
+   * @param orgCode
+   * @returns {any}
+   */
+  getRoleAndGroupList(sysCode:string,orgCode:string){
+    let result;
+    this.ajax.post({
+      url: '/organ/rolesList',
+      async:false,
+      data:{
+        sysCode: sysCode,
+        orgCode: orgCode
+      },
+      success: (res) => {
+        result = res;
+        //console.log("█ getRoleAndGroupList ►►►",  res);
+      },
+      error: (res) => {
+        console.log("get getRoleAndGroupList error");
+      }
+    });
+    return result;
+  }
 }

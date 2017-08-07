@@ -236,7 +236,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">选择角色</label>
             <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Role"
-                       [disabled]="!addOrganForm.form.valid"
+                       [disabled]="!addOrganForm.form.valid" #defaultRoles
                        (data)="refreshValueRole($event)" placeholder="请选择角色"></ng-select>
           </div>
         </fieldset>
@@ -244,7 +244,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">选择角色组</label>
             <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Group"
-                       [disabled]="!addOrganForm.form.valid"
+                       [disabled]="!addOrganForm.form.valid" #defaultGroup
                        (data)="refreshValueGroup($event)" placeholder="请选择角色组"></ng-select>
           </div>
         </fieldset>

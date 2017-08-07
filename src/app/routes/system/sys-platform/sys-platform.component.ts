@@ -67,7 +67,7 @@ export class SysPlatformComponent implements OnInit {
    * 查询系统列表
    * @param event
      */
-  private queryDatas(event?:PageEvent) {
+  queryDatas(event?:PageEvent) {
     let me = this,activePage = 1,requestParams;
     if(typeof event !== "undefined") activePage =event.activePage;
     requestParams = {

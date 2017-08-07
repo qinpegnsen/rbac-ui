@@ -1,4 +1,4 @@
-import { Component, OnInit,OnChanges,SimpleChanges } from '@angular/core';
+import { Component, ViewChild, OnInit,OnChanges,SimpleChanges } from '@angular/core';
 import {SettingsService} from "../../../core/settings/settings.service";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {AddAdminService} from "./add-admin.service";
@@ -8,7 +8,7 @@ import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {PatternService} from "../../../core/forms/pattern.service";
 import {SysPlatformService} from "../sys-platform/sys-platform.service";
 import {AdminsComponent} from "../admins/admins.component";
-//import {SelectComponent} from "ng2-select/index";
+import {SelectComponent} from "ng2-select/index";
 
 @Component({
   selector: 'app-add-admin',
@@ -28,6 +28,8 @@ export class AddAdminComponent implements OnInit,OnChanges {
   private newpwd:string;//新密码
   private sysCode:string = '';//系统编码
   private admin = { };
+  @ViewChild('defaultRole') public mySelectRoles: SelectComponent;//设置默认选中的角色
+  @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
 
 
   constructor(public settings:SettingsService, private adminsService:AdminsService,
@@ -50,6 +52,9 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
   private value:any = [];
 
+  public selected(value:any):void {
+    console.log('Selected value is: ', value);
+  }
   public refreshValueRole(value: any): void {
     this.selectedRoleStr = this.itemsToString(value);
     console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
@@ -67,6 +72,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
 
   ngOnInit() {
+    this.admin['orgCode'] = ''
 
     //获取当前路由
     this.route.url.subscribe(urls => {
@@ -124,42 +130,69 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
 
   private selectedChange(){
-    this.getRoleList();//获取角色列表
-    this.getRoleGroupList();//获取角色组列表
+    this.getRoleAndGroupList();//获取角色/角色组列表
+    this.getMyRoleAndGroupList();//获取已经分配的角色/角色组列表
   }
 
   /**
-   * 获取角色列表
+   * 获取已经分配的角色/角色组列表
    */
-  private getRoleList(){
-    let oldArray = this.addAdminService.getRoleList(this.sysCode);
-    let newArray = [],obj = {};
-    for (var i=0; i<oldArray.length; i++){
+  private getMyRoleAndGroupList(){
+    let myRolesAndGroup = this.addAdminService.getMyRoleAndGroupList(this.sysCode,this.admin['mgrCode'],this.admin['orgCode']).data;
+    //console.log("█ myRolesAndGroup ►►►",  myRolesAndGroup);
+    let oldRolesArray = myRolesAndGroup.roleList;
+    let oldRoleGroupArray = myRolesAndGroup.roleGroupList;
+    let newRolesArray = [],newRoleGroupArray = [], obj = {};
+    //将所有角色组成一个新的数组
+    for (var i=0; i<oldRolesArray.length; i++){
       obj = {
-        id:oldArray[i].roleCode,
-        text:oldArray[i].roleName
+        id:oldRolesArray[i].roleCode,
+        text:oldRolesArray[i].roleName
       };
-      newArray.push(obj);
+      newRolesArray.push(obj);
+    };
+    //将所有角色组组成一个新的数组
+    for (var i=0; i<oldRoleGroupArray.length; i++){
+      obj = {
+        id:oldRoleGroupArray[i].roleGroupCode,
+        text:oldRoleGroupArray[i].roleGroupName
+      };
+      newRoleGroupArray.push(obj);
     }
-    this.Role = newArray;
-    //console.log("█ this.Role ►►►",  this.Role);
+    this.mySelectRoles.active = newRolesArray;
+    this.mySelectGroup.active = newRoleGroupArray;
+
+    this.selectedRoleStr = this.itemsToString(newRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
+    this.selectedGroupStr = this.itemsToString(newRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
+    //console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
+    //console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
 
   /**
-   * 获取角色组列表
+   * 获取角色和角色组列表
    */
-  private getRoleGroupList(){
-    let oldArray = this.addAdminService.getRoleGroupList(this.sysCode);
-    let newArray = [],obj = {};
-    for (var i=0; i<oldArray.length; i++){
+  private getRoleAndGroupList(){
+    let roleAndGroupList = this.addAdminService.getRoleAndGroupList(this.sysCode,this.admin['mgrCode'],this.admin['orgCode']).data;
+    //console.log("█ roleAndGroupList ►►►", roleAndGroupList);
+    let oldRolesArray = roleAndGroupList.roleList;
+    let oldRoleGroupArray = roleAndGroupList.roleGroupList;
+    let newRolesArray = [],newRoleGroupArray = [], obj = {};
+    for (var i=0; i<oldRolesArray.length; i++){
       obj = {
-        id:oldArray[i].roleGroupCode,
-        text:oldArray[i].roleGroupName
+        id:oldRolesArray[i].roleCode,
+        text:oldRolesArray[i].roleName
       };
-      newArray.push(obj);
+      newRolesArray.push(obj);
     }
-    this.Group = newArray;
-    //console.log("█ this.Group ►►►",  this.Group);
+    for (var i=0; i<oldRoleGroupArray.length; i++){
+      obj = {
+        id:oldRoleGroupArray[i].roleCode,
+        text:oldRoleGroupArray[i].roleName
+      };
+      newRoleGroupArray.push(obj);
+    }
+    this.Role = newRolesArray;
+    this.Group = newRoleGroupArray;
   }
 
   //获取系统代码(路由参数)
@@ -177,13 +210,11 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
   //获取区域数据
   getAreaData(area) {
-    //console.log("█ area ►►►", area);
     this.admin['areaCode'] = area.areaCode;
   }
 
   //从子组件获取所选机构数据
   getOrganCode(orgCode) {
-    //console.log("█ orgCode ►►►", orgCode);
     this.admin['orgCode'] = orgCode;
   }
 
@@ -226,15 +257,16 @@ export class AddAdminComponent implements OnInit,OnChanges {
         submitData = {
           mgrCode: me.admin['mgrCode'],
           orgCode: me.admin['orgCode'],
-          roleCode: this.selectedRoleStr,
-          roleGroupCode: this.selectedGroupStr
+          sysCode: me.sysCode,
+          roleCode: me.selectedRoleStr,
+          roleGroupCode: me.selectedGroupStr
         };
         submitUrl = '/orgManager/addRolesRelation';
         break;
     }
     //console.log("█ submitData ►►►", submitData);
     me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me.adminsComponent.ngOnInit()//刷新父页面数据
+    me.adminsComponent.queryDatas()//刷新父页面数据
   }
 
   // 取消

@@ -64,6 +64,18 @@ export class AdminsComponent implements OnInit {
     ];
   }
 
+  updateAdmin(mgrCode){
+    this.router.navigate(['/main/system/admins/updateAdmin',mgrCode]);
+  }
+
+  adminDetail(mgrCode){
+    this.router.navigate(['/main/system/admins/adminDetail',mgrCode]);
+  }
+
+  allotRole(mgrCode){
+    this.router.navigate(['/main/system/admins/allotRole',mgrCode]);
+  }
+
   /**
    * 从子组件获取所选区域数据
    * @param outData
@@ -107,7 +119,7 @@ export class AdminsComponent implements OnInit {
    * 获取管理员表格数据
    * @param event
      */
-  private queryDatas(event?:PageEvent) {
+  queryDatas(event?:PageEvent) {
     let me = this,activePage = 1;
     if(typeof event !== "undefined") activePage =event.activePage;
     let requestParmas = {
@@ -115,7 +127,8 @@ export class AdminsComponent implements OnInit {
       mgrName: me.mgrName,
       orgCode: me.orgCode,
       areaCode: me.areaCode,
-      pageSize: '10'
+      pageSize: '10',
+      state: 'SUPER'
     };
     let result = this.admin.getAdminsList(requestParmas);//请求管理员列表
     me.admins = new Page(result);

@@ -94,7 +94,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">头像</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="avatar" [(ngModel)]="admin.avatar" #remarks="ngModel"
+              <input class="form-control" type="file" name="avatar" [(ngModel)]="admin.avatar" #remarks="ngModel"
                      placeholder="头像"/>
             </div>
           </div>
@@ -232,7 +232,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">选择角色</label>
             <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Role"
-                       [disabled]="!addAdmin.form.valid"
+                       [disabled]="!addAdmin.form.valid" #defaultRole
                        (data)="refreshValueRole($event)" placeholder="请选择角色"></ng-select>
           </div>
         </fieldset>
@@ -240,7 +240,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">选择角色组</label>
             <ng-select class="col-sm-7" (data)="value" [multiple]="true" [items]="Group"
-                       [disabled]="!addAdmin.form.valid"
+                       [disabled]="!addAdmin.form.valid" #defaultGroup
                        (data)="refreshValueGroup($event)" placeholder="请选择角色组"></ng-select>
           </div>
         </fieldset>

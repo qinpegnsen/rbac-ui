@@ -6,7 +6,8 @@
   <div class="col-md-4 clearfix">
     <label class="label-width pull-left text-right lh36 mb0">选择机构：</label>
     <div class="col-xs-7">
-      <app-select-organ [required]="false" [organCode]="orgCode" (selectedData)="getOrganCode($event)"></app-select-organ>
+      <app-select-organ [required]="false" [organCode]="orgCode"
+                        (selectedData)="getOrganCode($event)"></app-select-organ>
     </div>
   </div>
   <div class="col-md-4 clearfix">
@@ -58,9 +59,9 @@
         <th class="w10 unselectable text-center">
           <rzhDefaultSorter by="loginCode">登录账号</rzhDefaultSorter>
         </th>
-       <!-- <th class="col-md-1 unselectable text-center">
-          <rzhDefaultSorter by="crtime">创建时间</rzhDefaultSorter>
-        </th>-->
+        <!-- <th class="col-md-1 unselectable text-center">
+		   <rzhDefaultSorter by="crtime">创建时间</rzhDefaultSorter>
+		 </th>-->
         <th class="w7 unselectable text-center">修改密码</th>
         <th class="w10 unselectable text-center">状态</th>
         <th class="w10 unselectable text-center">修改状态</th>
@@ -78,21 +79,25 @@
         <td>{{admin.loginCode}}</td>
         <!--<td>{{admin.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>-->
         <td>
-          <button class="btn btn-default fa fa-pencil btn-xs" (click)="updatePwd(admin.mgrCode)" title="修改密码"></button>
+          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="admin.state=='OPEN'"
+                  (click)="updatePwd(admin.mgrCode)" title="修改密码"></button>
         </td>
         <td>{{admin.state | rzhState:'1009'}}</td>
         <td>
-          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="admin.state=='OPEN'" title="暂停" (click)="changeState('PAUSE',admin.mgrCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-play" *ngIf="admin.state=='PAUSE'" title="开启" (click)="changeState('OPEN',admin.mgrCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-square" *ngIf="admin.state=='PAUSE'" title="冻结" (click)="changeState('FREEZE',admin.mgrCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-trash" *ngIf="admin.state=='FREEZE'" title="删除" (click)="changeState('DELETE',admin.mgrCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="admin.state=='OPEN'" title="暂停"
+                  (click)="changeState('PAUSE',admin.mgrCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-play" *ngIf="admin.state=='PAUSE'" title="开启"
+                  (click)="changeState('OPEN',admin.mgrCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-square" *ngIf="admin.state=='PAUSE'" title="冻结"
+                  (click)="changeState('FREEZE',admin.mgrCode)"></button>
+          <button class="btn btn-info btn-xs fa fa-trash" *ngIf="admin.state=='FREEZE'" title="删除"
+                  (click)="changeState('DEL',admin.mgrCode)"></button>
         </td>
         <td>
-          <!--<button class="btn btn-primary fa fa-pencil btn-sm" (click)="updateAdmin(admin.mgrCode)" title="修改"></button>
-          <button class="btn btn-green icon-magnifier-add btn-sm" (click)="adminDetail(admin.mgrCode)"
-                  title="详情"></button>-->
-          <app-buttons [config]="option" (callback)="option.callback($event,admin.mgrCode)"
-                       *ngFor="let option of buttonConfig"></app-buttons>
+          <div *ngIf="admin.state=='OPEN'">
+            <app-buttons [config]="option" (callback)="option.callback($event,admin.mgrCode)"
+                         *ngFor="let option of buttonConfig"></app-buttons>
+          </div>
         </td>
       </tr>
       </tbody>

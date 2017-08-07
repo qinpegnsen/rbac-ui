@@ -1,6 +1,6 @@
 
 import 'rxjs/add/operator/switchMap';
-import { Component, Input, Output, OnInit } from '@angular/core';
+import { Component,ViewChild, Input, Output, OnInit } from '@angular/core';
 import {SettingsService} from "../../../core/settings/settings.service";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {PatternService} from "../../../core/forms/pattern.service";
@@ -10,6 +10,7 @@ import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {isNullOrUndefined} from 'util';
 import {OrganComponent} from "../organ/organ.component";
 import {SysPlatformService} from "../../system/sys-platform/sys-platform.service";
+import {SelectComponent} from "ng2-select/index";
 
 const swal = require('sweetalert');
 
@@ -31,9 +32,9 @@ export class AddorganComponent implements OnInit {
   private orgStates:any;//机构类型
   private organ = {};//机构
 
-  private orgCode: string;//机构编码
+  private orgCode: string = '';//机构编码
   private systems: any;//系统列表
-  private sysCode: string;//系统编码，分配角色或角色组时选择系统
+  private sysCode: string = '';//系统编码，分配角色或角色组时选择系统
   private path: string;//路由
   private pageTitle:string;右弹窗标题
 
@@ -44,6 +45,8 @@ export class AddorganComponent implements OnInit {
   private addRolesRelation:boolean = false;//是否是分配角色或角色组
 
   // ng2Select start
+  @ViewChild('defaultRoles') public mySelectRoles: SelectComponent;//设置默认选中的角色
+  @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
   private Role: Array<object>;//角色数组
   private Group: Array<object>;//角色组数组
   private selectedRoleStr:string;//已选角色拼接字符串
@@ -137,6 +140,7 @@ export class AddorganComponent implements OnInit {
           this.getOrgCode();  //获取机构代码orgCode
           this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           this.systems = this.systemService.getSystemList();//系统列表
+          //console.log("█ this.sysCode ►►►",  this.sysCode);
           break;
       }
     });
@@ -146,44 +150,72 @@ export class AddorganComponent implements OnInit {
    * 当选择的系统改变的时候
    */
   private selectedChange(){
-    this.getRoleList();//获取角色列表
-    this.getRoleGroupList();//获取角色组列表
+    this.getRoleAndGroupList();//获取角色/角色组列表
+    this.getMyRoleAndGroupList();//获取已经分配的角色/角色组列表
   }
 
   /**
-   * 获取角色列表
+   * 获取已经分配的角色/角色组列表
    */
-  private getRoleList(){
-    let oldArray = this.addAdminService.getRoleList(this.sysCode);
-    let newArray = [],obj = {};
-    for (var i=0; i<oldArray.length; i++){
+  private getMyRoleAndGroupList(){
+    let myRolesAndGroup = this.addOrganService.getMyRoleAndGroupList(this.sysCode,this.orgCode).data;
+    //console.log("█ myRolesAndGroup ►►►",  myRolesAndGroup);
+    let oldRolesArray = myRolesAndGroup.roleList;
+    let oldRoleGroupArray = myRolesAndGroup.roleGroupList;
+    let newRolesArray = [],newRoleGroupArray = [], obj = {};
+    //将所有角色组成一个新的数组
+    for (var i=0; i<oldRolesArray.length; i++){
       obj = {
-        id:oldArray[i].roleCode,
-        text:oldArray[i].roleName
+        id:oldRolesArray[i].roleCode,
+        text:oldRolesArray[i].roleName
       };
-      newArray.push(obj);
+      newRolesArray.push(obj);
+    };
+    //将所有角色组组成一个新的数组
+    for (var i=0; i<oldRoleGroupArray.length; i++){
+      obj = {
+        id:oldRoleGroupArray[i].roleGroupCode,
+        text:oldRoleGroupArray[i].roleGroupName
+      };
+      newRoleGroupArray.push(obj);
     }
-    this.Role = newArray;
-    //console.log("█ this.Role ►►►",  this.Role);
+    this.mySelectRoles.active = newRolesArray;
+    this.mySelectGroup.active = newRoleGroupArray;
+
+    this.selectedRoleStr = this.itemsToString(newRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
+    this.selectedGroupStr = this.itemsToString(newRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
+    //console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
+    //console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
 
   /**
-   * 获取角色组列表
+   * 获取角色和角色组列表
    */
-  private getRoleGroupList(){
-    let oldArray = this.addAdminService.getRoleGroupList(this.sysCode);
-    let newArray = [],obj = {};
-    for (var i=0; i<oldArray.length; i++){
+  private getRoleAndGroupList(){
+    let roleAndGroupList = this.addOrganService.getRoleAndGroupList(this.sysCode,this.orgCode).data;
+    //console.log("█ roleAndGroupList ►►►", roleAndGroupList);
+    let oldRolesArray = roleAndGroupList.roleList;
+    let oldRoleGroupArray = roleAndGroupList.roleGroupList;
+    let newRolesArray = [],newRoleGroupArray = [], obj = {};
+    //将所有角色组成一个新的数组
+    for (var i=0; i<oldRolesArray.length; i++){
       obj = {
-        id:oldArray[i].roleGroupCode,
-        text:oldArray[i].roleGroupName
+        id:oldRolesArray[i].roleCode,
+        text:oldRolesArray[i].roleName
       };
-      newArray.push(obj);
+      newRolesArray.push(obj);
+    };
+    //将所有角色组组成一个新的数组
+    for (var i=0; i<oldRoleGroupArray.length; i++){
+      obj = {
+        id:oldRoleGroupArray[i].roleGroupCode,
+        text:oldRoleGroupArray[i].roleGroupName
+      };
+      newRoleGroupArray.push(obj);
     }
-    this.Group = newArray;
-    //console.log("█ this.Group ►►►",  this.Group);
+    this.Role = newRolesArray;
+    this.Group = newRoleGroupArray;
   }
-
 
   //获取机构代码(路由参数)
   private getOrgCode(){
@@ -253,6 +285,7 @@ export class AddorganComponent implements OnInit {
         };
         submitData = {
           "orgCode":me.orgCode,
+          "sysCode":me.sysCode,
           "roleCodes": me.selectedRoleStr,
           "roleGroupCodes": me.selectedGroupStr
         };
@@ -260,12 +293,16 @@ export class AddorganComponent implements OnInit {
     }
     //console.log("█ submitData ►►►",  submitData);
     me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me._parent.ngOnInit();//刷新父页面数据
+    me._parent.queryDatas();//刷新父页面数据
   }
 
   // 取消
   cancel(){
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面,返回上级路由
+  }
+
+  // 登录
+  login() {
   }
 
 }
