@@ -7,7 +7,7 @@ const PROXY_CONFIG = [
       "/limitMenu",
       "/limitOpt",
       "/limitPage",
-      "/login2",
+      "/login",
       "/orgManager",
       "/organ",
       "/role",
@@ -22,7 +22,7 @@ const PROXY_CONFIG = [
   },
   {
     context: [
-      "/login",
+      "/login2",
       "/elder"
     ],
     target: "http://192.168.10.110:8086",   //拦截 context配置路径，经过此地址

@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
 import {SettingsService} from '../../../core/settings/settings.service';
 import {AjaxService} from '../../../core/services/ajax.service';
+import {MaskService} from "app/core/services/mask.service";
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   public password: string;
   public authMsg: string;
 
-  constructor(private ajax: AjaxService, private localtion: Location, private router: Router, private _cookieService: CookieService,private setting:SettingsService) {
+  constructor(private ajax: AjaxService, private maskservice: MaskService, private localtion: Location, private router: Router, private _cookieService: CookieService,private setting:SettingsService) {
   }
 
   ngOnInit() {
@@ -57,22 +58,33 @@ export class LoginComponent implements OnInit {
 
   // 用户登录
   public login() {
+    let start = new Date().getTime(), end;
+    console.log("█ start ►►►",  start);
     let me = this;
+    this.maskservice.showMask();
     me.ajax.post({
       url: '/login/login',
       data: {
-        'staffno': me.userName,
+        'loginCode': me.userName,
         'pwd': me.password
       },
       success: (result) => {
+        this.maskservice.hideMask();
+        end = new Date().getTime();
+        console.log("█ end ►►►",  end);
+        console.log("█ (用时：) ►►►",  (end - start) / 1000 + "s");
         if (result.success) {
-          let user =  result.data.user;
+          let user =  result.data;
           me._cookieService.putObject('loginInfo', user); //用户信息存入cookie
-          me.setting.user.name = user.name,me.setting.user.job = user.department; //修改user变量
-          me.router.navigate(['/home'], {replaceUrl: true}); //路由跳转
+          me.setting.user.name = user.mgrName,me.setting.user.job = user.mgrName; //修改user变量
+          me.router.navigate(['/main/home'], {replaceUrl: true}); //路由跳转
+        }
+        else {
+          console.log("█ result ►►►",  JSON.stringify(result));
         }
       },
       error: (result) => {
+        this.maskservice.hideMask();
         console.log('data', result);
       }
     });

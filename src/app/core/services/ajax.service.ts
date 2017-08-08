@@ -45,13 +45,13 @@ export class AjaxService {
       //隐藏遮罩层
       if (config.mask === true) _this.maskservice.hideMask();
       //过滤登录
-      // if (xhr.getResponseHeader("serverError") || xhr.getResponseHeader("serverError") === "sessionOut") {
-      //     this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
-      // } else {
+      if (xhr.getResponseHeader("serverError") || xhr.getResponseHeader("serverError") === "sessionOut") {
+          this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
+      } else {
         if (typeof success === "function") {
           success(result, status, xhr);
         }
-      // }
+      }
     };
     var error = config.error;
     config.error = function (result, status, xhr) {
