@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
   // 用户登录
   public login() {
     let start = new Date().getTime(), end;
-    console.log("█ start ►►►",  start);
     let me = this;
     this.maskservice.showMask();
     me.ajax.post({
@@ -71,8 +70,6 @@ export class LoginComponent implements OnInit {
       success: (result) => {
         this.maskservice.hideMask();
         end = new Date().getTime();
-        console.log("█ end ►►►",  end);
-        console.log("█ (用时：) ►►►",  (end - start) / 1000 + "s");
         if (result.success) {
           let user =  result.data;
           me._cookieService.putObject('loginInfo', user); //用户信息存入cookie
@@ -85,7 +82,6 @@ export class LoginComponent implements OnInit {
       },
       error: (result) => {
         this.maskservice.hideMask();
-        console.log('data', result);
       }
     });
   }

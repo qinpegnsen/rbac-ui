@@ -46,7 +46,7 @@ export class AjaxService {
       if (config.mask === true) _this.maskservice.hideMask();
       //过滤登录
       if (xhr.getResponseHeader("serverError") || xhr.getResponseHeader("serverError") === "sessionOut") {
-          this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
+        _this.route.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
       } else {
         if (typeof success === "function") {
           success(result, status, xhr);
