@@ -30,13 +30,13 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         $(document).on('click', '[href="#"]', e => e.preventDefault());
         //登录状态检测
-        // this.checkLogin();
+        this.checkLogin();
     }
 
     // 检测登录状态并引流
     private checkLogin(){
         let url = this.location.path();
-        let loginCookie = this.cookieService.get("AIXIN_LGTICKET");
+        let loginCookie = this.cookieService.get("RBAC_LGTICKET");
         if(url !== "/pages/login"){
           if(!loginCookie) this.router.navigate(['/pages/login'],{ replaceUrl: true }); //路由跳转
         }else{
