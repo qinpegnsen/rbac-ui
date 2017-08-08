@@ -27,6 +27,8 @@ export class BingRoleComponent implements OnInit {
   @ViewChild('defaultRoles')
   public mySelectRoles: SelectComponent;//设置默认选中的角色
 
+  private mySelectRolesStr:string;
+
   constructor(private ajax: AjaxService) {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     this.myModel = '';
@@ -42,6 +44,7 @@ export class BingRoleComponent implements OnInit {
         sysCode: this.sysCode
       },
       success: (data) => {
+        console.log("█ data ►►►",  data);
         let obj={},temp=[];//这里必须得声明临时变量来转换一下，要不然不能push
         for(var i=0;i<data.length;i++){
           obj={
@@ -57,13 +60,8 @@ export class BingRoleComponent implements OnInit {
          console.log('根据系统编码变化的角色列表错误');
       }
     });
-  }
 
-  // Color Picker
-  colorDemo1 = '#555555';
-  colorDemo2 = '#555555';
-  colorDemo3 = '#555555';
-  colorDemo4 = '#555555';
+  }
 
   // ng2Select
   /**
@@ -80,27 +78,13 @@ export class BingRoleComponent implements OnInit {
       }).join(',');
   }
   public value: any = {};
-  public _disabledV: string = '0';
-  public disabled: boolean = false;
 
-  public get disabledV(): string {
-    return this._disabledV;
-  }
-
-  public set disabledV(value: string) {
-    this._disabledV = value;
-    this.disabled = this._disabledV === '1';
-  }
-
-  public selected(obj,value): void {
-
-
-  }
 
   /**
    * 获取到当前角色组已经绑定的角色
    */
   getBingRoleList(){
+    let me = this;
     this.ajax.post({
       url: "/roleGroup/roleList",
       data: {
@@ -127,22 +111,14 @@ export class BingRoleComponent implements OnInit {
         console.log('tempY',tempY)
         console.log('tempN',tempN)
 
-        // this.items = temp;
+        me.mySelectRoles.active = tempY;
+        me.mySelectRolesStr = me.itemsToString(tempY);
+        this.roleCodes.emit(me.mySelectRolesStr)
       },
       error: (data) => {
         console.log('根据系统编码变化的角色列表错误');
       }
     });
-  }
-
-
-
-  public removed(obj,value: any): void {
-
-}
-
-  public typed(value: any): void {
-    console.log('New search input: ', value);
   }
 
 
