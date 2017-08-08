@@ -49,7 +49,7 @@
       <tr *ngFor="let sys of systems.data;let i = index" class="text-center">
         <td>{{i+1}}</td>
         <td>{{sys.sysName}}</td>
-        <td>{{sys.sysUrl}}</td>
+        <td><a [routerLink]="sys.sysUrl">{{sys.sysUrl}}</a></td>
         <td>{{sys.remarks}}</td>
         <td>{{sys.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>
         <td>

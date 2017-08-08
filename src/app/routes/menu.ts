@@ -130,17 +130,5 @@ const buttons = {
  * 菜单配置
  * @type {[{text: string; link: string; icon: string; submenu: {text: string; link: string}[]},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string},{text: string; link: string; icon: string; submenu: {text: string; link: string}[]}]}
  */
-export const menu = [
-  organ,
-  // account,
-  role,
-  limit,
-  system,
-  SystemMain,
-  datatables,
-  msg,
-  echarts,
-  operationpage,
-  navtree,
-  buttons
+export let menu = [
 ];

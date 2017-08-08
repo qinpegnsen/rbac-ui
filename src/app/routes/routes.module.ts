@@ -4,7 +4,6 @@ import {TranslatorService} from '../core/translator/translator.service';
 import {MenuService} from '../core/menu/menu.service';
 import {SharedModule} from '../shared/shared.module';
 
-import {menu} from './menu';
 import {routes} from './routes';
 import {PagesModule} from './pages/pages.module';
 @NgModule({
@@ -20,8 +19,4 @@ import {PagesModule} from './pages/pages.module';
 })
 
 export class RoutesModule {
-  constructor(public menuService: MenuService, tr: TranslatorService) {
-    //路由模块加载时，铺设导航栏
-    menuService.addMenu(menu);
-  }
 }
