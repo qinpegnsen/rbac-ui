@@ -170,7 +170,7 @@ public queryRoleGroupDatas(event?: PageEvent) {
         swal(text,'','success');
       },
       error: (data) => {
-        console.log("修改角色组的状态失败");
+        swal('停启用连接数据库失败','','error');
       }
     });
   }

@@ -173,7 +173,7 @@ export class RolemanComponent implements OnInit,OnChanges {
         swal(text,'','success');
       },
       error: (data) => {
-        console.log("error");
+        swal('停启用连接数据库失败','','error');
       }
     });
   }

@@ -106,7 +106,7 @@ export class RightpageComponent implements OnInit {
         }
       },
       error: (data) => {
-        swal("获取数据失败", '', 'success');
+        swal("获取数据失败", '', 'error');
       }
     });
   }
@@ -127,7 +127,7 @@ export class RightpageComponent implements OnInit {
         }
       },
       error: (data) => {
-        swal("获取数据失败", '', 'success');
+        swal("获取数据失败", '', 'error');
       }
     });
   }
@@ -167,11 +167,11 @@ export class RightpageComponent implements OnInit {
             swal('新增角色组成功', '', 'success');
           } else {
             let errorMsg = data.data.substring(data.data.indexOf('$$') + 2, data.data.indexOf('@@'))
-            swal(errorMsg, '', 'success');
+            swal(errorMsg, '', 'error');
           }
         },
         error: (data) => {
-          console.log("新增角色组失败");
+          swal('新增角色组失败', '', 'error');
         }
       });
     } else if (this.queryId == 2) {
@@ -186,11 +186,11 @@ export class RightpageComponent implements OnInit {
           if (data.success) {
             swal('绑定角色成功', '', 'success');
           } else {
-            swal('绑定角色失败', '', 'success');
+            swal('连接数据库成功', '绑定角色失败', 'error');
           }
         },
         error: (data) => {
-          console.log("绑定角色失败");
+          swal('绑定角色失败', '', 'error');
         }
       });
     } else if (this.queryId == 3) {
@@ -206,11 +206,11 @@ export class RightpageComponent implements OnInit {
           if (data.success) {
             swal('修改角色组成功', '', 'success');
           } else {
-            swal('修改角色组失败', '', 'success');
+            swal('连接数据库成功', '修改角色组失败', 'error');
           }
         },
         error: (data) => {
-          console.log("修改角色组失败");
+          swal('修改角色组失败', '', 'error');
         }
       });
     } else if (this.queryId == 4) {
@@ -226,12 +226,12 @@ export class RightpageComponent implements OnInit {
           if (data.success) {
             swal('修改角色成功', '', 'success');
           } else {
-            swal('修改角色失败', '', 'success');
+            swal('连接数据库成功', '修改角色失败', 'error');
 
           }
         },
         error: (data) => {
-          console.log("修改角色失败");
+          swal('修改角色失败', '', 'error');
         }
       });
     } else if (this.queryId == 5) {
@@ -249,11 +249,11 @@ export class RightpageComponent implements OnInit {
             swal('新增角色成功', '', 'success');
           } else {
             let errorMsg = data.data.substring(data.data.indexOf('$$') + 2, data.data.indexOf('@@'))
-            swal(errorMsg, '', 'success');
+            swal(errorMsg, '', 'error');
           }
         },
         error: (data) => {
-          console.log("修改角色失败");
+          swal('新增角失败', '', 'error');
         }
       });
     } else if (this.queryId == 6) {
@@ -268,11 +268,11 @@ export class RightpageComponent implements OnInit {
           if (data.success) {
             swal('分配权限成功', '', 'success');
           } else {
-            swal('分配权限失败', '', 'success');
+            swal('连接数据库成功', '但分配权限失败', 'error');
           }
         },
         error: (data) => {
-          console.log("绑定角色失败");
+          swal('分配权限失败', '', 'error');
         }
       });
     }
