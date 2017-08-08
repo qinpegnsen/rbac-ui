@@ -19,6 +19,7 @@ export class AdminsComponent implements OnInit {
   private mgrName:string = '';
   private areaCode:string = '';
   private admins: Page = new Page();
+  private buttons;
 
   constructor(private router:Router, private admin:AdminsService, public settings: SettingsService) { }
 
@@ -127,8 +128,8 @@ export class AdminsComponent implements OnInit {
       mgrName: me.mgrName,
       orgCode: me.orgCode,
       areaCode: me.areaCode,
-      pageSize: '10',
-      state: 'SUPER'
+      pageSize: '10'/*,
+      state: 'SUPER'*/
     };
     let result = this.admin.getAdminsList(requestParmas);//请求管理员列表
     me.admins = new Page(result);

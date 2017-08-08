@@ -3,12 +3,13 @@ import {AjaxService} from "../../../core/services/ajax.service";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {Page} from "../../../core/page/page";
 import {isNull} from "util";
+import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 const swal = require('sweetalert');
 
 @Injectable()
 export class OrganService {
 
-  constructor(private ajax: AjaxService) { }
+  constructor(private tools:RzhtoolsService,private ajax: AjaxService) { }
 
   /**
    * 获取机构列表
@@ -64,6 +65,7 @@ export class OrganService {
    * @param orgCode
      */
   changeState(state,orgCode){
+    let title = '成功' + this.tools.getEnumDataValByKey('1008',state);
     let me = this;
     me.ajax.post({
       url: '/organ/updateState',
@@ -74,7 +76,7 @@ export class OrganService {
       },
       success: (data) => {
         swal({
-          title: '提交成功!',
+          title: title,
           text: data.info,
           type: 'success',
           timer: 2000, //关闭时间，单位：毫秒
