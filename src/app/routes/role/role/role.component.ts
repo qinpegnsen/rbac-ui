@@ -11,6 +11,7 @@ const swal = require('sweetalert');
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.scss']
 })
+
 export class RoleComponent implements OnInit {
   /**
    * 系统列表的接口
@@ -19,7 +20,7 @@ export class RoleComponent implements OnInit {
    */
   public sysList;
   public sysCode;
-
+cli
   /**
    * 3个button的按钮
    * addGroupButton 添加角色组的按钮
@@ -34,7 +35,7 @@ export class RoleComponent implements OnInit {
    * roleGroupNameText 默认呈现的title
    * roleGroupCode 角色组的编码
    */
-  public roleGroupNameText;
+  public roleGroupName;
   public roleGroupCode;
 
   //分页用到得data
@@ -140,7 +141,7 @@ public queryRoleGroupDatas(event?: PageEvent) {
    * @param roleGroupName 角色组的名字
    */
   selectRole(roleGroupCode,roleGroupName){
-    this.roleGroupNameText='当前的角色组是：'+roleGroupName;
+    this.roleGroupName=roleGroupName;
     this.roleGroupCode=roleGroupCode;
   }
 

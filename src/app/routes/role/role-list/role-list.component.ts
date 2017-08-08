@@ -14,7 +14,8 @@ export class RoleListComponent implements OnInit {
   private addButton;
 
   //获取子组件RolemanComponent的实例，才可以调用它的方法
-  @ViewChild(RolemanComponent) rolemanComponent: RolemanComponent;
+  @ViewChild(RolemanComponent)
+  rolemanComponent: RolemanComponent;
   constructor(private ajax: AjaxService) {
   }
 

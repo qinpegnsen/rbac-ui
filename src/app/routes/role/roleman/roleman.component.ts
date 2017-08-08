@@ -1,8 +1,9 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {isNull} from "util";
 import {Page} from "../../../core/page/page";
-import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
+
 import {AjaxService} from '../../../core/services/ajax.service';
+import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 const swal = require('sweetalert');
 @Component({
   selector: 'app-roleman',
@@ -36,7 +37,8 @@ export class RolemanComponent implements OnInit,OnChanges {
   @Input()
   public roleGroupCode;
   @Input()
-  public roleGroupName="当前系统下的所有角色";
+  public roleGroupName;
+  public roleGroupNameText;
 
 
   constructor(private ajax: AjaxService) {
@@ -80,6 +82,7 @@ export class RolemanComponent implements OnInit,OnChanges {
    * roleGroupCode 角色组输入属性变化
    */
   ngOnChanges(changes: SimpleChanges): void {
+    this.roleGroupNameText="【"+this.roleGroupName+"】角色组下面的所有角色"
   //当sysCode变化的时候再次调动
   if(changes["sysCode"] && this.sysCode){
     this.queryRoleListDatasBySyscode()
@@ -105,7 +108,6 @@ export class RolemanComponent implements OnInit,OnChanges {
   }
 
   //根据系统编码变化的角色列表
-  @Input()
   public queryRoleListDatasBySyscode(event?: PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
@@ -125,7 +127,6 @@ export class RolemanComponent implements OnInit,OnChanges {
         console.log("根据角色组编码查询错误");
       }
     })
-
   }
 
   //根据角色组编码变化的角色列表
@@ -174,6 +175,7 @@ export class RolemanComponent implements OnInit,OnChanges {
       },
       error: (data) => {
         swal('停启用连接数据库失败','','error');
+
       }
     });
   }

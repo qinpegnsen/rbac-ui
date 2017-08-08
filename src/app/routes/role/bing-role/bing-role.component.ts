@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component,ViewChild , EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {FormControl} from "@angular/forms";
+import {SelectComponent} from "ng2-select";
 @Component({
   selector: 'app-bing-role',
   templateUrl: './bing-role.component.html',
@@ -14,10 +15,17 @@ export class BingRoleComponent implements OnInit {
 
     @Output()
      public roleCodes=new EventEmitter();
+
+    @Input()
+    public roleGroupCode;
     //存放的数据
      public items:Array<object>;
      //临时的数组用来存放编码，之后截取
      public string;
+
+
+  @ViewChild('defaultRoles')
+  public mySelectRoles: SelectComponent;//设置默认选中的角色
 
   constructor(private ajax: AjaxService) {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -26,6 +34,7 @@ export class BingRoleComponent implements OnInit {
     this.formControlInput.setValue('5555551234');
   }
   ngOnInit() {
+    this.getBingRoleList()
     //查询当前系统下的角色列表
     this.ajax.get({
       url: "/role/list",
@@ -42,6 +51,7 @@ export class BingRoleComponent implements OnInit {
           temp.push(obj);
         }
         this.items = temp;
+
       },
       error: (data) => {
          console.log('根据系统编码变化的角色列表错误');
@@ -85,6 +95,44 @@ export class BingRoleComponent implements OnInit {
   public selected(obj,value): void {
 
 
+  }
+
+  /**
+   * 获取到当前角色组已经绑定的角色
+   */
+  getBingRoleList(){
+    this.ajax.post({
+      url: "/roleGroup/roleList",
+      data: {
+        sysCode: this.sysCode,
+        roleGroupCode: this.roleGroupCode
+      },
+      success: (data) => {
+        console.log(data)
+
+        let tempY=[],tempN=[],obj={}//这里必须得声明临时变量来转换一下，要不然不能push
+        for(var i=0;i<data.data.length;i++){
+          console.log(data.data[i].isHas)
+          obj={
+            id:data.data[i].roleCode,
+            text:data.data[i].roleName
+          }
+          if(data.data[i].isHas=="Y"){
+            tempY.push(obj)
+          }else{
+            tempN.push(obj)
+          }
+        }
+
+        console.log('tempY',tempY)
+        console.log('tempN',tempN)
+
+        // this.items = temp;
+      },
+      error: (data) => {
+        console.log('根据系统编码变化的角色列表错误');
+      }
+    });
   }
 
 

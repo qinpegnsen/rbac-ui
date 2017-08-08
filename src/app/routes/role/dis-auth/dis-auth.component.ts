@@ -20,7 +20,6 @@ export class DisAuthComponent implements OnInit {
     this.formControlInput.setValue('5555551234');
   }
   ngOnInit() {
-
     /**
      * 查询出所有的权限
      * **/
@@ -40,9 +39,10 @@ export class DisAuthComponent implements OnInit {
         }
         this.items = temp;
       },
-      error: (data) => {
-        console.log('根据系统编码变化的角色列表错误');
-      }
+
+    error: (data) => {
+      console.log('根据系统编码变化的角色列表错误');
+    }
     });
   }
 
