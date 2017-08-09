@@ -98,6 +98,16 @@
                #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
+            <label class="col-sm-3 control-label"><i>*</i>选择菜单</label>
+            <div class="col-sm-8">
+              <select class="form-control" type="text" [(ngModel)]="menuCode" name="menuCode" >
+                <option [value]="item.menuCode" *ngFor="let item of menuList">{{item.menuName}}</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 页面名称</label>
             <div class="col-sm-8">
               <input class="form-control" required ngModel name="pageName"
@@ -106,14 +116,6 @@
                    class="alert alert-danger">
                 页面名称是必填项，请填写页面名称
               </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">上级页面</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel/>
             </div>
           </div>
         </fieldset>
@@ -181,6 +183,37 @@
                #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
+            <label class="col-sm-3 control-label">选择上级类型</label>
+            <div class="col-sm-8">
+              <label class="checkbox-inline c-checkbox">
+                <input id="inlineCheckbox10" type="radio" name="preType" value="option1" />
+                <span class="fa fa-check"></span> 菜单</label>
+              <label class="checkbox-inline c-checkbox">
+                <input id="inlineCheckbox20" type="radio" name="preType" value="option2" />
+                <span class="fa fa-check"></span> 页面元素</label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><i>*</i>选择菜单</label>
+            <div class="col-sm-8">
+              <select class="form-control" type="text" [(ngModel)]="menuCode" name="menuCode" >
+                <option [value]="item.menuCode" *ngFor="let item of menuList">{{item.menuName}}</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset *ngIf="preType.checked">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">选择上级页面元素</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 操作名称</label>
             <div class="col-sm-8">
               <input class="form-control" required ngModel name="optName"
@@ -202,22 +235,6 @@
                    class="alert alert-danger">
                 拦截URL是必填项，请填写拦截URL
               </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">上级操作</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel/>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">上级类型</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text" name="preType" #preType="ngModel" ngModel/>
             </div>
           </div>
         </fieldset>
