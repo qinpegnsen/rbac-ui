@@ -20,12 +20,14 @@ export class AdminsComponent implements OnInit {
   private mgrName:string = '';
   private areaCode:string = '';
   private admins: Page = new Page();
+  private userState:string;
   private buttons;
 
   constructor(private router:Router, private admin:AdminsService, public settings: SettingsService,private cookieService:CookieService) { }
 
   ngOnInit() {
     let me = this;
+    me.userState = me.cookieService.getObject('loginInfo')['state'];
     me.queryDatas();//获取管理员表格数据
     me.addButton = {
       type:"add",
@@ -123,9 +125,6 @@ export class AdminsComponent implements OnInit {
   queryDatas(event?:PageEvent) {
     let me = this,activePage = 1;
     if(typeof event !== "undefined") activePage =event.activePage;
-    let userState;
-    userState = this.cookieService.getObject('loginInfo')['state'];
-    console.log(userState);
 
     let requestParmas = {
       curPage: activePage,
@@ -133,7 +132,7 @@ export class AdminsComponent implements OnInit {
       orgCode: me.orgCode,
       areaCode: me.areaCode,
       pageSize: '10',
-      state: userState
+      state: me.userState
     };
     let result = this.admin.getAdminsList(requestParmas);//请求管理员列表
     me.admins = new Page(result);

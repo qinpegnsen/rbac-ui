@@ -86,11 +86,11 @@
         <td>
           <button class="btn btn-info btn-xs fa fa-pause" *ngIf="admin.state=='OPEN'" title="暂停"
                   (click)="changeState('PAUSE',admin.mgrCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-play" *ngIf="admin.state=='PAUSE'" title="开启"
+          <button class="btn btn-green btn-xs fa fa-play" *ngIf="admin.state=='PAUSE'" title="开启"
                   (click)="changeState('OPEN',admin.mgrCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-square" *ngIf="admin.state=='PAUSE'" title="冻结"
+          <button class="btn btn-warning btn-xs fa fa-square" *ngIf="admin.state=='PAUSE'" title="冻结"
                   (click)="changeState('FREEZE',admin.mgrCode)"></button>
-          <button class="btn btn-info btn-xs fa fa-trash" *ngIf="admin.state=='FREEZE'" title="删除"
+          <button class="btn btn-danger btn-xs fa fa-trash" *ngIf="admin.state=='FREEZE'" title="删除"
                   (click)="changeState('DEL',admin.mgrCode)"></button>
         </td>
         <td>

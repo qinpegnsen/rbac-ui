@@ -9,6 +9,8 @@ import {PatternService} from "../../../core/forms/pattern.service";
 import {SysPlatformService} from "../sys-platform/sys-platform.service";
 import {AdminsComponent} from "../admins/admins.component";
 import {SelectComponent} from "ng2-select/index";
+import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
+import {CookieService} from "angular2-cookie/core";
 
 @Component({
   selector: 'app-add-admin',
@@ -33,7 +35,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
 
   constructor(public settings:SettingsService, private adminsService:AdminsService,
-              private tools:RzhtoolsService,private router:Router,
+              private tools:RzhtoolsService,private router:Router,private cookieService:CookieService,
               private route:ActivatedRoute,  private systemService:SysPlatformService,
               private addOrgan:AddorganService,private patterns: PatternService,
               private adminsComponent:AdminsComponent,private addAdminService:AddAdminService) {
@@ -44,11 +46,13 @@ export class AddAdminComponent implements OnInit,OnChanges {
     console.log("█ changes ►►►", changes);
   }
 
+  @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
   // ng2Select
   private Role: Array<object>;
   private Group: Array<object>;
   private selectedRoleStr:string;
   private selectedGroupStr:string;
+  private userState:string;
 
   private value:any = [];
 
@@ -71,8 +75,24 @@ export class AddAdminComponent implements OnInit,OnChanges {
   }
 
 
+  fileChangeListener($event) {
+    let image: any = new Image();
+    let file: File = $event.target.files[0];
+    let myReader: FileReader = new FileReader();
+    let that = this;
+    myReader.onloadend = function(loadEvent: any) {
+      image.src = loadEvent.target.result;
+      // that.admin['avatar'] = image.src;
+      console.log(image.src)
+      // that.cropper.setImage(image);
+    };
+
+    myReader.readAsDataURL(file);
+  }
+
   ngOnInit() {
-    this.admin['orgCode'] = ''
+    this.admin['orgCode'] = '';
+    this.userState = this.cookieService.getObject('loginInfo')['state'];
 
     //获取当前路由
     this.route.url.subscribe(urls => {
@@ -131,7 +151,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
   private selectedChange(){
     this.getRoleAndGroupList();//获取角色/角色组列表
-    this.getMyRoleAndGroupList();//获取已经分配的角色/角色组列表
+    // this.getMyRoleAndGroupList();//获取已经分配的角色/角色组列表
   }
 
   /**
@@ -173,24 +193,35 @@ export class AddAdminComponent implements OnInit,OnChanges {
    */
   private getRoleAndGroupList(){
     let roleAndGroupList = this.addAdminService.getRoleAndGroupList(this.sysCode,this.admin['mgrCode'],this.admin['orgCode']).data;
-    //console.log("█ roleAndGroupList ►►►", roleAndGroupList);
+    console.log("█ roleAndGroupList ►►►", roleAndGroupList);
     let oldRolesArray = roleAndGroupList.roleList;
     let oldRoleGroupArray = roleAndGroupList.roleGroupList;
-    let newRolesArray = [],newRoleGroupArray = [], obj = {};
+    let newRolesArray = [], myNewRolesArray = [],myNewRoleGroupArray = [], newRoleGroupArray = [], obj = {};
     for (var i=0; i<oldRolesArray.length; i++){
       obj = {
         id:oldRolesArray[i].roleCode,
         text:oldRolesArray[i].roleName
       };
-      newRolesArray.push(obj);
+      if (oldRolesArray[i].isHas == 'Y'){
+        myNewRolesArray.push(obj)
+      }else{
+        newRolesArray.push(obj);
+      }
     }
     for (var i=0; i<oldRoleGroupArray.length; i++){
       obj = {
         id:oldRoleGroupArray[i].roleCode,
         text:oldRoleGroupArray[i].roleName
       };
-      newRoleGroupArray.push(obj);
+      if (oldRolesArray[i].isHas == 'Y'){
+        myNewRoleGroupArray.push(obj)
+      }else{
+        newRoleGroupArray.push(obj);
+      }
     }
+    console.log('myNewRolesArray',myNewRolesArray)
+    this.mySelectRoles.active = myNewRolesArray;
+    this.mySelectGroup.active = myNewRoleGroupArray;
     this.Role = newRolesArray;
     this.Group = newRoleGroupArray;
   }
@@ -258,8 +289,8 @@ export class AddAdminComponent implements OnInit,OnChanges {
           mgrCode: me.admin['mgrCode'],
           orgCode: me.admin['orgCode'],
           sysCode: me.sysCode,
-          roleCode: me.selectedRoleStr,
-          roleGroupCode: me.selectedGroupStr
+          roleCodes: me.selectedRoleStr,
+          roleGroupCodes: me.selectedGroupStr
         };
         submitUrl = '/orgManager/addRolesRelation';
         break;

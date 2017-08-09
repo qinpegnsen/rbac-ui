@@ -21,7 +21,7 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>区域</label>
             <div class="col-sm-7">
-              <app-select-area [required]="true" [selectedAreaName]="admin.areaCode | areaName" (myData)="getAreaData($event)"></app-select-area>
+              <app-select-area [required]="false" [selectedAreaName]="admin.areaCode | areaName" (myData)="getAreaData($event)"></app-select-area>
             </div>
           </div>
         </fieldset>
@@ -92,10 +92,12 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-4 control-label">头像</label>
+            <label class="col-sm-4 control-label">上传头像</label>
             <div class="col-sm-7">
-              <input class="form-control" type="file" name="avatar" [(ngModel)]="admin.avatar" #remarks="ngModel"
-                     placeholder="头像"/>
+              <label class="file-upload mb0" for="image-input">
+                <button class="btn btn-default btn-block">选择头像</button>
+                <input id="image-input" type="file" (change)="fileChangeListener($event)">
+              </label>
             </div>
           </div>
         </fieldset>
