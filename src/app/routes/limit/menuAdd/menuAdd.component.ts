@@ -24,6 +24,7 @@ export class MenuAddComponent implements OnInit {
   private queryId:number;//获取添加，修改的ID
   private uid;//声明保存获取到的暗码
   private menuList;//声明菜单列表
+  private preType;
   private limitForm = {
     sysCode: '',
     menuName: '',

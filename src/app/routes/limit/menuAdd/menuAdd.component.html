@@ -186,10 +186,10 @@
             <label class="col-sm-3 control-label">选择上级类型</label>
             <div class="col-sm-8">
               <label class="checkbox-inline c-checkbox">
-                <input id="inlineCheckbox10" type="radio" name="preType" value="option1" />
+                <input id="inlineCheckbox10" type="radio" name="preType" value="option1" [(ngModel)]="preType"/>
                 <span class="fa fa-check"></span> 菜单</label>
               <label class="checkbox-inline c-checkbox">
-                <input id="inlineCheckbox20" type="radio" name="preType" value="option2" />
+                <input id="inlineCheckbox20" type="radio" name="preType" value="option2" [(ngModel)]="preType"/>
                 <span class="fa fa-check"></span> 页面元素</label>
             </div>
           </div>
@@ -204,7 +204,7 @@
             </div>
           </div>
         </fieldset>
-        <fieldset *ngIf="preType.checked">
+        <fieldset *ngIf="preType=='option2'">
           <div class="form-group">
             <label class="col-sm-3 control-label">选择上级页面元素</label>
             <div class="col-sm-8">

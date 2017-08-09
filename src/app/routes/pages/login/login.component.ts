@@ -77,18 +77,6 @@ export class LoginComponent implements OnInit {
         if (result.success) {
           let user =  result.data;
           console.log("█ result.data.menuVOList ►►►",  result.data.menuVOList);
-          menu.push({
-            text: '权限管理',
-            link: '/main/limit',
-            icon: 'fa fa-lock text-center'
-          });
-
-
-          for (var i = 0; i < result.data.menuVOList.length; i++) {
-            result.data.menuVOList[i]["text"] = result.data.menuVOList[i]["menuName"];
-          }
-
-
           me.myMenu.addMenu(result.data.menuVOList);
 
           me._cookieService.putObject('loginInfo', user); //用户信息存入cookie
