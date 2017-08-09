@@ -10,7 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 export class RoleListComponent implements OnInit {
 
   public sysList;
-  public sysName;
+  public sysName="请先选择系统";
   public sysCode;
   private addButton;
 
@@ -39,7 +39,7 @@ export class RoleListComponent implements OnInit {
       success: (data) => {
         this.sysCode = data[0].sysCode;
         this.sysList = data;
-        this.sysName = data[0].sysName;
+
       },
       error: (data) => {
         console.log("sys/list  error");
@@ -50,8 +50,9 @@ export class RoleListComponent implements OnInit {
     this.addrType = this.routeInfo.snapshot.data[0]["type"];
   }
 
-  onSelectSys(sys): void {
-    this.sysCode = sys.value;
+  onSelectSys(sysCode,sysName): void {
+    this.sysCode = sysCode;
+    this.sysName = sysName;
   }
   /**
    * 刷新角色列表

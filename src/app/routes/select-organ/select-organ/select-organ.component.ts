@@ -11,6 +11,7 @@ import {isNull,isNullOrUndefined} from "util";
 })
 export class SelectOrganComponent implements OnInit {
   private organs:any;
+  private orgName="请先输入要查询的机构";
   private orgCode:string = '';//初始化，为了让select框默认选中value=''的option
 
   @Input() private required:boolean;
@@ -36,8 +37,9 @@ export class SelectOrganComponent implements OnInit {
     });
   }
 
-  selected(){
-    this.selectedData.emit(this.orgCode);
+  selected(code,orgName){
+    this.orgName=orgName;
+    this.selectedData.emit(code);
   }
 
 }

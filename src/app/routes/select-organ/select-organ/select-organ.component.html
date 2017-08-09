@@ -1,4 +1,9 @@
-<select name="orgCode" [required]="required" [(ngModel)]="orgCode" class="form-control" (change)="selected()">
-  <option value="" disabled>请选择机构</option>
-  <option *ngFor="let organ of organs" [value]="organ.orgCode">{{organ.orgName}}</option>
-</select>
+<div class="btn-group" dropdown>
+  <button class="btn btn-default" dropdownToggle>{{orgName}}<b class="caret"></b>
+  </button>
+  <ul *dropdownMenu class="dropdown-menu animated fadeInDown" role="menu" >
+    <li *ngFor="let organ of organs" (click)="selected(organ.orgCode,organ.orgName)">
+      <a href="#">{{organ.orgName}}</a>
+    </li>
+  </ul>
+</div>

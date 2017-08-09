@@ -1,5 +1,4 @@
 <!--新增角色组-->
-{{addrType}}
 <div class="rightpage"  *ngIf="queryId==1">
   <form class="form-validate form-horizontal" style="height: 100%" #dataForm="ngForm" (ngSubmit)="updateMssage(dataForm.value)">
     <!-- START panel-->
@@ -264,7 +263,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">为角色分配权限</label>
             <div class="col-sm-8">
-              <app-dis-auth (bingLimit)="getRoleLimit($event)"></app-dis-auth>
+              <app-dis-auth (bingLimit)="getRoleLimit($event)" [sysCode]="sysCode" [roleCode]="roleCode"></app-dis-auth>
             </div>
           </div>
         </fieldset>

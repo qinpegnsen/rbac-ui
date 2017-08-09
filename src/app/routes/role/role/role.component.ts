@@ -18,9 +18,11 @@ export class RoleComponent implements OnInit {
    * 系统列表的接口
    * sysCode 初始化系统的编码，默认第一个，然后根据sysCode调用初始化的角色组列表和角色列表
    * sysList 系统列表的数据
+   * sysName 系统下拉框里面的默认的文本
    */
   public sysList;
   public sysCode;
+  public sysName="请先选择系统";
 
   /**
    * 3个button的按钮
@@ -117,8 +119,9 @@ export class RoleComponent implements OnInit {
    * 系统发生变化的时候，获取到当前的系统编码，然后在刷新列表
    * @param sys
    */
-  onSelectSys(sys): void {
-    this.sysCode = sys.value;
+  onSelectSys(sysCode,sysName): void {
+    this.sysCode = sysCode;
+    this.sysName = sysName;
     this.queryRoleGroupDatas();
   }
 

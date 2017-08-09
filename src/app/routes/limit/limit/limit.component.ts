@@ -29,6 +29,7 @@ export class LimitComponent implements OnInit {
   private sysCode:string;//系统编码
   private menuCode;//权限菜单编码
   private buttonConfig;//权限菜单列表中的添加按钮
+  private sysName="请先选择系统";//系统下拉框里面的默认的文本
 
 
   /**
@@ -65,8 +66,9 @@ export class LimitComponent implements OnInit {
   /**
    * 系统发生变化的时候再次调用，改变权限菜单
    * **/
-  onSelectlimit(sys):void {
-    this.sysCode = sys.value;
+  onSelectlimit(sysCode,sysName):void {
+    this.sysCode = sysCode;
+    this.sysName=sysName
     this.queryDatas();
   }
 

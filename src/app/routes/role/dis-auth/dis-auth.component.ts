@@ -70,6 +70,8 @@ export class DisAuthComponent implements OnInit {
         this.bingLimit.emit(me.mySelectLimitsStr)
       },
       error: (data) => {
+        console.log(this.sysCode)
+        console.log(this.roleCode)
         console.log('查询角色绑定的权限错误');
       }
     });

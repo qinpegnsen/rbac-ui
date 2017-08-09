@@ -93,7 +93,6 @@ export class AdminsComponent implements OnInit {
    * @param orgCode
      */
   getOrganCode(orgCode){
-    //console.log("█ orgCode ►►►",  orgCode);
     this.orgCode = orgCode;
     this.queryDatas()//获取管理员表格数据
   }
