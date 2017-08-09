@@ -1,7 +1,7 @@
 import {Component, ComponentRef, Injector, OnInit,ViewChild} from '@angular/core';
 import {Page} from "../../../core/page/page";
 import {AjaxService} from '../../../core/services/ajax.service';
-import {isNull} from "util";
+import {isNull,isNullOrUndefined} from "util";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -29,14 +29,14 @@ export class LimitComponent implements OnInit {
   private sysCode:string;//系统编码
   private menuCode;//权限菜单编码
   private buttonConfig;//权限菜单列表中的添加按钮
-  private sysName="请先选择系统";//系统下拉框里面的默认的文本
-
+  private childMenuCode; //菜单编码，查询子集用
+  private childMenuTitList:Array<any> = []; //菜单级别面包屑
 
   /**
    * 装饰器，实现局部刷新
    */
   @ViewChild(LimittabComponent)
-  LimittabComponent: LimittabComponent;
+  LimittabComponent:LimittabComponent;
 
   constructor(private ajax:AjaxService, private router:Router, private limitService:LimitService) {
     let _this = this;
@@ -66,9 +66,9 @@ export class LimitComponent implements OnInit {
   /**
    * 系统发生变化的时候再次调用，改变权限菜单
    * **/
-  onSelectlimit(sysCode,sysName):void {
-    this.sysCode = sysCode;
-    this.sysName=sysName
+  onSelectlimit(sys):void {
+    this.sysCode = sys.value;
+    this.childMenuCode = null, this.childMenuTitList = []; //清空子集查询
     this.queryDatas();
   }
 
@@ -93,7 +93,7 @@ export class LimitComponent implements OnInit {
         $(".mat-tab-group .mat-tab-body-wrapper .mat-tab-body").css({"display": "inline"});
       }
     };
-    _this.limitService.sysList(_this,true);//选择系统列表
+    _this.limitService.sysList(_this, true);//选择系统列表
   }
 
   /**
@@ -109,15 +109,44 @@ export class LimitComponent implements OnInit {
   private showMsg(operation, id) {
   }
 
+  /**
+   * 查询子集菜单列表
+   */
+  queryChildMenuList(childCode?, menuName?, isTit?:boolean) {
+    let me = this, num = 0;
+    if (isNullOrUndefined(childCode)) {
+      this.childMenuCode = null, this.childMenuTitList = []; //清空子集查询
+    } else {
+      me.childMenuCode = childCode;
+      let item = {name: menuName, code: childCode};
+      if (!isTit) me.childMenuTitList.push(item); //非点击面包屑路径时，添加面包屑
+      else { //点击面包屑路径时，提出点击地址后的面包屑路径
+        for (var i = 0; i < me.childMenuTitList.length; i++) {  //获取点击面包屑的路径地址下标
+          if (item.code == me.childMenuTitList[i].code) num = i;
+        }
+        me.childMenuTitList.splice(num + 1); //剔除下标后的路径
+      }
+    }
+    me.data = new Page(me.limitService.queryMenuList(1, 4, me.sysCode, me.childMenuCode));
+  }
 
   /**
-   * 添加菜单列表
-   * **/
+   * 返回上一级菜单列表
+   */
+  goBackMenu() {
+    let num = this.childMenuTitList.length;
+    if (num - 2 < 0) this.queryChildMenuList();
+    else this.queryChildMenuList(this.childMenuTitList[num - 2].code, this.childMenuTitList[num - 2].name, true);
+  }
+
+  /**
+   * 查询菜单列表
+   **/
   public queryDatas(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
 
-    let listInfos = this.limitService.queryMenuList(activePage, 4, me.sysCode);
+    let listInfos = this.limitService.queryMenuList(activePage, 4, me.sysCode, me.childMenuCode);
     me.data = new Page(listInfos);
   }
 
@@ -151,14 +180,14 @@ export class LimitComponent implements OnInit {
         'state': data.isUse
       },
       success: () => {
-        if(data.isUse == "Y"){
-          swal('启动成功','', 'success');
-        }else if(data.isUse == "N"){
-          swal('停用成功','', 'success');
+        if (data.isUse == "Y") {
+          swal('启动成功', '', 'success');
+        } else if (data.isUse == "N") {
+          swal('停用成功', '', 'success');
         }
       },
       error: (data) => {
-        swal('修改权限菜单失败提醒','','error');
+        swal('修改权限菜单失败提醒', '', 'error');
       }
     });
   }

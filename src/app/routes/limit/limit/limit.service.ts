@@ -37,14 +37,15 @@ export class LimitService {
     });
     return sysList;
   }
-
+  
   /**
    * 查询权限菜单列表
    * @param activePage 当前页
    * @param sysCode 系统编码
+   * @param menuCode 菜单编码
    * @returns {any}
    */
-  queryMenuList(activePage, pageSize, sysCode) {
+  queryMenuList(activePage, pageSize, sysCode,menuCode?) {
     let infos = {};
     this.ajax.get({
       url: "/limitMenu/listpage",
@@ -52,7 +53,8 @@ export class LimitService {
       data: {
         curPage: activePage,
         pageSize: pageSize,
-        sysCode: sysCode
+        sysCode: sysCode,
+        preMenuCode: menuCode
       },
       success: (data) => {
         infos = data;

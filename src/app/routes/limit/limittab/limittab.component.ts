@@ -28,6 +28,9 @@ export class LimittabComponent implements OnInit ,OnChanges {
 
   @Input()
   public menuCode;//获取权限菜单编码
+
+  @Input()
+  public pageCode;//获取页面元素编码
   constructor(private ajax:AjaxService, private router:Router) {
     let _this = this;
 
@@ -114,7 +117,8 @@ export class LimittabComponent implements OnInit ,OnChanges {
       data: {
         curPage: activePage,
         pageSize:'3',
-        sysCode:this.sysCode
+        sysCode:this.sysCode,
+        preCode:this.pageCode
       },
       success: (data) => {
         if (!isNull(data)) {

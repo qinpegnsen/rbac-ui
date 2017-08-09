@@ -84,6 +84,93 @@
 </div>
 <!--添加权限菜单end-->
 
+<!--添加权限菜单子集begin-->
+<div class="rightpage" *ngIf="this.queryId==7">
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm">
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <fieldset class="b0">
+          <legend>添加菜单</legend>
+        </fieldset>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode" #sysCode="ngModel" type="hidden"/>
+        <input class="form-control" required [(ngModel)]="limitForm.preMenuCode" name="preMenuCode" #sysCode="ngModel" type="hidden"/>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 菜单名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" required [(ngModel)]="limitForm.menuName" name="menuName"
+                     #menuName="ngModel" type="text"/>
+              <div [hidden]="menuName.valid || menuName.pristine"
+                   class="alert alert-danger">
+                菜单名称是必填项，请填写菜单名称
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 菜单URL</label>
+            <div class="col-sm-8">
+              <input class="form-control" required name="menuUrl" [(ngModel)]="limitForm.menuUrl"
+                     #menuUrl="ngModel" type="text"/>
+              <div [hidden]="menuUrl.valid || menuUrl.pristine"
+                   class="alert alert-danger">
+                url是必填项，请填写url路径
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">菜单图标</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="menuIcon" ngModel [(ngModel)]="limitForm.menuIcon"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
+            <div class="col-sm-8">
+              <input class="form-control" required name="level" [(ngModel)]="limitForm.level" level="level"
+                     #level="ngModel" type="text"/>
+              <div [hidden]="level.valid || level.pristine"
+                   class="alert alert-danger">
+                级别是必填项，请填写级别
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="remarks" ngModel [(ngModel)]="limitForm.remarks"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">菜单顺序</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="ord" [(ngModel)]="limitForm.ord" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <!--按钮的操作begin-->
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="button" [disabled]="!addLimitForm.form.valid" (click)="addLimitList(addLimitForm.value)">提交信息</button>
+      </div>
+      <!--按钮的操作end-->
+    </div>
+    <!-- END panel-->
+  </form>
+</div>
+<!--添加权限菜单子集end-->
+
 <!--添加页面元素begin-->
 <div class="rightpage" *ngIf="this.queryId==2">
   <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm" (ngSubmit)="addLimitList(addLimitForm.value)"
@@ -168,6 +255,80 @@
   </form>
 </div>
 <!--添加页面元素end-->
+
+<!--添加页面元素子集begin-->
+<div class="rightpage" *ngIf="this.queryId==8">
+  <form class="form-validate form-horizontal" style="height: 100%" #addLimitForm="ngForm">
+    <!-- START panel-->
+    <div class="panel-default">
+      <div class="panel-body">
+        <fieldset class="b0">
+          <legend>添加菜单</legend>
+        </fieldset>
+        系统编码<input class="form-control" required [(ngModel)]="limitForm.sysCode"  name="sysCode" #sysCode="ngModel" />
+        页面编码<input class="form-control" required [(ngModel)]="limitForm.preCode"  name="preCode" #sysCode="ngModel"/>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 页面名称</label>
+            <div class="col-sm-8">
+              <input class="form-control" required ngModel name="pageName"
+                     #pageName="ngModel" type="text"/>
+              <div [hidden]="pageName.valid || pageName.pristine"
+                   class="alert alert-danger">
+                页面名称是必填项，请填写页面名称
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">页面图标</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="icon" #icon="ngModel" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
+            <div class="col-sm-8">
+              <input class="form-control" required name="level" [(ngModel)]="limitForm.level" level="level"
+                     #level="ngModel" type="text"/>
+              <div [hidden]="level.valid || level.pristine"
+                   class="alert alert-danger">
+                级别是必填项，请填写级别
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="remarks" #remarks="ngModel" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">排序</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="text" name="ord" #ord="ngModel" ngModel/>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <!--按钮的操作begin-->
+      <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
+        <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
+        <button class="ml btn btn-info pull-left" type="button" [disabled]="!addLimitForm.form.valid" (click)="addLimitList(addLimitForm.value)">提交信息</button>
+      </div>
+      <!--按钮的操作end-->
+    </div>
+    <!-- END panel-->
+  </form>
+</div>
+<!--添加页面元素子集end-->
 
 <!--添加功能操作begin-->
 <div class="rightpage" *ngIf="this.queryId==4">

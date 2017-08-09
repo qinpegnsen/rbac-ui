@@ -9,6 +9,7 @@ import { LimittabComponent } from './limittab/limittab.component';
 import {MenuAddComponent} from "./menuAdd/menuAdd.component";
 import {MenuUpdateComponent} from "./menuUpdate/menuUpdate.component";
 import { LimitChildDirective } from './limit/limit-child.directive';
+import {LimitService} from "./limit/limit.service";
 
 // 父路由，用于页面嵌套显示
 const routes:Routes = [
@@ -43,7 +44,7 @@ const routes:Routes = [
     FileUploadModule
   ],
   declarations: [LimitComponent, MenuAddComponent, MenuUpdateComponent, LimittabComponent, LimitChildDirective],
-  providers: [LimitComponent,LimittabComponent]
+  providers: [LimitComponent,LimittabComponent,LimitService]
 })
 export class LimitModule {
 }

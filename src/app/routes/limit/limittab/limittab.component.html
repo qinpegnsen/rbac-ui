@@ -4,19 +4,27 @@
   <!--页面元素begin-->
   <tab (select)="pageMenus()">
     <ng-template tabHeading>页面元素</ng-template>
+    <div class="col-md-10 font15 mt mb pl text-primary">
+      <i class="icon-map mr"></i>
+      <span class="cursor-p">当前菜单</span>
+    </div>
+    <div class="col-md-2 pull-right text-right mt">
+      <!--添加页面元素-->
+      <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+    </div>
     <table class="table table-striped" #dataTable2="rzhDataTable" [rzhData]="menuData" (pageChange)="pageMenus($event)">
       <thead>
       <tr>
         <th class="w5 text-center">
           序号
         </th>
-        <th class="w15 text-center">
+        <th class="w20 text-center">
           <rzhDefaultSorter by="pageName">页面名称</rzhDefaultSorter>
         </th>
         <th class="w15 text-center">
           <rzhDefaultSorter by="icon">页面图标</rzhDefaultSorter>
         </th>
-        <th class="w10 text-center">
+        <th class="w15 text-center">
           <rzhDefaultSorter by="level">级别</rzhDefaultSorter>
         </th>
         <th class="w15 text-center">
@@ -30,10 +38,6 @@
         </th>
         <th class="w10 text-center">
           <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
-        </th>
-        <th class="w10 text-center">
-          <!--添加页面元素-->
-          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
         </th>
       </tr>
 
@@ -59,9 +63,12 @@
           <!--修改页面元素的列表-->
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1,pageCode:page.pageCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--页面元素子列表项的添加-->
-          <app-buttons [config]="option" *ngFor="let option of buttonConfig" ></app-buttons>
+          <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:8,sysCode:sysCode,pageCode:page.pageCode}"></app-buttons>
+          <span (click)="queryChildMenuList(menu.menuCode,menu.menuName,false)" class="btn btn-default btn-xs">
+      <i class="fa fa-level-down"></i>
+      下级菜单
+            </span>
         </td>
-
       </tr>
       </tbody>
       <tfoot>
@@ -85,16 +92,24 @@
   <!--功能操作begin-->
   <tab (select)="operationDatas()">
     <ng-template tabHeading>功能操作</ng-template>
+    <div class="col-md-10 font15 mt mb pl text-primary">
+      <i class="icon-map mr"></i>
+      <span class="cursor-p">当前菜单</span>
+    </div>
+    <div class="col-md-2 pull-right text-right mt">
+      <!--添加功能操作-->
+      <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:4,sysCode:sysCode}" *ngFor="let option of tableButtonConfig2"></app-buttons>
+    </div>
     <table class="table table-striped" #dataTable3="rzhDataTable" [rzhData]="operationData" (pageChange)="operationDatas($event)">
       <thead>
       <tr>
         <th class="w5 text-center">
           序号
         </th>
-        <th class="w10 text-center">
+        <th class="w15 text-center">
           <rzhDefaultSorter by="optName">操作名称</rzhDefaultSorter>
         </th>
-        <th class="w15 text-center">
+        <th class="w20 text-center">
           <rzhDefaultSorter by="tacklUrl">拦截URL</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
@@ -114,10 +129,6 @@
         </th>
         <th class="w10 text-center">
           <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
-        </th>
-        <th class="w10 text-center">
-          <!--添加功能操作-->
-          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:4,sysCode:sysCode}" *ngFor="let option of tableButtonConfig2"></app-buttons>
         </th>
       </tr>
       </thead>
@@ -166,13 +177,17 @@
   <!--文件控制begin-->
   <tab (select)="controlDatas()">
     <ng-template tabHeading>文件控制</ng-template>
+    <div class="col-md-2 pull-right text-right mt">
+      <!--添加文件控制-->
+      <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:6,sysCode:sysCode}" *ngFor="let option of tableButtonConfig3"></app-buttons>
+    </div>
     <table class="table table-striped" #dataTable4="rzhDataTable" [rzhData]="controlData" (pageChange)="controlDatas($event)">
       <thead>
       <tr>
         <th class="w5 text-center">
           序号
         </th>
-        <th class="w15 text-center">
+        <th class="w25 text-center">
           <rzhDefaultSorter by="fileName">文件名称</rzhDefaultSorter>
         </th>
         <th class="w20 text-center">
@@ -186,10 +201,6 @@
         </th>
         <th class="w10 text-center">
           <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
-        </th>
-        <th class="w10 text-center">
-          <!--添加文件控制-->
-          <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:6,sysCode:sysCode}" *ngFor="let option of tableButtonConfig3"></app-buttons>
         </th>
       </tr>
       </thead>

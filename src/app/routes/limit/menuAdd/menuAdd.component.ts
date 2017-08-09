@@ -30,6 +30,7 @@ export class MenuAddComponent implements OnInit {
     menuName: '',
     menuUrl: '',
     preMenuCode: '',
+    preCode:'',
     menuIcon: '',
     level: '',
     remarks: '',
@@ -49,6 +50,8 @@ export class MenuAddComponent implements OnInit {
     //获取路由的参数
     _this.queryId = _this.routeInfo.snapshot.queryParams['id'];
     _this.limitForm.sysCode = _this.routeInfo.snapshot.queryParams['sysCode'];
+    _this.limitForm.preMenuCode = _this.routeInfo.snapshot.queryParams['menuCode'];
+    _this.limitForm.preCode = _this.routeInfo.snapshot.queryParams['pageCode'];
 
 
     /**
@@ -232,6 +235,60 @@ export class MenuAddComponent implements OnInit {
        */
       _this.uploader.uploadAll();
 
+    }
+    //添加权限菜单的子集
+    else if(_this.queryId == 7){
+      let submitUrl = '/limitMenu/add';
+      _this.ajax.post({
+        url: submitUrl,
+        async: false,
+        data: _this.limitForm,
+        success: (res) => {
+          if (res.success) {
+            _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
+            swal('添加菜单提交成功！', '','success');
+            //_this.outputvalue.emit(true);//提交成功后向父组件传值
+          } else {
+            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+            swal(res.info, errorMsg, 'error');
+          }
+        },
+        error: (res) => {
+          swal('添加菜单提交失败！','', 'error');
+        }
+      })
+      _this.limitComponent.queryDatas();
+    }
+    //添加页面元素的子集
+    else if(_this.queryId == 8){
+      let submitUrl = '/limitPage/add';
+      _this.ajax.post({
+        url: submitUrl,
+        async: false,
+        data: {
+          'sysCode': _this.limitForm.sysCode,
+          'pageName': value.pageName,
+          'preCode': _this.limitForm.preCode,
+          'icon': value.icon,
+          'level': value.level,
+          'remarks': value.remarks,
+          'ord': value.ord
+        },
+        success: (res) => {
+          if (res.success) {
+            _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
+            swal('添加菜单提交成功！', '','success');
+            //_this.outputvalue.emit(true);//提交成功后向父组件传值
+          } else {
+            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+            swal(res.info, errorMsg, 'error');
+          }
+        },
+        error: (res) => {
+          swal('添加菜单提交失败！','', 'error');
+        }
+      })
+      _this.limitComponent.queryDatas();
     }
     //添加菜单
     else {

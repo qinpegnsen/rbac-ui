@@ -14,7 +14,18 @@
   </div>
 </div>
 <div class="panel  mb0">
-  <div class="col-md-2 font15 mt mb pl text-primary"><i class="icon-layers mr"></i>菜单权限控制</div>
+  <div class="col-md-10 font15 mt mb pl text-primary">
+    <i class="icon-layers mr"></i>
+    <span class="cursor-p" (click)="queryChildMenuList()">菜单权限</span>
+    <span *ngFor="let menuTit of childMenuTitList">
+      <i class="fa fa-arrow-right mr ml"></i>
+      <font class="cursor-p" (click)="queryChildMenuList(menuTit.code,menuTit.name,true)">{{menuTit.name}}</font>
+    </span>
+    <span *ngIf="childMenuTitList.length>0" (click)="goBackMenu()" class="btn btn-default btn-xs ml">
+      <i class="fa fa-level-up mr5"></i>
+      返回上一级
+    </span>
+  </div>
   <div class="col-md-2 pull-right text-right mt">
     <!--添加菜单权限按钮begin-->
     <app-buttons [config]="addButton" (callback)="addButton.callback($event)" routerLink="addMenu" [queryParams]="{sysCode:sysCode}"></app-buttons>
@@ -67,18 +78,20 @@
       <td>
         <!--菜单权限列表的是否启用-->
 
-              <label class="switch">
-                <input type="checkbox" [checked]="menu.isUse=='Y'" (change)="upMenudateState(menu)" title="是否启动"/>
-                <span></span>
-              </label>
-
+        <label class="switch">
+          <input type="checkbox" [checked]="menu.isUse=='Y'" (change)="upMenudateState(menu)" title="是否启动"/>
+          <span></span>
+        </label>
       </td>
       <td>
         <!--菜单权限列表的修改-->
         <app-buttons [config]="option" (callback)="option.callback($event,menu.menuCode)" *ngFor="let option of tableButtonConfig"></app-buttons>
         <!--菜单权限子列表项的添加-->
-        <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu" [queryParams]="{sysCode:sysCode}"></app-buttons>
-        <button class="btn btn-info btn-xs" title="查看子集" limitChild="{{menu.menuCode}}"><i class="fa fa-caret-down"></i></button>
+        <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:7,sysCode:sysCode,menuCode:menu.menuCode}"></app-buttons>
+         <span (click)="queryChildMenuList(menu.menuCode,menu.menuName,false)" class="btn btn-default btn-xs">
+      <i class="fa fa-level-down"></i>
+      下级菜单
+    </span>
       </td>
     </tr>
     </tbody>
@@ -102,7 +115,7 @@
   <i class="fa fa-sort-down fa-2x text-muted"></i>
 </div>
 <div class="clear"></div>
-<p class="text-primary font15 mt0 pl"><i class="icon-graduation mr"></i>交互权限控制</p>
+<p class="text-primary font15 mt0 pl"><i class="icon-graduation mr"></i>交互权限</p>
 <div class="panel">
   <!--交互权限控制下的tab-->
   <app-limittab [sysCode]="sysCode" [menuCode]="menuCode"></app-limittab>
