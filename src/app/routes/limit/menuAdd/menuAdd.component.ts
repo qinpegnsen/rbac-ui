@@ -23,6 +23,8 @@ export class MenuAddComponent implements OnInit {
   }); //初始化上传方法
   private queryId:number;//获取添加，修改的ID
   private uid;//声明保存获取到的暗码
+  private menuList;//声明菜单列表
+  private preType;
   private limitForm = {
     sysCode: '',
     menuName: '',
@@ -46,22 +48,14 @@ export class MenuAddComponent implements OnInit {
     let _this = this;
     //获取路由的参数
     _this.queryId = _this.routeInfo.snapshot.queryParams['id'];
-
-    //获取菜单编码
-    /*_this.route.params.subscribe(params => {
-     console.log("█ params ►►►", params );
-     _this.limitForm.sysCode = params['sysCode'];
-     });*/
-
     _this.limitForm.sysCode = _this.routeInfo.snapshot.queryParams['sysCode'];
 
 
     /**
-     * 获得暗码
+     * 文件控制上传 获取暗码
      */
     _this.ajax.get({
       url: '/upload/basic/uid',
-      data: {},
       success: (res) => {
         console.log("█ res ►►►", res);
         if (res.success) {
@@ -74,10 +68,26 @@ export class MenuAddComponent implements OnInit {
         }
       },
       error: (data) => {
-        swal('提交失败');
+        swal('获得暗码失败','','error');
+        console.log(data);
       }
     });
 
+    /**
+     *获取权限菜单列表的信息
+     */
+    _this.ajax.get({
+      url: '/limitMenu/list',
+      data: {
+        'sysCode': _this.limitForm.sysCode
+      },
+      success: (data) => {
+        _this.menuList = data;
+      },
+      error: (data) => {
+        console.log("error");
+      }
+    });
 
   }
 
@@ -103,8 +113,8 @@ export class MenuAddComponent implements OnInit {
         async: false,
         data: {
           'sysCode': _this.limitForm.sysCode,
+          'preCode':value.menuCode,
           'pageName': value.pageName,
-          'preCode': value.preCode,
           'icon': value.icon,
           'level': value.level,
           'remarks': value.remarks,
@@ -114,30 +124,28 @@ export class MenuAddComponent implements OnInit {
           console.log("█ res ►►►", res);
           if (res.success) {
             _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
-            swal('提交成功！', '列表已自动更新');
-
-
-            //_this.outputvalue.emit(true);//提交成功后向父组件传值
+            swal('添加页面元素提交成功！', '','success');
+            _this.limitComponent.refresh()
           } else {
             let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
             swal(res.info, errorMsg, 'error');
           }
         },
         error: (data) => {
-          swal('提交失败');
+          swal('添加页面元素提交失败！', '','error');
         }
       })
-      _this.limittabComponent.pageMenus();
     }
     //添加功能操作列表
     else if (_this.queryId == 4) {
       _this.ajax.post({
         url: '/limitOpt/add',
+        async: false,
         data: {
           'sysCode': _this.limitForm.sysCode,
           'optName': value.optName,
           'tacklUrl': value.tacklUrl,
-          'preCode': value.preCode,
+          'preCode': value.menuCode,
           'preType': value.preType,
           'ord': value.ord,
           'remarks': value.remarks
@@ -145,16 +153,17 @@ export class MenuAddComponent implements OnInit {
         success: (res) => {
           console.log("█ res ►►►", res);
           if (res.success) {
-            _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
-            swal('提交成功！', '列表已自动更新');
+            _this.router.navigate(['/main/limit'], {replaceUrl: true});   //路由跳转
+            swal('添加功能操作提交成功！', '','success');
             //_this.outputvalue.emit(true);//提交成功后向父组件传值
+            _this.limitComponent.refresh();
           } else {
             let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
             swal(res.info, errorMsg, 'error');
           }
         },
         error: (data) => {
-          swal('提交失败！');
+          swal('添加页面元素提交失败！', '','error');
         }
       });
     }
@@ -184,6 +193,7 @@ export class MenuAddComponent implements OnInit {
            */
           _this.ajax.post({
             url: '/limitFile/add',
+            async: false,
             data: {
               'sysCode': _this.limitForm.sysCode,
               'fileName': value.fileName,
@@ -192,7 +202,8 @@ export class MenuAddComponent implements OnInit {
             success: (res) => {
               if (res.success) {
                 _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
-                swal('提交成功！', '列表已自动更新...', 'success');
+                swal('文件添加提交成功！', '列表已自动更新...', 'success');
+                _this.limitComponent.refresh();
                 //_this.outputvalue.emit(true);//提交成功后向父组件传值
               } else {
                 swal(res.info, "上传文件成功，但保存信息失败！", 'error');
@@ -232,7 +243,7 @@ export class MenuAddComponent implements OnInit {
         success: (res) => {
           if (res.success) {
             _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
-            swal('提交成功！', '列表已自动更新');
+            swal('添加菜单提交成功！', '','success');
             //_this.outputvalue.emit(true);//提交成功后向父组件传值
           } else {
             let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -240,7 +251,7 @@ export class MenuAddComponent implements OnInit {
           }
         },
         error: (res) => {
-          swal('提交失败！', '列表已自动更新');
+          swal('添加菜单提交失败！','', 'error');
         }
       })
       _this.limitComponent.queryDatas();

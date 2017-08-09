@@ -25,11 +25,17 @@ export class LimittabComponent implements OnInit ,OnChanges {
   private buttonConfig;//页面列表中的添加按钮
   @Input()
   public sysCode;//获取系统编码
+
   @Input()
   public menuCode;//获取权限菜单编码
   constructor(private ajax:AjaxService, private router:Router) {
     let _this = this;
-    //多按钮配置
+
+    /**
+     * 多按钮配置
+     * @type {{title: string, type: string, size: string}[]}
+       */
+    //修改权限菜单的按钮
     this.tableButtonConfig = [
       {
         title: "修改菜单",
@@ -39,6 +45,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
         //btnClass:"btn btn-success",
       }
     ];
+    //添加页面元素按钮
     this.tableButtonConfig1 = [
       {
         text: "添加元素",
@@ -46,6 +53,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
         type: "add",
       }
     ];
+    //添加功能按钮
     this.tableButtonConfig2 = [
       {
         text: "添加功能",
@@ -53,6 +61,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
         type: "add",
       }
     ];
+    //添加文件控制按钮
     this.tableButtonConfig3 = [
       {
         text: "添加文件",
@@ -74,6 +83,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
 
   ngOnInit() {
     this.pageMenus(); //页面元素信息加载
+    this.operationDatas()//功能操作信息加载
   }
 
   /**
@@ -86,14 +96,14 @@ export class LimittabComponent implements OnInit ,OnChanges {
       this.operationDatas();
       this.controlDatas();
     }else if(changes["menuCode"] && this.menuCode){
-      this.pageMenus();
-      this.operationDatas();
-      this.controlDatas();
+      this.queryPageByMenuCode(); //通过菜单编码查询页面元素
+      this.queryOptByMenuCode();  //通过菜单编码查询功能操作
+      this.controlDatas();        //通过菜单编码查询文件控制
     }
   }
 
   /**
-   * 页面元素分页分页列表
+   * 页面元素分页列表
    * **/
   public pageMenus(event?:PageEvent) {
     let me = this, activePage = 1;
@@ -104,8 +114,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
       data: {
         curPage: activePage,
         pageSize:'3',
-        sysCode:this.sysCode,
-        menuCode:this.menuCode
+        sysCode:this.sysCode
       },
       success: (data) => {
         if (!isNull(data)) {
@@ -118,9 +127,36 @@ export class LimittabComponent implements OnInit ,OnChanges {
     });
   }
 
+  /**
+   * 根据菜单编码查询页面元素
+   * @param event
+     */
+  public queryPageByMenuCode(event?:PageEvent) {
+    let me = this, activePage = 1;
+    if (typeof event !== "undefined") activePage = event.activePage;
+
+    this.ajax.get({
+      url: "/limitPage/listpage",
+      data: {
+        curPage: activePage,
+        pageSize:'3',
+        preCode:this.menuCode
+      },
+      success: (data) => {
+        console.log("█ queryPageByMenuCode ►►►", data );
+
+        if (!isNull(data)) {
+          me.menuData = new Page(data);
+        }
+      },
+      error: (data) => {
+        console.log('data', data);
+      }
+    });
+  }
 
   /**
-   * 页面控制分页列表
+   * 功能操作分页列表
    * **/
   public operationDatas(event?:PageEvent) {
     let me = this, activePage = 1;
@@ -130,8 +166,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
       data: {
         curPage: activePage,
         pageSize:'3',
-        sysCode:this.sysCode,
-        menuCode:this.menuCode
+        sysCode:this.sysCode
       },
       success: (data) => {
         if (!isNull(data)) {
@@ -141,7 +176,34 @@ export class LimittabComponent implements OnInit ,OnChanges {
       },
       error: (data) => {
         console.log('data', data);
-        console.log('页面控制分页列表错误');
+        console.log('权限操作分页列表错误');
+      }
+    });
+  }
+
+  /**
+   * 根据菜单编码查询功能操作
+   * @param event
+   */
+  public queryOptByMenuCode(event?:PageEvent) {
+    let me = this, activePage = 1;
+    if (typeof event !== "undefined") activePage = event.activePage;
+
+    this.ajax.get({
+      url: "/limitOpt/listpage",
+      data: {
+        curPage: activePage,
+        pageSize:'3',
+        menuCode:this.menuCode
+      },
+      success: (data) => {
+
+        if (!isNull(data)) {
+          me.menuData = new Page(data);
+        }
+      },
+      error: (data) => {
+        console.log('data', data);
       }
     });
   }
@@ -195,11 +257,15 @@ export class LimittabComponent implements OnInit ,OnChanges {
         'pageCode': data.pageCode,
         'state': data.isUse
       },
-      success: (data) => {
-        swal('成功提醒', '成功');
+      success: () => {
+        if(data.isUse == "Y"){
+          swal('启动成功','', 'success');
+        }else if(data.isUse == "N"){
+          swal('停用成功','', 'success');
+        }
       },
       error: (data) => {
-        swal('失败提醒', '失败');
+        swal('修改页面元素状态失败','error');
       }
     });
   }
@@ -221,11 +287,15 @@ export class LimittabComponent implements OnInit ,OnChanges {
         'optCode': data.optCode,
         'state': data.isUse
       },
-      success: (data) => {
-        swal('成功提醒', '成功');
+      success: () => {
+        if(data.isUse == "Y"){
+          swal('启动成功','', 'success');
+        }else if(data.isUse == "N"){
+          swal('停用成功','', 'success');
+        }
       },
       error: (data) => {
-        swal('失败提醒', '失败');
+        swal('修改功能操作状态失败', 'error');
       }
     });
   }
@@ -247,11 +317,15 @@ export class LimittabComponent implements OnInit ,OnChanges {
         'fileCode': data.fileCode,
         'state': data.isUse
       },
-      success: (data) => {
-        swal('成功提醒', '成功');
+      success: () => {
+        if(data.isUse == "Y"){
+          swal('启动成功','', 'success');
+        }else if(data.isUse == "N"){
+          swal('停用成功','', 'success');
+        }
       },
       error: (data) => {
-        swal('失败提醒', '失败');
+        swal('修改文件控制状态失败', 'error');
       }
     });
   }

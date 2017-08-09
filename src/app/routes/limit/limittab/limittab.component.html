@@ -1,4 +1,3 @@
-
 <!--权限菜单下的tab（页面元素，功能操作，文件控制）begin-->
 <tabset [justified]="true">
 
@@ -11,11 +10,8 @@
         <th class="w5 text-center">
           序号
         </th>
-        <th class="w10 text-center">
-          <rzhDefaultSorter by="pageName">页面名称</rzhDefaultSorter>
-        </th>
         <th class="w15 text-center">
-          <rzhDefaultSorter by="preCode">上级页面</rzhDefaultSorter>
+          <rzhDefaultSorter by="pageName">页面名称</rzhDefaultSorter>
         </th>
         <th class="w15 text-center">
           <rzhDefaultSorter by="icon">页面图标</rzhDefaultSorter>
@@ -23,7 +19,7 @@
         <th class="w10 text-center">
           <rzhDefaultSorter by="level">级别</rzhDefaultSorter>
         </th>
-        <th class="w10 text-center">
+        <th class="w15 text-center">
           <rzhDefaultSorter by="note">备注</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
@@ -46,7 +42,6 @@
       <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center">
         <td>{{x+1}}</td>
         <td>{{page.pageName}}</td>
-        <td>{{page.preCode}}</td>
         <td>{{page.icon}}</td>
         <td>{{page.level}}</td>
         <td>{{page.note}}</td>
@@ -71,7 +66,7 @@
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="4">
+        <td colspan="10">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{menuData.genStartRow()}} 至 {{menuData.genEndRow()}} 条，共 {{menuData.totalRow}} 条</strong></div>
           </div>
@@ -99,20 +94,17 @@
         <th class="w10 text-center">
           <rzhDefaultSorter by="optName">操作名称</rzhDefaultSorter>
         </th>
-        <th class="w10 text-center">
+        <th class="w15 text-center">
           <rzhDefaultSorter by="tacklUrl">拦截URL</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
-          <rzhDefaultSorter by="preCode">上级操作</rzhDefaultSorter>
+          <rzhDefaultSorter by="preCode	">上级操作</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
           <rzhDefaultSorter by="preType">上级类型</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
           <rzhDefaultSorter by="ord">排序</rzhDefaultSorter>
-        </th>
-        <th class="w10 text-center">
-          <rzhDefaultSorter by="note">排序</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
           <rzhDefaultSorter by="remarks">备注</rzhDefaultSorter>
@@ -133,11 +125,10 @@
       <tr *ngFor="let opt of dataTable3.data;let z = index" class="text-center">
         <td style="padding-left: 20px">{{z+1}}</td>
         <td>{{opt.optName}}</td>
-        <td>{{opt.menu}}</td>
+        <td>{{opt.tacklUrl}}</td>
         <td>{{opt.preCode}}</td>
         <td>{{opt.preType}}</td>
         <td>{{opt.ord}}</td>
-        <td>{{opt.remarks}}</td>
         <td>{{opt.remarks}}</td>
         <td>
         <!--功能操作的是否启用-->
@@ -151,14 +142,12 @@
         <td>
           <!--修改功能操作的列表-->
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:3,optCode:opt.optCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
-          <!--功能操作子列表项的添加-->
-          <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu"  [queryParams]="{sysCode:sysCode}"></app-buttons>
         </td>
       </tr>
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="5">
+        <td colspan="10">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{operationData.genStartRow()}} 至 {{operationData.genEndRow()}} 条，共 {{operationData.totalRow}} 条</strong></div>
           </div>
@@ -189,7 +178,7 @@
         <th class="w20 text-center">
           <rzhDefaultSorter by="fileUrl">文件URL</rzhDefaultSorter>
         </th>
-        <th class="w35 text-center">
+        <th class="w30 text-center">
           <rzhDefaultSorter by="type">文件类型</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
@@ -222,8 +211,6 @@
         <td>
           <!--修改文件控制的列表-->
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:5,fileCode:file.fileCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
-          <!--文件控制子列表项的添加-->
-          <app-buttons [config]="option" *ngFor="let option of buttonConfig" (callback)="addButton.callback($event)" routerLink="addMenu"  [queryParams]="{sysCode:sysCode}"></app-buttons>
           </td>
 
       </tr>
@@ -231,7 +218,7 @@
 
       <tfoot>
       <tr>
-        <td colspan="3">
+        <td colspan="7">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{controlData.genStartRow()}} 至 {{controlData.genEndRow()}} 条，共 {{controlData.totalRow}} 条</strong></div>
           </div>

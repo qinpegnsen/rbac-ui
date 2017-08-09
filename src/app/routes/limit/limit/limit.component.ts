@@ -1,4 +1,4 @@
-import {Component, ComponentRef, Injector, OnInit} from '@angular/core';
+import {Component, ComponentRef, Injector, OnInit,ViewChild} from '@angular/core';
 import {Page} from "../../../core/page/page";
 import {AjaxService} from '../../../core/services/ajax.service';
 import {isNull} from "util";
@@ -7,6 +7,7 @@ import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {LimitService} from "./limit.service";
 import {Type} from "@angular/compiler/src/output/output_ast";
+import {LimittabComponent} from "../limittab/limittab.component";
 declare var $:any;
 
 //修改状态弹窗
@@ -29,26 +30,17 @@ export class LimitComponent implements OnInit {
   private menuCode;//权限菜单编码
   private buttonConfig;//权限菜单列表中的添加按钮
 
-  constructor(private ajax:AjaxService, private router:Router, private limitService:LimitService, /*public dcl:DynamicComponentLoader, */public _injector:Injector) {
-    var _this = this;
-    /*let sysCode = _this.sysCode;
-     //单按钮配置
-     this.addButton={
-     text: "添加菜单",
-     title: "添加菜单",
-     type: "add",
-     callback: function (result) {
-     $(".mat-tab-group .mat-tab-body-wrapper").css({"display":"block"});
-     $(".mat-tab-group .mat-tab-body-wrapper .mat-tab-body").css({"display":"inline"});
-     result.then((id)=>{
-     _this.router.navigate(['/main/limit/addMenu',sysCode]);
-     })
-     //_this.router.navigate(['/main/limit/addMenu',sysCode]);
-     }
-     };*/
 
+  /**
+   * 装饰器，实现局部刷新
+   */
+  @ViewChild(LimittabComponent)
+  LimittabComponent: LimittabComponent;
+
+  constructor(private ajax:AjaxService, private router:Router, private limitService:LimitService) {
+    let _this = this;
     //多按钮配置
-    this.tableButtonConfig = [
+    _this.tableButtonConfig = [
       {
         title: "修改菜单",
         type: "update",
@@ -56,13 +48,12 @@ export class LimitComponent implements OnInit {
         //iconsClass:"icon-handbag",
         //btnClass:"btn btn-success",
         callback: function (result, menuCode) {
-          //this.router.navigate(['/main/limit/addMenu']);
           _this.router.navigate(['/main/limit/upMenu', menuCode]);
         }
       }
     ];
     //权限菜单列表中的添加按钮
-    this.buttonConfig = [
+    _this.buttonConfig = [
       {
         title: "添加菜单",
         type: "add",
@@ -84,13 +75,11 @@ export class LimitComponent implements OnInit {
    * **/
   onSelecttable(men):void {
     this.menuCode = men;
-    //this.queryDatas();
   }
 
 
   ngOnInit() {
-
-    var _this = this;
+    let _this = this;
     //单按钮配置
     this.addButton = {
       text: "添加菜单",
@@ -102,11 +91,7 @@ export class LimitComponent implements OnInit {
         $(".mat-tab-group .mat-tab-body-wrapper .mat-tab-body").css({"display": "inline"});
       }
     };
-    //选择系统列表
-    this.sysList = this.limitService.sysList();
-
-    let me = this;
-    this.queryDatas();
+    _this.limitService.sysList(_this,true);//选择系统列表
   }
 
   /**
@@ -130,29 +115,22 @@ export class LimitComponent implements OnInit {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
 
-    let listInfos = this.limitService.queryMenuList(activePage, 3, me.sysCode);
+    let listInfos = this.limitService.queryMenuList(activePage, 4, me.sysCode);
     me.data = new Page(listInfos);
-
-
-    //this.ajax.get({
-    //  url: "/limitMenu/listpage",
-    //  data: {
-    //    curPage: activePage,
-    //    pageSize: '3',
-    //    sysCode: this.sysCode
-    //  },
-    //  success: (data) => {
-    //    console.log('data', data);
-    //    if (!isNull(data)) {
-    //      me.data = new Page(data);
-    //    }
-    //  },
-    //  error: (data) => {
-    //    console.log('data', data);
-    //  }
-    //});
   }
 
+  /**
+   * 实现局部刷新
+   * pageMenus 页面元素
+   * operationDatas 功能操作
+   * controlDatas  文件控制
+   */
+  refresh() {
+    this.LimittabComponent.pageMenus();
+    this.LimittabComponent.operationDatas();
+    this.LimittabComponent.controlDatas();
+
+  }
 
   /**
    * 修改权限菜单状态
@@ -170,11 +148,15 @@ export class LimitComponent implements OnInit {
         'menuCode': data.menuCode,
         'state': data.isUse
       },
-      success: (data) => {
-        swal('成功提醒', '成功');
+      success: () => {
+        if(data.isUse == "Y"){
+          swal('启动成功','', 'success');
+        }else if(data.isUse == "N"){
+          swal('停用成功','', 'success');
+        }
       },
       error: (data) => {
-        swal('失败提醒', '失败');
+        swal('修改权限菜单失败提醒','','error');
       }
     });
   }

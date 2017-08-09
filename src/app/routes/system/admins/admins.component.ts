@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AdminsService} from "./admins.service";
 import {SettingsService} from "../../../core/settings/settings.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
+import {CookieService} from "angular2-cookie/core";
 
 @Component({
   selector: 'app-admins',
@@ -21,7 +22,7 @@ export class AdminsComponent implements OnInit {
   private admins: Page = new Page();
   private buttons;
 
-  constructor(private router:Router, private admin:AdminsService, public settings: SettingsService) { }
+  constructor(private router:Router, private admin:AdminsService, public settings: SettingsService,private cookieService:CookieService) { }
 
   ngOnInit() {
     let me = this;
@@ -123,13 +124,17 @@ export class AdminsComponent implements OnInit {
   queryDatas(event?:PageEvent) {
     let me = this,activePage = 1;
     if(typeof event !== "undefined") activePage =event.activePage;
+    let userState;
+    userState = this.cookieService.getObject('loginInfo')['state'];
+    console.log(userState);
+
     let requestParmas = {
       curPage: activePage,
       mgrName: me.mgrName,
       orgCode: me.orgCode,
       areaCode: me.areaCode,
-      pageSize: '10'/*,
-      state: 'SUPER'*/
+      pageSize: '10',
+      state: userState
     };
     let result = this.admin.getAdminsList(requestParmas);//请求管理员列表
     me.admins = new Page(result);

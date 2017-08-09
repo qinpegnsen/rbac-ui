@@ -79,7 +79,7 @@
         <td>{{admin.loginCode}}</td>
         <!--<td>{{admin.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>-->
         <td>
-          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="admin.state=='OPEN'"
+          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="admin.state=='OPEN' || admin.state=='SUPER'"
                   (click)="updatePwd(admin.mgrCode)" title="修改密码"></button>
         </td>
         <td>{{admin.state | rzhState:'1009'}}</td>
@@ -94,7 +94,7 @@
                   (click)="changeState('DEL',admin.mgrCode)"></button>
         </td>
         <td>
-          <div *ngIf="admin.state=='OPEN'">
+          <div *ngIf="admin.state=='OPEN' || admin.state=='SUPER'">
             <app-buttons [config]="option" (callback)="option.callback($event,admin.mgrCode)"
                          *ngFor="let option of buttonConfig"></app-buttons>
           </div>

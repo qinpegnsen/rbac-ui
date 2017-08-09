@@ -304,19 +304,6 @@
             </div>
           </div>
         </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 文件类型</label>
-            <div class="col-sm-8">
-              <input class="form-control" required [(ngModel)]="fileForm.type" name="type"
-                     #type="ngModel" type="text"/>
-              <div [hidden]="type.valid || type.pristine"
-                   class="alert alert-danger">
-                排序是必填项，请填写排序
-              </div>
-            </div>
-          </div>
-        </fieldset>
       </div>
       <!--按钮的操作begonia-->
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">

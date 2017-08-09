@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService, private ajax: AjaxService, private router: Router,private cookieService:CookieService) {
     // 只显示指定的
-    this.menuItems = menu.getMenu().slice(0, 4);
+    if(typeof menu.getMenu() !== 'undefined') this.menuItems = menu.getMenu().slice(0, 4);
   }
 
   ngOnInit() {
