@@ -28,10 +28,13 @@ export class RightpageComponent implements OnInit {
 
 
   public sysData;//系统列表的数据
-  public roleCodes;//绑定的角色编码集
   public limitCodes;//角色的权限集
 
   // 构造 初始化
+  public roleCodes;//绑定的角色编码集
+
+  public addrType;//获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
+
   constructor(public settings: SettingsService, private router: Router, private ajax: AjaxService, private routeInfo: ActivatedRoute, private roleListComponent: RoleListComponent,private roleComponent: RoleComponent) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
@@ -48,6 +51,7 @@ export class RightpageComponent implements OnInit {
    */
   ngOnInit() {
     this.queryId = this.routeInfo.snapshot.queryParams['id'];
+    this.addrType = this.routeInfo.snapshot.queryParams['addrType'];
     this.sysCode = this.routeInfo.snapshot.queryParams['sysCode'];//这个id=1和2,5 的时候都会用到，所以提到外面
     if (this.queryId == 1) { //新增角色组用到，根据系统的的编码呈现当前的系统的名字
     } else if (this.queryId == 2 || this.queryId == 3) {
@@ -77,16 +81,20 @@ export class RightpageComponent implements OnInit {
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
 
-  //提交页面
+  /**
+   * 点击提交时执行的方法  1.返回之前的页面   2.局部刷新
+   * queryId=4 addrType=='roleList'或者的时候加载角色列表页面 这里不能用 =5 =6 判断，因为公用组件，两个页面都有
+   */
   closePage() {
-    if (this.queryId == 5 || this.queryId == 4) {
-      this.settings.closeRightPage(); //关闭右侧滑动页面
+    if (this.queryId == 5||this.addrType=='roleList' ){
+      this.settings.closeRightPage();
       this.router.navigate(['/main/role/roleList']);
-      this.roleListComponent.refresh(); //刷新角色列表
+      this.roleListComponent.refresh();
     } else {
-      this.settings.closeRightPage(); //关闭右侧滑动页面
+      this.settings.closeRightPage();
       this.router.navigate(['/main/role/roleGroup']);
       this.roleComponent.queryRoleGroupDatas();
+      this.roleComponent.refresh()
     }
   }
 
@@ -194,12 +202,13 @@ export class RightpageComponent implements OnInit {
         }
       });
     } else if (this.queryId == 3) {
+      console.log(value)
       this.ajax.put({
         url: '/roleGroup/update',
         data: {
           'roleGroupCode': this.roleGroupCode,//这里是通过路由传递过来的
           'roleGroupName': this.roleGroupName,
-          'remarks': value.orgCode
+          'remarks': value.remarks
         },
         async: false,
         success: (data) => {
@@ -244,7 +253,6 @@ export class RightpageComponent implements OnInit {
         },
         async: false,
         success: (data) => {
-          console.log(data.sysCode)
           if (data.success) {
             swal('新增角色成功', '', 'success');
           } else {

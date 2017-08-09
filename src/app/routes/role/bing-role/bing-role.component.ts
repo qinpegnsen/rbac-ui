@@ -18,16 +18,13 @@ export class BingRoleComponent implements OnInit {
 
     @Input()
     public roleGroupCode;
-    //存放的数据
-     public items:Array<object>;
-     //临时的数组用来存放编码，之后截取
-     public string;
 
+    //存放的数据，临时的数组用来存放编码，之后截取
+     public items:Array<object>;
 
   @ViewChild('defaultRoles')
-  public mySelectRoles: SelectComponent;//设置默认选中的角色
-
-  private mySelectRolesStr:string;
+  public mySelectRoles: SelectComponent;//设置默认选中的角色数据数组集合
+  private mySelectRolesStr:string; //默认绑定好的角色数组的编码集
 
   constructor(private ajax: AjaxService) {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -36,31 +33,13 @@ export class BingRoleComponent implements OnInit {
     this.formControlInput.setValue('5555551234');
   }
   ngOnInit() {
+
+    /**
+     * 查询所有的角色列表
+     * tempY 已经绑定的角色
+     * tempN 未绑定的角色而
+     */
     this.getBingRoleList()
-    //查询当前系统下的角色列表
-    this.ajax.get({
-      url: "/role/list",
-      data: {
-        sysCode: this.sysCode
-      },
-      success: (data) => {
-        console.log("█ data ►►►",  data);
-        let obj={},temp=[];//这里必须得声明临时变量来转换一下，要不然不能push
-        for(var i=0;i<data.length;i++){
-          obj={
-            id:data[i]['roleCode'],
-            text:data[i]['roleName']
-          }
-          temp.push(obj);
-        }
-        this.items = temp;
-
-      },
-      error: (data) => {
-         console.log('根据系统编码变化的角色列表错误');
-      }
-    });
-
   }
 
   // ng2Select
@@ -81,45 +60,42 @@ export class BingRoleComponent implements OnInit {
 
 
   /**
-   * 获取到当前角色组已经绑定的角色
-   */
-  getBingRoleList(){
-    let me = this;
-    this.ajax.post({
-      url: "/roleGroup/roleList",
-      data: {
-        sysCode: this.sysCode,
-        roleGroupCode: this.roleGroupCode
-      },
-      success: (data) => {
-        console.log(data)
-
-        let tempY=[],tempN=[],obj={}//这里必须得声明临时变量来转换一下，要不然不能push
-        for(var i=0;i<data.data.length;i++){
-          console.log(data.data[i].isHas)
-          obj={
-            id:data.data[i].roleCode,
-            text:data.data[i].roleName
-          }
-          if(data.data[i].isHas=="Y"){
-            tempY.push(obj)
-          }else{
-            tempN.push(obj)
-          }
+ * 获取到当前角色组已经绑定的角色
+ * tempY 已经为为当前的角色组绑定的角色数组集合
+ * tempN  还没有为当前的角色组绑定的角色数组集合
+ * obj 数组里面的对象
+ */
+getBingRoleList(){
+  let me = this;
+  this.ajax.post({
+    url: "/roleGroup/roleList",
+    data: {
+      sysCode: this.sysCode,
+      roleGroupCode: this.roleGroupCode
+    },
+    success: (data) => {
+      let tempY=[],tempN=[],obj={}
+      for(var i=0;i<data.data.length;i++){
+        obj={
+          id:data.data[i].roleCode,
+          text:data.data[i].roleName
         }
-
-        console.log('tempY',tempY)
-        console.log('tempN',tempN)
-
-        me.mySelectRoles.active = tempY;
-        me.mySelectRolesStr = me.itemsToString(tempY);
-        this.roleCodes.emit(me.mySelectRolesStr)
-      },
-      error: (data) => {
-        console.log('根据系统编码变化的角色列表错误');
+        if(data.data[i].isHas=="Y"){
+          tempY.push(obj)
+        }else{
+          tempN.push(obj)
+        }
       }
-    });
-  }
+      this.items = tempN;
+      me.mySelectRoles.active = tempY;
+      me.mySelectRolesStr = me.itemsToString(tempY);
+      this.roleCodes.emit(me.mySelectRolesStr)
+    },
+    error: (data) => {
+      console.log('查询已经绑定的角色错误');
+    }
+  });
+}
 
 
   // TextMask

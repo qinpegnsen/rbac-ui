@@ -3,10 +3,6 @@
   <span *ngIf="!roleGroupName">当前系统下的所有角色</span>
 </div>
 <div>
-  <!--<div class="title">-->
-  <!--<span *ngIf="roleGroupName">{{roleGroupNameText}}</span>-->
-  <!--<span *ngIf="!roleGroupName">当前系统下的所有角色</span>-->
-  <!--</div>-->
   <div class="panel-body">
     <table class="table table-striped" #dataTable="rzhDataTable"  [rzhData]="data" (pageChange)="queryRoleList($event)">
       <thead>
@@ -40,7 +36,7 @@
         <td>{{elder.remarks}}</td>
         <td>
           <!--角色权限分配-->
-          <app-buttons class="" [config]="option" routerLink="rightpage" [queryParams]="{id:6,roleCode:elder.roleCode}" (callback)="option.callback($event)" *ngFor="let option of disAuthButton"></app-buttons>
+          <app-buttons class="" [config]="option" routerLink="rightpage" [queryParams]="{id:6,roleCode:elder.roleCode,addrType:addrType,sysCode:elder.sysCode}" (callback)="option.callback($event)" *ngFor="let option of disAuthButton"></app-buttons>
         </td>
         <td>
           <!--角色停启用-->
@@ -51,7 +47,7 @@
         </td>
         <td>
           <!--修改角色-->
-          <app-buttons   [config]="option" routerLink="rightpage" [queryParams]="{id:4,roleCode:elder.roleCode}"  *ngFor="let option of updateButton" ></app-buttons>
+          <app-buttons   [config]="option" routerLink="rightpage" [queryParams]="{id:4,roleCode:elder.roleCode,addrType:addrType}"  *ngFor="let option of updateButton" ></app-buttons>
         </td>
       </tr>
       </tbody>

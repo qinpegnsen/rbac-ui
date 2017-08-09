@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {RolemanComponent} from "../roleman/roleman.component";
+import {ActivatedRoute} from "@angular/router";
 @Component({
   selector: 'app-role-list',
   templateUrl: './role-list.component.html',
@@ -16,10 +17,14 @@ export class RoleListComponent implements OnInit {
   //获取子组件RolemanComponent的实例，才可以调用它的方法
   @ViewChild(RolemanComponent)
   rolemanComponent: RolemanComponent;
-  constructor(private ajax: AjaxService) {
+
+  public addrType;//获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
+
+  constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute) {
   }
 
   ngOnInit() {
+    //增加的按钮
     this.addButton = {
       type: "add",
       text: "新增角色",
@@ -40,6 +45,9 @@ export class RoleListComponent implements OnInit {
         console.log("sys/list  error");
       }
     });
+
+    //获取到路由传递过来的类型，从而在神龙的提交的时候加载刷新不同的页面
+    this.addrType = this.routeInfo.snapshot.data[0]["type"];
   }
 
   onSelectSys(sys): void {

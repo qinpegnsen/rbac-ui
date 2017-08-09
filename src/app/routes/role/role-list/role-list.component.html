@@ -5,10 +5,15 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="controll">选择系统</div>
-      <div class="options">
-        <select class="form-control" #sys (change)="onSelectSys(sys)">
-          <option [value]="item.sysCode" *ngFor="let item of sysList" class="sysCode">{{item.sysName}}</option>
-        </select>
+      <div class="btn-group" dropdown>
+        <button class="btn btn-default" dropdownToggle>请先选择系统 <b class="caret"></b>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu animated fadeInDown" role="menu" >
+          <li *ngFor="let item of sysList" (click)="onSelectSys(sys)">
+            <a href="#">{{item.sysName}}</a>
+            <input type="hidden" #sys [value]="item.sysCode"  name="sysCode" >
+          </li>
+        </ul>
       </div>
     </div>
     <div class="col-lg-6">
@@ -20,7 +25,7 @@
 <div class="container-fluid panel panel-default" [style.height.px]="'600'">
   <div class="row panel-body">
     <div class="role-ctrl col-lg-12">
-        <app-roleman [sysCode]="sysCode" ></app-roleman>
+        <app-roleman [sysCode]="sysCode" [addrType]="addrType"></app-roleman>
     </div>
   </div>
 </div>

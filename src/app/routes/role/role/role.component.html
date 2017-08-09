@@ -5,14 +5,20 @@
   <div class="row">
     <div class="col-lg-4">
       <div class="controll">选择系统</div>
-      <div class="options">
-        <select class="form-control" #sys (change)="onSelectSys(sys)">
-          <option [value]="item.sysCode" *ngFor="let item of sysList" class="sysCode">{{item.sysName}}</option>
-        </select>
+      <div class="btn-group" dropdown>
+        <button class="btn btn-default" dropdownToggle>请先选择系统 <b class="caret"></b>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu animated fadeInDown" role="menu" >
+          <li *ngFor="let item of sysList" (click)="onSelectSys(sys)">
+            <a href="#">{{item.sysName}}</a>
+            <input type="hidden" #sys [value]="item.sysCode"  name="sysCode" >
+          </li>
+        </ul>
       </div>
     </div>
-
   </div>
+
+
 </div>
 <div class="container-fluid panel panel-default" [style.height.px]="'600'">
   <div class="row panel-body">
@@ -91,7 +97,7 @@
     </div>
     <div class="role-ctrl col-lg-8 import">
       <div class="cont">
-        <app-roleman [sysCode]="sysCode" [roleGroupCode]="roleGroupCode" [roleGroupName]="roleGroupName"></app-roleman>
+        <app-roleman [sysCode]="sysCode" [roleGroupCode]="roleGroupCode" [roleGroupName]="roleGroupName" [addrType]="addrType"></app-roleman>
       </div>
     </div>
   </div>
@@ -99,3 +105,5 @@
 <!--路由嵌套 begin-->
 <router-outlet></router-outlet>
 <!--路由嵌套 end-->
+
+

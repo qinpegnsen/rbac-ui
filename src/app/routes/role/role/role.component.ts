@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {AjaxService} from '../../../core/services/ajax.service';
 import {Page} from "../../../core/page/page";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {isNull} from "util";
 import {ActivatedRoute} from "@angular/router";
 import {Router} from '@angular/router';
+import {RolemanComponent} from "../roleman/roleman.component";
 const swal = require('sweetalert');
 @Component({
   selector: 'app-role',
@@ -20,7 +21,7 @@ export class RoleComponent implements OnInit {
    */
   public sysList;
   public sysCode;
-cli
+
   /**
    * 3个button的按钮
    * addGroupButton 添加角色组的按钮
@@ -40,6 +41,13 @@ cli
 
   //分页用到得data
   private data: Page = new Page();
+
+  //获取子组件RolemanComponent的实例，才可以调用它的方法,局部刷新用的
+  @ViewChild(RolemanComponent)
+  rolemanComponent: RolemanComponent;
+
+  public addrType;//获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
+
 
   constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute, private router: Router) {
   }
@@ -99,6 +107,10 @@ cli
         }
       }
     ];
+
+    //获取到路由传递过来的类型，从而在神龙的提交的时候加载刷新不同的页面
+    this.addrType = this.routeInfo.snapshot.data[0]["type"];
+
   }
 
   /**
@@ -125,6 +137,7 @@ public queryRoleGroupDatas(event?: PageEvent) {
       pageSize:8
     },
     success: (data) => {
+
       if (!isNull(data)) {
         me.data = new Page(data);
       }
@@ -174,6 +187,11 @@ public queryRoleGroupDatas(event?: PageEvent) {
         swal('停启用连接数据库失败','','error');
       }
     });
+  }
+
+  //
+  refresh() {
+    this.rolemanComponent.queryRoleListDatasBySyscode();
   }
 }
 

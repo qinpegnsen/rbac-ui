@@ -11,8 +11,8 @@ const swal = require('sweetalert');
   styleUrls: ['./roleman.component.scss']
 })
 export class RolemanComponent implements OnInit,OnChanges {
-  //分页用的
-  @Input()
+
+  //定义分页用的数据data
   public data: Page = new Page();
 
   /**
@@ -40,7 +40,11 @@ export class RolemanComponent implements OnInit,OnChanges {
   public roleGroupName;
   public roleGroupNameText;
 
-
+  /**
+   * 获取到传递过来的地址栏的类型，在传给神龙，从而加载刷新不同的页面
+   */
+  @Input()
+  public addrType;
   constructor(private ajax: AjaxService) {
 
   }
@@ -72,12 +76,11 @@ export class RolemanComponent implements OnInit,OnChanges {
         }
       }
     ];
-    //初始化的角色列表
-    this.queryRoleListDatasBySyscode()
+
   }
   /**
    *
-   * @param changes 当输入属性发生变化的时候会执行这个钩子
+   * @param changes 当有输入属性的时候会执行这个钩子
    * sysCode 输入属性变化
    * roleGroupCode 角色组输入属性变化
    */
@@ -94,7 +97,7 @@ export class RolemanComponent implements OnInit,OnChanges {
 }
 
   /**
-   * 点击页码时的事件
+   * 点击页码时执行的事件
    * @param event
    * 1.当前系统下角色列表的页码
    * 2.当前角色组下面的色列表页码
@@ -124,7 +127,7 @@ export class RolemanComponent implements OnInit,OnChanges {
         }
       },
       error: (data) => {
-        console.log("根据角色组编码查询错误");
+        console.log("根据系统编码查询角色错误");
       }
     })
   }
