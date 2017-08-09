@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {CookieService} from "angular2-cookie/core";
 import {any} from "codelyzer/util/function";
+import {isNullOrUndefined} from "util";
 
 //后台菜单返回格式
 interface menuVO{
@@ -34,6 +35,28 @@ export class MenuService {
   constructor(private cookieService:CookieService) {
   }
 
+  foreachPushMenu(items:Array<menuVO>) {
+    let menuItems:Array<MenuItem> = [],menuItem:MenuItem;
+    console.log("█ items ►►►",  items);
+    items.forEach((item) => {
+      menuItem = new MenuItem();
+      //设置菜单显示名称
+      menuItem.text = item.menuName;
+      //判断菜单是否有下级
+      if (item.menuUrl == "#") {
+        menuItem.alert = "child";
+        menuItem.submenu = this.foreachPushMenu(item.subMenuList);
+      }
+      else menuItem.link = item.menuUrl;
+
+      //判断菜单图标是否为空
+      if (!isNullOrUndefined(item.menuIcon)) menuItem.icon = item.menuIcon;
+
+      menuItems.push(menuItem);
+    });
+    return menuItems;
+  }
+
   /**
    * 设置权限菜单信息
    * @param items
@@ -41,13 +64,23 @@ export class MenuService {
   addMenu(items:Array<menuVO>) {
     let menuItems:Array<MenuItem> = [],menuItem:MenuItem;
 
-    items.forEach((item) => {
+    menuItems = this.foreachPushMenu(items);
+
+    /*items.forEach((item) => {
       menuItem = new MenuItem();
       menuItem.text = item.menuName;
-      menuItem.link = item.menuUrl;
-      menuItem.icon = item.menuIcon;
+      //判断菜单是否有下级
+      if (item.menuUrl == "#") {
+        menuItem.alert = "child";
+        console.log("█ item.subMenuList ►►►",  item.subMenuList);
+      }
+      else menuItem.link = item.menuUrl;
+
+      //判断菜单图标是否为空
+      if (!isNullOrUndefined(item.menuIcon)) menuItem.icon = item.menuIcon;
+
       menuItems.push(menuItem);
-    });
+    });*/
     this.cookieService.putObject('userMenu', menuItems); //保存menu信息至cookie
   }
 
