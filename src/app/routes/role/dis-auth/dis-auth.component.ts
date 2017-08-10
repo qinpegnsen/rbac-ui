@@ -52,19 +52,18 @@ export class DisAuthComponent implements OnInit {
         roleCode: this.roleCode
       },
       success: (data) => {
-        let tempY=[],tempN=[],obj={}
+        let tempY=[],temp=[],obj={}
         for(var i=0;i<data.length;i++){
           obj={
             id:data[i].limitCode,
             text:data[i].alias
           }
+          temp.push(obj)
           if(data[i].isHas=="Y"){
             tempY.push(obj)
-          }else{
-            tempN.push(obj)
           }
         }
-        this.items = tempN;
+        this.items = temp;
         me.mySelectLimits.active = tempY;
         me.mySelectLimitsStr = me.itemsToString(tempY);
         this.bingLimit.emit(me.mySelectLimitsStr)

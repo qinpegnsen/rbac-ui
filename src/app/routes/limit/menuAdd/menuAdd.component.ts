@@ -25,6 +25,7 @@ export class MenuAddComponent implements OnInit {
   private uid;//声明保存获取到的暗码
   private menuList;//声明菜单列表
   private preType;
+  private menuCode;
   private limitForm = {
     sysCode: '',
     menuName: '',
@@ -116,7 +117,7 @@ export class MenuAddComponent implements OnInit {
         async: false,
         data: {
           'sysCode': _this.limitForm.sysCode,
-          'preCode':value.menuCode,
+          'preCode':_this.menuCode,
           'pageName': value.pageName,
           'icon': value.icon,
           'level': value.level,
@@ -314,5 +315,9 @@ export class MenuAddComponent implements OnInit {
       _this.limitComponent.queryDatas();
     }
 
+  }
+
+  getMenuData(menuCode){
+    this.menuCode=menuCode;
   }
 }

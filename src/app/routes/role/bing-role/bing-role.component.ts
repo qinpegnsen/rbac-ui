@@ -74,19 +74,18 @@ getBingRoleList(){
       roleGroupCode: this.roleGroupCode
     },
     success: (data) => {
-      let tempY=[],tempN=[],obj={}
+      let tempY=[],temp=[],obj={}
       for(var i=0;i<data.data.length;i++){
         obj={
           id:data.data[i].roleCode,
           text:data.data[i].roleName
         }
+        temp.push(obj)
         if(data.data[i].isHas=="Y"){
           tempY.push(obj)
-        }else{
-          tempN.push(obj)
         }
       }
-      this.items = tempN;
+      this.items = temp;
       me.mySelectRoles.active = tempY;
       me.mySelectRolesStr = me.itemsToString(tempY);
       this.roleCodes.emit(me.mySelectRolesStr)

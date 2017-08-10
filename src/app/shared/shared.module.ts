@@ -36,6 +36,8 @@ import {SelectAreaModule} from "./directives/select-area/select-area.module";
 import { StatePipe } from './pipe/state.pipe';
 import { AreaNamePipe } from './pipe/area-name.pipe';
 import { SelectModule } from 'ng2-select';
+import { SelectMenuComponent } from './directives/select-menu/select-menu/select-menu.component';
+import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -63,7 +65,8 @@ import { SelectModule } from 'ng2-select';
     DataTableModule,
     RzhButtonsModule,
     SelectAreaModule,
-    SelectModule
+    SelectModule,
+    SelectMenuModule
   ],
   providers: [
     ColorsService

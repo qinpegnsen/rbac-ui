@@ -137,7 +137,7 @@ public queryRoleGroupDatas(event?: PageEvent) {
     data: {
       curPage: activePage,
       sysCode: this.sysCode,
-      pageSize:8
+      pageSize:1
     },
     success: (data) => {
 

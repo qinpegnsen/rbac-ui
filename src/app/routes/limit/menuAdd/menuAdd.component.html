@@ -185,11 +185,9 @@
                #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label"><i>*</i>选择菜单</label>
+            <label class="col-sm-3 control-label"><i>*</i>选择菜单{{menuCode}}</label>
             <div class="col-sm-8">
-              <select class="form-control" type="text" [(ngModel)]="menuCode" name="menuCode" >
-                <option [value]="item.menuCode" *ngFor="let item of menuList">{{item.menuName}}</option>
-              </select>
+              <app-select-menu [sysCode]="limitForm.sysCode" (curMenuCode)="getMenuData($event)"></app-select-menu>
             </div>
           </div>
         </fieldset>
