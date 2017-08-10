@@ -68,7 +68,7 @@ export class AddorganService {
         }
       },
       error: (res) => {
-        console.log("get orgTypes error");
+        console.log("getOrgDetailByCode error");
       }
     });
     return organ;

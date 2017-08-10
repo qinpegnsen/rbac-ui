@@ -30,7 +30,7 @@ export class AdminsComponent implements OnInit {
     let me = this;
     me.userState = me.cookieService.getObject('loginInfo')['state'];
     me.userOrgCode = me.cookieService.getObject('loginInfo')['orgCode'];
-    console.log(me.userState,me.userOrgCode);
+
     me.queryDatas();//获取管理员表格数据
     me.addButton = {
       type:"add",
@@ -84,7 +84,7 @@ export class AdminsComponent implements OnInit {
   }
 
   /**
-   * 从子组件获取所选区域数据
+   * 从子组件获取所选区域数据,当选择区域时重新获取数据
    * @param outData
      */
   getAreaData(outData){
@@ -94,7 +94,7 @@ export class AdminsComponent implements OnInit {
   }
 
   /**
-   * 从子组件获取所选机构数据
+   * 从子组件获取所选机构数据,当选择机构时重新获取数据
    * @param orgCode
      */
   getOrganCode(orgCode){
@@ -134,8 +134,7 @@ export class AdminsComponent implements OnInit {
       mgrName: me.mgrName,
       orgCode: me.orgCode,
       areaCode: me.areaCode,
-      pageSize: '10',
-      state: me.userState
+      pageSize: '10'
     };
     let result = this.admin.getAdminsList(requestParmas);//请求管理员列表
     me.admins = new Page(result);

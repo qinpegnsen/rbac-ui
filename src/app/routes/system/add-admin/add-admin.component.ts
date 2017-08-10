@@ -31,6 +31,8 @@ export class AddAdminComponent implements OnInit,OnChanges {
   private sysCode:string = '';//系统编码
   private orgName:string;
   private admin = { };
+  private userState:string;//用户状态
+  private userOrgCode:string;//用户的机构编码
   @ViewChild('defaultRole') public mySelectRoles: SelectComponent;//设置默认选中的角色
   @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
 
@@ -51,16 +53,11 @@ export class AddAdminComponent implements OnInit,OnChanges {
   // ng2Select
   private Role: Array<object>;
   private Group: Array<object>;
-  private selectedRoleStr:string;
-  private selectedGroupStr:string;
-  private userState:string;
-  private userOrgCode:string;
+  private selectedRoleStr:string;//已经有的角色的编码组成的字符串
+  private selectedGroupStr:string;//已经有的角色组的编码组成的字符串
 
   private value:any = [];
 
-  public selected(value:any):void {
-    console.log('Selected value is: ', value);
-  }
   public refreshValueRole(value: any): void {
     this.selectedRoleStr = this.itemsToString(value);
     console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
@@ -96,11 +93,10 @@ export class AddAdminComponent implements OnInit,OnChanges {
     let me = this;
     me.admin['orgCode'] = '';
     let userInfo = me.cookieService.getObject('loginInfo');
-    console.log(userInfo)
+    // console.log(userInfo);
     me.userState = me.cookieService.getObject('loginInfo')['state'];
     me.userOrgCode = me.cookieService.getObject('loginInfo')['orgCode'];
-    me.orgName = this.getOrgNameByCode(this.admin['orgCode']);
-
+    me.admin['orgCode'] = me.userOrgCode;
     //当前用户不是系统超管时(那就是机构超管或普通管理员)，机构编码为登录者的机构编码
     if(me.userOrgCode !== '#'){
       me.admin['orgCode'] = me.userOrgCode;
@@ -314,7 +310,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
     }
     console.log("█ submitData ►►►", submitData);
     me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me.adminsComponent.queryDatas()//刷新父页面数据
+    me.adminsComponent.queryDatas({event: "pageChange", activePage: 2, rowsOnPage: 2, dataLength: 4})//刷新父页面数据
   }
 
   // 取消
