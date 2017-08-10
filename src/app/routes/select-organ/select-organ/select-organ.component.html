@@ -1,7 +1,7 @@
 <div class="btn-group" dropdown>
   <button class="btn btn-default" dropdownToggle>{{orgName}}<b class="caret"></b>
   </button>
-  <ul *dropdownMenu class="dropdown-menu animated fadeInDown" role="menu" >
+  <ul *dropdownMenu class="dropdown-menu animated fadeInDown special" role="menu" >
     <li *ngFor="let organ of organs" (click)="selected(organ.orgCode,organ.orgName)">
       <a href="#">{{organ.orgName}}</a>
     </li>

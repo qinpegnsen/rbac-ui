@@ -27,6 +27,7 @@ export class LimitComponent implements OnInit {
   private addButton:object;  //添加按钮配置
   private tableButtonConfig:Array<object>;  //列表按钮配置
   private sysCode:string;//系统编码
+  private sysName:string="请选择系统名称";//系统编码
   private menuCode;//权限菜单编码
   private buttonConfig;//权限菜单列表中的添加按钮
   private childMenuCode; //菜单编码，查询子集用
@@ -66,8 +67,9 @@ export class LimitComponent implements OnInit {
   /**
    * 系统发生变化的时候再次调用，改变权限菜单
    * **/
-  onSelectlimit(sys):void {
-    this.sysCode = sys.value;
+  onSelectlimit(syscode,sysName):void {
+    this.sysCode = syscode;
+    this.sysName = sysName;
     this.childMenuCode = null, this.childMenuTitList = []; //清空子集查询
     this.queryDatas();
   }
