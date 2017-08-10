@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
           me.myMenu.addMenu(result.data.menuVOList);
 
           me._cookieService.putObject('loginInfo', user); //用户信息存入cookie
-          me.setting.user.name = user.mgrName,me.setting.user.job = user.mgrName; //修改user变量
+          me.setting.user.name = user.mgrName,me.setting.user.job = me.setting.getUserJob(user); //修改user变量
           me.router.navigate(['/main/home'], {replaceUrl: true}); //路由跳转
         }
         else {

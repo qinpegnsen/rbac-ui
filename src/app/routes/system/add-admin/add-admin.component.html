@@ -8,11 +8,11 @@
           <legend>{{pageTitle}}</legend>
         </fieldset>
 
-        <fieldset>
+        <fieldset  *ngIf="userState==='SUPER' && userOrgCode==='#'">
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>选择机构</label>
             <div class="col-sm-7">
-              <app-select-organ [required]="true" [organCode]="admin.orgCode"
+              <app-select-organ [required]="true" [organCode]="admin.orgCode" [organName]="orgName"
                                 (selectedData)="getOrganCode($event)"></app-select-organ>
             </div>
           </div>
@@ -79,7 +79,7 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-4 control-label"><i>*</i>请输入密码</label>
+            <label class="col-sm-4 control-label"><i>*</i>密码</label>
             <div class="col-sm-7">
               <input class="form-control" type="text" name="pwd" required [(ngModel)]="admin.pwd" #pwd="ngModel"
                      placeholder="请输入密码"/>

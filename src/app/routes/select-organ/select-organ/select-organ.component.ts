@@ -11,18 +11,20 @@ import {isNull,isNullOrUndefined} from "util";
 })
 export class SelectOrganComponent implements OnInit {
   private organs:any;
-  private orgName="请先输入要查询的机构";
+  private orgName="请先选择要查询的机构";
   private orgCode:string = '';//初始化，为了让select框默认选中value=''的option
 
   @Input() private required:boolean;
   @Input() private organCode:string;
+  @Input() private organName:string;
 
   @Output() selectedData = new EventEmitter();
 
   constructor(private ajax: AjaxService, private router:Router) { }
 
   ngOnInit() {
-    if (this.organCode != '' || !isNullOrUndefined(this.organCode))this.orgCode = this.organCode;
+    if (this.organCode !== '' && !isNullOrUndefined(this.organCode))this.orgCode = this.organCode;
+    if (this.organName !== '' && !isNullOrUndefined(this.organName))this.orgName = this.organName;
 
     this.ajax.get({
       url: "/organ/list",

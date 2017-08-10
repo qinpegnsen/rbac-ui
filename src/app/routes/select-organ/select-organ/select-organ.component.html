@@ -1,5 +1,5 @@
-<div class="btn-group" dropdown>
-  <button class="btn btn-default" dropdownToggle>{{orgName}}<b class="caret"></b>
+<div class="btn-group w100" dropdown>
+  <button class="btn btn-default w100 text-left dropdownToggle" dropdownToggle>{{orgName}}<b class="caret pull-right"></b>
   </button>
   <ul *dropdownMenu class="dropdown-menu animated fadeInDown special" role="menu" >
     <li *ngFor="let organ of organs" (click)="selected(organ.orgCode,organ.orgName)">

@@ -18,7 +18,11 @@ export class SettingsService {
      * 获取用户cookie信息并展示
      */
     let loginInfo: any = this._cookieService.getObject('loginInfo'), name = '游客', job = '无';
-    if (!isNullOrUndefined(loginInfo)) name = loginInfo.name, job = loginInfo.department;
+    console.log('loginInfo',loginInfo);
+    if (!isNullOrUndefined(loginInfo)){
+      name = loginInfo.mgrName;
+      job = this.getUserJob(loginInfo);
+    };
     this.user = {
       name: name,
       job: job,
@@ -54,6 +58,20 @@ export class SettingsService {
       viewAnimation: 'ng-fadeInUp'
     };
 
+  }
+
+  getUserJob(loginInfo){
+    let job;
+    if(loginInfo.state === 'SUPER'){
+      if (loginInfo.orgCode === '#'){
+        job = '系统超管';
+      }else{
+        job = '机构超管';
+      }
+    }else if(loginInfo.state == 'OPEN'){
+      job = '机构管理员';
+    };
+    return job;
   }
 
   getAppSetting(name) {
