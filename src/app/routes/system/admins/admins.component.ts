@@ -17,6 +17,7 @@ export class AdminsComponent implements OnInit {
   private addButton;
   private buttonConfig;
   private orgCode:string = '';
+  private userOrgCode:string = '';
   private mgrName:string = '';
   private areaCode:string = '';
   private admins: Page = new Page();
@@ -28,6 +29,8 @@ export class AdminsComponent implements OnInit {
   ngOnInit() {
     let me = this;
     me.userState = me.cookieService.getObject('loginInfo')['state'];
+    me.userOrgCode = me.cookieService.getObject('loginInfo')['orgCode'];
+    console.log(me.userState,me.userOrgCode);
     me.queryDatas();//获取管理员表格数据
     me.addButton = {
       type:"add",

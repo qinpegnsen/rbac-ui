@@ -3,7 +3,7 @@
   <app-buttons class="pull-right" [config]="addButton" routerLink="addAdmin"></app-buttons>
 </div>
 <div class="panel p clearfix mb">
-  <div class="col-md-4 clearfix">
+  <div class="col-md-4 clearfix" *ngIf="userState==='SUPER' && userOrgCode==='#'">
     <label class="label-width pull-left text-right lh36 mb0">选择机构：</label>
     <div class="col-xs-7">
       <app-select-organ [required]="false" [organCode]="orgCode"

@@ -29,6 +29,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
   private adr:string = '';//地址
   private newpwd:string;//新密码
   private sysCode:string = '';//系统编码
+  private orgName:string;
   private admin = { };
   @ViewChild('defaultRole') public mySelectRoles: SelectComponent;//设置默认选中的角色
   @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
@@ -53,6 +54,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
   private selectedRoleStr:string;
   private selectedGroupStr:string;
   private userState:string;
+  private userOrgCode:string;
 
   private value:any = [];
 
@@ -91,57 +93,67 @@ export class AddAdminComponent implements OnInit,OnChanges {
   }
 
   ngOnInit() {
-    this.admin['orgCode'] = '';
-    this.userState = this.cookieService.getObject('loginInfo')['state'];
+    let me = this;
+    me.admin['orgCode'] = '';
+    let userInfo = me.cookieService.getObject('loginInfo');
+    console.log(userInfo)
+    me.userState = me.cookieService.getObject('loginInfo')['state'];
+    me.userOrgCode = me.cookieService.getObject('loginInfo')['orgCode'];
+    me.orgName = this.getOrgNameByCode(this.admin['orgCode']);
+
+    //当前用户不是系统超管时(那就是机构超管或普通管理员)，机构编码为登录者的机构编码
+    if(me.userOrgCode !== '#'){
+      me.admin['orgCode'] = me.userOrgCode;
+    }
 
     //获取当前路由
-    this.route.url.subscribe(urls => {
-      this.path = urls[0].path;
+    me.route.url.subscribe(urls => {
+      me.path = urls[0].path;
       //console.log("█ this.path ►►►", this.path);
-      switch (this.path) {
+      switch (me.path) {
         //新增管理员
         case "addAdmin":
           //console.log("█ \"新增管理员\" ►►►", "新增管理员");
-          this.pageTitle = "新增管理员";
-          this.Admin = true;
+          me.pageTitle = "新增管理员";
+          me.Admin = true;
           break;
 
         //查看管理员信息
         case "adminDetail":
           //console.log("█ \"查看管理员信息\" ►►►", "查看管理员信息");
-          this.adminDetail = true;//属于查看详情，需要隐藏可编辑表单
-          this.pageTitle = "管理员信息";
-          this.admin['mgrCode'] = this.getMgrCode();//获取管理员代码(路由参数)
-          this.admin = this.addAdminService.getAdminDetail(this.admin['mgrCode'])//获取某个管理员详情
+          me.adminDetail = true;//属于查看详情，需要隐藏可编辑表单
+          me.pageTitle = "管理员信息";
+          me.admin['mgrCode'] = me.getMgrCode();//获取管理员代码(路由参数)
+          me.admin = me.addAdminService.getAdminDetail(me.admin['mgrCode'])//获取某个管理员详情
           break;
 
         //修改管理员信息
         case "updateAdmin":
           //console.log("█ \"修改管理员信息\" ►►►", "修改管理员信息");
-          this.pageTitle = "修改管理员信息";
-          this.Admin = true;
-          this.admin['mgrCode'] = this.getMgrCode();//获取系统代码(路由参数)
-          this.admin = this.addAdminService.getAdminDetail(this.admin['mgrCode'])//获取某个管理员详情
-          this.admin['orgName'] = this.getOrgNameByCode(this.admin['orgCode']);//根据机构编码获取某个机构名字
+          me.pageTitle = "修改管理员信息";
+          me.Admin = true;
+          me.admin['mgrCode'] = me.getMgrCode();//获取系统代码(路由参数)
+          me.admin = me.addAdminService.getAdminDetail(me.admin['mgrCode'])//获取某个管理员详情
+          me.admin['orgName'] = me.getOrgNameByCode(me.admin['orgCode']);//根据机构编码获取某个机构名字
           break;
 
         //修改管理员密码
         case "updatePwd":
           //console.log("█ \"修改管理员密码\" ►►►", "修改管理员密码");
-          this.pageTitle = "修改密码";
-          this.updatePwd = true;
-          this.admin['mgrCode'] = this.getMgrCode();//获取管理员编码(路由参数)
-          this.admin = this.addAdminService.getAdminDetail(this.admin['mgrCode'])//获取某个管理员详情
+          me.pageTitle = "修改密码";
+          me.updatePwd = true;
+          me.admin['mgrCode'] = me.getMgrCode();//获取管理员编码(路由参数)
+          me.admin = me.addAdminService.getAdminDetail(me.admin['mgrCode'])//获取某个管理员详情
           break;
 
         //为管理员分配角色或角色组
         case "allotRole":
           //console.log("█ \"分配角色或角色组\" ►►►", "分配角色或角色组");
-          this.pageTitle = "分配角色或角色组";
-          this.allotRoleOrGroup = true;
-          this.admin['mgrCode'] = this.getMgrCode();//获取管理员编码(路由参数)
-          this.admin = this.addAdminService.getAdminDetail(this.admin['mgrCode'])//获取某个管理员详情
-          this.systems = this.systemService.getSystemList();//系统列表
+          me.pageTitle = "分配角色或角色组";
+          me.allotRoleOrGroup = true;
+          me.admin['mgrCode'] = me.getMgrCode();//获取管理员编码(路由参数)
+          me.admin = me.addAdminService.getAdminDetail(me.admin['mgrCode'])//获取某个管理员详情
+          me.systems = me.systemService.getSystemList();//系统列表
           break;
       }
     });
@@ -202,24 +214,23 @@ export class AddAdminComponent implements OnInit,OnChanges {
         id:oldRolesArray[i].roleCode,
         text:oldRolesArray[i].roleName
       };
+      newRolesArray.push(obj);
       if (oldRolesArray[i].isHas == 'Y'){
         myNewRolesArray.push(obj)
-      }else{
-        newRolesArray.push(obj);
       }
     }
     for (var i=0; i<oldRoleGroupArray.length; i++){
       obj = {
-        id:oldRoleGroupArray[i].roleCode,
-        text:oldRoleGroupArray[i].roleName
+        id:oldRoleGroupArray[i].roleGroupCode,
+        text:oldRoleGroupArray[i].roleGroupName
       };
-      if (oldRolesArray[i].isHas == 'Y'){
+      newRoleGroupArray.push(obj);
+      if (oldRoleGroupArray[i].isHas == 'Y'){
         myNewRoleGroupArray.push(obj)
-      }else{
-        newRoleGroupArray.push(obj);
       }
     }
     console.log('myNewRolesArray',myNewRolesArray)
+    console.log('myNewRoleGroupArray',myNewRoleGroupArray)
     this.mySelectRoles.active = myNewRolesArray;
     this.mySelectGroup.active = myNewRoleGroupArray;
     this.Role = newRolesArray;
@@ -235,11 +246,16 @@ export class AddAdminComponent implements OnInit,OnChanges {
     return mgrCode;
   }
 
+  /**
+   * 根据机构编码获取机构名
+   * @param orgCode
+   * @returns {string|any}
+   */
   private getOrgNameByCode(orgCode) {
-    return this.addOrgan.getOrgDetailByCode(this.admin['orgCode']).orgName;
+    return this.addOrgan.getOrgDetailByCode(orgCode).orgName;
   }
 
-  //获取区域数据
+  //从子组件获取区域数据
   getAreaData(area) {
     this.admin['areaCode'] = area.areaCode;
   }
@@ -262,6 +278,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
     let submitUrl, submitData;
     submitUrl = '/sys/add';
     submitData = me.admin;
+
     switch (this.path) {
       //添加系统
       case "addAdmin":
@@ -295,7 +312,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
         submitUrl = '/orgManager/addRolesRelation';
         break;
     }
-    //console.log("█ submitData ►►►", submitData);
+    console.log("█ submitData ►►►", submitData);
     me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
     me.adminsComponent.queryDatas()//刷新父页面数据
   }

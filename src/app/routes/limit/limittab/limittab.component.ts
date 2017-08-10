@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {isNull} from "util";
+import {LimttabService} from "./limttab.service";
 declare var $: any;
 
 //修改状态弹窗
@@ -12,7 +13,8 @@ const swal = require('sweetalert');
 @Component({
   selector: 'app-limittab',
   templateUrl: './limittab.component.html',
-  styleUrls: ['./limittab.component.scss']
+  styleUrls: ['./limittab.component.scss'],
+  providers: [LimttabService]
 })
 export class LimittabComponent implements OnInit ,OnChanges {
   private menuData:Page = new Page();
@@ -31,7 +33,7 @@ export class LimittabComponent implements OnInit ,OnChanges {
 
   @Input()
   public pageCode;//获取页面元素编码
-  constructor(private ajax:AjaxService, private router:Router) {
+  constructor(private ajax:AjaxService, private router:Router,private limttabService:LimttabService) {
     let _this = this;
 
     /**
@@ -111,24 +113,14 @@ export class LimittabComponent implements OnInit ,OnChanges {
   public pageMenus(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
-
-    this.ajax.get({
-      url: "/limitPage/listpage",
-      data: {
-        curPage: activePage,
-        pageSize:'3',
-        sysCode:this.sysCode,
-        preCode:this.pageCode
-      },
-      success: (data) => {
-        if (!isNull(data)) {
-          me.menuData = new Page(data);
-        }
-      },
-      error: (data) => {
-        console.log('data', data);
-      }
-    });
+    let myData = {
+      curPage: activePage,
+      pageSize:'3',
+      sysCode:this.sysCode,
+      preCode:this.pageCode
+    };
+    let pageMenus = me.limttabService.getPageMenus(myData);
+    me.menuData = new Page(pageMenus);
   }
 
   /**
