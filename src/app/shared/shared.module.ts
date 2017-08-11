@@ -36,8 +36,8 @@ import {SelectAreaModule} from "./directives/select-area/select-area.module";
 import { StatePipe } from './pipe/state.pipe';
 import { AreaNamePipe } from './pipe/area-name.pipe';
 import { SelectModule } from 'ng2-select';
-import { SelectMenuComponent } from './directives/select-menu/select-menu/select-menu.component';
 import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
+import {RouterGuardService} from "../core/routerGuard/router-guard.service";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -69,7 +69,8 @@ import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
     SelectMenuModule
   ],
   providers: [
-    ColorsService
+    ColorsService,
+    RouterGuardService
   ],
   declarations: [
     FlotDirective,
