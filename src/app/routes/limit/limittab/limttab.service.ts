@@ -12,7 +12,7 @@ export class LimttabService {
    * @param myData
    * @returns {any}
    */
-  getPageMenus(myData){
+  getPageMenus(myData,pageCode?){
     let result;
     this.ajax.get({
       url: "/limitPage/listpage",

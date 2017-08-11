@@ -54,19 +54,6 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
-            <div class="col-sm-8">
-              <input class="form-control" required name="level" [(ngModel)]="limitForm.level" level="level"
-                     #level="ngModel" type="text"/>
-              <div [hidden]="level.valid || level.pristine"
-                   class="alert alert-danger">
-                级别是必填项，请填写级别
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
             <label class="col-sm-3 control-label">备注</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="remarks" [(ngModel)]="limitForm.remarks"  />
@@ -132,19 +119,6 @@
             <label class="col-sm-3 control-label">页面图标</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="icon" #icon="ngModel"  [(ngModel)]="pageForm.icon"/>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
-            <div class="col-sm-8">
-              <input class="form-control" required [(ngModel)]="pageForm.level" name="level"
-                     #level="ngModel" type="text"/>
-              <div [hidden]="level.valid || level.pristine"
-                   class="alert alert-danger">
-                级别是必填项，请填写级别
-              </div>
             </div>
           </div>
         </fieldset>

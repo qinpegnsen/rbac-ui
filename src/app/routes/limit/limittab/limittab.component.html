@@ -6,7 +6,15 @@
     <ng-template tabHeading>页面元素</ng-template>
     <div class="col-md-10 font15 mt mb pl text-primary">
       <i class="icon-map mr"></i>
-      <span class="cursor-p">当前菜单</span>
+      <span class="cursor-p" (click)="queryChildMenuList()">当前菜单</span>
+      <span *ngFor="let menuTit of childpageTitList">
+      <i class="fa fa-arrow-right mr ml"></i>
+      <font class="cursor-p" (click)="queryChildMenuList(menuTit.code,menuTit.name,true)">{{menuTit.name}}</font>
+    </span>
+    <span *ngIf="childpageTitList.length>0" (click)="goBackMenu()" class="btn btn-default btn-xs ml">
+      <i class="fa fa-level-up mr5"></i>
+      返回上一级
+    </span>
     </div>
     <div class="col-md-2 pull-right text-right mt">
       <!--添加页面元素-->
@@ -64,10 +72,10 @@
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1,pageCode:page.pageCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
           <!--页面元素子列表项的添加-->
           <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:8,sysCode:sysCode,pageCode:page.pageCode}"></app-buttons>
-          <span (click)="queryChildMenuList(menu.menuCode,menu.menuName,false)" class="btn btn-default btn-xs">
+          <span class="btn btn-default btn-xs" (click)="queryChildMenuList(page.pageCode,page.pageName,false)">
       <i class="fa fa-level-down"></i>
       下级菜单
-            </span>
+    </span>
         </td>
       </tr>
       </tbody>

@@ -23,9 +23,10 @@ export class MenuAddComponent implements OnInit {
   }); //初始化上传方法
   private queryId:number;//获取添加，修改的ID
   private uid;//声明保存获取到的暗码
-  private menuList;//声明菜单列表
-  private preType;
-  private menuCode;
+  private menuList;//声明权限菜单列表
+  private pageList;//声明页面菜单列表
+  private menuCode;//声明保存上级的菜单编码
+  private preType;//选择上级类型
   private limitForm = {
     sysCode: '',
     menuName: '',
@@ -61,10 +62,9 @@ export class MenuAddComponent implements OnInit {
     _this.ajax.get({
       url: '/upload/basic/uid',
       success: (res) => {
-        console.log("█ res ►►►", res);
         if (res.success) {
           _this.uid = res.data;//把获取的暗码赋值给uid
-          console.log('获取的暗码成功！', _this.uid);
+          //console.log('获取的暗码成功！', _this.uid);
           //_this.outputvalue.emit(true);//提交成功后向父组件传值
         } else {
           let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -73,7 +73,6 @@ export class MenuAddComponent implements OnInit {
       },
       error: (data) => {
         swal('获得暗码失败','','error');
-        console.log(data);
       }
     });
 
@@ -93,6 +92,31 @@ export class MenuAddComponent implements OnInit {
       }
     });
 
+
+  }
+
+  /**
+   * 查询上级的页面列表
+   */
+  prepagelist(menuCode){
+    let _this = this;
+    _this.menuCode = menuCode;
+
+    /**
+     *获取页面元素列表的信息
+     */
+    _this.ajax.get({
+      url: '/limitPage/listpage',
+      data: {
+        'preCode': _this.menuCode
+      },
+      success: (data) => {
+        _this.pageList = data;
+      },
+      error: (data) => {
+        console.log("error");
+      }
+    });
   }
 
   /**
@@ -111,13 +135,12 @@ export class MenuAddComponent implements OnInit {
     let _this = this;
     //添加页面元素列表
     if (_this.queryId == 2) {
-      console.log(value);
       _this.ajax.post({
         url: '/limitPage/add',
         async: false,
         data: {
           'sysCode': _this.limitForm.sysCode,
-          'preCode':_this.menuCode,
+          'menuCode':_this.menuCode,
           'pageName': value.pageName,
           'icon': value.icon,
           'level': value.level,
@@ -125,7 +148,6 @@ export class MenuAddComponent implements OnInit {
           'ord': value.ord
         },
         success: (res) => {
-          console.log("█ res ►►►", res);
           if (res.success) {
             _this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
             swal('添加页面元素提交成功！', '','success');
@@ -155,7 +177,6 @@ export class MenuAddComponent implements OnInit {
           'remarks': value.remarks
         },
         success: (res) => {
-          console.log("█ res ►►►", res);
           if (res.success) {
             _this.router.navigate(['/main/limit'], {replaceUrl: true});   //路由跳转
             swal('添加功能操作提交成功！', '','success');

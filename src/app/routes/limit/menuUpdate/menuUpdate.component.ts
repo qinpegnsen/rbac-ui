@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SettingsService} from "../../../core/settings/settings.service";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {AjaxService} from "../../../core/services/ajax.service";
+import {LimitComponent} from "../limit/limit.component";
 const swal = require('sweetalert');
 @Component({
   selector: 'app-rightamend',
@@ -21,7 +22,7 @@ export class MenuUpdateComponent implements OnInit {
   /**
    * 构造 初始化
    * **/
-  constructor(public ajax:AjaxService, public settings:SettingsService, private router:Router, private route:ActivatedRoute, private routeInfo:ActivatedRoute) {
+  constructor(public ajax:AjaxService, public settings:SettingsService, private router:Router, private route:ActivatedRoute, private routeInfo:ActivatedRoute, private limitComponent:LimitComponent) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
@@ -74,7 +75,6 @@ export class MenuUpdateComponent implements OnInit {
       data: requestData,
       success: (res) => {
         if (res.success) {
-          console.log("█ res ►►►",  res);
           this.limitForm = res.data, this.limitForm['menuCode'] = mc;
         } else {
           let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -96,7 +96,6 @@ export class MenuUpdateComponent implements OnInit {
       data: requestData,
       success: (res) => {
         if (res.success) {
-          console.log("█ res ►►►",  res);
           this.pageForm = res.data, this.pageForm['pageCode'] = pc;
         } else {
           let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -118,7 +117,6 @@ export class MenuUpdateComponent implements OnInit {
       data: requestData,
       success: (res) => {
         if (res.success) {
-          console.log("█ res ►►►",  res);
           this.optForm = res.data, this.optForm['pageCode'] = oc;
         } else {
           let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -140,7 +138,6 @@ export class MenuUpdateComponent implements OnInit {
       data: requestData,
       success: (res) => {
         if (res.success) {
-          console.log("█ res ►►►",  res);
           this.fileForm = res.data, this.fileForm['pageCode'] = fc;
         } else {
           let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -179,16 +176,16 @@ export class MenuUpdateComponent implements OnInit {
     } else {
       submitData = me.limitForm;
     }
-console.log("█ submitData ►►►", submitData );
-
     me.ajax.post({
       url: submitUrl,
+      async: false,
       data: submitData,
       success: (res) => {
-        console.log("█ res ►►►", res);
         if (res.success) {
           this.router.navigate(['/main/limit'], {replaceUrl: true}); //路由跳转
           swal('提交成功！', '列表已自动更新');
+          me.limitComponent.queryDatas();
+          me.limitComponent.refresh();
           //this.outputvalue.emit(true);//提交成功后向父组件传值
         } else {
           let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
@@ -200,5 +197,6 @@ console.log("█ submitData ►►►", submitData );
         swal('提交失败！');
       }
     })
+
   }
 }

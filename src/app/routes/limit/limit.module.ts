@@ -11,6 +11,7 @@ import {MenuUpdateComponent} from "./menuUpdate/menuUpdate.component";
 import { LimitChildDirective } from './limit/limit-child.directive';
 import {LimitService} from "./limit/limit.service";
 import {SelectMenuComponent} from "app/shared/directives/select-menu/select-menu/select-menu.component";
+import {LimttabService} from "./limittab/limttab.service";
 
 // 父路由，用于页面嵌套显示
 const routes:Routes = [
@@ -45,7 +46,7 @@ const routes:Routes = [
     FileUploadModule
   ],
   declarations: [LimitComponent, MenuAddComponent, MenuUpdateComponent, LimittabComponent, LimitChildDirective,SelectMenuComponent],
-  providers: [LimitComponent,LimittabComponent,LimitService]
+  providers: [LimitComponent,LimittabComponent,LimitService,LimttabService]
 })
 export class LimitModule {
 }

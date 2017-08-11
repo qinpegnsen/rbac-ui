@@ -174,7 +174,6 @@ export class LimitComponent implements OnInit {
     } else if (data.isUse == "N") {
       data.isUse = "Y"
     }
-    console.log(data);
     this.ajax.post({
       url: '/limitMenu/updateState',
       data: {

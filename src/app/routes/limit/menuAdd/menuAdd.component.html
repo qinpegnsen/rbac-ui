@@ -44,19 +44,6 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
-            <div class="col-sm-8">
-              <input class="form-control" required name="level" [(ngModel)]="limitForm.level" level="level"
-                     #level="ngModel" type="text"/>
-              <div [hidden]="level.valid || level.pristine"
-                   class="alert alert-danger">
-                级别是必填项，请填写级别
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
             <label class="col-sm-3 control-label">备注</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="remarks" ngModel [(ngModel)]="limitForm.remarks"/>
@@ -131,19 +118,6 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
-            <div class="col-sm-8">
-              <input class="form-control" required name="level" [(ngModel)]="limitForm.level" level="level"
-                     #level="ngModel" type="text"/>
-              <div [hidden]="level.valid || level.pristine"
-                   class="alert alert-danger">
-                级别是必填项，请填写级别
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
             <label class="col-sm-3 control-label">备注</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="remarks" ngModel [(ngModel)]="limitForm.remarks"/>
@@ -185,7 +159,7 @@
                #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
-            <label class="col-sm-3 control-label"><i>*</i>选择菜单{{menuCode}}</label>
+            <label class="col-sm-3 control-label"><i>*</i>选择菜单</label>
             <div class="col-sm-8">
               <app-select-menu [sysCode]="limitForm.sysCode" (curMenuCode)="getMenuData($event)"></app-select-menu>
             </div>
@@ -209,19 +183,6 @@
             <label class="col-sm-3 control-label">页面图标</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="icon" #icon="ngModel" ngModel/>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
-            <div class="col-sm-8">
-              <input class="form-control" required name="level" ngModel level="level"
-                     #level="ngModel" type="text"/>
-              <div [hidden]="level.valid || level.pristine"
-                   class="alert alert-danger">
-                级别是必填项，请填写级别
-              </div>
             </div>
           </div>
         </fieldset>
@@ -283,19 +244,6 @@
             <label class="col-sm-3 control-label">页面图标</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="icon" #icon="ngModel" ngModel/>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 级别</label>
-            <div class="col-sm-8">
-              <input class="form-control" required name="level" [(ngModel)]="limitForm.level" level="level"
-                     #level="ngModel" type="text"/>
-              <div [hidden]="level.valid || level.pristine"
-                   class="alert alert-danger">
-                级别是必填项，请填写级别
-              </div>
             </div>
           </div>
         </fieldset>
@@ -365,7 +313,9 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">选择上级页面元素</label>
             <div class="col-sm-8">
-              <input class="form-control" type="text" name="preCode" #preCode="ngModel" ngModel/>
+              <select class="form-control" type="text" [(ngModel)]="pageCode" name="pageCode">>
+                <option [value]="item.pageCode" *ngFor="let item of pageList">{{item.pageName}}</option>
+              </select>
             </div>
           </div>
         </fieldset>
