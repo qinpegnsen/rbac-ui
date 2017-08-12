@@ -12,20 +12,20 @@ export class RouterGuardService implements CanActivate {
 
   constructor(private router: Router, private cookieService: CookieService) {
 
-    //监听路由，该事件一旦执行停不下来呀，所以可以用来着接着监听后面的子路由是否有权限
+    //监听路由，该事件一旦执行(除非刷新)停不下来呀，所以可以用来着接着监听后面的子路由是否有权限
+    //该事件需写在构造器里，因为写在别的地方，该服务被调用几次，他就会重复执行几次，越来越多
     this.router.events
       .filter(event => event instanceof NavigationStart)
       .subscribe((event) => {
         this.path = event['url'];
         if (this.path != this.urlHome) {//当路由为home时，不拦截
-          var hasPermission: boolean = this.isPermission(this.menus, this.path);
+          let hasPermission: boolean = RouterGuardService.isPermission(this.menus, this.path);
           if (!hasPermission) this.router.navigate([this.urlHome]);
         }
       });
   }
 
   ngOnInit() {
-
   }
 
   canActivate() {
@@ -33,9 +33,11 @@ export class RouterGuardService implements CanActivate {
     this.menus = this.getAllRouterLink();//取到所有菜单的link；
     //如果有刷新页面，router监听一般获取到undefined，通过JQuery获取全路径之后截取到path，防止刷新后重定向到home
     if (isNullOrUndefined(this.path)) this.path = rulHref.substring(rulHref.indexOf(host)).substring(host.length);
-
-    var hasPermission: boolean = this.isPermission(this.menus, this.path);
-    if (!hasPermission) this.router.navigate([this.urlHome]);//路由不匹配时重定向地址
+    let hasPermission: boolean = true;
+    if (this.path != this.urlHome) {//当路由为home时，不拦截
+      hasPermission = RouterGuardService.isPermission(this.menus, this.path);
+      if (!hasPermission) this.router.navigate([this.urlHome]);//路由不匹配时重定向地址
+    }
     return hasPermission;
   }
 
@@ -55,7 +57,7 @@ export class RouterGuardService implements CanActivate {
       } else {
         menuUrls.push(menu.link);
       }
-    })
+    });
     return menuUrls;
   }
 
@@ -65,8 +67,8 @@ export class RouterGuardService implements CanActivate {
    * @param path
    * @returns {boolean}
    */
-  private isPermission(paths, path) {
-    for (var i = 0; i < paths.length; i++) {
+  private static isPermission(paths, path) {
+    for (let i = 0; i < paths.length; i++) {
       if (path.indexOf(paths[i]) == 0) return true;
     }
     return false;
