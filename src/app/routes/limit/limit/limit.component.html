@@ -37,7 +37,7 @@
       <th class="unselectable text-center sort-num">
         序号
       </th>
-      <th class="col-lg-1  unselectable text-center">
+      <th class="col-lg-2  unselectable text-center">
         <rzhDefaultSorter by="name">菜单名称</rzhDefaultSorter>
       </th>
       <th class="col-lg-1  unselectable text-center">
@@ -52,7 +52,7 @@
       <th class="col-lg-1  unselectable text-center">
         <rzhDefaultSorter by="level">级别</rzhDefaultSorter>
       </th>
-      <th class="col-lg-2  unselectable text-center">
+      <th class="col-lg-1  unselectable text-center">
         <rzhDefaultSorter by="note">备注</rzhDefaultSorter>
       </th>
       <th class="col-lg-1  unselectable text-center">
@@ -67,8 +67,8 @@
     </thead>
     <tbody>
     <tr class="text-center" *ngFor="let menu of dataTable.data;let i = index" #men id="menList{{i}}" (click)="onSelecttable(menu.menuCode)">
-      <td style="padding-left: 20px"><a href="#" title="点击">{{i+1}}</a></td>
-      <td>{{menu.menuName}}</td>
+      <td style="padding-left: 20px">{{i+1}}</td>
+      <td><!--<span class="btn btn-default btn-xs ml mr">点击</span>-->{{menu.menuName}}</td>
       <td>{{menu.menuUrl}}</td>
       <td>{{menu.preMenuCode}}</td>
       <td>{{menu.menuIcon}}</td>
