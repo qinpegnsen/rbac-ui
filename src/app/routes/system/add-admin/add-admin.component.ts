@@ -1,6 +1,6 @@
-import { Component, ViewChild, OnInit,OnChanges,SimpleChanges } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from "@angular/core";
 import {SettingsService} from "../../../core/settings/settings.service";
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import {ActivatedRoute, Router} from "@angular/router";
 import {AddAdminService} from "./add-admin.service";
 import {AddorganService} from "../../organ/addorgan/addorgan.service";
 import {AdminsService} from "../admins/admins.service";
@@ -9,7 +9,7 @@ import {PatternService} from "../../../core/forms/pattern.service";
 import {SysPlatformService} from "../sys-platform/sys-platform.service";
 import {AdminsComponent} from "../admins/admins.component";
 import {SelectComponent} from "ng2-select/index";
-import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
+import {ImageCropperComponent} from "ng2-img-cropper";
 import {CookieService} from "angular2-cookie/core";
 
 @Component({
@@ -60,11 +60,11 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
   public refreshValueRole(value: any): void {
     this.selectedRoleStr = this.itemsToString(value);
-    console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
+    // console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
   }
   public refreshValueGroup(value: any): void {
     this.selectedGroupStr = this.itemsToString(value);
-    console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
+    // console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
   public itemsToString(value:Array<any> = []):string {
     return value
@@ -310,7 +310,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
     }
     console.log("█ submitData ►►►", submitData);
     me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me.adminsComponent.queryDatas({event: "pageChange", activePage: 2, rowsOnPage: 2, dataLength: 4})//刷新父页面数据
+    me.adminsComponent.queryDatas()//刷新父页面数据
   }
 
   // 取消
