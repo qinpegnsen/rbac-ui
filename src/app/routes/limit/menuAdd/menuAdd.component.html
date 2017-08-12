@@ -313,9 +313,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">选择上级页面元素</label>
             <div class="col-sm-8">
-              <select class="form-control" type="text" [(ngModel)]="pageCode" name="pageCode">>
-                <option [value]="item.pageCode" *ngFor="let item of pageList">{{item.pageName}}</option>
-              </select>
+              <app-select-page [sysCode]="limitForm.sysCode" [menuCode]="menuCode" (curPageCode)="getPageData($event)"></app-select-page>
             </div>
           </div>
         </fieldset>

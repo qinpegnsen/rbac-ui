@@ -44,6 +44,10 @@ export class RoleComponent implements OnInit {
   //分页用到得data
   private data: Page = new Page();
 
+  //把当前的页码信息发射出去，刷新的时候用到
+  @Output()
+  getRoleGroupPageInfo=new EventEmitter();
+
   //获取子组件RolemanComponent的实例，才可以调用它的方法,局部刷新用的
   @ViewChild(RolemanComponent)
   rolemanComponent: RolemanComponent;
@@ -126,10 +130,12 @@ export class RoleComponent implements OnInit {
   }
 
   /**
- * 角色组列表分页
+ * 角色组列表分页,点击分页的时候执行的事件
  * @param event
+ *  把当前的页码信息发射出去，刷新用的
  */
 public queryRoleGroupDatas(event?: PageEvent) {
+  this.getRoleGroupPageInfo.emit(event)//把当前的页码信息发射出去，刷新用的
   let me = this, activePage = 1;
   if (typeof event !== "undefined") activePage = event.activePage;
   this.ajax.get({
@@ -192,9 +198,10 @@ public queryRoleGroupDatas(event?: PageEvent) {
     });
   }
 
-  //
-  refresh() {
-    this.rolemanComponent.queryRoleListDatasBySyscode();
+  //执行这个方法的时候，刷新相应的页面
+  refresh(obj) {
+    this.rolemanComponent.queryRoleListDatasBySyscode(obj);
+    this.queryRoleGroupDatas(obj)
   }
 }
 

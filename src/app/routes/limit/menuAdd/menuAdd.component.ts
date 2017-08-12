@@ -26,6 +26,7 @@ export class MenuAddComponent implements OnInit {
   private menuList;//声明权限菜单列表
   private pageList;//声明页面菜单列表
   private menuCode;//声明保存上级的菜单编码
+  private pageCode;//声明保存上级的页面编码
   private preType;//选择上级类型
   private limitForm = {
     sysCode: '',
@@ -337,8 +338,15 @@ export class MenuAddComponent implements OnInit {
     }
 
   }
-
+  //获取到当前的菜单的编码
   getMenuData(menuCode){
     this.menuCode=menuCode;
+    console.log(menuCode)
+  }
+
+  //获取到当前的页面的编码
+  getPageData(pageCode){
+    this.pageCode=pageCode;
+    console.log(this.pageCode)
   }
 }

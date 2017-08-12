@@ -74,7 +74,10 @@ export class SelectMenuComponent implements OnInit {
       },
       success: (data) => {
         menuList = data.voList;
-        console.log(data)
+        if(data.totalRow==0){
+          this.show=false;
+        }
+
       },
       error: (data) => {
         console.log("error");

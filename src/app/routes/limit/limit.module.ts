@@ -12,6 +12,7 @@ import { LimitChildDirective } from './limit/limit-child.directive';
 import {LimitService} from "./limit/limit.service";
 import {SelectMenuComponent} from "app/shared/directives/select-menu/select-menu/select-menu.component";
 import {LimttabService} from "./limittab/limttab.service";
+import {SelectPageComponent} from "../../shared/directives/selec-page/select-page/select-page.component";
 
 // 父路由，用于页面嵌套显示
 const routes:Routes = [
@@ -26,18 +27,6 @@ const routes:Routes = [
   ]
   }
 ];
-
-// 子路由，用于页面嵌套显示
-//const appChildRoutes: Routes = [
-//  {path: 'menuAdd', component: MenuAddComponent}
-//];
-//
-//// 父路由，用于页面嵌套显示
-//
-//const routes: Routes = [
-//  {path: '', component: LimitComponent, children: appChildRoutes},
-//];
-
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
@@ -45,7 +34,7 @@ const routes:Routes = [
     SharedModule,
     FileUploadModule
   ],
-  declarations: [LimitComponent, MenuAddComponent, MenuUpdateComponent, LimittabComponent, LimitChildDirective,SelectMenuComponent],
+  declarations: [LimitComponent, MenuAddComponent, MenuUpdateComponent, LimittabComponent, LimitChildDirective,SelectMenuComponent,SelectPageComponent],
   providers: [LimitComponent,LimittabComponent,LimitService,LimttabService]
 })
 export class LimitModule {
