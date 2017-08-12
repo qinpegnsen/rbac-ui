@@ -27,9 +27,6 @@ export class RouterGuardService implements CanActivate {
       });
   }
 
-  ngOnInit() {
-  }
-
   canActivate() {
     let rulHref = window.location.href, host = window.location.host;
     //如果有刷新页面，router监听一般获取到undefined，通过JQuery获取全路径之后截取到path，防止刷新后重定向到home
