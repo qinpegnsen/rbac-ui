@@ -74,6 +74,7 @@ export class RoleComponent implements OnInit {
       },
       success: (data) => {
         this.sysCode = data[0].sysCode;
+        this.sysName = data[0].sysName;
         this.sysList = data;
         this.queryRoleGroupDatas();
       },
@@ -143,7 +144,7 @@ public queryRoleGroupDatas(event?: PageEvent) {
     data: {
       curPage: activePage,
       sysCode: this.sysCode,
-      pageSize:1
+      pageSize:8
     },
     success: (data) => {
 
@@ -199,9 +200,9 @@ public queryRoleGroupDatas(event?: PageEvent) {
   }
 
   //执行这个方法的时候，刷新相应的页面
-  refresh(obj) {
-    this.rolemanComponent.queryRoleListDatasBySyscode(obj);
-    this.queryRoleGroupDatas(obj)
+  refresh() {
+    this.rolemanComponent.queryRoleListDatasByroleGroupCode();
+    this.queryRoleGroupDatas()
   }
 }
 

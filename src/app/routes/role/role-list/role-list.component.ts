@@ -38,6 +38,7 @@ export class RoleListComponent implements OnInit {
       },
       success: (data) => {
         this.sysCode = data[0].sysCode;
+        this.sysName = data[0].sysName;
         this.sysList = data;
 
       },

@@ -93,7 +93,7 @@ export class RightpageComponent implements OnInit {
     } else {
       this.settings.closeRightPage();
       this.router.navigate(['/main/role/roleGroup']);
-      this.roleComponent.refresh( {event: "pageChange", activePage: 2, rowsOnPage: 1, dataLength: 2})
+      this.roleComponent.refresh()
     }
   }
 
