@@ -13,7 +13,7 @@ export const routes = [
       {path: 'home', loadChildren: './home/home.module#HomeModule',canActivate:[RouterGuardService]},
       {path: 'organ', loadChildren: './organ/organ.module#OrganModule',canActivate:[RouterGuardService]},
       {path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule'},
-      {path: 'system', loadChildren: './system/system.module#SystemModule',canActivate:[RouterGuardService]},
+      {path: 'system', loadChildren: './system/system.module#SystemModule'},
       {path: 'msg', loadChildren: './msg/msg.module#MsgModule'},
       {path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule'},
       {path: 'role', loadChildren: './role/role.module#RoleModule',canActivate:[RouterGuardService]},
