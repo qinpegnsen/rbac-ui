@@ -83,11 +83,11 @@ export class HeaderComponent implements OnInit {
    * 退出登录
    */
   logout() {
-    this.cookieService.removeAll(); //清空所有cookie
     this.ajax.get({
       url: "/login/logout",
       success: (result) => {
         if (result.success) {
+          this.cookieService.removeAll(); //清空所有cookie
           this.router.navigate(['/pages/login'], {replaceUrl: true});
         }
       }

@@ -11,6 +11,7 @@ export class RouterGuardService implements CanActivate {
   public path;//当前路由
 
   constructor(private router: Router, private cookieService: CookieService) {
+    this.menus = this.getAllRouterLink();//取到所有菜单的link；
 
     //监听路由，该事件一旦执行(除非刷新)停不下来呀，所以可以用来着接着监听后面的子路由是否有权限
     //该事件需写在构造器里，因为写在别的地方，该服务被调用几次，他就会重复执行几次，越来越多
@@ -18,7 +19,8 @@ export class RouterGuardService implements CanActivate {
       .filter(event => event instanceof NavigationStart)
       .subscribe((event) => {
         this.path = event['url'];
-        if (this.path != this.urlHome) {//当路由为home时，不拦截
+        if (this.path != this.urlHome && isNullOrUndefined(this.menus)) {
+          //当路由为home时，不拦截,当menus为空时不拦截（当退出登录时，清空了所有cookie，但是路由监听还在执行，由此取到Menu为undefined）
           let hasPermission: boolean = RouterGuardService.isPermission(this.menus, this.path);
           if (!hasPermission) this.router.navigate([this.urlHome]);
         }
@@ -30,7 +32,6 @@ export class RouterGuardService implements CanActivate {
 
   canActivate() {
     let rulHref = window.location.href, host = window.location.host;
-    this.menus = this.getAllRouterLink();//取到所有菜单的link；
     //如果有刷新页面，router监听一般获取到undefined，通过JQuery获取全路径之后截取到path，防止刷新后重定向到home
     if (isNullOrUndefined(this.path)) this.path = rulHref.substring(rulHref.indexOf(host)).substring(host.length);
     let hasPermission: boolean = true;
@@ -49,6 +50,7 @@ export class RouterGuardService implements CanActivate {
     let allMenus;
     allMenus = this.cookieService.getObject('userMenu');
     let menuUrls = [];
+    console.log("█ allMenus ►►►",  allMenus);
     allMenus.forEach((menu) => {
       if (menu.submenu) {
         menu.submenu.forEach((submenu) => {
