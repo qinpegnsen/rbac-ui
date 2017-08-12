@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {AjaxService} from '../../../core/services/ajax.service';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
+import {AjaxService} from "../../../core/services/ajax.service";
 import {Page} from "../../../core/page/page";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {isNull} from "util";
 import {ActivatedRoute} from "@angular/router";
-import {Router} from '@angular/router';
 import {RolemanComponent} from "../roleman/roleman.component";
 const swal = require('sweetalert');
 @Component({
@@ -55,7 +54,7 @@ export class RoleComponent implements OnInit {
   public addrType;//获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
 
 
-  constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute, private router: Router) {
+  constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute) {
   }
   /**
    * 初始化的时候获取 系统列表的接口 和 机构的接口
@@ -78,7 +77,7 @@ export class RoleComponent implements OnInit {
         this.sysList = data;
         this.queryRoleGroupDatas();
       },
-      error: (data) => {
+      error: () => {
         console.log("sys/list  error");
       }
     });
@@ -122,7 +121,8 @@ export class RoleComponent implements OnInit {
 
   /**
    * 系统发生变化的时候，获取到当前的系统编码，然后在刷新列表
-   * @param sys
+   * @param sysCode
+   * @param sysName
    */
   onSelectSys(sysCode,sysName): void {
     this.sysCode = sysCode;
@@ -136,7 +136,7 @@ export class RoleComponent implements OnInit {
  *  把当前的页码信息发射出去，刷新用的
  */
 public queryRoleGroupDatas(event?: PageEvent) {
-  this.getRoleGroupPageInfo.emit(event)//把当前的页码信息发射出去，刷新用的
+  this.getRoleGroupPageInfo.emit(event);//把当前的页码信息发射出去，刷新用的
   let me = this, activePage = 1;
   if (typeof event !== "undefined") activePage = event.activePage;
   this.ajax.get({
@@ -144,15 +144,14 @@ public queryRoleGroupDatas(event?: PageEvent) {
     data: {
       curPage: activePage,
       sysCode: this.sysCode,
-      pageSize:8
+      pageSize: 8
     },
     success: (data) => {
-
       if (!isNull(data)) {
         me.data = new Page(data);
       }
     },
-    error: (data) => {
+    error: () => {
       console.log('角色组列表分页错误');
     }
   });
@@ -193,7 +192,7 @@ public queryRoleGroupDatas(event?: PageEvent) {
         }
         swal(text,'','success');
       },
-      error: (data) => {
+      error: () => {
         swal('停启用连接数据库失败','','error');
       }
     });
