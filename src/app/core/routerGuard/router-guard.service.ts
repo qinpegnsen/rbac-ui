@@ -32,7 +32,7 @@ export class RouterGuardService implements CanActivate {
     //如果有刷新页面，router监听一般获取到undefined，通过JQuery获取全路径之后截取到path，防止刷新后重定向到home
     if (isNullOrUndefined(this.path)) this.path = rulHref.substring(rulHref.indexOf(host)).substring(host.length);
     let hasPermission: boolean = true;
-    if (this.path != this.urlHome) {//当路由为home时，不拦截
+    if (this.path != this.urlHome && isNullOrUndefined(this.menus)) {//当路由为home时，不拦截
       hasPermission = RouterGuardService.isPermission(this.menus, this.path);
       if (!hasPermission) this.router.navigate([this.urlHome]);//路由不匹配时重定向地址
     }
