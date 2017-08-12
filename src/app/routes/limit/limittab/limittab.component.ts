@@ -24,6 +24,9 @@ export class LimittabComponent implements OnInit,OnChanges {
   private tableButtonConfig1:Array<object>;  //页面添加列表按钮配置
   private tableButtonConfig2:Array<object>;  //功能添加列表按钮配置
   private tableButtonConfig3:Array<object>;  //文件添加列表按钮配置
+  private tableButtonConfig4:Array<object>;  //页面元素列表中的修改按钮配置
+  private tableButtonConfig5:Array<object>;  //功能操作列表中的修改按钮配置
+  private tableButtonConfig6:Array<object>;  //文件控制列表中的修改按钮配置
   private buttonConfig;//页面列表中的添加按钮
   private childpageCode; //页面编码，查询子集用
   private childpageTitList:Array<any> = []; //菜单级别面包屑
@@ -79,8 +82,32 @@ export class LimittabComponent implements OnInit,OnChanges {
     //页面元素列表中的添加按钮
     this.buttonConfig = [
       {
-        title: "添加菜单",
+        title: "添加页面",
         type: "add",
+        size: 'xs',
+      }
+    ];
+    //页面元素列表中的修改按钮
+    this.tableButtonConfig4 = [
+      {
+        title: "修改页面",
+        type: "update",
+        size: 'xs',
+      }
+    ];
+    //功能操作列表中的修改按钮
+    this.tableButtonConfig5 = [
+      {
+        title: "修改功能操作",
+        type: "update",
+        size: 'xs',
+      }
+    ];
+    //文件控制列表中的修改按钮
+    this.tableButtonConfig6 = [
+      {
+        title: "修改文件",
+        type: "update",
         size: 'xs',
       }
     ];
@@ -112,7 +139,7 @@ export class LimittabComponent implements OnInit,OnChanges {
     }
     let myData = {
       curPage: 1,
-      pageSize: '3',
+      pageSize: 4,
       sysCode: this.sysCode,
       menuCode: this.menuCode,
       preCode: this.childpageCode
@@ -139,9 +166,6 @@ export class LimittabComponent implements OnInit,OnChanges {
   public pageMenus(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
-
-    console.log("█ this.menuCode 1111 ►►►",  this.menuCode);
-
 
     let myData = {
       curPage: activePage,
@@ -185,7 +209,7 @@ export class LimittabComponent implements OnInit,OnChanges {
       data: {
         curPage: activePage,
         pageSize: '3',
-        menuCode: this.menuCode
+        menuCode: this.menuCode,
       },
       success: (data) => {
 
@@ -230,19 +254,24 @@ export class LimittabComponent implements OnInit,OnChanges {
   public queryOptByMenuCode(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
-
+    console.log("█ +++++++++++++ ►►►", "+++++++++");
     this.ajax.get({
       url: "/limitOpt/listpage",
       data: {
         curPage: activePage,
         pageSize: '3',
+        sysCode: this.sysCode,
         menuCode: this.menuCode
       },
       success: (data) => {
-
+        console.log(data)
+        console.log(this.sysCode)
+        console.log(this.menuCode)
         if (!isNull(data)) {
-          me.menuData = new Page(data);
+          me.operationData = new Page(data);
         }
+        console.log("█ 11111111111 ►►►","11111111111" );
+
       },
       error: (data) => {
         console.log('data', data);

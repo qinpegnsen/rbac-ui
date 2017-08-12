@@ -127,6 +127,8 @@ export class MenuAddComponent implements OnInit {
     _this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
 
+
+
   /**
    * 添加（菜单、页面元素、功能操作、文件控制）
    * @param value 必填信息
@@ -171,12 +173,13 @@ export class MenuAddComponent implements OnInit {
           'sysCode': _this.limitForm.sysCode,
           'optName': value.optName,
           'tacklUrl': value.tacklUrl,
-          'preCode': value.menuCode,
-          'preType': value.preType,
+          'menuCode': _this.menuCode,
           'ord': value.ord,
-          'remarks': value.remarks
+          'remarks': value.remarks,
+          'preType':this.preType
         },
         success: (res) => {
+          console.log(res)
           if (res.success) {
             _this.router.navigate(['/main/limit'], {replaceUrl: true});   //路由跳转
             swal('添加功能操作提交成功！', '','success');
@@ -249,7 +252,7 @@ export class MenuAddComponent implements OnInit {
        * @param status 状态码
        * @param headers 上传失败后服务器的返回的返回头
        */
-      _this.uploader.onErrorItem = function (item, response, status, headers) {
+       _this.uploader.onErrorItem = function (item, response, status, headers) {
         swal('上传失败', '文件上传失败！', 'error');
       };
       /**
@@ -337,7 +340,7 @@ export class MenuAddComponent implements OnInit {
     }
 
   }
-
+  //获取到子组件发射过来的菜单编码
   getMenuData(menuCode){
     this.menuCode=menuCode;
   }
