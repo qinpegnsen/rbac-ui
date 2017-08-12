@@ -2,6 +2,7 @@ import {LayoutComponent} from '../layout/layout.component';
 import {LoginComponent} from './pages/login/login.component';
 import {PagesComponent} from './pages/pages/pages.component';
 import {ButtonDemoComponent} from "./buttons/buttonDemo/button-demo.component";
+import {RouterGuardService} from "../core/routerGuard/router-guard.service";
 // 设置路由指向
 export const routes = [
   {
@@ -9,14 +10,14 @@ export const routes = [
     component: LayoutComponent,
     children: [
       {path: '', redirectTo: '/main/home', pathMatch: 'full'},
-      {path: 'home', loadChildren: './home/home.module#HomeModule'},
-      {path: 'organ', loadChildren: './organ/organ.module#OrganModule'},
+      {path: 'home', loadChildren: './home/home.module#HomeModule',canActivate:[RouterGuardService]},
+      {path: 'organ', loadChildren: './organ/organ.module#OrganModule',canActivate:[RouterGuardService]},
       {path: 'datatables', loadChildren: './datatables/datatables.module#DatatablesModule'},
-      {path: 'system', loadChildren: './system/system.module#SystemModule'},
+      {path: 'system', loadChildren: './system/system.module#SystemModule',canActivate:[RouterGuardService]},
       {path: 'msg', loadChildren: './msg/msg.module#MsgModule'},
       {path: 'echarts', loadChildren: './echarts/echarts.module#EchartsModule'},
-      {path: 'role', loadChildren: './role/role.module#RoleModule'},
-      {path: 'limit', loadChildren: './limit/limit.module#LimitModule'},
+      {path: 'role', loadChildren: './role/role.module#RoleModule',canActivate:[RouterGuardService]},
+      {path: 'limit', loadChildren: './limit/limit.module#LimitModule',canActivate:[RouterGuardService]},
       {path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule'},
       {path: 'navtree', loadChildren: './navtree/navtree.module#NavtreeModule'},
       {path: 'buttons', component: ButtonDemoComponent}

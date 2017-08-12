@@ -39,6 +39,7 @@ import { SelectModule } from 'ng2-select';
 import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
 import {SelectPageModule} from "./directives/selec-page/select-page.module";
 import {SelectPageComponent} from "./directives/selec-page/select-page/select-page.component";
+import {RouterGuardService} from "../core/routerGuard/router-guard.service";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -71,7 +72,8 @@ import {SelectPageComponent} from "./directives/selec-page/select-page/select-pa
     SelectPageModule
   ],
   providers: [
-    ColorsService
+    ColorsService,
+    RouterGuardService
   ],
   declarations: [
     FlotDirective,
