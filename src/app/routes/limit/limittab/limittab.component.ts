@@ -30,6 +30,7 @@ export class LimittabComponent implements OnInit,OnChanges {
   private buttonConfig;//页面列表中的添加按钮
   private childpageCode; //页面编码，查询子集用
   private childpageTitList:Array<any> = []; //菜单级别面包屑
+  private show = true;//判断页面元素是否有下级
   @Input()
   public sysCode;//获取系统编码
 
@@ -122,33 +123,35 @@ export class LimittabComponent implements OnInit,OnChanges {
   /**
    * 查询子集菜单列表
    */
-  queryChildMenuList(childCode?, pageName?, isTit?:boolean) {
+  queryChildMenuList(hasSon?, childCode?, pageName?, isTit?:boolean) {
     let me = this, num = 0;
-    if (isNullOrUndefined(childCode)) {
-      this.childpageCode = null, this.childpageTitList = []; //清空子集查询
-    } else {
-      me.childpageCode = childCode;
-      let item = {name: pageName, code: childCode};
-      if (!isTit) me.childpageTitList.push(item); //非点击面包屑路径时，添加面包屑
-      else { //点击面包屑路径时，提出点击地址后的面包屑路径
-        for (var i = 0; i < me.childpageTitList.length; i++) {  //获取点击面包屑的路径地址下标
-          if (item.code == me.childpageTitList[i].code) num = i;
+    if(hasSon == "N"){
+      me.show = false;
+    }else {
+      me.show = true;
+      if (isNullOrUndefined(childCode)) {
+        this.childpageCode = null, this.childpageTitList = []; //清空子集查询
+      } else {
+        me.childpageCode = childCode;
+        let item = {name: pageName, code: childCode};
+        if (!isTit) me.childpageTitList.push(item); //非点击面包屑路径时，添加面包屑
+        else { //点击面包屑路径时，提出点击地址后的面包屑路径
+          for (var i = 0; i < me.childpageTitList.length; i++) {  //获取点击面包屑的路径地址下标
+            if (item.code == me.childpageTitList[i].code) num = i;
+          }
+          me.childpageTitList.splice(num + 1); //剔除下标后的路径
         }
-        me.childpageTitList.splice(num + 1); //剔除下标后的路径
       }
+      let myData = {
+        curPage: 1,
+        pageSize: 4,
+        sysCode: this.sysCode,
+        menuCode: this.menuCode,
+        preCode: this.childpageCode
+      };
+      me.menuData = new Page(me.limttabService.getPageMenus(myData));
     }
-    let myData = {
-      curPage: 1,
-      pageSize: 4,
-      sysCode: this.sysCode,
-      menuCode: this.menuCode,
-      preCode: this.childpageCode
-    };
 
-    console.log("█ ceshi--- ►►►", myData);
-
-
-    me.menuData = new Page(me.limttabService.getPageMenus(myData));
   }
 
   /**
@@ -187,10 +190,12 @@ export class LimittabComponent implements OnInit,OnChanges {
       this.pageMenus();
       this.operationDatas();
       this.controlDatas();
+      this.childpageCode = null, this.childpageTitList = []; //当系统发生变化时清空子集查询
     } else if (changes["menuCode"] && this.menuCode) {
       this.queryPageByMenuCode(); //通过菜单编码查询页面元素
       this.queryOptByMenuCode();  //通过菜单编码查询功能操作
       this.controlDatas();        //通过菜单编码查询文件控制
+      this.childpageCode = null, this.childpageTitList = []; //当权限菜单发生变化时清空子集查询
 
     }
   }

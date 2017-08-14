@@ -21,7 +21,7 @@
       <i class="fa fa-arrow-right mr ml"></i>
       <font class="cursor-p" (click)="queryChildMenuList(menuTit.code,menuTit.name,true)">{{menuTit.name}}</font>
     </span>
-    <span *ngIf="childMenuTitList.length>0" (click)="goBackMenu()" class="btn btn-default btn-xs ml">
+    <span *ngIf="childMenuTitList.length>0" (click)="goBackMenu()" class="btn btn-default btn-xs ml" >
       <i class="fa fa-level-up mr5"></i>
       返回上一级
     </span>
@@ -66,7 +66,7 @@
       </th>
     </thead>
     <tbody>
-    <tr class="text-center" *ngFor="let menu of dataTable.data;let i = index" #men id="menList{{i}}" (click)="onSelecttable(menu.menuCode)">
+    <tr class="text-center" *ngFor="let menu of dataTable.data;let i = index" #men id="menList{{i}}">
       <td style="padding-left: 20px">{{i+1}}</td>
       <td><!--<span class="btn btn-default btn-xs ml mr">点击</span>-->{{menu.menuName}}</td>
       <td>{{menu.menuUrl}}</td>
@@ -88,9 +88,13 @@
         <app-buttons [config]="option" (callback)="option.callback($event,menu.menuCode)" *ngFor="let option of tableButtonConfig"></app-buttons>
         <!--菜单权限子列表项的添加-->
         <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:7,sysCode:sysCode,menuCode:menu.menuCode}"></app-buttons>
-         <span (click)="queryChildMenuList(menu.menuCode,menu.menuName,false)" class="btn btn-default btn-xs">
+         <span (click)="queryChildMenuList(menu.hasSon,menu.menuCode,menu.menuName,false)" class="btn btn-default btn-xs" *ngIf="show">
       <i class="fa fa-level-down"></i>
       下级菜单
+    </span>
+        <span class=" btn btn-purple btn-xs" *ngIf="!show" (click)="onSelecttable(menu.menuCode)">
+      <i class="fa fa-search-plus"></i>
+      权限页面
     </span>
       </td>
     </tr>

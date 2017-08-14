@@ -224,8 +224,8 @@
         <fieldset class="b0">
           <legend>添加菜单</legend>
         </fieldset>
-        系统编码<input class="form-control" required [(ngModel)]="limitForm.sysCode"  name="sysCode" #sysCode="ngModel" />
-        页面编码<input class="form-control" required [(ngModel)]="limitForm.preCode"  name="preCode" #sysCode="ngModel"/>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode"  name="sysCode" #sysCode="ngModel" type="hidden"/>
+        <input class="form-control" required [(ngModel)]="limitForm.preCode"  name="preCode" #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 页面名称</label>
