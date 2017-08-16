@@ -32,7 +32,6 @@ export class LimitComponent implements OnInit {
   private buttonConfig;//权限菜单列表中的添加按钮
   private childMenuCode; //菜单编码，查询子集用
   private childMenuTitList:Array<any> = []; //菜单级别面包屑
-  private show = true;//判断菜单是否有下级
 
   /**
    * 装饰器，实现局部刷新
@@ -115,28 +114,22 @@ export class LimitComponent implements OnInit {
   /**
    * 查询子集菜单列表
    */
-  queryChildMenuList(hasSon?, childCode?, menuName?, isTit?:boolean) {
+  queryChildMenuList(childCode?, menuName?, isTit?:boolean) {
     let me = this, num = 0;
-    if(hasSon == "N"){
-      me.show = false;
-    }else{
-      me.show = true;
-      if (isNullOrUndefined(childCode)) {
-        this.childMenuCode = null, this.childMenuTitList = []; //清空子集查询
-      } else {
-        me.childMenuCode = childCode;
-        let item = {name: menuName, code: childCode};
-        if (!isTit) me.childMenuTitList.push(item); //非点击面包屑路径时，添加面包屑
-        else { //点击面包屑路径时，提出点击地址后的面包屑路径
-          for (var i = 0; i < me.childMenuTitList.length; i++) {  //获取点击面包屑的路径地址下标
-            if (item.code == me.childMenuTitList[i].code) num = i;
-          }
-          me.childMenuTitList.splice(num + 1); //剔除下标后的路径
+    if (isNullOrUndefined(childCode)) {
+      this.childMenuCode = null, this.childMenuTitList = []; //清空子集查询
+    } else {
+      me.childMenuCode = childCode;
+      let item = {name: menuName, code: childCode};
+      if (!isTit) me.childMenuTitList.push(item); //非点击面包屑路径时，添加面包屑
+      else { //点击面包屑路径时，提出点击地址后的面包屑路径
+        for (var i = 0; i < me.childMenuTitList.length; i++) {  //获取点击面包屑的路径地址下标
+          if (item.code == me.childMenuTitList[i].code) num = i;
         }
+        me.childMenuTitList.splice(num + 1); //剔除下标后的路径
       }
-      me.data = new Page(me.limitService.queryMenuList(1, 4, me.sysCode, me.childMenuCode));
     }
-
+    me.data = new Page(me.limitService.queryMenuList(1, 4, me.sysCode, me.childMenuCode));
   }
 
   /**
@@ -158,6 +151,7 @@ export class LimitComponent implements OnInit {
     let listInfos = this.limitService.queryMenuList(activePage, 4, me.sysCode, me.childMenuCode);
     me.data = new Page(listInfos);
   }
+
 
   /**
    * 实现局部刷新

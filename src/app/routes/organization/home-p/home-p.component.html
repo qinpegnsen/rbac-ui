@@ -1,0 +1,104 @@
+<div class="home-p">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 left-tree">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="search">
+              <form action="">
+                <div class="form-group">
+                  <label for="search"></label>
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  <input class="form-control" type="text" id="search" placeholder="搜素">
+                </div>
+              </form>
+            </div>
+            <div class="tab clearfix">
+              <div class="tab-left"
+                   [ngClass]="{'active': isActive, 'un-active': !isActive}">组织架构
+              </div>
+              <div class="tab-right"
+                   [ngClass]="{'active': !isActive, 'un-active': isActive}">角色
+              </div>
+            </div>
+            <div class="tree">
+              <ul>
+                <li>
+                  <div (click)="toggle(tree_root.name)"
+                       style="position:relative;width:100%;"
+                       class="cell"
+                       [ngClass]="{'active':active_tree_cell === tree_root.name}"
+                  >
+                    <a class="" href="javascript:void(0)">
+                      <span (click)="tree_status[0] = !tree_status[0]"
+                            *ngIf="tree_root.memberCount"
+                            class="fa"
+                            [ngClass]="{
+                              'fa-caret-right':!tree_status[0],
+                              'fa-caret-down': tree_status[0]
+                            }"
+                            [innerHTML]="''"
+                            style="font-size:18px;">
+                      </span>
+                      <span
+                        [ngStyle]="{color: active_tree_cell === tree_root.name ? '#fff': ''}">
+                        {{tree_root.name + '(' + tree_root.memberCount + ')人'}}</span>
+                    </a>
+                  </div>
+                  <ul>
+                    <li *ngFor="let v of tree_tow">
+                      <div *ngIf="tree_status[0]"
+                           style="position:relative;width:100%;" class="cell"
+                           (click)="tree_status[1] = v.memberCount?!tree_status[1]:tree_status[1];toggle(v.name)"
+                           [ngClass]="{'active':active_tree_cell === v.name}"
+                      >
+                        <a class="dep-name dep-name-hl" href="javascript:void(0)">
+                          <span *ngIf="v.memberCount"  class="fa"
+                                [ngClass]="{
+                                'fa-caret-right': !tree_status[1],
+                                'fa-caret-down': tree_status[1]
+                                }"
+                                style="font-size:18px;"
+                                [innerHTML]="''"
+                          ></span>
+                          <span class="fa fa-folder"></span>
+                          <span
+                            [ngStyle]="{color: active_tree_cell === v.name ? '#fff': ''}">
+                            {{v.name + '(' + v.memberCount + ')人'}}
+                          </span>
+                        </a>
+                      </div>
+                      <ul *ngIf="v.memberCount">
+                        <li *ngFor="let key of tree_s">
+                          <div *ngIf="tree_status[1]"
+                               style="position:relative;width:100%;"
+                               class="cell" (click)="toggle(key.name)"
+                               [ngClass]="{'active':active_tree_cell === key.name}"
+                          >
+                            <a class="dep-name dep-name-hl" href="javascript:void(0)">
+                              <span class="fa fa-folder"></span>
+                              <span
+                                [ngStyle]="{color: active_tree_cell === key.name ? '#fff': ''}">
+                                {{key.name + '(' + key.memberCount + ')人'}}
+                              </span>
+                            </a>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 right-content">
+        <div>
+          <app-navigation [list_data]="list_data" [path]="path_arr"></app-navigation>
+          <app-table [orgEmpExtVOList]="orgEmpExtVOList"></app-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

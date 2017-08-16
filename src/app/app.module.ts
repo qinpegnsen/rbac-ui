@@ -13,6 +13,8 @@ import {SharedModule} from './shared/shared.module';
 import {RoutesModule} from './routes/routes.module';
 import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
 import { OpaqueToken } from '@angular/core';
+import {pathReducer} from './routes/organization/store/store';
+import {StoreModule} from '@ngrx/store';
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: Http) {
@@ -34,6 +36,9 @@ export function createTranslateLoader(http: Http) {
         useFactory: (createTranslateLoader),
         deps: [Http]
       }
+    }),
+    StoreModule.provideStore({
+      path: pathReducer
     })
   ],
   providers: [

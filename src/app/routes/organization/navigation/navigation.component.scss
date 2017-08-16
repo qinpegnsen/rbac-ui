@@ -1,0 +1,96 @@
+.c_title_1{
+  width: 100%;
+  padding: 19px 0;
+  font-size: 20px;
+}
+.contact_header .tag {
+  position: relative;
+  top: -3px;
+  margin-left: 5px;
+}
+.c_ding_tag_xs {
+  font-size: 10px;
+  font-weight: 100;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+.c_ding_tag_success {
+  background: #f7cb27;
+}
+.c_ding_tag {
+  display: inline;
+  padding: .3em .6em;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+.dept_navbar_c {
+  padding-bottom: 10px;
+  padding-top: 5px;
+  height: 45px;
+}
+.dept_navbar_c ul {
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+}
+.dept_navbar_c ul li {
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dept_navbar_c .end_title {
+  display: block;
+  float: left;
+  max-width: 150px;
+  padding: 0 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dept_navbar_c a {
+  display: block;
+  float: left;
+  max-width: 150px;
+  padding-right: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.c_link {
+  color: #38adff;
+  padding: 0px 5px;
+  cursor: pointer;
+}
+
+.c_drag_drop_dept_item {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 12px;
+  border: 1px solid transparent;
+  border-bottom: 1px solid #ebebeb;
+  position: relative;
+  background: #fff;
+  cursor: pointer;
+}
+.c_drag_drop_dept_item .name {
+  width: 100%;
+  padding: 0px 70px 0px 20px;
+}
+.c_drag_drop_dept_item .number {
+  position: absolute;
+  right: 0;
+  width: 30px;
+  text-align: left;
+  top: 50%;
+  margin-top: -8px;
+}
+.c_drag_drop_dept_item:hover {
+  background: #dddddd;
+}
+

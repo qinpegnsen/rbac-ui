@@ -1,0 +1,34 @@
+<div class="c_action_content">
+  <div class="c_ding_btn c_ding_btn_primary c_ding_btn_xs" routerLink="rightpage" [queryParams]="{id:3}">添加成员</div>
+  <div class="c_ding_btn c_ding_btn_xs" style="">调整位置</div>
+  <div class="c_ding_btn c_ding_btn_error c_ding_btn_xs">批量删除</div>
+</div>
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th><input type="checkbox" [checked]="top_check" name=""
+                 (click)="toggle(true)"
+      ></th>
+      <th>姓名</th>
+      <th>职位</th>
+      <th>工号</th>
+      <th>手机号</th>
+      <th>邮箱</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let v of orgEmpExtVOList; let i = index">
+      <td><input type="checkbox"
+                 [checked]="check_status[i]"
+                 name="test"
+                 (click)="check_status[i]=!check_status[i];toggle()"></td>
+      <td>{{v.name}}</td>
+      <td>{{v.extNumber}}</td>
+      <td>{{v.jobNumber}}</td>
+      <td>{{v.mobile}}</td>
+      <td>{{v.email}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

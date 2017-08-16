@@ -30,7 +30,6 @@ export class LimittabComponent implements OnInit,OnChanges {
   private buttonConfig;//页面列表中的添加按钮
   private childpageCode; //页面编码，查询子集用
   private childpageTitList:Array<any> = []; //菜单级别面包屑
-  private show = true;//判断页面元素是否有下级
   @Input()
   public sysCode;//获取系统编码
 
@@ -123,12 +122,8 @@ export class LimittabComponent implements OnInit,OnChanges {
   /**
    * 查询子集菜单列表
    */
-  queryChildMenuList(hasSon?, childCode?, pageName?, isTit?:boolean) {
+  queryChildMenuList(childCode?, pageName?, isTit?:boolean) {
     let me = this, num = 0;
-    if(hasSon == "N"){
-      me.show = false;
-    }else {
-      me.show = true;
       if (isNullOrUndefined(childCode)) {
         this.childpageCode = null, this.childpageTitList = []; //清空子集查询
       } else {
@@ -150,7 +145,6 @@ export class LimittabComponent implements OnInit,OnChanges {
         preCode: this.childpageCode
       };
       me.menuData = new Page(me.limttabService.getPageMenus(myData));
-    }
 
   }
 
@@ -259,7 +253,6 @@ export class LimittabComponent implements OnInit,OnChanges {
   public queryOptByMenuCode(event?:PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
-    console.log("█ +++++++++++++ ►►►", "+++++++++");
     this.ajax.get({
       url: "/limitOpt/listpage",
       data: {
@@ -269,14 +262,9 @@ export class LimittabComponent implements OnInit,OnChanges {
         menuCode: this.menuCode
       },
       success: (data) => {
-        console.log(data)
-        console.log(this.sysCode)
-        console.log(this.menuCode)
         if (!isNull(data)) {
           me.operationData = new Page(data);
         }
-        console.log("█ 11111111111 ►►►","11111111111" );
-
       },
       error: (data) => {
         console.log('data', data);

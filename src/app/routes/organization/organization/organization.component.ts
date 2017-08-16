@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+
+
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
@@ -7,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrganizationComponent implements OnInit {
 
-  settingActive = 1;
-  constructor() { }
+
+
+
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }
+
+
 
 }

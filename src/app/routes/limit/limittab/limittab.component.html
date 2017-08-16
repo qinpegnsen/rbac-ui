@@ -72,7 +72,7 @@
           <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1,pageCode:page.pageCode}" *ngFor="let option of tableButtonConfig4"></app-buttons>
           <!--页面元素子列表项的添加-->
           <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:8,sysCode:sysCode,pageCode:page.pageCode}"></app-buttons>
-          <span class="btn btn-default btn-xs" (click)="queryChildMenuList(page.hasSon,page.pageCode,page.pageName,false)" *ngIf="show">
+          <span class="btn btn-default btn-xs" (click)="queryChildMenuList(page.pageCode,page.pageName,false)" *ngIf="page.hasSon=='Y'">
       <i class="fa fa-level-down"></i>
       下级菜单
     </span>
