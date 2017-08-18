@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService, private ajax: AjaxService, private router: Router,private cookieService:CookieService) {
     // 只显示指定的
+    console.log("█ menu.getMenu() ►►►",  menu.getMenu());
     if(typeof menu.getMenu() !== 'undefined') this.menuItems = menu.getMenu().slice(0, 4);
   }
 
@@ -83,11 +84,12 @@ export class HeaderComponent implements OnInit {
    * 退出登录
    */
   logout() {
+    this.cookieService.removeAll(); //清空所有cookie
+    sessionStorage.clear();//清空所有Session
     this.ajax.get({
       url: "/login/logout",
       success: (result) => {
         if (result.success) {
-          this.cookieService.removeAll(); //清空所有cookie
           this.router.navigate(['/pages/login'], {replaceUrl: true});
         }
       }

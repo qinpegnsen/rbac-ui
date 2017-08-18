@@ -62,7 +62,7 @@
         <td>{{organ.tel}}</td>
         <td>{{organ.areaCode | areaName}}</td>
         <td>{{organ.type | rzhState:'1007'}}
-          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN'"
+          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN' && organ.type != 'SUPER'"
                   (click)="updateType(organ.orgCode)" title="修改"></button>
         </td>
         <td>{{organ.state | rzhState:'1008'}}</td>

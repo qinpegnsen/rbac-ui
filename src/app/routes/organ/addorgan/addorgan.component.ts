@@ -91,7 +91,7 @@ export class AddorganComponent implements OnInit {
           //console.log("█ \"添加机构\" ►►►",  "添加机构");
           this.pageTitle = "添加机构";
           this.Organ = true;
-          this.orgTypes = this.addOrganService.getOrgTypes(); //获取机构类型
+          this.orgTypes = this.filterOrgTypes(); //获取机构类型列表
           break;
 
         //查看机构详情
@@ -108,7 +108,7 @@ export class AddorganComponent implements OnInit {
           //console.log("█ \"修改机构信息\" ►►►",  "修改机构信息");
           this.Organ = true;
           this.pageTitle = "修改机构信息";
-          this.orgTypes = this.addOrganService.getOrgTypes(); //获取机构类型列表
+          this.orgTypes = this.filterOrgTypes(); //获取机构类型列表
           this.getOrgCode();  //获取机构代码orgCode
           this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
@@ -127,7 +127,8 @@ export class AddorganComponent implements OnInit {
           //console.log("█ \"修改机构性质\" ►►►",  "修改机构性质");
           this.updateType = true;
           this.pageTitle = "修改机构性质";
-          this.orgTypes = this.addOrganService.getOrgTypes(); //获取机构类型列表
+          this.orgTypes = this.filterOrgTypes(); //获取机构类型列表
+          console.log("█ this.orgTypes ►►►",  this.orgTypes);
           this.getOrgCode();  //获取机构代码orgCode
           this.organ = this.addOrganService.getOrgDetailByCode(this.orgCode);  //通过orgCode获取机构详细信息
           break;
@@ -152,6 +153,20 @@ export class AddorganComponent implements OnInit {
   private selectedChange(){
     this.getRoleAndGroupList();//获取角色/角色组列表
     this.getMyRoleAndGroupList();//获取已经分配的角色/角色组列表
+  }
+
+  /**
+   * 筛选机构类型，去掉超管
+   */
+  filterOrgTypes(){
+    let typeList = this.addOrganService.getOrgTypes();
+    let newList = [];
+    typeList.forEach((orgTp) => {
+      if(orgTp.key !== 'SUPER'){
+        newList.push(orgTp)
+      }
+    })
+    return newList;
   }
 
   /**

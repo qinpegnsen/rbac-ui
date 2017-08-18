@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import {CookieService} from "angular2-cookie/core";
+import {Injectable} from "@angular/core";
 import {any} from "codelyzer/util/function";
 import {isNullOrUndefined} from "util";
 
@@ -32,7 +31,7 @@ class MenuItem {
 @Injectable()
 export class MenuService {
 
-  constructor(private cookieService:CookieService) {
+  constructor() {
   }
 
   foreachPushMenu(items:Array<menuVO>) {
@@ -81,7 +80,8 @@ export class MenuService {
 
       menuItems.push(menuItem);
     });*/
-    this.cookieService.putObject('userMenu', menuItems); //保存menu信息至cookie
+    let menuItemsString = JSON.stringify(menuItems);
+    sessionStorage.setItem('userMenu', menuItemsString); //保存menu信息至cookie
   }
 
   /**
@@ -89,7 +89,8 @@ export class MenuService {
    * @returns {Array<any>}
    */
   getMenu() {
-    return <Array<any>>this.cookieService.getObject("userMenu"); //cookie中取出
+    let menus = JSON.parse(sessionStorage.getItem("userMenu"));
+    return menus; //cookie中取出
   }
 
 }

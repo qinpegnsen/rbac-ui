@@ -1,7 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {AjaxService} from "../../../core/services/ajax.service";
-import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
-import {Page} from "../../../core/page/page";
 import {isNull} from "util";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 const swal = require('sweetalert');

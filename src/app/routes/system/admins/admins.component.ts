@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {Page} from "../../../core/page/page";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
-import {Router} from '@angular/router';
+import {Router} from "@angular/router";
 import {AdminsService} from "./admins.service";
 import {SettingsService} from "../../../core/settings/settings.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
-import {CookieService} from "angular2-cookie/core";
 
 @Component({
   selector: 'app-admins',
@@ -24,12 +23,15 @@ export class AdminsComponent implements OnInit {
   private userState:string;
   private buttons;
 
-  constructor(private router:Router, private admin:AdminsService, public settings: SettingsService,private cookieService:CookieService) { }
+  @ViewChild('chooseOrgan') private choosedOrgCode: string;
+
+  constructor(private router:Router, private admin:AdminsService, public settings: SettingsService) { }
 
   ngOnInit() {
-    let me = this;
-    me.userState = me.cookieService.getObject('loginInfo')['state'];
-    me.userOrgCode = me.cookieService.getObject('loginInfo')['orgCode'];
+    let me = this,
+    userInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
+    me.userState = userInfo['state'];
+    me.userOrgCode = userInfo['orgCode'];
 
     me.queryDatas();//获取管理员表格数据
     me.addButton = {
@@ -71,17 +73,6 @@ export class AdminsComponent implements OnInit {
     ];
   }
 
-  updateAdmin(mgrCode){
-    this.router.navigate(['/main/system/admins/updateAdmin',mgrCode]);
-  }
-
-  adminDetail(mgrCode){
-    this.router.navigate(['/main/system/admins/adminDetail',mgrCode]);
-  }
-
-  allotRole(mgrCode){
-    this.router.navigate(['/main/system/admins/allotRole',mgrCode]);
-  }
 
   /**
    * 从子组件获取所选区域数据,当选择区域时重新获取数据
@@ -99,6 +90,7 @@ export class AdminsComponent implements OnInit {
      */
   getOrganCode(orgCode){
     this.orgCode = orgCode;
+    console.log("█ orgCode ►►►",  orgCode);
     this.queryDatas()//获取管理员表格数据
   }
 

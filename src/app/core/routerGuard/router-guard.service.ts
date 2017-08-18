@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {CookieService} from "angular2-cookie/core";
 import {CanActivate, NavigationStart, Router} from "@angular/router";
 import {isNullOrUndefined} from "util";
 
@@ -10,7 +9,7 @@ export class RouterGuardService implements CanActivate {
   private menus;//有权限的路由组合
   public path;//当前路由
 
-  constructor(private router: Router, private cookieService: CookieService) {
+  constructor(private router: Router) {
     this.menus = this.getAllRouterLink();//取到所有菜单的link；
 
     //监听路由，该事件一旦执行(除非刷新)停不下来呀，所以可以用来着接着监听后面的子路由是否有权限
@@ -44,8 +43,7 @@ export class RouterGuardService implements CanActivate {
    * @returns {Array}
    */
   private getAllRouterLink() {
-    let allMenus;
-    allMenus = this.cookieService.getObject('userMenu');
+    let allMenus = JSON.parse(sessionStorage.getItem('userMenu'));
     let menuUrls = [];
     console.log("█ allMenus ►►►",  allMenus);
     allMenus.forEach((menu) => {
