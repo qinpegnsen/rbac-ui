@@ -6,7 +6,9 @@ import {HomePComponent} from './home-p/home-p.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {TableComponent} from './table/table.component';
 import { RightpageComponent } from './rightpage/rightpage.component';
-
+import {OrgService} from './server/org.service';
+import {TreeModule} from 'ng2-tree';
+import { TreeComponent } from './tree/tree.component';
 
 const appChildRoutes: Routes = [
   {path: 'rightpage', component: RightpageComponent},
@@ -19,6 +21,7 @@ const routes:Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    TreeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -26,7 +29,9 @@ const routes:Routes = [
     TableComponent,
     NavigationComponent,
     HomePComponent,
-    RightpageComponent
-  ]
+    RightpageComponent,
+    TreeComponent
+  ],
+  providers: [OrgService]
 })
 export class OrganizationModule { }

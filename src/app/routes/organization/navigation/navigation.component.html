@@ -26,10 +26,10 @@
       </div>
       <div class="">
         <div class="dragDropDept">
-          <div class="c_drag_drop_dept_item" *ngFor="let v of list_data">
+          <div class="c_drag_drop_dept_item" *ngFor="let v of list">
             <div class="name">
-              <span>{{v.name}}</span>
-              <span>&nbsp;（</span><span>{{v.memberCount}}</span><span>人）</span>
+              <span>{{v.deptName}}</span>
+              <!--<span>&nbsp;（</span><span>{{v.memberCount}}</span><span>人）</span>-->
             </div>
             <div class="number">
               <i class="fa fa-chevron-right" [innerHTML]="''" style="color:#b9babc;"></i>
@@ -40,7 +40,7 @@
     </div>
     <div>
       <div class="c_title_1">
-        <i class="fa fa-user-plus" [innerHTML]="''"></i>
+        <i class="fa fa-user-plus" [innerHTML]="''"></i>
         <span>部门人员</span>
       </div>
     </div>

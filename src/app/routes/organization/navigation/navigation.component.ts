@@ -12,12 +12,13 @@ export class NavigationComponent implements OnInit {
   // path: any;
   _path: Array<any>;
   @Input() set path(value) {
-    console.log(value);
+    //console.log(value);
     this._path = value;
   }
   get path() {
     return this._path;
   }
+  list: any;
   @Input() list_data: Array<any>;
   constructor(private store: Store<AppStore>) {
     // this.store.select('path').subscribe((res) => this.path = res);
@@ -25,6 +26,10 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.store.select('path').subscribe((res) => this.path = res as Array<any>);
+    this.store.select('list').subscribe((res) => {
+      //console.log(res);
+      this.list = res;
+    });
     // this.path = this.store.select('path');
   }
 

@@ -11,10 +11,11 @@
                  (click)="toggle(true)"
       ></th>
       <th>姓名</th>
-      <th>职位</th>
-      <th>工号</th>
       <th>手机号</th>
-      <th>邮箱</th>
+      <th>身份证</th>
+      <th>登录账号</th>
+      <th>修改密码</th>
+      <th>其他操作</th>
     </tr>
     </thead>
     <tbody>
@@ -23,12 +24,61 @@
                  [checked]="check_status[i]"
                  name="test"
                  (click)="check_status[i]=!check_status[i];toggle()"></td>
-      <td>{{v.name}}</td>
-      <td>{{v.extNumber}}</td>
-      <td>{{v.jobNumber}}</td>
-      <td>{{v.mobile}}</td>
-      <td>{{v.email}}</td>
+      <td>{{v.staffName}}</td>
+      <td>{{v.phone}}</td>
+      <td>{{v.idcard}}</td>
+      <td>{{v.loginCode}}</td>
+      <td>
+        <button class="btn btn-default fa fa-pencil btn-xs" title="修改密码"></button>
+      </td>
+      <td>
+
+        <app-buttons [config]="option" *ngFor="let option of tableButtonConfig"></app-buttons>
+        <app-buttons [config]="option" *ngFor="let option of buttonConfig"></app-buttons>
+      </td>
     </tr>
     </tbody>
   </table>
+  <!--<table class="table table-striped" #dataTable2="rzhDataTable" [rzhData]="menuData" (pageChange)="pageMenus($event)">
+    <thead>
+    <tr>
+      <th class="w20 text-center">
+        <rzhDefaultSorter by="staffName">姓名</rzhDefaultSorter>
+      </th>
+      <th class="w15 text-center">
+        <rzhDefaultSorter by="icon">手机号</rzhDefaultSorter>
+      </th>
+      <th class="w15 text-center">
+        <rzhDefaultSorter by="level">身份证号</rzhDefaultSorter>
+      </th>
+      <th class="w15 text-center">
+        <rzhDefaultSorter by="note">登录账号</rzhDefaultSorter>
+      </th>
+      <th class="w10 text-center">
+        <rzhDefaultSorter by="order">修改密码</rzhDefaultSorter>
+      </th>
+      <th class="w10 text-center">
+        <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
+      </th>
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center">
+      <td>{{page.pageName}}</td>
+      <td>{{page.icon}}</td>
+      <td>{{page.level}}</td>
+      <td>{{page.level}}</td>
+      <td>
+        <button class="btn btn-default fa fa-pencil btn-xs"  title="修改密码"></button>
+      </td>
+      <td>
+
+        <app-buttons *ngFor="let option of tableButtonConfig4"></app-buttons>
+
+        <app-buttons *ngFor="let option of buttonConfig"></app-buttons>
+      </td>
+    </tr>
+    </tbody>
+  </table>-->
 </div>

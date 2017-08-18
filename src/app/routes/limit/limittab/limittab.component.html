@@ -51,7 +51,7 @@
 
       </thead>
       <tbody>
-      <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center" (click)="onSelecttable(menu.menuCode)">
+      <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center" (click)="onSelecttable(page.pageCode)">
         <td>{{x+1}}</td>
         <td>{{page.pageName}}</td>
         <td>{{page.icon}}</td>

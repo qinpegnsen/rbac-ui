@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AppStore} from "../store/app-store";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
+import {OrgService} from '../server/org.service';
+declare var $: any;
 
 const path_arr = [];
 @Component({
@@ -11,27 +13,69 @@ const path_arr = [];
 })
 export class HomePComponent implements OnInit {
   public isActive = true;
-  public tree_root: any;
-  public tree_tow: any;
-  public tree_s: any;
-  public path_arr: Array<any>;
-  public tree_status: Array<any>;
-  public obj: any;
+  public tree_root:any;
+  public tree_tow:any;
+  public tree_s:any;
+  public path_arr:Array<any>;
+  public tree_status:Array<any>;
+  public obj:any;
   public path = [];
-  public active_tree_cell: string;
-  public orgEmpExtVOList: Array<any>;
-  public list_data: Array<any>;
-  constructor( private store: Store<AppStore>) {
+  public active_tree_cell:string;
+  public orgEmpExtVOList:Array<any>;
+  public list_data:Array<any>;
+  public result;
+  public pre_arr;
+  constructor(private store:Store<AppStore>,
+              private org:OrgService){
+    console.log($);
   }
 
-  toggle(name) {
+  /*toggle(name) {
     this.active_tree_cell = name;
     this.forPath(name, this.obj.root);
-    /*this.store.select('path').subscribe((res) => {
-      console.log(res);});*/
-  }
+    /!*this.store.select('path').subscribe((res) => {
+     console.log(res);});*!/
+  }*/
+  menu = [
+    {
+      title: '郑州三楂红科技有限公司',
+      index: 0,
+      items: [
+        {
+          index: 1,
+          title: '1.1',
+          items: [
+            {
+              name: '1.1.1',
+              title: 'xxx1',
+              items: [
+                {
+                  name: '1.1.2',
+                  title: 'xxx2',
+                  items: [
+                    {
+                      name: '1.1.3',
+                      title: 'xxx3',
+                      items: [
 
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          index: 1,
+          title: '1.2',
+          items: []
+        }
+      ]
+    }
+  ];
   ngOnInit() {
+    this.getOrgList('/dept/list');
     this.tree_status = [];
     this.tree_root = {
       canManage: true,
@@ -159,12 +203,12 @@ export class HomePComponent implements OnInit {
     ];
 
     this.list_data = [this.tree_root];
-    this.orgEmpExtVOList = [
-      {email: '', extNumber: '', name: '伯缘', mobile: '13783597063', jobNumber: ''},
-      {email: '', extNumber: '', name: '鄂总', mobile: '17719878068', jobNumber: ''},
-      {email: '', extNumber: '', name: '秦总', mobile: '18635020813', jobNumber: ''}
-    ];
+    this.orgEmpExtVOList = [];
     this.active_tree_cell = this.tree_root.name;
+
+    this.store.select('staff').subscribe((item) => {
+      this.orgEmpExtVOList = item as Array<any>;
+    })
 
     // 默认值
     this.store.dispatch({type: 'PATH_ADD', payload: [this.tree_root.name]});
@@ -200,22 +244,70 @@ export class HomePComponent implements OnInit {
       this.tree_status.push(true);
     }
   }
+
+  getOrgList(url:string) {
+    this.org.getOrgList(url).subscribe((res) => {
+      const {result, pre_arr} = this.forDate(res);
+      this.result = result;
+      this.pre_arr = pre_arr;
+      //console.log(result);
+      //console.log(pre_arr);
+    })
+  }
+  forDate(data: any): {result: any, pre_arr: any} {
+    const result = [];
+    const org_arr = {};
+    data.forEach((item) => {
+      for (let a in item) {
+        if (a === 'deptCode') {
+          org_arr[item[a]] = item;
+        }
+      }
+    });
+    let i = 0;
+    const pre_arr = {};
+    data.forEach((item) => {
+      for (let a in item) {
+        if (a === 'preCode') {
+          //console.log(item[a]);
+          // 获取顶级
+          if (item[a] === null) {
+            result[i] = item;
+            i ++;
+          } else {
+            for (let key in org_arr) {
+              if (item[a] === key) {
+                if (pre_arr[key]) { // 如果重复
+                  pre_arr[key].push(item);
+                } else {
+                  pre_arr[key] = [];
+                  pre_arr[key].push(item);
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+    return {result: result, pre_arr: pre_arr}
+  }
   // 递归解析树的路径
-  forPath(target: string, obj) {
+ /* forPath(target:string, obj) {
     for (let a in obj) {
       if (a == "name") {
         this.path[obj.index] = obj[a];
         if (obj[a] === target) {
           this.path.length = obj.index + 1;
           const arr = [];
-          for (let i = 0; i < this.path.length; i ++) {
+          for (let i = 0; i < this.path.length; i++) {
             arr.push(this.path[i]);
           }
           this.store.dispatch({type: 'PATH_ADD', payload: arr});
         }
-      } else if (typeof (obj[a]) == "object"){
+      } else if (typeof (obj[a]) == "object") {
         this.forPath(target, obj[a]);
       }
     }
-  }
+  }*/
+
 }

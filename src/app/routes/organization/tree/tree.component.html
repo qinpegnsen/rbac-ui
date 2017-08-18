@@ -1,0 +1,30 @@
+<ul>
+  <li *ngFor="let item of result; let i = index">
+    <div (click)="itemClick(item.deptName,item.deptCode)"
+         style="position:relative;width:100%;"
+         class="cell"
+         [ngClass]="{'active':active_tree_cell === item.deptName}"
+    >
+      <a class="" href="javascript:void(0)">
+        <span
+          (click)="tree_status[i] = pre_arr[item.deptCode] ? !tree_status[i] : tree_status[i]"
+          *ngIf="pre_arr && pre_arr[item.deptCode]"
+          class="fa"
+          [ngClass]="{
+                        'fa-caret-right':!tree_status[i],
+                         'fa-caret-down': tree_status[i]
+          }"
+          [innerHTML]="''"
+          style="font-size:18px;">
+        </span>
+        <span class="fa " [ngClass]="{'fa-folder': true, 'fa-sitemap': false}"></span>
+        <span
+          [ngStyle]="{color: active_tree_cell === item.deptName ? '#fff': ''}">
+                        {{item.deptName}}</span>
+      </a>
+    </div>
+    <app-tree *ngIf="tree_status[i] && pre_arr[item.deptCode]" [result]="pre_arr[item.deptCode]" [pre_arr]="pre_arr"
+    >
+    </app-tree>
+  </li>
+</ul>

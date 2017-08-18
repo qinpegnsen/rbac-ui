@@ -37,5 +37,26 @@ export function pathReducer(state: Array<any>, action: Action) {
     default:
       return state;
   }
+}export function listReducer(state: Array<any>, action: Action) {
+  switch (action.type) {
+    case 'LIST_ADD':
+      return action.payload;
+    default:
+      return state;
+  }
+}export function staffReducer(state: Array<any>, action: Action) {
+  switch (action.type) {
+    case 'STAFF_ADD':
+      return action.payload;
+    default:
+      return state;
+  }
+}export function activeReducer(state: string, action: Action) {
+  switch (action.type) {
+    case 'ACTIVE':
+      return action.payload;
+    default:
+      return state;
+  }
 }
 
