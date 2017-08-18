@@ -1,0 +1,43 @@
+<div class="content-heading mb-lg">修改密码</div>
+<div class="panel panel-default p-lg clearfix">
+  <div class="panel-body col-sm-8 m-lg">
+    <form class="form-validate form-horizontal" #updatePwd="ngForm" >
+      <fieldset class="b0">
+        <div class="form-group">
+          <label class="col-sm-3 control-label">管理员姓名</label>
+          <div class="col-sm-9">
+            <input class="form-control" readonly [value]="upPwd.mgrName"/>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="b0" *ngIf="!superAdmin">
+        <div class="form-group">
+          <label class="col-sm-3 control-label"><i>*</i>老密码</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" name="oldpwd" required [(ngModel)]="upPwd.oldpwd"
+                   #oldpwd="ngModel" placeholder="请输入老密码"/>
+          </div>
+        </div>
+        <div [hidden]="oldpwd.valid || oldpwd.pristine"
+             class="col-sm-9 pull-right text-danger">
+          请输入老密码
+        </div>
+      </fieldset>
+      <fieldset class="b0">
+        <div class="form-group">
+          <label class="col-sm-3 control-label"><i>*</i>新密码</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" name="newpwd" required [(ngModel)]="upPwd.newpwd"
+                   #newpwd="ngModel" placeholder="请输入新密码"/>
+          </div>
+        </div>
+        <div [hidden]="newpwd.valid || newpwd.pristine"
+             class="col-sm-9 pull-right text-danger">
+          请输入新密码
+        </div>
+      </fieldset>
+      <div class="text-center"><button class="btn btn-danger" [disabled]="!updatePwd.form.valid" (click)="update()">确定</button></div>
+    </form>
+  </div>
+</div>
+
