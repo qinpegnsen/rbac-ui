@@ -19,20 +19,18 @@ export class SettingsService {
     let sessionInfo = sessionStorage.getItem('loginInfo');
     let loginInfo: any = JSON.parse(sessionInfo);
     console.log("█ loginInfo ►►►",  loginInfo);
+    let name = '游客', job = '无';
     if (!isNullOrUndefined(loginInfo)) {
-      let name, job ;
-      name = loginInfo.mgrName;
-      job = this.getUserJob(loginInfo);
-      if (isNullOrUndefined(name)){
-        name = '游客'
-      }else if(isNullOrUndefined(job)){
-        job = '无'
+      if (!isNullOrUndefined(name)){
+        name = loginInfo.mgrName;
+      }else if(!isNullOrUndefined(job)){
+        job = this.getUserJob(loginInfo);
       }
-      this.user = {
-        name: name,
-        job: job,
-        picture: 'assets/img/user/user.png'
-      };
+    };
+    this.user = {
+      name: name,
+      job: job,
+      picture: 'assets/img/user/user.png'
     };
 
 

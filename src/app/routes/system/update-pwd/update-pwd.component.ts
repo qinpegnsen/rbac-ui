@@ -11,9 +11,7 @@ const swal = require('sweetalert');
 })
 export class UpdatePwdComponent implements OnInit {
   private superAdmin: boolean = false;
-  private upPwd = {
-    mgrName: '123'
-  }
+  private upPwd = {}
 
   constructor(private ajax: AjaxService, public settings: SettingsService) {
   }
