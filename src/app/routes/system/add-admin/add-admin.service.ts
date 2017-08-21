@@ -128,6 +128,9 @@ export class AddAdminService {
    * @returns {any}
      */
   getRoleAndGroupList(sysCode,mgrCode:string,orgCode:string){
+    console.log("█ mgrCode ►►►", mgrCode );
+    console.log("█ orgCode ►►►", orgCode );
+
     let result;
     this.ajax.post({
       url: '/orgManager/rolesList',
@@ -139,7 +142,7 @@ export class AddAdminService {
       },
       success: (res) => {
         result = res;
-        //console.log("█ getRoleAndGroupList ►►►",  res);
+        console.log("█ getRoleAndGroupList ►►►",  res);
       },
       error: (res) => {
         console.log("get getRoleAndGroupList error");

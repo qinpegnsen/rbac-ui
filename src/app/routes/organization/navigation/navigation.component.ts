@@ -8,29 +8,18 @@ import {Store} from "@ngrx/store";
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-
-  // path: any;
-  _path: Array<any>;
+  private _path: Array<any>;
   @Input() set path(value) {
-    //console.log(value);
     this._path = value;
   }
   get path() {
     return this._path;
   }
-  list: any;
-  @Input() list_data: Array<any>;
-  constructor(private store: Store<AppStore>) {
-    // this.store.select('path').subscribe((res) => this.path = res);
-  }
-
+  public list: any;
+  constructor(private store: Store<AppStore>) {}
   ngOnInit() {
     this.store.select('path').subscribe((res) => this.path = res as Array<any>);
-    this.store.select('list').subscribe((res) => {
-      //console.log(res);
-      this.list = res;
-    });
-    // this.path = this.store.select('path');
+    this.store.select('list').subscribe((res) => this.list = res);
   }
 
 }

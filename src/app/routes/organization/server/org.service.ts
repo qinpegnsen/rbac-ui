@@ -36,7 +36,6 @@ export class OrgService {
     const options = new RequestOptions({headers: header});*/
     return this.http.get(url)
       .map((res) => {
-        console.log(res);
         return res.json();
       })
       .catch(this.handleError);

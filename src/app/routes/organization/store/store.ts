@@ -59,4 +59,27 @@ export function pathReducer(state: Array<any>, action: Action) {
       return state;
   }
 }
+export function queryReducer(state: boolean = false, action: Action) {
+  switch (action.type) {
+    case 'QUERY':
+      return action.payload;
+    default:
+      return state;
+  }
+}export function addStaffReducer(state: Array<{id: string, deptCode: string}> = [{id: '', deptCode: ''}], action: Action) {
+  switch (action.type) {
+    case 'ADD_STAFF':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+export function upDataReducer(state: boolean = false, action: Action) {
+  switch (action.type) {
+    case 'LIST':
+      return action.payload;
+    default:
+      return state;
+  }
+}
 

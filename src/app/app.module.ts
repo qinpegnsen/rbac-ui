@@ -13,7 +13,15 @@ import {SharedModule} from './shared/shared.module';
 import {RoutesModule} from './routes/routes.module';
 import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
 import { OpaqueToken } from '@angular/core';
-import {pathReducer, listReducer, staffReducer, activeReducer} from './routes/organization/store/store';
+import {
+  pathReducer,
+  listReducer,
+  staffReducer,
+  activeReducer,
+  queryReducer,
+  addStaffReducer,
+  upDataReducer
+} from './routes/organization/store/store';
 import {StoreModule} from '@ngrx/store';
 
 // https://github.com/ocombe/ng2-translate/issues/218
@@ -41,7 +49,10 @@ export function createTranslateLoader(http: Http) {
       path: pathReducer,
       list: listReducer,
       staff: staffReducer,
-      active: activeReducer
+      active: activeReducer,
+      query: queryReducer,
+      addStaff: addStaffReducer,
+      updata: upDataReducer
     })
   ],
   providers: [

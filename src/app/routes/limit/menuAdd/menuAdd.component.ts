@@ -73,7 +73,7 @@ export class MenuAddComponent implements OnInit {
         }
       },
       error: (data) => {
-        swal('获得暗码失败','','error');
+        //swal('获得暗码失败','','error');
       }
     });
 

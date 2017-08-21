@@ -1,84 +1,41 @@
 <div class="c_action_content">
   <div class="c_ding_btn c_ding_btn_primary c_ding_btn_xs" routerLink="rightpage" [queryParams]="{id:3}">添加成员</div>
   <div class="c_ding_btn c_ding_btn_xs" style="">调整位置</div>
-  <div class="c_ding_btn c_ding_btn_error c_ding_btn_xs">批量删除</div>
+  <div class="c_ding_btn c_ding_btn_error c_ding_btn_xs" (click)="delstaffs()">批量删除</div>
 </div>
 <div>
   <table class="table">
     <thead>
-    <tr>
-      <th><input type="checkbox" [checked]="top_check" name=""
-                 (click)="toggle(true)"
-      ></th>
-      <th>姓名</th>
-      <th>手机号</th>
-      <th>身份证</th>
-      <th>登录账号</th>
-      <th>修改密码</th>
-      <th>其他操作</th>
+    <tr (click)="delstaff(this)">
+      <th class="text-center"><input type="checkbox" [checked]="top_check" name=""
+                 (click)="toggle(true)"></th>
+      <th class="text-center">姓名</th>
+      <th class="text-center">手机号</th>
+      <th class="text-center">身份证</th>
+      <th class="text-center">登录账号</th>
+      <th class="text-center">修改密码</th>
+      <th class="text-center">其他操作</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let v of orgEmpExtVOList; let i = index">
+    <tr *ngFor="let v of orgEmpExtVOList; let i = index" class="text-center" (click)="delstaff(this)">
       <td><input type="checkbox"
                  [checked]="check_status[i]"
                  name="test"
-                 (click)="check_status[i]=!check_status[i];toggle()"></td>
+                 (click)="check_status[i] = !check_status[i];toggle()"></td>
       <td>{{v.staffName}}</td>
       <td>{{v.phone}}</td>
       <td>{{v.idcard}}</td>
       <td>{{v.loginCode}}</td>
       <td>
-        <button class="btn btn-default fa fa-pencil btn-xs" title="修改密码"></button>
+
+        <button class="btn btn-default fa fa-pencil btn-xs" title="修改密码" routerLink="rightpage" [queryParams]="{id:4,staffCode:v.staffCode}"></button>
       </td>
       <td>
-
-        <app-buttons [config]="option" *ngFor="let option of tableButtonConfig"></app-buttons>
-        <app-buttons [config]="option" *ngFor="let option of buttonConfig"></app-buttons>
+        <app-buttons [config]="option" *ngFor="let option of tableButtonConfig" routerLink="rightpage" [queryParams]="{id:5,staffCode:v.staffCode}"></app-buttons>
+        <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="rightpage" [queryParams]="{id:6,staffCode:v.staffCode}"></app-buttons>
       </td>
     </tr>
     </tbody>
   </table>
-  <!--<table class="table table-striped" #dataTable2="rzhDataTable" [rzhData]="menuData" (pageChange)="pageMenus($event)">
-    <thead>
-    <tr>
-      <th class="w20 text-center">
-        <rzhDefaultSorter by="staffName">姓名</rzhDefaultSorter>
-      </th>
-      <th class="w15 text-center">
-        <rzhDefaultSorter by="icon">手机号</rzhDefaultSorter>
-      </th>
-      <th class="w15 text-center">
-        <rzhDefaultSorter by="level">身份证号</rzhDefaultSorter>
-      </th>
-      <th class="w15 text-center">
-        <rzhDefaultSorter by="note">登录账号</rzhDefaultSorter>
-      </th>
-      <th class="w10 text-center">
-        <rzhDefaultSorter by="order">修改密码</rzhDefaultSorter>
-      </th>
-      <th class="w10 text-center">
-        <rzhDefaultSorter by="b">操作</rzhDefaultSorter>
-      </th>
-    </tr>
-
-    </thead>
-    <tbody>
-    <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center">
-      <td>{{page.pageName}}</td>
-      <td>{{page.icon}}</td>
-      <td>{{page.level}}</td>
-      <td>{{page.level}}</td>
-      <td>
-        <button class="btn btn-default fa fa-pencil btn-xs"  title="修改密码"></button>
-      </td>
-      <td>
-
-        <app-buttons *ngFor="let option of tableButtonConfig4"></app-buttons>
-
-        <app-buttons *ngFor="let option of buttonConfig"></app-buttons>
-      </td>
-    </tr>
-    </tbody>
-  </table>-->
 </div>

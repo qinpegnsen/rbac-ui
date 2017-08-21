@@ -159,7 +159,7 @@ export class AddAdminComponent implements OnInit {
    */
   private getMyRoleAndGroupList(){
     let myRolesAndGroup = this.addAdminService.getMyRoleAndGroupList(this.sysCode,this.admin['mgrCode'],this.admin['orgCode']).data;
-    //console.log("█ myRolesAndGroup ►►►",  myRolesAndGroup);
+    console.log("█ myRolesAndGroup ►►►",  myRolesAndGroup);
     let oldRolesArray = myRolesAndGroup.roleList;
     let oldRoleGroupArray = myRolesAndGroup.roleGroupList;
     let newRolesArray = [],newRoleGroupArray = [], obj = {};
@@ -221,6 +221,7 @@ export class AddAdminComponent implements OnInit {
     console.log('myNewRoleGroupArray',myNewRoleGroupArray)
     this.mySelectRoles.active = myNewRolesArray;
     this.mySelectGroup.active = myNewRoleGroupArray;
+
     this.Role = newRolesArray;
     this.Group = newRoleGroupArray;
   }
