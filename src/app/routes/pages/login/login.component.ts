@@ -6,7 +6,6 @@ import {SettingsService} from "../../../core/settings/settings.service";
 import {AjaxService} from "../../../core/services/ajax.service";
 import {MaskService} from "app/core/services/mask.service";
 import {MenuService} from "../../../core/menu/menu.service";
-import {RoleService} from "../../role/role/role.service";
 
 declare var $: any;
 @Component({
