@@ -17,10 +17,11 @@ export class LoginComponent implements OnInit {
   public userName: string;
   public password: string;
   public authMsg: string;
+  public sysName: string;
 
   constructor(private ajax: AjaxService, private maskservice: MaskService, private localtion: Location,
               private router: Router,private setting:SettingsService,private myMenu:MenuService) {
-
+    this.sysName = setting.app.name;
   }
 
   ngOnInit() {
@@ -51,10 +52,8 @@ export class LoginComponent implements OnInit {
       // Components
       slide_links: 'blank',    // Individual links for each slide (Options: false, 'num', 'name', 'blank')
       slides: [    // Slideshow Images
-        {image: '/assets/login/img/backgrounds/1.jpg'}
-        // {image : '/assets/login/img/backgrounds/2.jpg'},
-        // {image : '/assets/login/img/backgrounds/3.jpg'},
-        // {image : '/assets/login/img/backgrounds/4.jpg'}
+        {image: '/assets/login/img/backgrounds/1.jpg'},
+        {image : '/assets/login/img/backgrounds/2.jpg'}
       ]
     });
   }
@@ -76,7 +75,6 @@ export class LoginComponent implements OnInit {
         if (result.success) {
           let user =  result.data;
           me.myMenu.addMenu(result.data.menuVOList);
-          console.log("█ user ►►►",  user);
 
           sessionStorage.setItem('loginInfo', JSON.stringify(user)); //用户信息存入session
           me.setting.user.name = user.mgrName,me.setting.user.job = me.setting.getUserJob(user); //修改user变量
