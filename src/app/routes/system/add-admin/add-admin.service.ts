@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {SettingsService} from "../../../core/settings/settings.service";
 import {isNullOrUndefined} from 'util';
+import {RoleService} from "../../role/role/role.service";
 const swal = require('sweetalert');
 
 @Injectable()
 export class AddAdminService {
 
-  constructor(private ajax: AjaxService, public settings: SettingsService) {
+  constructor(private ajax: AjaxService,public settings: SettingsService,private roleService: RoleService) {
   }
 
   /**
@@ -41,7 +42,7 @@ export class AddAdminService {
    * @param submitUrl
    * @param submitData
    */
-  submitRightPageData(submitUrl, submitData) {
+  submitRightPageData(submitUrl, submitData,edit?:boolean) {
     let me = this;
     me.ajax.post({
       url: submitUrl,
@@ -58,6 +59,10 @@ export class AddAdminService {
             timer: 2000, //关闭时间，单位：毫秒
             showConfirmButton: false  //不显示按钮
           });
+          if(edit){
+            let data=me.roleService.getSysList();//获取系统列表的数据
+            sessionStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
+          }
         } else {
           let errorMsg;
           if(isNullOrUndefined(res.data)){

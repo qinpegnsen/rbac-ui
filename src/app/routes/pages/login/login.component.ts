@@ -6,6 +6,7 @@ import {SettingsService} from "../../../core/settings/settings.service";
 import {AjaxService} from "../../../core/services/ajax.service";
 import {MaskService} from "app/core/services/mask.service";
 import {MenuService} from "../../../core/menu/menu.service";
+import {RoleService} from "../../role/role/role.service";
 
 declare var $: any;
 @Component({
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   public authMsg: string;
 
   constructor(private ajax: AjaxService, private maskservice: MaskService, private localtion: Location,
-              private router: Router,private setting:SettingsService,private myMenu:MenuService) {
+              private router: Router,private setting:SettingsService,private myMenu:MenuService,private roleService:RoleService) {
 
   }
 
@@ -79,6 +80,8 @@ export class LoginComponent implements OnInit {
           console.log("█ user ►►►",  user);
 
           sessionStorage.setItem('loginInfo', JSON.stringify(user)); //用户信息存入session
+          let data=me.roleService.getSysList();//获取系统列表的数据
+          sessionStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
           me.setting.user.name = user.mgrName,me.setting.user.job = me.setting.getUserJob(user); //修改user变量
           me.router.navigate(['/main/home'], {replaceUrl: true}); //路由跳转
         }

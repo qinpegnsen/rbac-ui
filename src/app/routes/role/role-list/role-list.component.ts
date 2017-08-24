@@ -2,6 +2,7 @@ import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {RolemanComponent} from "../roleman/roleman.component";
 import {ActivatedRoute} from "@angular/router";
+import {RoleService} from "../role/role.service";
 @Component({
   selector: 'app-role-list',
   templateUrl: './role-list.component.html',
@@ -20,7 +21,7 @@ export class RoleListComponent implements OnInit {
 
   public addrType;//获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
 
-  constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute) {
+  constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute,private roleService: RoleService) {
   }
 
   ngOnInit() {
@@ -31,21 +32,12 @@ export class RoleListComponent implements OnInit {
       title: '新增角色'
     };
     //系统列表的接口，以及设置初始化的sysCode，然后根据sysCode调用初始化的角色列表
-    this.ajax.get({
-      url: '/sys/list',
-      data: {
-        'sysName': ''
-      },
-      success: (data) => {
-        this.sysCode = data[0].sysCode;
-        this.sysName = data[0].sysName;
-        this.sysList = data;
 
-      },
-      error: (data) => {
-        console.log("sys/list  error");
-      }
-    });
+    let data=JSON.parse(sessionStorage.getItem('sysListData'));
+    this.sysCode = data[0].sysCode;
+    this.sysName = data[0].sysName;
+    this.sysList = data;
+
 
     //获取到路由传递过来的类型，从而在神龙的提交的时候加载刷新不同的页面
     this.addrType = this.routeInfo.snapshot.data[0]["type"];

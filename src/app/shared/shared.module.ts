@@ -40,6 +40,7 @@ import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
 import {SelectPageModule} from "./directives/selec-page/select-page.module";
 import {SelectPageComponent} from "./directives/selec-page/select-page/select-page.component";
 import {RouterGuardService} from "../core/routerGuard/router-guard.service";
+import {RoleService} from "../routes/role/role/role.service";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -73,7 +74,8 @@ import {RouterGuardService} from "../core/routerGuard/router-guard.service";
   ],
   providers: [
     ColorsService,
-    RouterGuardService
+    RouterGuardService,
+    RoleService
   ],
   declarations: [
     FlotDirective,
