@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AjaxService} from "../../../../core/services/ajax.service";
+import {isNullOrUndefined} from 'util';
+declare var $: any;
 
 @Component({
   selector: 'app-select-menu',
@@ -31,6 +33,16 @@ export class SelectMenuComponent implements OnInit {
   constructor(private ajax:AjaxService) { }
 
   ngOnInit() {
+    /**
+     * 点击区域选框外页面时，关闭选框
+     * @type {SelectAreaComponent}
+     * @private
+     */
+    let _this = this;
+    $('body').click(function (e) {
+      let event = e.target.attributes['class'];
+      if (isNullOrUndefined(event) || isNullOrUndefined(event.nodeValue) || event.nodeValue.indexOf("rzh-sel-city") <= 0) _this.show = false; //关闭选框
+    });
   }
   /**
    * 前台页面的聚焦事件，当聚焦的时候就会执行这个方法，然后调用下面获取菜单列表getselectMenu的方法
@@ -74,7 +86,10 @@ export class SelectMenuComponent implements OnInit {
       },
       success: (data) => {
         menuList = data.voList;
-        console.log(data)
+        if(data.totalRow==0){
+          this.show=false;
+        }
+
       },
       error: (data) => {
         console.log("error");

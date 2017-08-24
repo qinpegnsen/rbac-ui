@@ -29,7 +29,7 @@ export class LimitService {
         sysList = data;
         //若传入参数不为空，进行动态赋值
         if (!isNullOrUndefined(_this)) _this.sysList = data, _this.sysCode = _this.sysList[0].sysCode; //设置系统列表
-        if(async) _this.data = new Page(me.queryMenuList(1, 3, _this.sysCode)); //设置第一个系统列表下的权限信息
+        if(async) _this.data = new Page(me.queryMenuList(1, 4, _this.sysCode)); //设置第一个系统列表下的权限信息
       },
       error: (data) => {
         console.log("error");
@@ -37,7 +37,7 @@ export class LimitService {
     });
     return sysList;
   }
-  
+
   /**
    * 查询权限菜单列表
    * @param activePage 当前页

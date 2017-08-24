@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {AjaxService} from '../../../core/services/ajax.service';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
+import {AjaxService} from "../../../core/services/ajax.service";
 import {Page} from "../../../core/page/page";
 import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {isNull} from "util";
 import {ActivatedRoute} from "@angular/router";
-import {Router} from '@angular/router';
 import {RolemanComponent} from "../roleman/roleman.component";
 const swal = require('sweetalert');
 @Component({
@@ -44,6 +43,10 @@ export class RoleComponent implements OnInit {
   //分页用到得data
   private data: Page = new Page();
 
+  //把当前的页码信息发射出去，刷新的时候用到
+  @Output()
+  getRoleGroupPageInfo=new EventEmitter();
+
   //获取子组件RolemanComponent的实例，才可以调用它的方法,局部刷新用的
   @ViewChild(RolemanComponent)
   rolemanComponent: RolemanComponent;
@@ -51,7 +54,7 @@ export class RoleComponent implements OnInit {
   public addrType;//获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
 
 
-  constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute, private router: Router) {
+  constructor(private ajax: AjaxService, private routeInfo: ActivatedRoute) {
   }
   /**
    * 初始化的时候获取 系统列表的接口 和 机构的接口
@@ -70,10 +73,11 @@ export class RoleComponent implements OnInit {
       },
       success: (data) => {
         this.sysCode = data[0].sysCode;
+        this.sysName = data[0].sysName;
         this.sysList = data;
         this.queryRoleGroupDatas();
       },
-      error: (data) => {
+      error: () => {
         console.log("sys/list  error");
       }
     });
@@ -117,7 +121,8 @@ export class RoleComponent implements OnInit {
 
   /**
    * 系统发生变化的时候，获取到当前的系统编码，然后在刷新列表
-   * @param sys
+   * @param sysCode
+   * @param sysName
    */
   onSelectSys(sysCode,sysName): void {
     this.sysCode = sysCode;
@@ -126,10 +131,12 @@ export class RoleComponent implements OnInit {
   }
 
   /**
- * 角色组列表分页
+ * 角色组列表分页,点击分页的时候执行的事件
  * @param event
+ *  把当前的页码信息发射出去，刷新用的
  */
 public queryRoleGroupDatas(event?: PageEvent) {
+  this.getRoleGroupPageInfo.emit(event);//把当前的页码信息发射出去，刷新用的
   let me = this, activePage = 1;
   if (typeof event !== "undefined") activePage = event.activePage;
   this.ajax.get({
@@ -137,15 +144,14 @@ public queryRoleGroupDatas(event?: PageEvent) {
     data: {
       curPage: activePage,
       sysCode: this.sysCode,
-      pageSize:1
+      pageSize:8
     },
     success: (data) => {
-
       if (!isNull(data)) {
         me.data = new Page(data);
       }
     },
-    error: (data) => {
+    error: () => {
       console.log('角色组列表分页错误');
     }
   });
@@ -186,15 +192,16 @@ public queryRoleGroupDatas(event?: PageEvent) {
         }
         swal(text,'','success');
       },
-      error: (data) => {
+      error: () => {
         swal('停启用连接数据库失败','','error');
       }
     });
   }
 
-  //
+  //执行这个方法的时候，刷新相应的页面
   refresh() {
-    this.rolemanComponent.queryRoleListDatasBySyscode();
+    this.rolemanComponent.queryRoleListDatasByroleGroupCode();
+    this.queryRoleGroupDatas()
   }
 }
 

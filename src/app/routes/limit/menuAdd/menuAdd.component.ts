@@ -26,6 +26,7 @@ export class MenuAddComponent implements OnInit {
   private menuList;//声明权限菜单列表
   private pageList;//声明页面菜单列表
   private menuCode;//声明保存上级的菜单编码
+  private pageCode;//声明保存上级的页面编码
   private preType;//选择上级类型
   private limitForm = {
     sysCode: '',
@@ -72,7 +73,7 @@ export class MenuAddComponent implements OnInit {
         }
       },
       error: (data) => {
-        swal('获得暗码失败','','error');
+        //swal('获得暗码失败','','error');
       }
     });
 
@@ -171,12 +172,13 @@ export class MenuAddComponent implements OnInit {
           'sysCode': _this.limitForm.sysCode,
           'optName': value.optName,
           'tacklUrl': value.tacklUrl,
-          'preCode': value.menuCode,
-          'preType': value.preType,
+          'menuCode': _this.menuCode,
           'ord': value.ord,
-          'remarks': value.remarks
+          'remarks': value.remarks,
+          'preType':this.preType
         },
         success: (res) => {
+          console.log(res)
           if (res.success) {
             _this.router.navigate(['/main/limit'], {replaceUrl: true});   //路由跳转
             swal('添加功能操作提交成功！', '','success');
@@ -249,7 +251,7 @@ export class MenuAddComponent implements OnInit {
        * @param status 状态码
        * @param headers 上传失败后服务器的返回的返回头
        */
-      _this.uploader.onErrorItem = function (item, response, status, headers) {
+       _this.uploader.onErrorItem = function (item, response, status, headers) {
         swal('上传失败', '文件上传失败！', 'error');
       };
       /**
@@ -337,8 +339,16 @@ export class MenuAddComponent implements OnInit {
     }
 
   }
-
+  //获取到当前的菜单的编码
+  //获取到子组件发射过来的菜单编码
   getMenuData(menuCode){
     this.menuCode=menuCode;
+    console.log(menuCode)
+  }
+
+  //获取到当前的页面的编码
+  getPageData(pageCode){
+    this.pageCode=pageCode;
+    console.log(this.pageCode)
   }
 }

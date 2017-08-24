@@ -1,16 +1,14 @@
-import { Component, ViewChild, OnInit,OnChanges,SimpleChanges } from '@angular/core';
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {SettingsService} from "../../../core/settings/settings.service";
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import {ActivatedRoute, Router} from "@angular/router";
 import {AddAdminService} from "./add-admin.service";
 import {AddorganService} from "../../organ/addorgan/addorgan.service";
-import {AdminsService} from "../admins/admins.service";
 import {RzhtoolsService} from "../../../core/services/rzhtools.service";
 import {PatternService} from "../../../core/forms/pattern.service";
 import {SysPlatformService} from "../sys-platform/sys-platform.service";
 import {AdminsComponent} from "../admins/admins.component";
 import {SelectComponent} from "ng2-select/index";
-import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
-import {CookieService} from "angular2-cookie/core";
+import {ImageCropperComponent} from "ng2-img-cropper";
 
 @Component({
   selector: 'app-add-admin',
@@ -18,9 +16,10 @@ import {CookieService} from "angular2-cookie/core";
   styleUrls: ['./add-admin.component.scss'],
   providers: [AddAdminService, AddorganService, RzhtoolsService,PatternService,SysPlatformService]
 })
-export class AddAdminComponent implements OnInit,OnChanges {
+export class AddAdminComponent implements OnInit {
   private pageTitle:string = '';
   private path:string;//当前路由
+  private superAdmin: boolean = false;//是否是系统超管
   private Admin:boolean = false;//添加/修改管理员
   private adminDetail:boolean = false;//查看详情
   private updatePwd:boolean = false;//修改密码
@@ -37,17 +36,13 @@ export class AddAdminComponent implements OnInit,OnChanges {
   @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
 
 
-  constructor(public settings:SettingsService, private adminsService:AdminsService,
-              private tools:RzhtoolsService,private router:Router,private cookieService:CookieService,
+  constructor(public settings:SettingsService, private router:Router,
               private route:ActivatedRoute,  private systemService:SysPlatformService,
-              private addOrgan:AddorganService,private patterns: PatternService,
+              private addOrgan:AddorganService, private patterns:PatternService,
               private adminsComponent:AdminsComponent,private addAdminService:AddAdminService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
-  ngOnChanges(changes:SimpleChanges):void {
-    console.log("█ changes ►►►", changes);
-  }
 
   @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
   // ng2Select
@@ -60,11 +55,11 @@ export class AddAdminComponent implements OnInit,OnChanges {
 
   public refreshValueRole(value: any): void {
     this.selectedRoleStr = this.itemsToString(value);
-    console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
+    // console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
   }
   public refreshValueGroup(value: any): void {
     this.selectedGroupStr = this.itemsToString(value);
-    console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
+    // console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
   public itemsToString(value:Array<any> = []):string {
     return value
@@ -92,16 +87,13 @@ export class AddAdminComponent implements OnInit,OnChanges {
   ngOnInit() {
     let me = this;
     me.admin['orgCode'] = '';
-    let userInfo = me.cookieService.getObject('loginInfo');
+    let userInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
     // console.log(userInfo);
-    me.userState = me.cookieService.getObject('loginInfo')['state'];
-    me.userOrgCode = me.cookieService.getObject('loginInfo')['orgCode'];
-    me.admin['orgCode'] = me.userOrgCode;
-    //当前用户不是系统超管时(那就是机构超管或普通管理员)，机构编码为登录者的机构编码
-    if(me.userOrgCode !== '#'){
-      me.admin['orgCode'] = me.userOrgCode;
+    if(userInfo['state'] === 'SUPER' && userInfo['orgCode'] === '#'){//当前用户是系统超管时,需要选择机构
+      this.superAdmin = true;
+    }else{//当前用户不是系统超管时(那就是机构超管或普通管理员)，机构编码为登录者的机构编码
+      me.admin['orgCode'] = userInfo['orgCode'];
     }
-
     //获取当前路由
     me.route.url.subscribe(urls => {
       me.path = urls[0].path;
@@ -167,7 +159,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
    */
   private getMyRoleAndGroupList(){
     let myRolesAndGroup = this.addAdminService.getMyRoleAndGroupList(this.sysCode,this.admin['mgrCode'],this.admin['orgCode']).data;
-    //console.log("█ myRolesAndGroup ►►►",  myRolesAndGroup);
+    console.log("█ myRolesAndGroup ►►►",  myRolesAndGroup);
     let oldRolesArray = myRolesAndGroup.roleList;
     let oldRoleGroupArray = myRolesAndGroup.roleGroupList;
     let newRolesArray = [],newRoleGroupArray = [], obj = {};
@@ -229,6 +221,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
     console.log('myNewRoleGroupArray',myNewRoleGroupArray)
     this.mySelectRoles.active = myNewRolesArray;
     this.mySelectGroup.active = myNewRoleGroupArray;
+
     this.Role = newRolesArray;
     this.Group = newRoleGroupArray;
   }
@@ -310,7 +303,7 @@ export class AddAdminComponent implements OnInit,OnChanges {
     }
     console.log("█ submitData ►►►", submitData);
     me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me.adminsComponent.queryDatas({event: "pageChange", activePage: 2, rowsOnPage: 2, dataLength: 4})//刷新父页面数据
+    me.adminsComponent.queryDatas()//刷新父页面数据
   }
 
   // 取消

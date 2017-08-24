@@ -1,0 +1,20 @@
+
+:host {
+  ul {
+    span {
+      color: #555555;
+    }
+    .fa-folder {
+      color: #aee4fa;
+    }
+    .cell {
+      height: 37px;
+      line-height: 37px;
+    }
+  }
+
+  .active {
+    background: #38adff;
+    color: #ffffff;
+  }
+}

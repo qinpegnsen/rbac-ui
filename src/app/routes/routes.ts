@@ -2,6 +2,8 @@ import {LayoutComponent} from '../layout/layout.component';
 import {LoginComponent} from './pages/login/login.component';
 import {PagesComponent} from './pages/pages/pages.component';
 import {ButtonDemoComponent} from "./buttons/buttonDemo/button-demo.component";
+import {RouterGuardService} from "../core/routerGuard/router-guard.service";
+import {OrganizationComponent} from "./organization/organization/organization.component";
 // 设置路由指向
 export const routes = [
   {
@@ -19,7 +21,8 @@ export const routes = [
       {path: 'limit', loadChildren: './limit/limit.module#LimitModule'},
       {path: 'operationpage', loadChildren: './operationpage/operationpage.module#OperationpageModule'},
       {path: 'navtree', loadChildren: './navtree/navtree.module#NavtreeModule'},
-      {path: 'buttons', component: ButtonDemoComponent}
+      {path: 'buttons', component: ButtonDemoComponent},
+      {path: 'organization',  loadChildren: './organization/organization.module#OrganizationModule'}
     ]
   },
   {

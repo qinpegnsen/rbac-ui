@@ -36,8 +36,10 @@ import {SelectAreaModule} from "./directives/select-area/select-area.module";
 import { StatePipe } from './pipe/state.pipe';
 import { AreaNamePipe } from './pipe/area-name.pipe';
 import { SelectModule } from 'ng2-select';
-import { SelectMenuComponent } from './directives/select-menu/select-menu/select-menu.component';
 import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
+import {SelectPageModule} from "./directives/selec-page/select-page.module";
+import {SelectPageComponent} from "./directives/selec-page/select-page/select-page.component";
+import {RouterGuardService} from "../core/routerGuard/router-guard.service";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -66,10 +68,12 @@ import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
     RzhButtonsModule,
     SelectAreaModule,
     SelectModule,
-    SelectMenuModule
+    SelectMenuModule,
+    SelectPageModule
   ],
   providers: [
-    ColorsService
+    ColorsService,
+    RouterGuardService
   ],
   declarations: [
     FlotDirective,
@@ -82,6 +86,7 @@ import {SelectMenuModule} from "./directives/select-menu/select-menu.module";
     JqcloudDirective,
     StatePipe,
     AreaNamePipe
+
   ],
   exports: [
     CommonModule,

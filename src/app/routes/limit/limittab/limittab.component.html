@@ -39,7 +39,7 @@
           <rzhDefaultSorter by="note">备注</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
-          <rzhDefaultSorter by="order">菜单顺序</rzhDefaultSorter>
+          <rzhDefaultSorter by="order">排序</rzhDefaultSorter>
         </th>
         <th class="w10 text-center">
           <rzhDefaultSorter by="a">是否启动</rzhDefaultSorter>
@@ -51,13 +51,13 @@
 
       </thead>
       <tbody>
-      <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center">
+      <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center" (click)="onSelecttable(page.pageCode)">
         <td>{{x+1}}</td>
         <td>{{page.pageName}}</td>
         <td>{{page.icon}}</td>
         <td>{{page.level}}</td>
         <td>{{page.note}}</td>
-        <td>{{page.order}}</td>
+        <td>{{page.ord}}</td>
         <td>
           <!--页面元素的是否启用-->
 
@@ -69,10 +69,10 @@
         </td>
         <td>
           <!--修改页面元素的列表-->
-          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1,pageCode:page.pageCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:1,pageCode:page.pageCode}" *ngFor="let option of tableButtonConfig4"></app-buttons>
           <!--页面元素子列表项的添加-->
           <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:8,sysCode:sysCode,pageCode:page.pageCode}"></app-buttons>
-          <span class="btn btn-default btn-xs" (click)="queryChildMenuList(page.pageCode,page.pageName,false)">
+          <span class="btn btn-default btn-xs" (click)="queryChildMenuList(page.pageCode,page.pageName,false)" *ngIf="page.hasSon=='Y'">
       <i class="fa fa-level-down"></i>
       下级菜单
     </span>
@@ -160,7 +160,7 @@
         </td>
         <td>
           <!--修改功能操作的列表-->
-          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:3,optCode:opt.optCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:3,optCode:opt.optCode}" *ngFor="let option of tableButtonConfig5"></app-buttons>
         </td>
       </tr>
       </tbody>
@@ -229,7 +229,7 @@
         </td>
         <td>
           <!--修改文件控制的列表-->
-          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:5,fileCode:file.fileCode}" *ngFor="let option of tableButtonConfig"></app-buttons>
+          <app-buttons [config]="option" routerLink="menuUpdate" [queryParams]="{id:5,fileCode:file.fileCode}" *ngFor="let option of tableButtonConfig6"></app-buttons>
           </td>
 
       </tr>

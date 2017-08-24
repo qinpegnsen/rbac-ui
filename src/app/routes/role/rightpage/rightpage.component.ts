@@ -93,7 +93,6 @@ export class RightpageComponent implements OnInit {
     } else {
       this.settings.closeRightPage();
       this.router.navigate(['/main/role/roleGroup']);
-      this.roleComponent.queryRoleGroupDatas();
       this.roleComponent.refresh()
     }
   }
@@ -150,6 +149,12 @@ export class RightpageComponent implements OnInit {
     this.limitCodes = limitCodes;
   }
 
+  /**
+   * 获取到当前点击的页码的数据
+   */
+  getRoleGroupPageInfo(pageData){
+    console.log(pageData)
+  }
   /**
    * 表单提交事件 根据不同的id，调取不同的接口
    * @param value 表单提交时时候的携带的数据

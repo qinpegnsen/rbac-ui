@@ -278,6 +278,53 @@
             </div>
           </div>
         </fieldset>
+
+        <!--<fieldset>
+          <p class="pull-right label label-info ng-binding ng-scope" *ngIf="uploader?.queue?.length">文件数: {{ uploader?.queue?.length }}</p>
+          <h4 class="page-header mt0 text-warning"><i class="icon-cloud-upload mr"></i>上传文件 </h4>
+          <table class="table">
+            <thead>
+            <tr>
+              <th width="50%">文件名</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of uploader.queue">
+              <td><strong>{{ item?.file?.name }}</strong></td>
+              <td nowrap>
+                <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                  <span class="icon-close mr"></span> 取消
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                  <span class="icon-trash mr"></span> 删除
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div>
+            <div>
+              <i class="icon-clock mr5"></i>进度:
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+              </div>
+            </div>
+            <div for="file1" class="file-upload pull-left mr5">
+              <button type="button" class="btn btn-info btn-s"><i class="icon-cloud-upload mr"></i>选择文件</button>
+              &lt;!&ndash;多选&ndash;&gt;
+              &lt;!&ndash;<input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple/>&ndash;&gt;
+              <input id="file1" type="file" ng2FileSelect [uploader]="uploader"/>
+            </div>
+            <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+              <span class="icon-close mr"></span>全部取消
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+              <span class="icon-trash mr"></span>全部删除
+            </button>
+          </div>
+        </fieldset>-->
+
       </div>
       <!--按钮的操作begonia-->
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">

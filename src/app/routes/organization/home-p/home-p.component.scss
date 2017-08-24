@@ -1,0 +1,90 @@
+:host{
+  background: #e7e8eb;
+  display: block;
+  min-height: 100%;
+  .container{
+    .row{
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+    }
+  }
+  .right-content{
+    flex: 1;
+  }
+  .home-p{
+    padding-top: 20px;
+    .left-tree{
+      background: #f4f6f8;
+    }
+    .right-content{
+      background: #ffffff;
+      padding: 27px;
+    }
+    .search{
+      padding: 0 0 22px 0;
+      .form-group {
+        margin: 0;
+        position: relative;
+        span{
+          position: absolute;
+          top: 50%;
+          font-size: 18px;
+          left: 10px;
+          color: #949494;
+        }
+        input{
+          padding-left: 35px;
+        }
+      }
+    }
+    .tab{
+      div{
+        height: 36px;
+        line-height: 36px;
+        width: 50%;
+        float: left;
+        text-align: center;
+        &.tab-left{
+          border-radius: 7px 0 0 7px;
+        }
+        &.tab-right{
+          border-radius: 0 7px 7px 0;
+        }
+      }
+    }
+    .tree{
+      margin-top: 12px;
+      >ul{
+        margin: 0;
+        padding: 0;
+        span{
+          color: #555555;
+        }
+        .fa-folder{
+          color: #aee4fa;
+        }
+      }
+      .cell{
+        height: 37px;
+        line-height: 37px;
+      }
+    }
+
+  }
+}
+.active{
+  background: #38adff;
+  color: #ffffff;
+}
+.un-active{
+  background: #e7eaef;
+  color: #000;
+}
+.un-active:hover{
+  background: #dddddd;
+}
+.cell:hover{
+  background: #dddddd;
+}

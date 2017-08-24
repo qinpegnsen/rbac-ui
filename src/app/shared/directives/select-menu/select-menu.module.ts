@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SelectMenuComponent} from "./select-menu/select-menu.component";
-
+import {FormsModule} from "@angular/forms";
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   declarations: []
 })

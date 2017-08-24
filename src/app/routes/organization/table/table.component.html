@@ -1,0 +1,41 @@
+<div class="c_action_content">
+  <div class="c_ding_btn c_ding_btn_primary c_ding_btn_xs" routerLink="rightpage" [queryParams]="{id:3}">添加成员</div>
+  <!--<div class="c_ding_btn c_ding_btn_xs" style="">调整位置</div>-->
+  <div class="c_ding_btn c_ding_btn_error c_ding_btn_xs" (click)="delstaffs()">批量删除</div>
+</div>
+<div>
+  <table class="table">
+    <thead>
+    <tr (click)="delstaff(this)">
+      <th class="text-center"><input type="checkbox" [checked]="top_check" name=""
+                 (click)="toggle(true)"></th>
+      <th class="text-center">姓名</th>
+      <th class="text-center">手机号</th>
+      <th class="text-center">身份证</th>
+      <th class="text-center">登录账号</th>
+      <th class="text-center">修改密码</th>
+      <th class="text-center">其他操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let v of orgEmpExtVOList; let i = index" class="text-center" (click)="delstaff(this)">
+      <td><input type="checkbox"
+                 [checked]="check_status[i]"
+                 name="test"
+                 (click)="check_status[i] = !check_status[i];toggle()"></td>
+      <td>{{v.staffName}}</td>
+      <td>{{v.phone}}</td>
+      <td>{{v.idcard}}</td>
+      <td>{{v.loginCode}}</td>
+      <td>
+
+        <button class="btn btn-default fa fa-pencil btn-xs" title="修改密码" routerLink="rightpage" [queryParams]="{id:4,staffCode:v.staffCode}"></button>
+      </td>
+      <td>
+        <app-buttons [config]="option" *ngFor="let option of tableButtonConfig" routerLink="rightpage" [queryParams]="{id:5,staffCode:v.staffCode}"></app-buttons>
+        <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="rightpage" [queryParams]="{id:6,staffCode:v.staffCode}"></app-buttons>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

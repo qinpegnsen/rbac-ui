@@ -17,7 +17,7 @@ const PROXY_CONFIG = [
       "/sys",
       "/res"
     ],
-    target: "http://192.168.10.110:8082",   //拦截 context配置路径，经过此地址
+    target: "http://192.168.10.178:8082",   //拦截 context配置路径，经过此地址
     secure: false
   },
   {

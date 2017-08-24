@@ -62,7 +62,7 @@
         <td>{{organ.tel}}</td>
         <td>{{organ.areaCode | areaName}}</td>
         <td>{{organ.type | rzhState:'1007'}}
-          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN'"
+          <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN' && organ.type != 'SUPER'"
                   (click)="updateType(organ.orgCode)" title="修改"></button>
         </td>
         <td>{{organ.state | rzhState:'1008'}}</td>
@@ -82,7 +82,9 @@
           <div *ngIf="organ.state=='OPEN'">
             <app-buttons [config]="option" (callback)="option.callback($event,organ.orgCode)"
                          *ngFor="let option of buttonConfig"></app-buttons>
+            <span class="btn btn-danger btn-xs" routerLink="/main/organization"><i class="fa fa-credit-card mr5"></i>管理组织</span>
           </div>
+
         </td>
       </tr>
       </tbody>
