@@ -21,9 +21,9 @@ export class SettingsService {
     console.log("█ loginInfo ►►►",  loginInfo);
     let name = '游客', job = '无';
     if (!isNullOrUndefined(loginInfo)) {
-      if (!isNullOrUndefined(name)){
+      if (!isNullOrUndefined(loginInfo.mgrName)){
         name = loginInfo.mgrName;
-      }else if(!isNullOrUndefined(job)){
+      }else if(!isNullOrUndefined(loginInfo.state)){
         job = this.getUserJob(loginInfo);
       }
     };
