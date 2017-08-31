@@ -37,7 +37,7 @@ export class SettingsService {
     // App Settings
     // -----------------------------------
     this.app = {
-      name: '爱馨信息科技-系统权限管理平台',
+      name: '三楂红科技-系统权限管理平台',
       description: '系统权限管理平台',
       year: ((new Date()).getFullYear())
     };

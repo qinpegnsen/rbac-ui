@@ -6,6 +6,7 @@ import {SettingsService} from "../../../core/settings/settings.service";
 import {AjaxService} from "../../../core/services/ajax.service";
 import {MaskService} from "app/core/services/mask.service";
 import {MenuService} from "../../../core/menu/menu.service";
+import {RoleService} from "../../role/role/role.service";
 
 declare var $: any;
 @Component({
@@ -17,10 +18,11 @@ export class LoginComponent implements OnInit {
   public userName: string;
   public password: string;
   public authMsg: string;
+  public sysName: string;
 
   constructor(private ajax: AjaxService, private maskservice: MaskService, private localtion: Location,
-              private router: Router,private setting:SettingsService,private myMenu:MenuService) {
-
+              private router: Router,private setting:SettingsService,private myMenu:MenuService,private roleService:RoleService) {
+    this.sysName = setting.app.name;
   }
 
   ngOnInit() {
@@ -51,10 +53,10 @@ export class LoginComponent implements OnInit {
       // Components
       slide_links: 'blank',    // Individual links for each slide (Options: false, 'num', 'name', 'blank')
       slides: [    // Slideshow Images
-        {image: '/assets/login/img/backgrounds/1.jpg'}
-        // {image : '/assets/login/img/backgrounds/2.jpg'},
-        // {image : '/assets/login/img/backgrounds/3.jpg'},
-        // {image : '/assets/login/img/backgrounds/4.jpg'}
+        {image: '/assets/login/img/backgrounds/1.jpg'},
+        {image : '/assets/login/img/backgrounds/2.png'},
+        {image : '/assets/login/img/backgrounds/3.png'},
+        {image : '/assets/login/img/backgrounds/4.jpg'}
       ]
     });
   }
@@ -76,9 +78,10 @@ export class LoginComponent implements OnInit {
         if (result.success) {
           let user =  result.data;
           me.myMenu.addMenu(result.data.menuVOList);
-          console.log("█ user ►►►",  user);
 
           sessionStorage.setItem('loginInfo', JSON.stringify(user)); //用户信息存入session
+          let data=me.roleService.getSysList();//获取系统列表的数据
+          sessionStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
           me.setting.user.name = user.mgrName,me.setting.user.job = me.setting.getUserJob(user); //修改user变量
           me.router.navigate(['/main/home'], {replaceUrl: true}); //路由跳转
         }

@@ -9,6 +9,7 @@ import { BingRoleComponent } from './bing-role/bing-role.component';
 import { SelectModule } from 'ng2-select';
 import { DisAuthComponent } from './dis-auth/dis-auth.component';
 import { RoleListComponent } from './role-list/role-list.component';
+import {RoleService} from "./role/role.service";
 
 
 
@@ -21,6 +22,7 @@ const appChildRoutes: Routes = [
 
 // 父路由，用于页面嵌套显示
 const routes: Routes = [
+  {path: '', redirectTo: 'roleGroup', pathMatch: 'full'},
   {path: 'roleGroup', component: RoleComponent,data:[{type:'roleGroup'}] ,children: appChildRoutes},
   {path: 'roleList', component: RoleListComponent,data:[{type:'roleList'}], children: appChildRoutes},
 ];
@@ -33,6 +35,6 @@ const routes: Routes = [
     SelectModule
   ],
   declarations: [RoleComponent,RightpageComponent, RolemanComponent, BingRoleComponent, DisAuthComponent, RoleListComponent],
-  providers: [RoleComponent,RolemanComponent,RoleListComponent],
+  providers: [RoleComponent,RolemanComponent,RoleListComponent,RoleService],
 })
 export class RoleModule { }

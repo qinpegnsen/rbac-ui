@@ -5,6 +5,7 @@ import {PageEvent} from "../../../shared/directives/ng2-datatable/DataTable";
 import {isNull} from "util";
 import {ActivatedRoute} from "@angular/router";
 import {RolemanComponent} from "../roleman/roleman.component";
+import {RoleService} from "./role.service";
 const swal = require('sweetalert');
 @Component({
   selector: 'app-role',
@@ -61,26 +62,18 @@ export class RoleComponent implements OnInit {
    */
   ngOnInit() {
     /**
-     * 系统列表的接口
+     * 系统列表的接口 登录的时候放到sessionStorage里面了，需要拿出来
      * sysCode 初始化系统的编码，默认第一个，然后根据sysCode调用初始化的角色组列表和角色列表
      * sysName 默认的第一个的名字
      * sysList 系统列表的数据
      */
-    this.ajax.get({
-      url: '/sys/list',
-      data: {
-        'sysName': ''
-      },
-      success: (data) => {
-        this.sysCode = data[0].sysCode;
-        this.sysName = data[0].sysName;
-        this.sysList = data;
-        this.queryRoleGroupDatas();
-      },
-      error: () => {
-        console.log("sys/list  error");
-      }
-    });
+    let data=JSON.parse(sessionStorage.getItem('sysListData'));
+    this.sysCode = data[0].sysCode;
+    this.sysName = data[0].sysName;
+    this.sysList = data;
+    this.queryRoleGroupDatas();
+
+
     //添加角色组的按钮
     this.addGroupButton = {
       type:"add",
