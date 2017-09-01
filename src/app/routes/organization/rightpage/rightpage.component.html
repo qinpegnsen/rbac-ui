@@ -59,7 +59,7 @@
         <fieldset class="b0">
           <legend>添加子部门</legend>
         </fieldset>
-        <input class="form-control" required [(ngModel)]="deptCode" name="preCode" type="hidden"/>
+        <input class="form-control" [(ngModel)]="deptCode" name="preCode" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 部门名称</label>
@@ -68,16 +68,8 @@
                      #deptName="ngModel" type="text"/>
               <div [hidden]="deptName.valid || deptName.pristine"
                    class="alert alert-danger">
-                部门名称是必填项，请填写url路径
+                部门名称是必填项，请填写部门名称
               </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">部门位置</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text" name="adr" ngModel [(ngModel)]="limitForm.adr"/>
             </div>
           </div>
         </fieldset>

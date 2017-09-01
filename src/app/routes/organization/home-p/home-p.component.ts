@@ -39,9 +39,14 @@ export class HomePComponent implements OnInit {
      */
   getOrgList(url:string) {
     this.org.getOrgList(url).subscribe((res) => {
+      console.log("█ res ►►►", res );
+
       const {result, pre_arr} = this.toTreeDate(res);
       this.result = result;
       this.pre_arr = pre_arr;
+      console.log("█ result ►►►", result );
+      console.log("█ pre_arr ►►►", pre_arr );
+
     })
   }
 
@@ -54,19 +59,21 @@ export class HomePComponent implements OnInit {
     const result = [];
     const org_arr = {};
     data.forEach((item) => {
-      for (let a in item) {
-        if (a === 'deptCode') {
-          org_arr[item[a]] = item;
-        }
+
+    for (let a in item) {
+      if (a === 'deptCode') {
+        org_arr[item[a]] = item;
       }
-    });
+    }
+  });
+
     let i = 0;
     const pre_arr = {};
     data.forEach((item) => {
       for (let a in item) {
         if (a === 'preCode') {
           // 获取顶级
-          if (item[a] === null) {
+          if (item[a] === null  || item[a] === '' ) {
             item.istop = true;
             result[i] = item;
             i ++;

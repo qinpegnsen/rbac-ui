@@ -29,16 +29,16 @@ export class MenuAddComponent implements OnInit {
   private pageCode;//声明保存上级的页面编码
   private preType;//选择上级类型
   private limitForm = {
-    sysCode: '',
-    menuName: '',
-    menuUrl: '',
-    preMenuCode: '',
-    preCode:'',
-    menuIcon: '',
-    level: '',
-    remarks: '',
-    ord: ''
-  }
+  sysCode: '',
+  menuName: '',
+  menuUrl: '',
+  preMenuCode: '',
+  preCode:'',
+  menuIcon: '',
+  level: '',
+  remarks: '',
+  ord: ''
+}
 
   /**
    * 构造 初始化
@@ -92,7 +92,6 @@ export class MenuAddComponent implements OnInit {
         console.log("error");
       }
     });
-
 
   }
 

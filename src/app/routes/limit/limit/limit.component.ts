@@ -163,7 +163,6 @@ export class LimitComponent implements OnInit {
     this.LimittabComponent.pageMenus();
     this.LimittabComponent.operationDatas();
     this.LimittabComponent.controlDatas();
-
   }
 
   /**

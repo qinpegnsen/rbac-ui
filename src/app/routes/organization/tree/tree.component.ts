@@ -16,9 +16,11 @@ export class TreeComponent implements OnInit {
   @Input() set result(value: any) {
     if (!this._result && value) {
       console.log(value);
-      console.log(value[0].deptCode);
-      if (value[0].istop) {
-        this.itemClick(value[0].deptName, value[0].deptCode, value[0].id)
+      if(value.length>0) {
+        //console.log(value[0].deptCode);
+        if (value[0].istop) {
+          this.itemClick(value[0].deptName, value[0].deptCode, value[0].id)
+        }
       }
     }
     this._result = value;
@@ -26,7 +28,9 @@ export class TreeComponent implements OnInit {
   get result() {
     return this._result;
   }
+
   @Input() pre_arr;
+
   constructor(private store: Store<AppStore>,private org:OrgService) {
 
   }

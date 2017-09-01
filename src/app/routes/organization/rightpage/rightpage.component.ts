@@ -95,9 +95,15 @@ export class RightpageComponent implements OnInit {
       }
       this.orgEmpExtVOList = arr;
     })
-    this.store.select('active').subscribe((res) => {
-      this.limitForm.deptName = res as string;
-    });
+    /**
+     * 部门设置右边栏显示部门名称
+     */
+    if(this.queryId == 1){
+      this.store.select('active').subscribe((res) => {
+        this.limitForm.deptName = res as string;
+      });
+    }
+
 
     /**
      * 请求详细数据，并显示(员工信息)
