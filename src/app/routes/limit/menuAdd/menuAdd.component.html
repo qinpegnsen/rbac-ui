@@ -36,6 +36,19 @@
         </fieldset>
         <fieldset>
           <div class="form-group">
+            <label class="col-sm-3 control-label"> <i>*</i> 菜单顺序</label>
+            <div class="col-sm-8">
+              <input class="form-control" required [(ngModel)]="limitForm.ord" name="ord"
+                     #ord="ngModel" type="text"/>
+              <div [hidden]="ord.valid || ord.pristine"
+                   class="alert alert-danger">
+                菜单顺序是必填项，请填写菜单顺序
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
             <label class="col-sm-3 control-label">菜单图标</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="menuIcon" ngModel [(ngModel)]="limitForm.menuIcon"/>
@@ -47,14 +60,6 @@
             <label class="col-sm-3 control-label">备注</label>
             <div class="col-sm-8">
               <input class="form-control" type="text" name="remarks" ngModel [(ngModel)]="limitForm.remarks"/>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">菜单顺序</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text" name="ord" [(ngModel)]="limitForm.ord" ngModel/>
             </div>
           </div>
         </fieldset>

@@ -82,7 +82,6 @@
           <div *ngIf="organ.state=='OPEN'">
             <app-buttons [config]="option" (callback)="option.callback($event,organ.orgCode)"
                          *ngFor="let option of buttonConfig"></app-buttons>
-            <span class="btn btn-danger btn-xs" routerLink="/main/organization"><i class="fa fa-credit-card mr5"></i>管理组织</span>
           </div>
 
         </td>

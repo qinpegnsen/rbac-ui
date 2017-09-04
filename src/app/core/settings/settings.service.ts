@@ -18,18 +18,24 @@ export class SettingsService {
      */
     let sessionInfo = sessionStorage.getItem('loginInfo');
     let loginInfo: any = JSON.parse(sessionInfo);
-    console.log("█ loginInfo ►►►",  loginInfo);
-    let name = '游客', job = '无';
+    let name = '游客', job = '无',orgName = '';
     if (!isNullOrUndefined(loginInfo)) {
       if (!isNullOrUndefined(loginInfo.mgrName)){
         name = loginInfo.mgrName;
       }else if(!isNullOrUndefined(loginInfo.state)){
         job = this.getUserJob(loginInfo);
       }
+      if(!isNullOrUndefined(loginInfo.rbacOrganVO.orgName)){
+        orgName = loginInfo.rbacOrganVO.orgName;
+        console.log("-----loginInfo.rbacOrganVO:"+loginInfo.rbacOrganVO)
+        console.log("-----loginInfo.rbacOrganVO.orgName:"+loginInfo.rbacOrganVO.orgName)
+        console.log("-----orgName:"+orgName)
+      }
     };
     this.user = {
       name: name,
       job: job,
+      orgName: orgName,
       picture: 'assets/img/user/user.png'
     };
 

@@ -3,6 +3,7 @@ import {AppStore} from "../store/app-store";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {OrgService} from '../server/org.service';
+import {SettingsService} from "../../../core/settings/settings.service";
 
 @Component({
   selector: 'app-home-p',
@@ -15,9 +16,13 @@ export class HomePComponent implements OnInit {
   public pre_arr;
   private deptCode;
   constructor(private store:Store<AppStore>,
+              private setting: SettingsService,
               private org:OrgService){}
+  private user;
+
 
   ngOnInit() {
+    this.user = this.setting.user;
     this.getOrgList('/dept/list');
     // 更新组织列表
     this.store.select('staff').subscribe((item) => {
