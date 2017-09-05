@@ -26,7 +26,7 @@
             <label class="col-sm-4 control-label"><i>*</i>系统网址</label>
             <div class="col-sm-7">
               <input class="form-control" type="text" required name="sysUrl" [(ngModel)]="system.sysUrl"
-                     #sysUrl="ngModel" placeholder="请填写系统网址"/>
+                     #sysUrl="ngModel" tooltip="需要加上http协议" placeholder="请填写系统网址"/>
             </div>
           </div>
           <div [hidden]="sysUrl.valid || sysUrl.pristine"

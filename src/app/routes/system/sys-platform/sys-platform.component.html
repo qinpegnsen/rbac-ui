@@ -54,7 +54,7 @@
         <td>{{sys.sysName}}</td>
         <td><img height="50px" [src]="sys.sysLogo" onerror="javascript:this.src='../../../assets/img/dummy.png'"
                  alt=""></td>
-        <td><a target="_blank" [routerLink]="sys.sysUrl">{{sys.sysUrl}}</a></td>
+        <td><a target="_blank" [href]="sys.sysUrl">{{sys.sysUrl}}</a></td>
         <td>{{sys.remarks}}</td>
         <td>{{sys.crtime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
         <td>
