@@ -33,12 +33,15 @@
           <rzhDefaultSorter by="sysName">系统名称</rzhDefaultSorter>
         </th>
         <th class="col-md-2 unselectable text-center">
+          <rzhDefaultSorter by="sysLogo">系统LOGO</rzhDefaultSorter>
+        </th>
+        <th class="col-md-2 unselectable text-center">
           <rzhDefaultSorter by="orgBoss">系统网址</rzhDefaultSorter>
         </th>
-        <th class="col-md-2 unselectable text-center">
+        <th class="col-md-1 unselectable text-center">
           <rzhDefaultSorter by="orgSign">备注</rzhDefaultSorter>
         </th>
-        <th class="col-md-2 unselectable text-center">
+        <th class="col-md-1 unselectable text-center">
           <rzhDefaultSorter by="adr">创建时间</rzhDefaultSorter>
         </th>
         <th class="col-md-1 unselectable text-center">开启/关闭</th>
@@ -49,9 +52,11 @@
       <tr *ngFor="let sys of systems.data;let i = index" class="text-center">
         <td>{{i+1}}</td>
         <td>{{sys.sysName}}</td>
-        <td><a [routerLink]="sys.sysUrl">{{sys.sysUrl}}</a></td>
+        <td><img height="50px" [src]="sys.sysLogo" onerror="javascript:this.src='../../../assets/img/dummy.png'"
+                 alt=""></td>
+        <td><a target="_blank" [routerLink]="sys.sysUrl">{{sys.sysUrl}}</a></td>
         <td>{{sys.remarks}}</td>
-        <td>{{sys.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>
+        <td>{{sys.crtime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
         <td>
           <label class="switch switch-md" title="停/启用">
             <input [checked]="sys.isUse=='Y'" type="checkbox"

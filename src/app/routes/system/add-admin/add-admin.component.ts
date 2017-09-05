@@ -217,10 +217,13 @@ export class AddAdminComponent implements OnInit {
         myNewRoleGroupArray.push(obj)
       }
     }
-    console.log('myNewRolesArray',myNewRolesArray)
-    console.log('myNewRoleGroupArray',myNewRoleGroupArray)
+    console.log('myNewRolesArray',myNewRolesArray);
+    console.log('myNewRoleGroupArray',myNewRoleGroupArray);
     this.mySelectRoles.active = myNewRolesArray;
     this.mySelectGroup.active = myNewRoleGroupArray;
+
+    this.selectedRoleStr = this.itemsToString(myNewRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
+    this.selectedGroupStr = this.itemsToString(myNewRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
 
     this.Role = newRolesArray;
     this.Group = newRoleGroupArray;

@@ -77,7 +77,7 @@
         <td>{{admin.idcard}}</td>
         <td>{{admin.home}}</td>
         <td>{{admin.loginCode}}</td>
-        <!--<td>{{admin.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</td>-->
+        <!--<td>{{admin.crtime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>-->
         <td>
           <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="admin.state=='OPEN' || admin.state=='SUPER'"
                   (click)="updatePwd(admin.mgrCode)" title="修改密码"></button>

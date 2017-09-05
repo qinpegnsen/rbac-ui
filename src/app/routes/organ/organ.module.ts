@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import {OrganComponent} from "./organ/organ.component";
 import { AddorganComponent } from './addorgan/addorgan.component';
 import {SharedModule} from "../../shared/shared.module";
+import {FileUploadModule} from "ng2-file-upload";
+import {GetUidService} from "../../core/services/get-uid.service";
 
 
 // 子路由，用于页面嵌套显示
@@ -22,8 +24,10 @@ const routes:Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    FileUploadModule
   ],
-  declarations: [OrganComponent, AddorganComponent]
+  declarations: [OrganComponent, AddorganComponent],
+  providers: [GetUidService]
 })
 export class OrganModule { }

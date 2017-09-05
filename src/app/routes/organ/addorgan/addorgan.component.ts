@@ -11,6 +11,9 @@ import {isNullOrUndefined} from 'util';
 import {OrganComponent} from "../organ/organ.component";
 import {SysPlatformService} from "../../system/sys-platform/sys-platform.service";
 import {SelectComponent} from "ng2-select/index";
+import {FileUploader} from "ng2-file-upload";
+import {AppComponent} from "../../../app.component";
+import {GetUidService} from "../../../core/services/get-uid.service";
 
 const swal = require('sweetalert');
 
@@ -22,7 +25,7 @@ const swal = require('sweetalert');
 })
 export class AddorganComponent implements OnInit {
 
-  constructor(private patterns: PatternService,private tools: RzhtoolsService,private _parent:OrganComponent,
+  constructor(private patterns: PatternService,private tools: RzhtoolsService,private _parent:OrganComponent,private getUid:GetUidService,
               public settings: SettingsService,private addAdminService: AddAdminService,private systemService:SysPlatformService,
               private route: ActivatedRoute, private router:Router, private addOrganService: AddorganService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
@@ -37,6 +40,15 @@ export class AddorganComponent implements OnInit {
   private sysCode: string = '';//系统编码，分配角色或角色组时选择系统
   private path: string;//路由
   private pageTitle:string;右弹窗标题
+
+  private uuid: string;
+  private myImg: any;
+  private upBrandImg:boolean = false;
+  private fileName:string = '选择图片';
+  public uploader:FileUploader = new FileUploader({
+    url: '/organ/uploadOrgLogo',
+    itemAlias:"limitFile"
+  }); //初始化上传方法
 
   private Organ:boolean = false;//是否是添加或修改机构
   private detail:boolean = false;//是否是查看详情
@@ -146,12 +158,27 @@ export class AddorganComponent implements OnInit {
       }
     });
   }
-
+  /**
+   * 监听图片选择
+   * @param $event
+   */
+  fileChangeListener($event) {
+    let that = this;
+    let image: any = new Image();
+    let file: File = $event.target.files[0];
+    that.fileName = file.name;
+    let myReader: FileReader = new FileReader();
+    myReader.onloadend = function (loadEvent: any) {
+      image.src = loadEvent.target.result;
+      that.myImg = image.src;
+    };
+    myReader.readAsDataURL(file);
+  }
   /**
    * 当选择的系统改变的时候
    */
   private selectedChange(){
-    this.getRoleAndGroupList();//获取角色/角色组列表
+    // this.getRoleAndGroupList();//获取角色/角色组列表
     this.getMyRoleAndGroupList();//获取已经分配的角色/角色组列表
   }
 
@@ -170,14 +197,14 @@ export class AddorganComponent implements OnInit {
   }
 
   /**
-   * 获取已经分配的角色/角色组列表
+   * 获取角色/角色组列表
    */
   private getMyRoleAndGroupList(){
-    let myRolesAndGroup = this.addOrganService.getMyRoleAndGroupList(this.sysCode,this.orgCode).data;
+    let myRolesAndGroup = this.addOrganService.getRoleAndGroupList(this.sysCode,this.orgCode).data;
     //console.log("█ myRolesAndGroup ►►►",  myRolesAndGroup);
     let oldRolesArray = myRolesAndGroup.roleList;
     let oldRoleGroupArray = myRolesAndGroup.roleGroupList;
-    let newRolesArray = [],newRoleGroupArray = [], obj = {};
+    let newRolesArray = [],newRoleGroupArray = [],myNewRolesArray=[],myNewRoleGroupArray=[], obj = {};
     //将所有角色组成一个新的数组
     for (var i=0; i<oldRolesArray.length; i++){
       obj = {
@@ -185,6 +212,9 @@ export class AddorganComponent implements OnInit {
         text:oldRolesArray[i].roleName
       };
       newRolesArray.push(obj);
+      if (oldRolesArray[i].isHas == 'Y'){
+        myNewRolesArray.push(obj)
+      };
     };
     //将所有角色组组成一个新的数组
     for (var i=0; i<oldRoleGroupArray.length; i++){
@@ -193,19 +223,24 @@ export class AddorganComponent implements OnInit {
         text:oldRoleGroupArray[i].roleGroupName
       };
       newRoleGroupArray.push(obj);
+      if (oldRoleGroupArray[i].isHas == 'Y'){
+        myNewRoleGroupArray.push(obj)
+      }
     }
-    this.mySelectRoles.active = newRolesArray;
-    this.mySelectGroup.active = newRoleGroupArray;
+    this.mySelectRoles.active = myNewRolesArray;
+    this.mySelectGroup.active = myNewRoleGroupArray;
+    this.Role = newRolesArray;
+    this.Group = newRoleGroupArray;
 
     this.selectedRoleStr = this.itemsToString(newRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
     this.selectedGroupStr = this.itemsToString(newRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
     //console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
     //console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
-
-  /**
+/*
+  /!**
    * 获取角色和角色组列表
-   */
+   *!/
   private getRoleAndGroupList(){
     let roleAndGroupList = this.addOrganService.getRoleAndGroupList(this.sysCode,this.orgCode).data;
     //console.log("█ roleAndGroupList ►►►", roleAndGroupList);
@@ -230,7 +265,7 @@ export class AddorganComponent implements OnInit {
     }
     this.Role = newRolesArray;
     this.Group = newRoleGroupArray;
-  }
+  }*/
 
   //获取机构代码(路由参数)
   private getOrgCode(){
@@ -267,12 +302,86 @@ export class AddorganComponent implements OnInit {
         }
         submitUrl = '/organ/add';
         submitData = me.organ;
+        me.uuid = null;//先置空
+
+        me.uploader.onBuildItemForm = function(fileItem, form){
+          me.uuid = me.getUid.getUid();
+          if (me.uuid) submitData.uuid = me.uuid;
+          form.append('uuid', me.uuid);
+        };
+        me.uploader.onSuccessItem = function (item, response, status, headers) {
+          let res = JSON.parse(response);
+          if (res.success) {
+            console.log("█ submitData ►►►",  submitData);
+            me.addAdminService.submitRightPageData(submitUrl,submitData,true);
+            me._parent.queryDatas();//刷新父页面数据
+          } else {
+            AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+          }
+        }
+        /**
+         * 上传失败处理
+         * @param item 失败的文件列表
+         * @param response 返回信息
+         * @param status 状态码
+         * @param headers 上传失败后服务器的返回的返回头
+         */
+        me.uploader.onErrorItem = function (item, response, status, headers) {
+          AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+        };
+        /**
+         * 执行上传
+         */
+        me.uploader.uploadAll();
+
+        //如果没有选择图片则直接提交
+        if(isNullOrUndefined(me.uuid)){
+          me.addAdminService.submitRightPageData(submitUrl,submitData,true);
+          me._parent.queryDatas();//刷新父页面数据
+        }
         break;
       //修改机构信息
       case "updateOrgan":
         submitUrl = '/organ/update';
         submitData = me.organ;
         submitData.orgCode = me.orgCode;
+        me.uuid = null;//先置空
+
+        me.uploader.onBuildItemForm = function(fileItem, form){
+          me.uuid = me.getUid.getUid();
+          if (me.uuid) submitData.uuid = me.uuid;
+          form.append('uuid', me.uuid);
+        };
+        me.uploader.onSuccessItem = function (item, response, status, headers) {
+          let res = JSON.parse(response);
+          if (res.success) {
+            console.log("█ submitData ►►►",  submitData);
+            me.addAdminService.submitRightPageData(submitUrl,submitData,true);
+            me._parent.queryDatas();//刷新父页面数据
+          } else {
+            AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+          }
+        }
+        /**
+         * 上传失败处理
+         * @param item 失败的文件列表
+         * @param response 返回信息
+         * @param status 状态码
+         * @param headers 上传失败后服务器的返回的返回头
+         */
+        me.uploader.onErrorItem = function (item, response, status, headers) {
+          AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+        };
+        /**
+         * 执行上传
+         */
+        me.uploader.uploadAll();
+
+        //如果没有选择图片则直接提交
+        if(isNullOrUndefined(me.uuid)){
+          me.addAdminService.submitRightPageData(submitUrl,submitData,true);
+          me._parent.queryDatas();//刷新父页面数据
+        }
         break;
       //修改机构负责人
       case "updateBoss":
@@ -282,6 +391,8 @@ export class AddorganComponent implements OnInit {
           "orgBoss": me.organ['orgBoss'],
           "bossPhone": me.organ['bossPhone']
         };
+        me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+        me._parent.queryDatas();//刷新父页面数据
         break;
       //修改机构类型
       case "updateType":
@@ -290,6 +401,8 @@ export class AddorganComponent implements OnInit {
           "orgCode":me.orgCode,
           "type": me.organ['type']
         };
+        me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+        me._parent.queryDatas();//刷新父页面数据
         break;
       //添加角色或角色组
       case "allotRole":
@@ -304,11 +417,10 @@ export class AddorganComponent implements OnInit {
           "roleCodes": me.selectedRoleStr,
           "roleGroupCodes": me.selectedGroupStr
         };
+        me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+        me._parent.queryDatas();//刷新父页面数据
         break;
     }
-    //console.log("█ submitData ►►►",  submitData);
-    me.addAdminService.submitRightPageData(submitUrl,submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me._parent.queryDatas();//刷新父页面数据
   }
 
   // 取消

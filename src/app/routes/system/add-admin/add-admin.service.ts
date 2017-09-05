@@ -15,7 +15,7 @@ export class AddAdminService {
    * 获取某个系统详情
    * @param mgrCode
    * @returns {any}
-     */
+ */
   getAdminDetail(mgrCode) {
     let result;
     this.ajax.get({

@@ -7,6 +7,8 @@ import {AdminsComponent} from "./admins/admins.component";
 import {AddAdminComponent} from "./add-admin/add-admin.component";
 import {SelectOrganComponent} from "../select-organ/select-organ/select-organ.component";
 import { UpdatePwdComponent } from './update-pwd/update-pwd.component';
+import {FileUploadModule} from "ng2-file-upload";
+import {GetUidService} from "../../core/services/get-uid.service";
 
 
 const appChildRoutes: Routes = [
@@ -31,8 +33,10 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    FileUploadModule
   ],
-  declarations: [SysPlatformComponent, AddSysComponent, AdminsComponent, AddAdminComponent,SelectOrganComponent, UpdatePwdComponent]
+  declarations: [SysPlatformComponent, AddSysComponent, AdminsComponent, AddAdminComponent,SelectOrganComponent, UpdatePwdComponent],
+  providers: [GetUidService]
 })
 export class SystemModule { }

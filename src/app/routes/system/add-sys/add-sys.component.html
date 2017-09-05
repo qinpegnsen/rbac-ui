@@ -34,12 +34,31 @@
             系统网址不可缺少
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset *ngIf="path == 'addSystem'">
           <div class="form-group">
             <label class="col-sm-4 control-label">系统LOGO</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" name="sysLogo" [(ngModel)]="system.sysLogo" #sysLogo="ngModel"
-                     placeholder="请输入系统LOGO"/>
+              <img class="col-sm-5 p-sm" *ngIf="myImg" [src]="myImg" alt="">
+              <label class="btn btn-default file-upload">
+                <i class="icon-cloud-upload mr"></i>{{fileName}}
+                <input class="w100" type="file" name="sysLogo" ng2FileSelect [uploader]="uploader"
+                       (change)="fileChangeListener($event)"/>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset *ngIf="path == 'updateSystem'">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">系统LOGO</label>
+            <div class="col-sm-7">
+              <img *ngIf="system.sysLogo && !myImg" class="col-sm-5 p-sm" [src]="system.sysLogo" alt="">
+              <img *ngIf="system.sysLogo && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
+              <img *ngIf="!system.sysLogo && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
+              <label class="btn btn-default file-upload">
+                <i class="icon-cloud-upload mr"></i>{{system.sysLogo? '修改图片':'上传图片'}}
+                <input class="w100" type="file" name="sysLogo" ng2FileSelect [uploader]="uploader"
+                       (change)="fileChangeListener($event)"/>
+              </label>
             </div>
           </div>
         </fieldset>
@@ -67,7 +86,10 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">系统LOGO：</span>
-            <p class="item-bd col-sm-7">{{system.sysLogo}}</p>
+            <p class="item-bd col-sm-7">
+              <img height="50px" [src]="system.sysLogo" onerror="javascript:this.src='../../../assets/img/dummy.png'"
+                   alt="">
+            </p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">系统代码：</span>
@@ -79,11 +101,11 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">创建时间：</span>
-            <p class="item-bd col-sm-7">{{system.crtime | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
+            <p class="item-bd col-sm-7">{{system.crtime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">修改时间：</span>
-            <p class="item-bd col-sm-7">{{system.uptime | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
+            <p class="item-bd col-sm-7">{{system.uptime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">备注：</span>

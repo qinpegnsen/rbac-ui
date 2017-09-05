@@ -33,6 +33,9 @@
           <rzhDefaultSorter by="orgName">机构名称</rzhDefaultSorter>
         </th>
         <th class="col-md-1 unselectable text-center">
+          <rzhDefaultSorter by="orgName">机构LOGO</rzhDefaultSorter>
+        </th>
+        <th class="col-md-1 unselectable text-center">
           <rzhDefaultSorter by="orgBoss">机构负责人</rzhDefaultSorter>
         </th>
         <th class="col-md-1 unselectable text-center">
@@ -55,6 +58,8 @@
       <tr *ngFor="let organ of dataTable.data;let i = index" class="text-center">
         <td>{{i+1}}</td>
         <td>{{organ.orgName}}</td>
+        <td><img height="50px" [src]="organ.orgLogo" onerror="javascript:this.src='../../../assets/img/dummy.png'"
+                 alt=""></td>
         <td>{{organ.orgBoss}}
           <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN'"
                   (click)="updateBoss(organ.orgCode)" title="修改"></button>
