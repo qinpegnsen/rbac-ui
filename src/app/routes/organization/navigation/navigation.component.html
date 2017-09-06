@@ -4,17 +4,17 @@
       <span>{{path[path.length - 1]}}</span>
       <div class="c_ding_btn c_ding_btn_xs contact_btn" routerLink="rightpage" [queryParams]="{id:1}">设置</div>
     </div>
-    <div>
+    <!--<div>
       <div class="dept_navbar_c">
         <ul>
           <li *ngFor="let v of path; let i = last">
             <a class="c_link">{{v}}</a>
             <i class="fa" [ngClass]="{'fa-chevron-right': !i}" [innerHTML]="''"></i>
           </li>
-          <!--<li class="end_title" *ngFor="let v of path">{{v}}</li>-->
+          &lt;!&ndash;<li class="end_title" *ngFor="let v of path">{{v}}</li>&ndash;&gt;
         </ul>
       </div>
-    </div>
+    </div>-->
     <div style="margin-bottom:10px;">
       <div class="c_title_1"><i class="fa fa-sitemap" [innerHTML]="''"></i>
         <span>下级部门</span>
@@ -44,8 +44,5 @@
       </div>
     </div>
   </div>
-  <!--路由嵌套 begin-->
-  <router-outlet></router-outlet>
-  <!--路由嵌套 end-->
 </div>
 

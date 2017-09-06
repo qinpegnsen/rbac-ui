@@ -424,7 +424,7 @@ export class RightpageComponent implements OnInit {
           if (res.success) {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
             swal('修改部门信息成功！', '','success');
-
+            _this.store.dispatch({type: 'LIST', payload: true});
           } else {
             let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
             swal(res.info, errorMsg, 'error');
@@ -435,6 +435,34 @@ export class RightpageComponent implements OnInit {
         }
       });
     }
+  }
+
+  /**
+   * 删除部门
+   */
+  delLimitList(value){
+    let _this = this;
+    _this.ajax.post({
+      url: '/dept/updateState',
+      data: {
+        'deptCode': value.deptCode,
+        'state':'DEL'
+      },
+      success: (res) => {
+        console.log(res)
+        if (res.success) {
+          _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
+          swal('成功删除部门！', '','success');
+          _this.store.dispatch({type: 'LIST', payload: true});
+        } else {
+          let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
+          swal(res.info, errorMsg, 'error');
+        }
+      },
+      error: (data) => {
+        swal('删除部门失败！', '','error');
+      }
+    });
   }
 
 }
