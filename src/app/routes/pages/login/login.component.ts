@@ -7,6 +7,7 @@ import {AjaxService} from "../../../core/services/ajax.service";
 import {MaskService} from "app/core/services/mask.service";
 import {MenuService} from "../../../core/menu/menu.service";
 import {RoleService} from "../../role/role/role.service";
+import {AppComponent} from "../../../app.component";
 
 declare var $: any;
 @Component({
@@ -19,6 +20,10 @@ export class LoginComponent implements OnInit {
   public password: string;
   public authMsg: string;
   public sysName: string;
+  private loginFail = {
+    type: false,
+    info: ''
+  };
 
   constructor(private ajax: AjaxService, private maskservice: MaskService, private localtion: Location,
               private router: Router,private setting:SettingsService,private myMenu:MenuService,private roleService:RoleService) {
@@ -86,10 +91,13 @@ export class LoginComponent implements OnInit {
           me.router.navigate(['/main/home'], {replaceUrl: true}); //路由跳转
         }
         else {
+          me.loginFail.type = true;
+          me.loginFail.info = result.info;
           console.log("█ result ►►►",  JSON.stringify(result));
         }
       },
       error: (result) => {
+        AppComponent.rzhAlt('error','网络错误');
         this.maskservice.hideMask();
       }
     });

@@ -7,6 +7,9 @@
       <input type="text" class="input" name="username" [(ngModel)]="userName" autocomplete="off" required  placeholder="请输入管理员账号">
       <input type="password" class="input" name="password" [(ngModel)]="password" autocomplete="off" required placeholder="请输入密码">
       <!--<div toggle-fullscreen="toggle-fullscreen">-->
+
+      <div [hidden]="!loginFail.type" class="text-warning text-left p-sm" style="position: absolute">{{loginFail
+        .info}}</div>
       <button type="submit" class="button button-login" (click)="login()">点击登陆</button>
       <!--</div>-->
       <div class="error"><span>+</span></div>
