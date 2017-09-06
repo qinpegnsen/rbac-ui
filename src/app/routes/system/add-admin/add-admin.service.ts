@@ -3,19 +3,24 @@ import {AjaxService} from "../../../core/services/ajax.service";
 import {SettingsService} from "../../../core/settings/settings.service";
 import {isNullOrUndefined} from 'util';
 import {RoleService} from "../../role/role/role.service";
+import {MaskService} from "../../../core/services/mask.service";
+import {AppComponent} from "../../../app.component";
 const swal = require('sweetalert');
 
 @Injectable()
 export class AddAdminService {
 
-  constructor(private ajax: AjaxService,public settings: SettingsService,private roleService: RoleService) {
+  constructor(private ajax: AjaxService,
+              public settings: SettingsService,
+              private mask: MaskService,
+              private roleService: RoleService) {
   }
 
   /**
    * 获取某个系统详情
    * @param mgrCode
    * @returns {any}
- */
+   */
   getAdminDetail(mgrCode) {
     let result;
     this.ajax.get({
@@ -42,7 +47,7 @@ export class AddAdminService {
    * @param submitUrl
    * @param submitData
    */
-  submitRightPageData(submitUrl, submitData,edit?:boolean) {
+  submitRightPageData(submitUrl, submitData, edit?: boolean) {
     let me = this;
     me.ajax.post({
       url: submitUrl,
@@ -51,43 +56,47 @@ export class AddAdminService {
       success: (res) => {
         console.log("█ res ►►►", res);
         if (res.success) {
+          this.mask.hideMask();//关闭遮罩层
           this.settings.closeRightPageAndRouteBack()//关闭右侧页面并返回上级路由
           swal({
             title: '提交成功!',
             text: res.info,
             type: 'success',
-            timer: 2000, //关闭时间，单位：毫秒
+            timer: 3000, //关闭时间，单位：毫秒
             showConfirmButton: false  //不显示按钮
           });
-          if(edit){
-            let data=me.roleService.getSysList();//获取系统列表的数据
+          if (edit) {
+            let data = me.roleService.getSysList();//获取系统列表的数据
             sessionStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
           }
         } else {
+          this.mask.hideMask();//关闭遮罩层
           let errorMsg;
-          if(isNullOrUndefined(res.data)){
+          if (isNullOrUndefined(res.data)) {
             errorMsg = res.info
-          }else {
+          } else {
             errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
           }
-          swal(res.info, errorMsg, 'error');
+          AppComponent.rzhAlt("error", errorMsg);
         }
       },
       error: (res) => {
+        this.mask.hideMask();//关闭遮罩层
+        AppComponent.rzhAlt("error", '网络错误');
         console.log("post system error");
       }
     })
   }
 
-  getRoleGroupList(sysCode:string,orgCode?:string,roleGroupName?:string){
+  getRoleGroupList(sysCode: string, orgCode?: string, roleGroupName?: string) {
     let list;
     this.ajax.get({
       url: '/roleGroup/list',
-      async:false,
-      data:{
+      async: false,
+      data: {
         sysCode: sysCode,
         orgCode: orgCode,
-        roleGroupName:roleGroupName
+        roleGroupName: roleGroupName
       },
       success: (res) => {
         list = res;
@@ -106,12 +115,12 @@ export class AddAdminService {
    * @param orgCode
    * @returns {any}
    */
-  getMyRoleAndGroupList(sysCode,mgrCode:string,orgCode:string){
+  getMyRoleAndGroupList(sysCode, mgrCode: string, orgCode: string) {
     let result;
     this.ajax.post({
       url: '/orgManager/myRolesList',
-      async:false,
-      data:{
+      async: false,
+      data: {
         mgrCode: mgrCode,
         orgCode: orgCode,
         sysCode: sysCode
@@ -126,28 +135,29 @@ export class AddAdminService {
     });
     return result;
   }
+
   /**
    * 获取角色和角色组列表
    * @param mgrCode
    * @param orgCode
    * @returns {any}
-     */
-  getRoleAndGroupList(sysCode,mgrCode:string,orgCode:string){
-    console.log("█ mgrCode ►►►", mgrCode );
-    console.log("█ orgCode ►►►", orgCode );
+   */
+  getRoleAndGroupList(sysCode, mgrCode: string, orgCode: string) {
+    console.log("█ mgrCode ►►►", mgrCode);
+    console.log("█ orgCode ►►►", orgCode);
 
     let result;
     this.ajax.post({
       url: '/orgManager/rolesList',
-      async:false,
-      data:{
+      async: false,
+      data: {
         mgrCode: mgrCode,
         orgCode: orgCode,
         sysCode: sysCode
       },
       success: (res) => {
         result = res;
-        console.log("█ getRoleAndGroupList ►►►",  res);
+        console.log("█ getRoleAndGroupList ►►►", res);
       },
       error: (res) => {
         console.log("get getRoleAndGroupList error");

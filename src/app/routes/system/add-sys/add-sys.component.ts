@@ -9,6 +9,7 @@ import {FileUploader} from "ng2-file-upload";
 import {AppComponent} from "../../../app.component";
 import {GetUidService} from "../../../core/services/get-uid.service";
 import {isNullOrUndefined} from "util";
+import {MaskService} from "../../../core/services/mask.service";
 
 const swal = require('sweetalert');
 
@@ -32,9 +33,14 @@ export class AddSysComponent implements OnInit {
     itemAlias:"limitFile"
   }); //初始化上传方法
 
-  constructor(private addSysService: AddSysService,public settings: SettingsService,
-              private route: ActivatedRoute, private router:Router,private getUid:GetUidService,
-              private Location: Location,private addAdminService:AddAdminService,
+  constructor(private addSysService: AddSysService,
+              public settings: SettingsService,
+              private route: ActivatedRoute,
+              private router:Router,
+              private getUid:GetUidService,
+              private Location: Location,
+              private mask: MaskService,
+              private addAdminService:AddAdminService,
               private sysPlatformComponent:SysPlatformComponent) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
@@ -117,83 +123,57 @@ export class AddSysComponent implements OnInit {
       case "addSystem":
         me.uuid = null;//先置空
         submitUrl = '/sys/add';
-
-        me.uploader.onBuildItemForm = function(fileItem, form){
-          me.uuid = me.getUid.getUid();
-          if (me.uuid) submitData.uuid = me.uuid;
-          form.append('uuid', me.uuid);
-        };
-        me.uploader.onSuccessItem = function (item, response, status, headers) {
-          let res = JSON.parse(response);
-          if (res.success) {
-            console.log("█ submitData ►►►",  submitData);
-            me.addAdminService.submitRightPageData(submitUrl,submitData,true);
-            me.sysPlatformComponent.queryDatas()//刷新父页面数据
-          } else {
-            AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
-          }
-        }
-        /**
-         * 上传失败处理
-         * @param item 失败的文件列表
-         * @param response 返回信息
-         * @param status 状态码
-         * @param headers 上传失败后服务器的返回的返回头
-         */
-        me.uploader.onErrorItem = function (item, response, status, headers) {
-          AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
-        };
-        /**
-         * 执行上传
-         */
-        me.uploader.uploadAll();
-
-        //如果没有选择图片则直接提交
-        if(isNullOrUndefined(me.uuid)){
-          me.addAdminService.submitRightPageData(submitUrl,submitData,true);
-          me.sysPlatformComponent.queryDatas()//刷新父页面数据
-        }
+        me.upLoadImg(submitUrl,submitData);// 上传图片及提交数据
             break;
       case "updateSystem":
         submitUrl = '/sys/update';
         me.uuid = null;//先置空
-
-        me.uploader.onBuildItemForm = function(fileItem, form){
-          me.uuid = me.getUid.getUid();
-          if (me.uuid) submitData.uuid = me.uuid;
-          form.append('uuid', me.uuid);
-        };
-        me.uploader.onSuccessItem = function (item, response, status, headers) {
-          let res = JSON.parse(response);
-          if (res.success) {
-            console.log("█ submitData ►►►",  submitData);
-            me.addAdminService.submitRightPageData(submitUrl,submitData,true);
-            me.sysPlatformComponent.queryDatas()//刷新父页面数据
-          } else {
-            AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
-          }
-        }
-        /**
-         * 上传失败处理
-         * @param item 失败的文件列表
-         * @param response 返回信息
-         * @param status 状态码
-         * @param headers 上传失败后服务器的返回的返回头
-         */
-        me.uploader.onErrorItem = function (item, response, status, headers) {
-          AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
-        };
-        /**
-         * 执行上传
-         */
-        me.uploader.uploadAll();
-
-        //如果没有选择图片则直接提交
-        if(isNullOrUndefined(me.uuid)){
-          me.addAdminService.submitRightPageData(submitUrl,submitData,true);
-          me.sysPlatformComponent.queryDatas()//刷新父页面数据
-        }
+        me.upLoadImg(submitUrl,submitData);// 上传图片及提交数据
         break;
+    }
+  }
+  /**
+   * 上传图片及提交数据
+   * @param submitData
+   * @param submitUrl
+   */
+  private upLoadImg(submitUrl,submitData){
+    let me = this;
+    me.mask.showMask();//上传图片比较慢，显示遮罩层
+    //上传之前
+    me.uploader.onBuildItemForm = function(fileItem, form){
+      me.uuid = me.getUid.getUid();
+      form.append('uuid', me.uuid);
+    };
+    //执行上传
+    me.uploader.uploadAll();
+    //上传成功
+    me.uploader.onSuccessItem = function (item, response, status, headers) {
+      let res = JSON.parse(response);
+      if (res.success) {
+        if (me.uuid) submitData.uuid = me.uuid;
+      } else {
+        AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+      }
+    }
+    // 上传失败
+    me.uploader.onErrorItem = function (item, response, status, headers) {
+      AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+    };
+    //上传完成，不管成功还是失败
+    me.uploader.onCompleteAll = function(){
+      me.addAdminService.submitRightPageData(submitUrl,submitData,true);
+      me.sysPlatformComponent.queryDatas()//刷新父页面数据
+    }
+
+    //如果没有选择图片则直接提交
+    if(isNullOrUndefined(me.uuid)){
+      me.addAdminService.submitRightPageData(submitUrl,submitData,true);
+      me.sysPlatformComponent.queryDatas()//刷新父页面数据
+    }else if(!isNullOrUndefined(me.uuid) && !me.uploader.isUploading){
+      // 图片已经传过了，但是数据提交失败了，改过之后可以直接提交
+      me.addAdminService.submitRightPageData(submitUrl,submitData,true);
+      me.sysPlatformComponent.queryDatas()//刷新父页面数据
     }
   }
 
@@ -201,4 +181,5 @@ export class AddSysComponent implements OnInit {
   cancel(){
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
+
 }

@@ -34,20 +34,7 @@
             系统网址不可缺少
           </div>
         </fieldset>
-        <fieldset *ngIf="path == 'addSystem'">
-          <div class="form-group">
-            <label class="col-sm-4 control-label">系统LOGO</label>
-            <div class="col-sm-7">
-              <img class="col-sm-5 p-sm" *ngIf="myImg" [src]="myImg" alt="">
-              <label class="btn btn-default file-upload">
-                <i class="icon-cloud-upload mr"></i>{{fileName}}
-                <input class="w100" type="file" name="sysLogo" ng2FileSelect [uploader]="uploader"
-                       (change)="fileChangeListener($event)"/>
-              </label>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset *ngIf="path == 'updateSystem'">
+        <fieldset>
           <div class="form-group">
             <label class="col-sm-4 control-label">系统LOGO</label>
             <div class="col-sm-7">
@@ -87,7 +74,8 @@
           <li class="org-item">
             <span class="item-hd col-sm-4">系统LOGO：</span>
             <p class="item-bd col-sm-7">
-              <img height="50px" [src]="system.sysLogo" onerror="javascript:this.src='../../../assets/img/dummy.png'"
+              <img height="50px" *ngIf="system.sysLogo" [src]="system.sysLogo"
+                   onerror="javascript:this.src='../../../assets/img/dummy.png'"
                    alt="">
             </p>
           </li>

@@ -44,27 +44,27 @@
         <th class="w10 unselectable text-center">
           <rzhDefaultSorter by="mgrName">姓名</rzhDefaultSorter>
         </th>
-        <!-- <th class="col-lg-1 col-md-1 unselectable text-center">
-		   <rzhDefaultSorter by="vatar">头像</rzhDefaultSorter>
-		 </th>-->
+        <th class="w8 unselectable text-center">
+          <rzhDefaultSorter by="vatar">头像</rzhDefaultSorter>
+        </th>
         <th class="w10 unselectable text-center">
           <rzhDefaultSorter by="phone">手机号</rzhDefaultSorter>
         </th>
-        <th class="w10 unselectable text-center">
+        <th class="w10 unselectable text-center hidden-sm">
           <rzhDefaultSorter by="idcard">身份证号</rzhDefaultSorter>
         </th>
-        <th class="w15 unselectable text-center">
+        <th class="w13 unselectable text-center hidden-md">
           <rzhDefaultSorter by="home">住址</rzhDefaultSorter>
         </th>
-        <th class="w10 unselectable text-center">
+        <th class="w10 unselectable text-center hidden-sm">
           <rzhDefaultSorter by="loginCode">登录账号</rzhDefaultSorter>
         </th>
         <!-- <th class="col-md-1 unselectable text-center">
 		   <rzhDefaultSorter by="crtime">创建时间</rzhDefaultSorter>
 		 </th>-->
-        <th class="w10 unselectable text-center">修改密码</th>
-        <th class="w10 unselectable text-center">状态</th>
-        <th class="w10 unselectable text-center">修改状态</th>
+        <th class="w8 unselectable text-center">修改密码</th>
+        <th class="w8 unselectable text-center">状态</th>
+        <th class="w8 unselectable text-center">修改状态</th>
         <th class="w10 unselectable text-center">其他操作</th>
       </tr>
       </thead>
@@ -72,11 +72,12 @@
       <tr *ngFor="let admin of adminsData.data;let i = index" class="text-center">
         <td>{{i+1}}</td>
         <td>{{admin.mgrName}}</td>
-        <!--<td>{{admin.vatar}}</td>-->
+        <td><img height="50px" [src]="admin.avatar" onerror="javascript:this.src='../../../assets/img/dummy.png'"
+                 alt=""></td>
         <td>{{admin.phone}}</td>
-        <td>{{admin.idcard}}</td>
-        <td>{{admin.home}}</td>
-        <td>{{admin.loginCode}}</td>
+        <td class="hidden-sm">{{admin.idcard}}</td>
+        <td class="hidden-md">{{admin.home}}</td>
+        <td class="hidden-sm">{{admin.loginCode}}</td>
         <!--<td>{{admin.crtime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>-->
         <td>
           <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="admin.state=='OPEN' || admin.state=='SUPER'"

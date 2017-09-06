@@ -9,6 +9,11 @@ import {SysPlatformService} from "../sys-platform/sys-platform.service";
 import {AdminsComponent} from "../admins/admins.component";
 import {SelectComponent} from "ng2-select/index";
 import {ImageCropperComponent} from "ng2-img-cropper";
+import {FileUploader} from "ng2-file-upload";
+import {AppComponent} from "../../../app.component";
+import {MaskService} from "../../../core/services/mask.service";
+import {isNullOrUndefined} from "util";
+import {GetUidService} from "../../../core/services/get-uid.service";
 
 @Component({
   selector: 'app-add-admin',
@@ -29,22 +34,26 @@ export class AddAdminComponent implements OnInit {
   private newpwd:string;//新密码
   private sysCode:string = '';//系统编码
   private orgName:string;
+  private noOrgCode: boolean = false;//没有机构编码
   private admin = { };
   private userState:string;//用户状态
   private userOrgCode:string;//用户的机构编码
   @ViewChild('defaultRole') public mySelectRoles: SelectComponent;//设置默认选中的角色
   @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
+  private myImg:any;
+  private uuid:string;
+  public uploader:FileUploader = new FileUploader({
+    url: '/orgManager/uploadAvatar',
+    itemAlias:"limitFile"
+  }); //初始化上传方法
 
-
-  constructor(public settings:SettingsService, private router:Router,
+  constructor(public settings:SettingsService, private router:Router,private mask: MaskService,
               private route:ActivatedRoute,  private systemService:SysPlatformService,
-              private addOrgan:AddorganService, private patterns:PatternService,
+              private addOrgan:AddorganService, private patterns:PatternService,private getUid:GetUidService,
               private adminsComponent:AdminsComponent,private addAdminService:AddAdminService) {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
-
-  @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
   // ng2Select
   private Role: Array<object>;
   private Group: Array<object>;
@@ -76,7 +85,7 @@ export class AddAdminComponent implements OnInit {
     let that = this;
     myReader.onloadend = function(loadEvent: any) {
       image.src = loadEvent.target.result;
-      // that.admin['avatar'] = image.src;
+      that.myImg = image.src;
       console.log(image.src)
       // that.cropper.setImage(image);
     };
@@ -255,6 +264,7 @@ export class AddAdminComponent implements OnInit {
   //从子组件获取所选机构数据
   getOrganCode(orgCode) {
     this.admin['orgCode'] = orgCode;
+    this.noOrgCode = false;
   }
 
   //从详情去修改
@@ -272,12 +282,18 @@ export class AddAdminComponent implements OnInit {
     submitData = me.admin;
 
     switch (this.path) {
-      //添加系统
+      //添加系统管理员
       case "addAdmin":
         submitUrl = '/orgManager/add';
+        if(isNullOrUndefined(submitData.orgCode) || submitData.orgCode == '') {
+          me.noOrgCode = true;
+          return
+        };
+        me.upLoadImg(submitUrl, submitData); //上传图片及提交数据
         break;
       case "updateAdmin":
         submitUrl = '/orgManager/update';
+        me.upLoadImg(submitUrl, submitData); //上传图片及提交数据
         break;
       case "updateState":
         submitData = {
@@ -285,6 +301,8 @@ export class AddAdminComponent implements OnInit {
           state: me.admin['state']
         };
         submitUrl = '/orgManager/updateState';
+        me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+        me.adminsComponent.queryDatas()//刷新父页面数据
         break;
       case "updatePwd":
         submitData = {
@@ -292,6 +310,8 @@ export class AddAdminComponent implements OnInit {
           newpwd: me.admin['newpwd']
         };
         submitUrl = '/orgManager/updatePwdForSuper';
+        me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+        me.adminsComponent.queryDatas()//刷新父页面数据
         break;
       case "allotRole":
         submitData = {
@@ -302,13 +322,54 @@ export class AddAdminComponent implements OnInit {
           roleGroupCodes: me.selectedGroupStr
         };
         submitUrl = '/orgManager/addRolesRelation';
+        me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+        me.adminsComponent.queryDatas()//刷新父页面数据
         break;
     }
-    console.log("█ submitData ►►►", submitData);
-    me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
-    me.adminsComponent.queryDatas()//刷新父页面数据
   }
+  /**
+   * 上传图片及提交数据
+   * @param submitData
+   * @param submitUrl
+   */
+  private upLoadImg(submitUrl,submitData){
+    let me = this;
+    me.mask.showMask();//上传图片比较慢，显示遮罩层
+    //上传之前
+    me.uploader.onBuildItemForm = function(fileItem, form){
+      me.uuid = me.getUid.getUid();
+      form.append('uuid', me.uuid);
+    };
+    //执行上传
+    me.uploader.uploadAll();
+    //上传成功
+    me.uploader.onSuccessItem = function (item, response, status, headers) {
+      let res = JSON.parse(response);
+      if (res.success) {
+        if (me.uuid) submitData.uuid = me.uuid;
+      } else {
+        AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+      }
+    }
+    // 上传失败
+    me.uploader.onErrorItem = function (item, response, status, headers) {
+      AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
+    };
+    //上传完成，不管成功还是失败
+    me.uploader.onCompleteAll = function(){
+      me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+      me.adminsComponent.queryDatas()//刷新父页面数据
+    }
 
+    //如果没有选择图片则直接提交
+    if(isNullOrUndefined(me.uuid)){
+      me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+      me.adminsComponent.queryDatas()//刷新父页面数据
+    }else if(!isNullOrUndefined(me.uuid) && !me.uploader.isUploading){// 图片已经传过了，但是数据提交失败了，改过之后可以直接提交
+      me.addAdminService.submitRightPageData(submitUrl, submitData);//所有表单提交用的都是AddAdminService里的submitRightPageData方法
+      me.adminsComponent.queryDatas()//刷新父页面数据
+    }
+  }
   // 取消
   private cancel() {
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面

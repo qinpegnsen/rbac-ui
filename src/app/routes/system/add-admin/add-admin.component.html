@@ -16,6 +16,7 @@
                                 (selectedData)="getOrganCode($event)"></app-select-organ>
             </div>
           </div>
+          <div class="col-sm-8 pull-right text-danger" [hidden]="!noOrgCode">请选择机构</div>
         </fieldset>
         <fieldset>
           <div class="form-group">
@@ -94,9 +95,13 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">上传头像</label>
             <div class="col-sm-7">
-              <label class="file-upload mb0" for="image-input">
-                <button class="btn btn-default btn-block">选择头像</button>
-                <input id="image-input" type="file" (change)="fileChangeListener($event)">
+              <img *ngIf="admin.avatar && !myImg" class="col-sm-5 p-sm" [src]="admin.avatar" alt="">
+              <img *ngIf="admin.avatar && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
+              <img *ngIf="!admin.avatar && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
+              <label class="btn btn-default file-upload">
+                <i class="icon-cloud-upload mr"></i>{{admin.avatar? '修改图片':'上传图片'}}
+                <input class="w100" type="file" name="avatar" ng2FileSelect [uploader]="uploader"
+                       (change)="fileChangeListener($event)"/>
               </label>
             </div>
           </div>
@@ -153,7 +158,11 @@
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">头像：</span>
-            <p class="item-bd col-sm-7">{{admin.avatar}}</p>
+            <p class="item-bd col-sm-7">
+              <img height="50px" *ngIf="admin.avatar" [src]="admin.avatar"
+                   onerror="javascript:this.src='../../../assets/img/dummy.png'"
+                   alt="">
+            </p>
           </li>
           <li class="org-item">
             <span class="item-hd col-sm-4">住址：</span>
