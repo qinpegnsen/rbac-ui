@@ -18,7 +18,7 @@
     </div>
     <div class="col-md-2 pull-right text-right mt">
       <!--添加页面元素-->
-      <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
+      <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode,menuCode:menuCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
     </div>
     <table class="table table-striped" #dataTable2="rzhDataTable" [rzhData]="menuData" (pageChange)="pageMenus($event)">
       <thead>

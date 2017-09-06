@@ -29,16 +29,17 @@ export class MenuAddComponent implements OnInit {
   private pageCode;//声明保存上级的页面编码
   private preType;//选择上级类型
   private limitForm = {
-  sysCode: '',
-  menuName: '',
-  menuUrl: '',
-  preMenuCode: '',
-  preCode:'',
-  menuIcon: '',
-  level: '',
-  remarks: '',
-  ord: ''
-}
+    menuCode:'',
+    sysCode: '',
+    menuName: '',
+    menuUrl: '',
+    preMenuCode: '',
+    preCode:'',
+    menuIcon: '',
+    level: '',
+    remarks: '',
+    ord: ''
+  }
 
   /**
    * 构造 初始化
@@ -54,6 +55,7 @@ export class MenuAddComponent implements OnInit {
     _this.queryId = _this.routeInfo.snapshot.queryParams['id'];
     _this.limitForm.sysCode = _this.routeInfo.snapshot.queryParams['sysCode'];
     _this.limitForm.preMenuCode = _this.routeInfo.snapshot.queryParams['menuCode'];
+    _this.limitForm.menuCode = _this.routeInfo.snapshot.queryParams['menuCode'];
     _this.limitForm.preCode = _this.routeInfo.snapshot.queryParams['pageCode'];
 
 
@@ -140,7 +142,7 @@ export class MenuAddComponent implements OnInit {
         async: false,
         data: {
           'sysCode': _this.limitForm.sysCode,
-          'menuCode':_this.menuCode,
+          'menuCode':_this.limitForm.menuCode,
           'pageName': value.pageName,
           'icon': value.icon,
           'level': value.level,

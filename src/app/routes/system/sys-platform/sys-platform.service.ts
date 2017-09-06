@@ -45,7 +45,7 @@ export class SysPlatformService {
   getSystemListPage(requestParams){
     let list;
     this.ajax.get({
-      url: "/sys/listpage",
+      url: "/sys/listpage?isAll=Y",
       data: requestParams,
       async: false,
       success: (res) => {

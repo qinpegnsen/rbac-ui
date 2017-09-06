@@ -161,7 +161,9 @@
           <legend>添加页面</legend>
         </fieldset>
         <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode"
-               #sysCode="ngModel" type="hidden"/>
+               #sysCode="ngModel" />
+        <input class="form-control" required [(ngModel)]="limitForm.menuCode" name="menuCode"
+               #sysCode="ngModel" />
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"><i>*</i>选择菜单</label>

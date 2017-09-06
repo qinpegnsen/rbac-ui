@@ -26,6 +26,7 @@ export class RightpageComponent implements OnInit {
     deptName: ''
   }
   private  staff= {}
+  private  dept= {}
 
   private sysCode: string;//新增角色组，绑定角色用到，根据系统的的编码呈现当前的系统的名字
 
@@ -34,6 +35,8 @@ export class RightpageComponent implements OnInit {
   public roleCode;//角色列表的数据
   public orgEmpExtVOList;
   private _staffList: any; // 员工列表
+  private fileName:string = '选择图片';
+  private myImg: any;
 
   @ViewChild('defaultRole') public mySelectRoles: SelectComponent;//设置默认选中的角色
   @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
@@ -122,6 +125,24 @@ export class RightpageComponent implements OnInit {
       });
     }
 
+    /**
+     * 请求详细数据，并显示(部门信息)
+     */
+
+   if(typeof(this.deptCode) != 'undefined') {
+      this.ajax.get({
+        url: '/dept/load',
+        async: false, //同步请求
+        data: {deptCode: this.deptCode},
+        success: (res) => {
+          this.dept = res.data;
+        },
+        error: (res) => {
+          console.log("post limit error");
+        }
+      });
+    }
+
 
     /**
      * 获取系统列表的信息
@@ -141,11 +162,28 @@ export class RightpageComponent implements OnInit {
 
   }
 
+
+  /**
+   * 监听图片选择
+   * @param $event
+   */
+  fileChangeListener($event) {
+    let that = this;
+    let image: any = new Image();
+    let file: File = $event.target.files[0];
+    that.fileName = file.name;
+    let myReader: FileReader = new FileReader();
+    myReader.onloadend = function (loadEvent: any) {
+      image.src = loadEvent.target.result;
+      that.myImg = image.src;
+    };
+    myReader.readAsDataURL(file);
+  }
   /**
    *为部门设置主管
    * @param data
      */
-  refreshValueList(data: any) {
+  /*refreshValueList(data: any) {
     this.staffCodes = '';
     console.log(this._staffList);
     for (let i = 0; i < data.length; i ++) {
@@ -162,7 +200,7 @@ export class RightpageComponent implements OnInit {
     }
     console.log(this.staffCodes);
     console.log(data);
-  }
+  }*/
   /**
    * 关闭子页面（取消）
    */
@@ -370,35 +408,33 @@ export class RightpageComponent implements OnInit {
         }
       });
     }
-    //部门编辑，为部门设置主管
+    //修改部门信息
     else if(_this.queryId == 1) {
       _this.ajax.post({
-        url: '/staff/updateIsHead',
+        url: '/dept/update',
         data: {
-          'deptCode': this.deptCode,
-          'staffCodes': this.staffCodes
-          /* 'sysCode': this.sysCode,
-           'roleCode': this.roleCode,
-           'roleGroupCode': this.roleGroupCode*/
+          'deptCode': value.deptCode,
+          'preCode': value.preCode,
+          'deptName': value.deptName,
+          'adr': value.adr,
+          'duty': value.duty
         },
         success: (res) => {
           console.log(res)
           if (res.success) {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
-            swal('成功！', '','success');
-            //_this.outputvalue.emit(true);//提交成功后向父组件传值
-            _this.store.dispatch({type: 'LIST', payload: true});
+            swal('修改部门信息成功！', '','success');
+
           } else {
             let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
             swal(res.info, errorMsg, 'error');
           }
         },
         error: (data) => {
-          swal('失败！', '','error');
+          swal('修改部门信息失败！', '','error');
         }
       });
     }
-
   }
 
 }

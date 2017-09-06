@@ -14,6 +14,7 @@
       <th class="text-center">身份证</th>
       <th class="text-center">登录账号</th>
       <th class="text-center">修改密码</th>
+      <th class="text-center">为部门设置主管</th>
       <th class="text-center">其他操作</th>
     </tr>
     </thead>
@@ -23,13 +24,19 @@
                  [checked]="check_status[i]"
                  name="test"
                  (click)="check_status[i] = !check_status[i];toggle()"></td>
-      <td>{{v.staffName}}</td>
-      <td>{{v.phone}}</td>
-      <td>{{v.idcard}}</td>
-      <td>{{v.loginCode}}</td>
+      <td>{{v.staffAccount.staffName}}</td>
+      <td>{{v.staffAccount.phone}}</td>
+      <td>{{v.staffAccount.idcard}}</td>
+      <td>{{v.staffAccount.loginCode}}</td>
       <td>
-
         <button class="btn btn-default fa fa-pencil btn-xs" title="修改密码" routerLink="rightpage" [queryParams]="{id:4,staffCode:v.staffCode}"></button>
+      </td>
+      <td>
+        <!--为部门设置主管-->
+        <label class="switch">
+          <input type="checkbox" [checked]="v.isHead=='N'" (change)="upMenudateState(v)" title="是否启动"/>
+          <span></span>
+        </label>
       </td>
       <td>
         <app-buttons [config]="option" *ngFor="let option of tableButtonConfig" routerLink="rightpage" [queryParams]="{id:5,staffCode:v.staffCode}"></app-buttons>

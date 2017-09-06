@@ -7,16 +7,16 @@
         <fieldset class="b0">
           <legend>修改菜单</legend>
         </fieldset>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode" #sysCode="ngModel" type="hidden"/>
         <input class="form-control" required [(ngModel)]="limitForm.menuCode" name="menuCode"
-               #menuCode="ngModel" type="hidden"/>
+               #menuCode="ngModel" type="hidden" />
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 菜单名称</label>
             <div class="col-sm-8">
-
               <input class="form-control" required name="menuName" [(ngModel)]="limitForm.menuName"
                      #menuName="ngModel" type="text"/>
-              <div [hidden]="menuName.valid || name.pristine"
+              <div [hidden]="menuName.valid || menuName.pristine"
                    class="alert alert-danger">
                 菜单名称是必填项，请填写菜单名称
               </div>
@@ -93,6 +93,7 @@
         </fieldset>
         <input class="form-control" required [(ngModel)]="pageForm.pageCode" name="pageCode"
                #pageCode="ngModel" type="hidden"/>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode" #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 页面名称</label>
@@ -163,6 +164,7 @@
         </fieldset>
         <input class="form-control" required [(ngModel)]="optForm.optCode" name="optCode"
                #optCode="ngModel" type="hidden"/>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode" #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 操作名称</label>
@@ -252,6 +254,7 @@
         </fieldset>
         <input class="form-control" required [(ngModel)]="fileForm.fileCode" name="fileCode"
                #fileCode="ngModel" type="hidden"/>
+        <input class="form-control" required [(ngModel)]="limitForm.sysCode" name="sysCode" #sysCode="ngModel" type="hidden"/>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label"> <i>*</i> 文件名称</label>

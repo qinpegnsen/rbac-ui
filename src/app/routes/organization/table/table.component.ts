@@ -28,6 +28,7 @@ export class TableComponent implements OnInit {
       value.map((value, index, array) => {this.check_status[index] = false});
     }
     this._orgEmpExtVOList = value;
+    console.log(this._orgEmpExtVOList)
   }
   get orgEmpExtVOList() {
     return this._orgEmpExtVOList;
@@ -125,6 +126,33 @@ export class TableComponent implements OnInit {
       },
       error: (data) => {
         swal('删除失败提醒', '', 'error');
+      }
+    });
+  }
+
+
+  upMenudateState(data) {
+    if (data.isHead == "N") {
+      data.isHead = "Y"
+    } else if (data.isHead == "Y") {
+      data.isHead = "N"
+    }
+    this.ajax.post({
+      url: '/staff/updateIsHead',
+      data: {
+        'staffCodes': data.staffCode,
+        'deptCode':data.deptCode,
+        'isHead':data.isHead
+      },
+      success: () => {
+        if (data.isHead == "Y") {
+          swal('设置主管取消', '', 'success');
+        } else if (data.isHead == "N") {
+          swal('设置主管成功', '', 'success');
+        }
+      },
+      error: (data) => {
+        swal('为部门设置主管失败', '', 'error');
       }
     });
   }

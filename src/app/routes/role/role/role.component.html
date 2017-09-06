@@ -6,8 +6,7 @@
     <div class="col-lg-4">
       <div class="controll">选择系统</div>
       <div class="btn-group" dropdown>
-        <button class="btn btn-default" dropdownToggle> {{sysName}}<b class="caret"></b>
-        </button>
+        <button class="btn btn-default" dropdownToggle> {{sysName}}<b class="caret"></b></button>
         <ul *dropdownMenu class="dropdown-menu animated fadeInDown special" role="menu" >
           <li *ngFor="let item of sysList" (click)="onSelectSys(item.sysCode,item.sysName)">
             <a href="#">{{item.sysName}}</a>

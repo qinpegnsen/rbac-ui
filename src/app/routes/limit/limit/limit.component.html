@@ -2,15 +2,19 @@
   权限管理
 </div>
 <div class="panel p mb">
-  <div class="col-md-1 font16 mt5"><i class="icon-magnifier"></i> 选择系统</div>
-  <div class="btn-group" dropdown>
-    <button class="btn btn-default" dropdownToggle>{{sysName}}<b class="caret"></b>
-    </button>
-    <ul *dropdownMenu class="dropdown-menu animated fadeInDown" role="menu" >
-      <li *ngFor="let item of sysList" (click)="onSelectlimit(item.sysCode,item.sysName)">
-        <a href="#">{{item.sysName}}</a>
-      </li>
-    </ul>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="font16 mt5 pull-left"><i class="icon-magnifier"></i> 选择系统</div>
+      <div class="btn-group" dropdown>
+        <button style="margin-left: 10%" class="btn btn-default" dropdownToggle>{{sysName}}<b class="caret"></b>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu animated fadeInDown" role="menu">
+          <li *ngFor="let item of sysList" (click)="onSelectlimit(item.sysCode,item.sysName)">
+            <a href="#">{{item.sysName}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 <div class="panel  mb0">
@@ -21,7 +25,7 @@
       <i class="fa fa-arrow-right mr ml"></i>
       <font class="cursor-p" (click)="queryChildMenuList(menuTit.code,menuTit.name,true)">{{menuTit.name}}</font>
     </span>
-    <span *ngIf="childMenuTitList.length>0" (click)="goBackMenu()" class="btn btn-default btn-xs ml" >
+    <span *ngIf="childMenuTitList.length>0" (click)="goBackMenu()" class="btn btn-default btn-xs ml">
       <i class="fa fa-level-up mr5"></i>
       返回上一级
     </span>
@@ -84,7 +88,7 @@
         <app-buttons [config]="option" (callback)="option.callback($event,menu.menuCode)" *ngFor="let option of tableButtonConfig"></app-buttons>
         <!--菜单权限子列表项的添加-->
         <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:7,sysCode:sysCode,menuCode:menu.menuCode}"></app-buttons>
-         <span (click)="queryChildMenuList(menu.menuCode,menu.menuName,false)" class="btn btn-default btn-xs" *ngIf="menu.hasSon=='Y'">
+        <span (click)="queryChildMenuList(menu.menuCode,menu.menuName,false)" class="btn btn-default btn-xs" *ngIf="menu.hasSon=='Y'">
       <i class="fa fa-level-down"></i>
       下级菜单
     </span>
