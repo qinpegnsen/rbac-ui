@@ -12,7 +12,7 @@ import {LayoutModule} from './layout/layout.module';
 import {SharedModule} from './shared/shared.module';
 import {RoutesModule} from './routes/routes.module';
 import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
-import { OpaqueToken } from '@angular/core';
+import {OpaqueToken} from '@angular/core';
 import {
   pathReducer,
   listReducer,
@@ -23,6 +23,7 @@ import {
   upDataReducer
 } from './routes/organization/store/store';
 import {StoreModule} from '@ngrx/store';
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: Http) {
@@ -56,7 +57,8 @@ export function createTranslateLoader(http: Http) {
     })
   ],
   providers: [
-    CookieService
+    CookieService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
