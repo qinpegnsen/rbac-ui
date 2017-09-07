@@ -46,13 +46,13 @@ export class SelectAreaComponent implements OnInit {
     // me.show = true;
     areaData = me.tools.getAreaByCode(myAreaCode, isOld);
     let allCitys = areaData.children;
+    me.adr = fullName;
+    me.areaCode = myAreaCode;
     if (!isNullOrUndefined(allCitys) && allCitys.length != 0) {//如果有下级列表
       me.areas = me.getNewCitys(allCitys);
     }else{
       me.cityConfirm();
     };
-    me.adr = fullName;
-    me.areaCode = myAreaCode;
   }
 
   /**
