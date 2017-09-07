@@ -132,10 +132,12 @@ export class TableComponent implements OnInit {
 
 
   upMenudateState(data) {
-    if (data.isHead == "N") {
-      data.isHead = "Y"
-    } else if (data.isHead == "Y") {
+    console.log("█ data ►►►", data );
+
+    if (data.isHead == "Y") {
       data.isHead = "N"
+    }else{
+      data.isHead = "Y"
     }
     this.ajax.post({
       url: '/staff/updateIsHead',
@@ -146,9 +148,9 @@ export class TableComponent implements OnInit {
       },
       success: () => {
         if (data.isHead == "Y") {
-          swal('设置主管取消', '', 'success');
-        } else if (data.isHead == "N") {
           swal('设置主管成功', '', 'success');
+        } else if (data.isHead == "N") {
+          swal('取消主管成功', '', 'success');
         }
       },
       error: (data) => {
