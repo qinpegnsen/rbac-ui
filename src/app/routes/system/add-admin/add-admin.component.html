@@ -8,7 +8,7 @@
           <legend>{{pageTitle}}</legend>
         </fieldset>
 
-        <fieldset  *ngIf="superAdmin">
+        <fieldset  *ngIf="superAdmin && path == 'addAdmin'">
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>选择机构</label>
             <div class="col-sm-7">
@@ -65,7 +65,7 @@
             请填写正确的身份证号
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset *ngIf="path == 'addAdmin'">
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>登录帐号</label>
             <div class="col-sm-7">
@@ -78,7 +78,7 @@
             请输入登陆帐号
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset *ngIf="path == 'addAdmin'">
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>密码</label>
             <div class="col-sm-7">
