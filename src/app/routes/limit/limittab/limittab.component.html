@@ -16,7 +16,7 @@
       返回上一级
     </span>
     </div>
-    <div class="col-md-2 pull-right text-right mt">
+    <div class="col-md-2 pull-right text-right mt" *ngIf="Inflag">
       <!--添加页面元素-->
       <app-buttons [config]="option" routerLink="menuAdd" [queryParams]="{id:2,sysCode:sysCode,menuCode:menuCode}" *ngFor="let option of tableButtonConfig1"></app-buttons>
     </div>

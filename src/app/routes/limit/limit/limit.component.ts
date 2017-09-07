@@ -24,6 +24,7 @@ const swal = require('sweetalert');
 export class LimitComponent implements OnInit {
   private data:Page = new Page();
   public sysList;//配置服务系统列表
+  public flag=false;//用于添加页面元素按钮的显示和隐藏
   private addButton:object;  //添加按钮配置
   private tableButtonConfig:Array<object>;  //列表按钮配置
   private sysCode:string;//系统编码
@@ -79,6 +80,7 @@ export class LimitComponent implements OnInit {
    * **/
   onSelecttable(men):void {
     this.menuCode = men;
+    this.flag=true;//当点击查看元素的时候将flag设为true，添加页面元素按钮显示
   }
 
 
@@ -116,6 +118,7 @@ export class LimitComponent implements OnInit {
    */
   queryChildMenuList(childCode?, menuName?, isTit?:boolean) {
     let me = this, num = 0;
+    me.flag=!me.flag;//flag取反，当点击下级菜单按钮的时候添加页面元素按钮隐藏
     if (isNullOrUndefined(childCode)) {
       this.childMenuCode = null, this.childMenuTitList = []; //清空子集查询
     } else {

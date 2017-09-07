@@ -34,6 +34,9 @@ export class LimittabComponent implements OnInit,OnChanges {
   public sysCode;//获取系统编码
 
   @Input()
+  public flag;//接收父组件传过来的flag
+  public Inflag;//存储父组件传过来的flag,用于添加页面元素按钮的显示隐藏
+  @Input()
   public menuCode;//获取权限菜单编码
 
   @Input()
@@ -179,6 +182,7 @@ export class LimittabComponent implements OnInit,OnChanges {
    * 钩子，输入属性变化的时候调用页面元素
    * **/
   ngOnChanges(changes:SimpleChanges):void {
+    this.Inflag=this.flag;//添加页面元素的隐藏
     //当sysCode变化的时候再次调动
     if (changes["sysCode"] && this.sysCode) {
       this.pageMenus();
