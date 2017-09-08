@@ -67,7 +67,7 @@ export class SysPlatformService {
   getSystemList(){
     let list;
     this.ajax.get({
-      url: "/sys/list",
+      url: "/sys/listForMgr",
       async: false,
       data: '',
       success: (res) => {

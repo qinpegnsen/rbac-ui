@@ -77,11 +77,11 @@ export class AddorganComponent implements OnInit {
 
   private refreshValueRole(value: any): void {
     this.selectedRoleStr = this.itemsToString(value);
-    //console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
+    console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
   }
   private refreshValueGroup(value: any): void {
     this.selectedGroupStr = this.itemsToString(value);
-    //console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
+    console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
 
   /**
