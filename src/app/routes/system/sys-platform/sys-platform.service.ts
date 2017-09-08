@@ -60,11 +60,33 @@ export class SysPlatformService {
     return list;
   }
   /**
-   * 获取系统列表，不分页
+   * 获取开启状态的系统列表，不分页
    * @param requestParams
    * @returns {any}
    */
   getSystemList(){
+    let list;
+    this.ajax.get({
+      url: "/sys/list",
+      async: false,
+      data: '',
+      success: (res) => {
+        if (!isNull(res)) {
+          list = res;
+        }
+      },
+      error: (res) => {
+        console.log('getSystemList error');
+      }
+    });
+    return list;
+  }
+
+  /**
+   * 获取管理员拥有权限的开启状态的系统列表，不分页
+   * @returns {any}
+   */
+  getSystemListForMgr(){
     let list;
     this.ajax.get({
       url: "/sys/listForMgr",
