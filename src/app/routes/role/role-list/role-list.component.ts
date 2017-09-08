@@ -33,7 +33,7 @@ export class RoleListComponent implements OnInit {
     };
     //系统列表的接口，以及设置初始化的sysCode，然后根据sysCode调用初始化的角色列表
 
-    let data=JSON.parse(sessionStorage.getItem('sysListData'));
+    let data=JSON.parse(localStorage.getItem('sysListData'));
     this.sysCode = data[0].sysCode;
     this.sysName = data[0].sysName;
     this.sysList = data;

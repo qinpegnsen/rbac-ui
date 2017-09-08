@@ -43,7 +43,7 @@ export class RouterGuardService implements CanActivate {
    * @returns {Array}
    */
   private getAllRouterLink() {
-    let allMenus = JSON.parse(sessionStorage.getItem('userMenu'));
+    let allMenus = JSON.parse(localStorage.getItem('userMenu'));
     let menuUrls = [];
     console.log("█ allMenus ►►►",  allMenus);
     allMenus.forEach((menu) => {

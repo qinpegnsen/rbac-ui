@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
    */
   logout() {
     this.cookieService.removeAll(); //清空所有cookie
-    sessionStorage.clear();//清空所有Session
+    localStorage.clear();//清空所有Session
     this.ajax.get({
       url: "/login/logout",
       success: (result) => {

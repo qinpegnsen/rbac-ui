@@ -96,7 +96,7 @@ export class AddAdminComponent implements OnInit {
   ngOnInit() {
     let me = this;
     me.admin['orgCode'] = '';
-    let userInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
+    let userInfo = JSON.parse(localStorage.getItem('loginInfo'));
     // console.log(userInfo);
     if(userInfo['state'] === 'SUPER' && userInfo['orgCode'] === '#'){//当前用户是系统超管时,需要选择机构
       this.superAdmin = true;

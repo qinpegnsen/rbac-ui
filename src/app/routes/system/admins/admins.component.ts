@@ -29,7 +29,7 @@ export class AdminsComponent implements OnInit {
 
   ngOnInit() {
     let me = this,
-    userInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
+    userInfo = JSON.parse(localStorage.getItem('loginInfo'));
     me.userState = userInfo['state'];
     me.userOrgCode = userInfo['orgCode'];
 

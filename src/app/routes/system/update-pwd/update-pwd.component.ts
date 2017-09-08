@@ -18,7 +18,7 @@ export class UpdatePwdComponent implements OnInit {
 
   ngOnInit() {
     let me = this,
-      userInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
+      userInfo = JSON.parse(localStorage.getItem('loginInfo'));
     me.upPwd['mgrCode'] = userInfo.mgrCode;
     me.upPwd['mgrName'] = userInfo.mgrName;
     if(userInfo.orgCode === '#'){

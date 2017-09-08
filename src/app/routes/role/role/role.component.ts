@@ -62,12 +62,12 @@ export class RoleComponent implements OnInit {
    */
   ngOnInit() {
     /**
-     * 系统列表的接口 登录的时候放到sessionStorage里面了，需要拿出来
+     * 系统列表的接口 登录的时候放到localStorage里面了，需要拿出来
      * sysCode 初始化系统的编码，默认第一个，然后根据sysCode调用初始化的角色组列表和角色列表
      * sysName 默认的第一个的名字
      * sysList 系统列表的数据
      */
-    let data=JSON.parse(sessionStorage.getItem('sysListData'));
+    let data=JSON.parse(localStorage.getItem('sysListData'));
     this.sysCode = data[0].sysCode;
     this.sysName = data[0].sysName;
     this.sysList = data;

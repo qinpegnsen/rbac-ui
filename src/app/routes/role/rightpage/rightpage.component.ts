@@ -62,7 +62,7 @@ export class RightpageComponent implements OnInit {
       this.selectRoleNamebycode(this.roleCode);//根据角色的编码获取到角色的名字
     }
     //获取系统列表的信息
-    this.sysData=JSON.parse(sessionStorage.getItem('sysListData'));
+    this.sysData=JSON.parse(localStorage.getItem('sysListData'));
 
   }
 

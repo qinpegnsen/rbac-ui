@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {any} from "codelyzer/util/function";
 import {isNullOrUndefined} from "util";
+import {CookieService} from "angular2-cookie/core";
 
 //后台菜单返回格式
 interface menuVO{
@@ -31,7 +32,7 @@ class MenuItem {
 @Injectable()
 export class MenuService {
 
-  constructor() {
+  constructor(private cookie:CookieService) {
   }
 
   foreachPushMenu(items:Array<menuVO>) {
@@ -61,6 +62,7 @@ export class MenuService {
    * @param items
    */
   addMenu(items:Array<menuVO>) {
+    let _this = this;
     let menuItems:Array<MenuItem> = [],menuItem:MenuItem;
 
     menuItems = this.foreachPushMenu(items);
@@ -81,7 +83,7 @@ export class MenuService {
       menuItems.push(menuItem);
     });*/
     let menuItemsString = JSON.stringify(menuItems);
-    sessionStorage.setItem('userMenu', menuItemsString); //保存menu信息至cookie
+    localStorage.setItem('userMenu', menuItemsString); //保存menu信息至cookie
   }
 
   /**
@@ -89,7 +91,7 @@ export class MenuService {
    * @returns {Array<any>}
    */
   getMenu() {
-    let menus = JSON.parse(sessionStorage.getItem("userMenu"));
+    let menus = JSON.parse(localStorage.getItem("userMenu"));
     return menus; //cookie中取出
   }
 

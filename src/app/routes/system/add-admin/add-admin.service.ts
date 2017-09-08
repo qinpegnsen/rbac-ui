@@ -67,7 +67,7 @@ export class AddAdminService {
           });
           if (edit) {
             let data = me.roleService.getSysList();//获取系统列表的数据
-            sessionStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
+            localStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
           }
         } else {
           this.mask.hideMask();//关闭遮罩层

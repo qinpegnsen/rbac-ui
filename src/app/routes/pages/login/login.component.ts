@@ -8,6 +8,7 @@ import {MaskService} from "app/core/services/mask.service";
 import {MenuService} from "../../../core/menu/menu.service";
 import {RoleService} from "../../role/role/role.service";
 import {AppComponent} from "../../../app.component";
+import {CookieService} from "angular2-cookie/core";
 
 declare var $: any;
 @Component({
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
     info: ''
   };
 
-  constructor(private ajax: AjaxService, private maskservice: MaskService, private localtion: Location,
+  constructor(private ajax: AjaxService, private maskservice: MaskService, private cookie:CookieService,
               private router: Router,private setting:SettingsService,private myMenu:MenuService,private roleService:RoleService) {
     this.sysName = setting.app.name;
   }
@@ -83,10 +84,9 @@ export class LoginComponent implements OnInit {
         if (result.success) {
           let user =  result.data;
           me.myMenu.addMenu(result.data.menuVOList);
-
-          sessionStorage.setItem('loginInfo', JSON.stringify(user)); //用户信息存入session
+          localStorage.setItem('loginInfo', JSON.stringify(user)); //用户信息存入session
           let data=me.roleService.getSysList();//获取系统列表的数据
-          sessionStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
+          localStorage.setItem('sysListData', JSON.stringify(data)); //由于多次调用，所以把数据存储到session里面，减轻服务器压力
           me.setting.user.name = user.mgrName,me.setting.user.job = me.setting.getUserJob(user); //修改user变量
           me.router.navigate(['/main/home'], {replaceUrl: true}); //路由跳转
         }

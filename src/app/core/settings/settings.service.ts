@@ -14,22 +14,24 @@ export class SettingsService {
 
     /**
      * 用户信息（当前登录用户）
-     * 获取用户cookie信息并展示
+     * 获取用户localStorage信息并展示
      */
-    let sessionInfo = sessionStorage.getItem('loginInfo');
+    let sessionInfo = localStorage.getItem('loginInfo');
     let loginInfo: any = JSON.parse(sessionInfo);
     let name = '游客', job = '无',orgName = '';
     if (!isNullOrUndefined(loginInfo)) {
+      console.log('loginInfo--------',loginInfo)
       if (!isNullOrUndefined(loginInfo.mgrName)){
         name = loginInfo.mgrName;
-      }else if(!isNullOrUndefined(loginInfo.state)){
+      }
+      if(!isNullOrUndefined(loginInfo.state)){
         job = this.getUserJob(loginInfo);
       }
       if(!isNullOrUndefined(loginInfo.rbacOrganVO.orgName)){
         orgName = loginInfo.rbacOrganVO.orgName;
-        console.log("-----loginInfo.rbacOrganVO:"+loginInfo.rbacOrganVO)
-        console.log("-----loginInfo.rbacOrganVO.orgName:"+loginInfo.rbacOrganVO.orgName)
-        console.log("-----orgName:"+orgName)
+        console.log("-----loginInfo.rbacOrganVO:",loginInfo.rbacOrganVO)
+        console.log("-----loginInfo.rbacOrganVO.orgName:",loginInfo.rbacOrganVO.orgName)
+        console.log("-----orgName:",orgName)
       }
     };
     this.user = {

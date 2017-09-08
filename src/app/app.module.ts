@@ -57,8 +57,7 @@ export function createTranslateLoader(http: Http) {
     })
   ],
   providers: [
-    CookieService,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
