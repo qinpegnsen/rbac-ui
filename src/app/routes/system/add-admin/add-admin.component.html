@@ -31,7 +31,7 @@
             <label class="col-sm-4 control-label"><i>*</i>姓名</label>
             <div class="col-sm-7">
               <input class="form-control" type="text" name="mgrName" required [(ngModel)]="admin.mgrName"
-                     #mgrName="ngModel" placeholder="请输入机构名称"/>
+                     #mgrName="ngModel" placeholder="请输入管理员姓名"/>
             </div>
           </div>
           <div [hidden]="mgrName.valid || mgrName.pristine"
