@@ -1,28 +1,26 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'; // this is needed!
-import {NgModule} from '@angular/core';
-import {HttpModule, Http} from '@angular/http';
-import {TranslateService, TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations"; // this is needed!
+import {NgModule} from "@angular/core";
+import {Http, HttpModule} from "@angular/http";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
-import {AppComponent} from './app.component';
+import {AppComponent} from "./app.component";
 
-import {CoreModule} from './core/core.module';
-import {LayoutModule} from './layout/layout.module';
-import {SharedModule} from './shared/shared.module';
-import {RoutesModule} from './routes/routes.module';
-import {CookieService} from '_angular2-cookie@1.2.6@angular2-cookie';
-import {OpaqueToken} from '@angular/core';
+import {CoreModule} from "./core/core.module";
+import {LayoutModule} from "./layout/layout.module";
+import {SharedModule} from "./shared/shared.module";
+import {RoutesModule} from "./routes/routes.module";
+import {CookieService} from "_angular2-cookie@1.2.6@angular2-cookie";
 import {
-  pathReducer,
-  listReducer,
-  staffReducer,
   activeReducer,
-  queryReducer,
   addStaffReducer,
+  listReducer,
+  pathReducer,
+  queryReducer,
+  staffReducer,
   upDataReducer
-} from './routes/organization/store/store';
-import {StoreModule} from '@ngrx/store';
+} from "./routes/organization/store/store";
+import {StoreModule} from "@ngrx/store";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 // https://github.com/ocombe/ng2-translate/issues/218
@@ -57,7 +55,8 @@ export function createTranslateLoader(http: Http) {
     })
   ],
   providers: [
-    CookieService
+    CookieService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
