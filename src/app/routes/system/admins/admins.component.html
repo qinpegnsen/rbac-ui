@@ -85,17 +85,19 @@
         </td>
         <td>{{admin.state | rzhState:'1009'}}</td>
         <td>
-          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="admin.orgCode != '#' && admin.state=='OPEN'" title="暂停"
+          <button class="btn btn-default btn-xs fa fa-ban" *ngIf="admin.state=='SUPER'"> 不可修改
+          </button>
+          <button class="btn btn-info btn-xs fa fa-pause" *ngIf="admin.state=='OPEN'" title="暂停"
                   (click)="changeState('PAUSE',admin.mgrCode)"></button>
-          <button class="btn btn-green btn-xs fa fa-play" *ngIf="admin.orgCode != '#' && admin.state=='PAUSE'" title="开启"
+          <button class="btn btn-green btn-xs fa fa-play" *ngIf="admin.state=='PAUSE'" title="开启"
                   (click)="changeState('OPEN',admin.mgrCode)"></button>
-          <button class="btn btn-warning btn-xs fa fa-square" *ngIf="admin.orgCode != '#' && admin.state=='PAUSE'" title="冻结"
+          <button class="btn btn-warning btn-xs fa fa-square" *ngIf="admin.state=='PAUSE'" title="冻结"
                   (click)="changeState('FREEZE',admin.mgrCode)"></button>
-          <button class="btn btn-danger btn-xs fa fa-trash" *ngIf="admin.orgCode != '#' && admin.state=='FREEZE'" title="删除"
+          <button class="btn btn-danger btn-xs fa fa-trash" *ngIf="admin.state=='FREEZE'" title="删除"
                   (click)="changeState('DEL',admin.mgrCode)"></button>
         </td>
         <td>
-          <div *ngIf="admin.state=='OPEN' || admin.state=='SUPER'">
+          <div *ngIf="admin.state=='SUPER'">
             <app-buttons [config]="option" (callback)="option.callback($event,admin.mgrCode)"
                          *ngFor="let option of buttonConfig"></app-buttons>
           </div>
@@ -104,7 +106,7 @@
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="10">
+        <td colspan="11">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{admins.genStartRow()}} 至 {{admins.genEndRow()}} 条，共 {{admins.totalRow}}
               条</strong></div>

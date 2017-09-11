@@ -40,15 +40,15 @@ export class AddorganComponent implements OnInit {
     this.settings.showRightPage("28%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
-  private orgTypes:any;//机构类型，选择类型时需要
-  private orgStates:any;//机构类型
-  private organ = {};//机构
+  private orgTypes:any;   //机构类型，选择类型时需要
+  private orgStates:any;  //机构类型
+  private organ = {};     //机构
 
-  private orgCode: string = '';//机构编码
-  private systems: any;//系统列表
-  private sysCode: string = '';//系统编码，分配角色或角色组时选择系统
-  private path: string;//路由
-  private pageTitle:string;右弹窗标题
+  private orgCode: string = '';     //机构编码
+  private systems: any;              //系统列表
+  private sysCode: string = '';     //系统编码，分配角色或角色组时选择系统
+  private path: string;             //路由
+  private pageTitle:string;         //右弹窗标题
 
   private uuid: string;
   private myImg: any;
@@ -59,27 +59,27 @@ export class AddorganComponent implements OnInit {
     itemAlias:"limitFile"
   }); //初始化上传方法
 
-  private Organ:boolean = false;//是否是添加或修改机构
-  private detail:boolean = false;//是否是查看详情
-  private updateType:boolean = false;//是否是修改机构类型
-  private updateBoss:boolean = false;//是否是修改机构负责人
-  private addRolesRelation:boolean = false;//是否是分配角色或角色组
+  private Organ:boolean = false;              //是否是添加或修改机构
+  private detail:boolean = false ;            //是否是查看详情
+  private updateType:boolean = false;         //是否是修改机构类型
+  private updateBoss:boolean = false;         //是否是修改机构负责人
+  private addRolesRelation:boolean = false;   //是否是分配角色或角色组
 
   // ng2Select start
   @ViewChild('defaultRoles') public mySelectRoles: SelectComponent;//设置默认选中的角色
   @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
-  private Role: Array<object>;//角色数组
-  private Group: Array<object>;//角色组数组
-  private selectedRoleStr:string;//已选角色拼接字符串
-  private selectedGroupStr:string;//已选角色组拼接字符串
+  private Role: Array<object>;        //角色数组
+  private Group: Array<object>;       //角色组数组
+  private selectedRoleStr:string;     //已选角色拼接字符串
+  private selectedGroupStr:string;    //已选角色组拼接字符串
 
   private value:any = [];
 
-  private refreshValueRole(value: any): void {
+  refreshValueRole(value: any): void {
     this.selectedRoleStr = this.itemsToString(value);
     console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
   }
-  private refreshValueGroup(value: any): void {
+  refreshValueGroup(value: any): void {
     this.selectedGroupStr = this.itemsToString(value);
     console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
@@ -98,8 +98,8 @@ export class AddorganComponent implements OnInit {
   // ng2Select end
 
   ngOnInit() {
-    this.organ['type'] = '';//初始化，为了让select框默认选中value=''的option
-    this.organ['state'] = '';//初始化，为了让select框默认选中value=''的option
+    this.organ['type'] = '';      //初始化，为了让select框默认选中value=''的option
+    this.organ['state'] = '';     //初始化，为了让select框默认选中value=''的option
 
 
     //获取当前路由
@@ -186,8 +186,7 @@ export class AddorganComponent implements OnInit {
   /**
    * 当选择的系统改变的时候
    */
-  private selectedChange(){
-    // this.getRoleAndGroupList();//获取角色/角色组列表
+  selectedChange(){
     this.getMyRoleAndGroupList();//获取已经分配的角色/角色组列表
   }
 
@@ -243,38 +242,7 @@ export class AddorganComponent implements OnInit {
 
     this.selectedRoleStr = this.itemsToString(newRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
     this.selectedGroupStr = this.itemsToString(newRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
-    //console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
-    //console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
-/*
-  /!**
-   * 获取角色和角色组列表
-   *!/
-  private getRoleAndGroupList(){
-    let roleAndGroupList = this.addOrganService.getRoleAndGroupList(this.sysCode,this.orgCode).data;
-    //console.log("█ roleAndGroupList ►►►", roleAndGroupList);
-    let oldRolesArray = roleAndGroupList.roleList;
-    let oldRoleGroupArray = roleAndGroupList.roleGroupList;
-    let newRolesArray = [],newRoleGroupArray = [], obj = {};
-    //将所有角色组成一个新的数组
-    for (var i=0; i<oldRolesArray.length; i++){
-      obj = {
-        id:oldRolesArray[i].roleCode,
-        text:oldRolesArray[i].roleName
-      };
-      newRolesArray.push(obj);
-    };
-    //将所有角色组组成一个新的数组
-    for (var i=0; i<oldRoleGroupArray.length; i++){
-      obj = {
-        id:oldRoleGroupArray[i].roleGroupCode,
-        text:oldRoleGroupArray[i].roleGroupName
-      };
-      newRoleGroupArray.push(obj);
-    }
-    this.Role = newRolesArray;
-    this.Group = newRoleGroupArray;
-  }*/
 
   //获取机构代码(路由参数)
   private getOrgCode(){
@@ -285,21 +253,21 @@ export class AddorganComponent implements OnInit {
   }
 
   //获取区域数据
-  private getAreaData(area){
+  getAreaData(area){
     //console.log("█ area ►►►",  area);
     let me = this;
     me.organ['areaCode'] = area.areaCode;
   }
 
   //从详情去修改
-  private toUpdateOrgan(){
+  toUpdateOrgan(){
     let me = this;
     me.settings.closeRightPage(); //关闭右侧滑动页面
     me.router.navigate(['/main/organ/updateOrgan',this.orgCode], { replaceUrl: true });
   }
 
   //提交机构form
-  private submitOrganData(){
+  submitOrganData(){
     let me = this;
     let submitUrl,submitData;
     switch(this.path){

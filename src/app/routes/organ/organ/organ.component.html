@@ -64,7 +64,7 @@
           <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN'"
                   (click)="updateBoss(organ.orgCode)" title="修改"></button>
         </td>
-        <td>{{organ.tel}}</td>
+        <td>{{organ.bossPhone}}</td>
         <td>{{organ.areaCode | areaName}}</td>
         <td>{{organ.type | rzhState:'1007'}}
           <button class="btn btn-default fa fa-pencil btn-xs" *ngIf="organ.state=='OPEN' && organ.type != 'SUPER'"
@@ -94,7 +94,7 @@
       </tbody>
       <tfoot>
       <tr>
-        <td colspan="9">
+        <td colspan="10">
           <div class="col-sm-5">
             <div class="text-muted"><strong>第 {{organs.genStartRow()}} 至 {{organs.genEndRow()}} 条，共 {{organs.totalRow}}
               条</strong></div>

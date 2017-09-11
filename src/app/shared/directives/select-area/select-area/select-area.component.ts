@@ -43,7 +43,6 @@ export class SelectAreaComponent implements OnInit {
    */
   getArea(fullName, myAreaCode, isOld) {
     let me = this, areaData;
-    // me.show = true;
     areaData = me.tools.getAreaByCode(myAreaCode, isOld);
     let allCitys = areaData.children;
     me.adr = fullName;
@@ -85,8 +84,14 @@ export class SelectAreaComponent implements OnInit {
    */
   freshCitys() {
     this.adr = '';
+    this.areaCode = '';
     this.areas = this.tools.getAreaByCode('');
+    this.myData.emit({
+      areaCode: this.areaCode,
+      adr: this.adr
+    });
   }
+
 
   /**
    * 确定选择城市

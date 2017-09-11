@@ -30,7 +30,7 @@
 }
 
 .page-container {
-    margin: 120px auto 0 auto;
+    margin: 0 auto;
     width: 350px;
     min-height: 400px;
     height:auto;
@@ -38,6 +38,8 @@
     border-radius: 8px; /* 所有角都使用半径为5px的圆角，此属性为CSS3标准属性 */
     -moz-border-radius: 8px; /* Mozilla浏览器的私有属性 */
     -webkit-border-radius: 8px; /* Webkit浏览器的私有属性 */
+    position: relative;
+    top: 150px;
 }
 
 h1 {
