@@ -387,7 +387,7 @@ export class AddorganComponent implements OnInit {
     me.uploader.onSuccessItem = function (item, response, status, headers) {
       let res = JSON.parse(response);
       if (res.success) {
-        if (me.uuid) submitData.uuid = me.uuid;
+        if (!isNullOrUndefined(me.uuid)) submitData.uuid = me.uuid;
       } else {
         AppComponent.rzhAlt('error','上传失败', '图片上传失败！');
       }
@@ -403,11 +403,8 @@ export class AddorganComponent implements OnInit {
     }
 
     //如果没有选择图片则直接提交
-    if(isNullOrUndefined(me.uuid)){
-      me.addAdminService.submitRightPageData(submitUrl,submitData,true);
-      me._parent.queryDatas();//刷新父页面数据
-    }else if(!isNullOrUndefined(me.uuid) && !me.uploader.isUploading){
-      // 图片已经传过了，但是数据提交失败了，改过之后可以直接提交
+    if(!me.uploader.isUploading){// 图片已经传过了，但是数据提交失败了，改过之后可以直接提交
+      if (!isNullOrUndefined(me.uuid)) submitData.uuid = me.uuid;
       me.addAdminService.submitRightPageData(submitUrl,submitData,true);
       me._parent.queryDatas();//刷新父页面数据
     }

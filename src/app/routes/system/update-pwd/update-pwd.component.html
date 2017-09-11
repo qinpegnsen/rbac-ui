@@ -12,7 +12,7 @@
       </fieldset>
       <fieldset class="b0" *ngIf="!superAdmin">
         <div class="form-group">
-          <label class="col-sm-3 control-label"><i>*</i>老密码</label>
+          <label class="col-sm-3 control-label"><i class="main-red">*</i>老密码</label>
           <div class="col-sm-9">
             <input class="form-control" type="password" name="oldpwd" required [(ngModel)]="upPwd.oldpwd"
                    #oldpwd="ngModel" placeholder="请输入老密码"/>
@@ -25,7 +25,7 @@
       </fieldset>
       <fieldset class="b0">
         <div class="form-group">
-          <label class="col-sm-3 control-label"><i>*</i>新密码</label>
+          <label class="col-sm-3 control-label"><i class="main-red">*</i>新密码</label>
           <div class="col-sm-9">
             <input class="form-control" type="password" name="newpwd" required [(ngModel)]="upPwd.newpwd"
                    #newpwd="ngModel" placeholder="请输入新密码"/>
