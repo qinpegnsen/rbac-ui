@@ -31,7 +31,11 @@ export class SelectAreaComponent implements OnInit {
     let _this = this;
     $('body').click(function (e) {
       let event = e.target.attributes['class'];
-      if (isNullOrUndefined(event) || isNullOrUndefined(event.nodeValue) || event.nodeValue.indexOf("rzh-sel-city") <= 0) _this.show = false; //关闭选框
+      if (isNullOrUndefined(event) || isNullOrUndefined(event.nodeValue) || event.nodeValue.indexOf("rzh-sel-city") <= 0) {
+        if(_this.show){
+          _this.cityConfirm()
+        }
+      } //关闭选框
     });
   }
 

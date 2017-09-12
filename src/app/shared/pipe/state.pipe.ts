@@ -10,7 +10,7 @@ export class StatePipe implements PipeTransform {
 
   transform(value: string, args?: any): any {
     let me = this, val;
-    val = this.tools.getEnumDataValByKey(args,value);
+    val = me.tools.getEnumDataValByKey(args,value);
     return val;
   }
 }
