@@ -22,7 +22,7 @@ export class RoleComponent implements OnInit {
    */
   public sysList;
   public sysCode;
-  public sysName="请先选择系统";
+  public sysName;
 
   /**
    * 3个button的按钮

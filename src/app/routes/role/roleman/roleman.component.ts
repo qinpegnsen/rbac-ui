@@ -85,13 +85,14 @@ export class RolemanComponent implements OnInit,OnChanges {
    * roleGroupCode 角色组输入属性变化
    */
   ngOnChanges(changes: SimpleChanges): void {
-    this.roleGroupNameText="【"+this.roleGroupName+"】角色组下面的所有角色"
   //当sysCode变化的时候再次调动
   if(changes["sysCode"] && this.sysCode){
+    this.roleGroupNameText="当前系统下的所有角色"
     this.queryRoleListDatasBySyscode()
   }
   //当roleGroupCode变化的时候再次调动
   if(changes["roleGroupCode"] && this.roleGroupCode){
+    this.roleGroupNameText="【"+this.roleGroupName+"】角色组下面的所有角色"
     this.queryRoleListDatasByroleGroupCode()
   }
 }
