@@ -102,7 +102,6 @@
             修改角色组信息
           </legend>
         </fieldset>
-
         <input type="hidden" ngModel [value]="roleGroupCode" name="roleGroupCode">
         <fieldset>
           <div class="form-group">
@@ -130,7 +129,7 @@
       </div>
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
-        <button class="ml btn btn-info pull-left" type="submit">提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" [disabled]="dataForm.invalid">提交信息</button>
       </div>
     </div>
     <!-- END panel-->
@@ -177,7 +176,7 @@
       </div>
       <div class="panel-footer text-center" style="position: fixed;width: 100%;bottom:0;">
         <button class="ml btn btn-default mr pull-left" (click)="cancel()" type="button">取消</button>
-        <button class="ml btn btn-info pull-left" type="submit">提交信息</button>
+        <button class="ml btn btn-info pull-left" type="submit" [disabled]="dataForm.invalid">提交信息</button>
       </div>
     </div>
     <!-- END panel-->
