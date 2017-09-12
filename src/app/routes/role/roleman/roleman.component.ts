@@ -91,7 +91,7 @@ export class RolemanComponent implements OnInit,OnChanges {
     this.queryRoleListDatasBySyscode()
   }
   //当roleGroupCode变化的时候再次调动
-  if(changes["roleGroupCode"] && this.roleGroupCode){
+  if(changes["roleGroupCode"]&& this.roleGroupCode){
     this.roleGroupNameText="【"+this.roleGroupName+"】角色组下面的所有角色"
     this.queryRoleListDatasByroleGroupCode()
   }

@@ -72,7 +72,9 @@ export class RightpageComponent implements OnInit {
   }
 
   /**
-   * 点击提交时执行的方法  1.返回之前的页面   2.局部刷新
+   * 点击提交时执行的方法
+   * 1.返回之前的页面
+   * 2.局部刷新
    * queryId=4 addrType=='roleList'或者的时候加载角色列表页面 这里不能用 =5 =6 判断，因为公用组件，两个页面都有
    */
   closePage() {
@@ -80,7 +82,10 @@ export class RightpageComponent implements OnInit {
       this.settings.closeRightPage();
       this.router.navigate(['/main/role/roleList']);
       this.roleListComponent.refresh();
-    } else {
+    } else if(this.queryId == 1){
+      this.router.navigate(['/main/role/roleGroup']);
+      this.roleComponent.queryRoleGroupDatas();
+    } else{
       this.settings.closeRightPage();
       this.router.navigate(['/main/role/roleGroup']);
       this.roleComponent.refresh()

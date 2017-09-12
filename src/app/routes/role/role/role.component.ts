@@ -129,6 +129,7 @@ export class RoleComponent implements OnInit {
  *  把当前的页码信息发射出去，刷新用的
  */
 public queryRoleGroupDatas(event?: PageEvent) {
+  console.log("█ 1 ►►►",  1);
   this.getRoleGroupPageInfo.emit(event);//把当前的页码信息发射出去，刷新用的
   let me = this, activePage = 1;
   if (typeof event !== "undefined") activePage = event.activePage;
