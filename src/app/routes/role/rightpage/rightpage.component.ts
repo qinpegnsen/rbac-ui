@@ -21,10 +21,12 @@ export class RightpageComponent implements OnInit {
   //绑定角色,修改角色组的时候用到
   private roleGroupCode: string;
   private roleGroupName: string;
+  private roleGroupmark: string;
 
   //修改角色，分配权限的时候用到
   private roleCode: string;
   private roleName: string;
+  private roleremark: string;//备注
 
 
   public sysData;//系统列表的数据
@@ -103,6 +105,7 @@ export class RightpageComponent implements OnInit {
       success: (data) => {
         if (data.success) {
           this.roleGroupName = data.data.roleGroupName;
+          this.roleGroupmark = data.data.remarks;
         } else {
           swal("系统错误", '', 'success');
         }
@@ -124,6 +127,7 @@ export class RightpageComponent implements OnInit {
       success: (data) => {
         if (data.success) {
           this.roleName = data.data.roleName;
+          this.roleremark = data.data.remarks;
         } else {
           swal("系统错误", '', 'success');
         }
@@ -142,13 +146,6 @@ export class RightpageComponent implements OnInit {
   //获取到传递过来的权限编码集
   getRoleLimit(limitCodes) {
     this.limitCodes = limitCodes;
-  }
-
-  /**
-   * 获取到当前点击的页码的数据
-   */
-  getRoleGroupPageInfo(pageData){
-    console.log(pageData)
   }
   /**
    * 表单提交事件 根据不同的id，调取不同的接口
