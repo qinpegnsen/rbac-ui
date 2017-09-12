@@ -10,16 +10,13 @@
         <th style="width: 5%">
           序号
         </th>
-        <th style="width: 18%">
+        <th style="width: 22%">
           <rzhDefaultSorter by="name">系统名称</rzhDefaultSorter>
         </th>
-        <th style="width: 18%">
-          <rzhDefaultSorter>机构编码</rzhDefaultSorter>
-        </th>
-        <th style="width: 15%">
+        <th style="width: 19%">
           <rzhDefaultSorter by="city">角色名称</rzhDefaultSorter>
         </th>
-        <th style="width: 20%">
+        <th style="width: 30%">
           <rzhDefaultSorter by="city">备注</rzhDefaultSorter>
         </th>
         <th style="width: 10%">权限分配</th>
@@ -31,7 +28,6 @@
       <tr *ngFor="let elder of dataTable.data;let i = index">
         <td>{{i+1}}</td>
         <td>{{elder.sysName}}</td>
-        <td>{{elder.orgCode}}</td>
         <td>{{elder.roleName}}</td>
         <td>{{elder.remarks}}</td>
         <td>
