@@ -14,6 +14,7 @@ export class PatternService {
   public backcard: string; //银行卡
   public chinese: string; //中文
   public tel:string;//手机号和固话
+  public str:string;//URL路径
 
   constructor() {
     this.num = '^[0-9]*$'; //数字正则
@@ -25,7 +26,7 @@ export class PatternService {
     this.backcard = '^([0-9]{16}|[0-9]{19})$'; //银行卡正则（三网合一）
     this.chinese = '^[\u4e00-\u9fa5]{0,}$'; //中文正则（三网合一）
     this.tel = '(^1[0-9]{10}$)|(^((^[0-9]{3,4}-[0-9]{7,8}$)|(^[0-9]{7,8}$))$)';//手机号和固话同时验证
-
+    this.str = '[^\u4e00-\u9fa5]+'//验证URL正则
   }
 
 }

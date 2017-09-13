@@ -5,6 +5,7 @@ import {AjaxService} from "../../../core/services/ajax.service";
 import { FileUploader } from 'ng2-file-upload';
 import {LimitComponent} from "../limit/limit.component";
 import {LimittabComponent} from "../limittab/limittab.component";
+import {PatternService} from "../../../core/forms/pattern.service";
 const swal = require('sweetalert');
 const uploadUrl = "/limitFile/uploadLimitFile";  //图片上传路径(调取上传的接口)
 
@@ -44,7 +45,7 @@ export class MenuAddComponent implements OnInit {
   /**
    * 构造 初始化
    * **/
-  constructor(private ajax:AjaxService, public settings:SettingsService, private router:Router, private routeInfo:ActivatedRoute, private route:ActivatedRoute, private limitComponent:LimitComponent, private limittabComponent:LimittabComponent) {
+  constructor(private ajax:AjaxService, public settings:SettingsService, private router:Router, private routeInfo:ActivatedRoute, private route:ActivatedRoute, private limitComponent:LimitComponent, private limittabComponent:LimittabComponent,private patterns: PatternService) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
