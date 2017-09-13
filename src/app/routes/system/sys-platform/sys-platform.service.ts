@@ -86,12 +86,12 @@ export class SysPlatformService {
    * 获取管理员拥有权限的开启状态的系统列表，不分页
    * @returns {any}
    */
-  getSystemListForMgr(){
+  getSystemListForMgr(orgCode){
     let list;
     this.ajax.get({
       url: "/sys/listForMgr",
       async: false,
-      data: '',
+      data: {orgCode:orgCode},
       success: (res) => {
         if (!isNull(res)) {
           list = res;

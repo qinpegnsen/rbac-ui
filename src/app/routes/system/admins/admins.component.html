@@ -98,7 +98,7 @@
         </td>
         <td>
           <div *ngIf="admin.state=='SUPER'">
-            <app-buttons [config]="option" (callback)="option.callback($event,admin.mgrCode)"
+            <app-buttons [config]="option" (callback)="option.callback($event,admin.mgrCode,admin.orgCode)"
                          *ngFor="let option of buttonConfig"></app-buttons>
           </div>
         </td>

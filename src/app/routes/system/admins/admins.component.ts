@@ -64,9 +64,9 @@ export class AdminsComponent implements OnInit {
         title:"角色分配",
         type: "add",
         size: "xs",
-        callback:function(result,mgrCode) {
+        callback:function(result,mgrCode,orgCode) {
           result.then((id)=> {
-            me.router.navigate(['/main/system/admins/allotRole',mgrCode]);
+            me.router.navigate(['/main/system/admins/allotRole',mgrCode],{queryParams:{orgCode:orgCode}});
           })
         }
       }

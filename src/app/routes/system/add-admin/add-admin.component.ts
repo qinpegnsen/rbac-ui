@@ -150,7 +150,8 @@ export class AddAdminComponent implements OnInit {
           me.allotRoleOrGroup = true;
           me.admin['mgrCode'] = me.getMgrCode();//获取管理员编码(路由参数)
           me.admin = me.addAdminService.getAdminDetail(me.admin['mgrCode'])//获取某个管理员详情
-          me.systems = me.systemService.getSystemListForMgr();//管理员拥有权限的系统列表
+          let orgCode = this.route.snapshot.queryParams['orgCode']
+          me.systems = me.systemService.getSystemListForMgr(orgCode);//管理员拥有权限的系统列表
           break;
       }
     });
