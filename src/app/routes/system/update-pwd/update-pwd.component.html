@@ -15,6 +15,7 @@
           <label class="col-sm-3 control-label"><i class="main-red">*</i>老密码</label>
           <div class="col-sm-9">
             <input class="form-control" type="password" name="oldpwd" required [(ngModel)]="upPwd.oldpwd"
+                   minlength="6" maxlength="16"
                    #oldpwd="ngModel" placeholder="请输入老密码"/>
           </div>
         </div>
@@ -28,12 +29,13 @@
           <label class="col-sm-3 control-label"><i class="main-red">*</i>新密码</label>
           <div class="col-sm-9">
             <input class="form-control" type="password" name="newpwd" required [(ngModel)]="upPwd.newpwd"
+                   minlength="6" maxlength="16"
                    #newpwd="ngModel" placeholder="请输入新密码"/>
           </div>
         </div>
         <div [hidden]="newpwd.valid || newpwd.pristine"
              class="col-sm-9 pull-right text-danger">
-          请输入新密码
+          请输入6-16位密码
         </div>
       </fieldset>
       <div class="text-center"><button class="btn btn-danger" [disabled]="!updatePwd.form.valid" (click)="update()">确定</button></div>

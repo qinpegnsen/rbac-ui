@@ -10,6 +10,8 @@ import {AppComponent} from "../../../app.component";
 import {GetUidService} from "../../../core/services/get-uid.service";
 import {isNullOrUndefined} from "util";
 import {MaskService} from "../../../core/services/mask.service";
+import {RzhtoolsService} from "../../../core/services/rzhtools.service";
+import {PatternService} from "../../../core/forms/pattern.service";
 
 const swal = require('sweetalert');
 
@@ -37,6 +39,7 @@ export class AddSysComponent implements OnInit {
               public settings: SettingsService,
               private route: ActivatedRoute,
               private router:Router,
+              public patterns: PatternService,
               private getUid:GetUidService,
               private Location: Location,
               private mask: MaskService,

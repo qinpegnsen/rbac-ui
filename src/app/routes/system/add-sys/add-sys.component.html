@@ -25,13 +25,14 @@
           <div class="form-group">
             <label class="col-sm-4 control-label"><i>*</i>系统网址</label>
             <div class="col-sm-7">
-              <input class="form-control" type="text" required name="sysUrl" [(ngModel)]="system.sysUrl"
-                     #sysUrl="ngModel" tooltip="需要加上http协议" placeholder="请填写系统网址"/>
+              <input class="form-control" type="url" required name="sysUrl" [(ngModel)]="system.sysUrl"
+                     [pattern]="patterns.URL"
+                     #sysUrl="ngModel" tooltip="需要加上http/https等协议" placeholder="请填写系统网址"/>
             </div>
           </div>
           <div [hidden]="sysUrl.valid || sysUrl.pristine"
                class="col-sm-8 pull-right text-danger">
-            系统网址不可缺少
+            请输入正确的网址
           </div>
         </fieldset>
         <fieldset>
