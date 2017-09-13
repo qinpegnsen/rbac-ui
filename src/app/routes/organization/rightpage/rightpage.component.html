@@ -273,7 +273,7 @@
             <label class="col-sm-3 control-label"> <i>*</i> 新密码</label>
             <div class="col-sm-8">
               <input class="form-control" required name="newpwd" [(ngModel)]="limitForm.newpwd"
-                     #newpwd="ngModel" type="text"/>
+                     #newpwd="ngModel" type="password"/>
               <div [hidden]="newpwd.valid || newpwd.pristine"
                    class="alert alert-danger">
                 新密码是必填项，请填写新密码
@@ -337,7 +337,7 @@
                      #staffName="ngModel" type="text"/>
               <div [hidden]="staffName.valid || staffName.pristine"
                    class="alert alert-danger">
-                部门名称是必填项，请填写url路径
+                员工名称是必填项，请填写员工名称
               </div>
             </div>
           </div>
