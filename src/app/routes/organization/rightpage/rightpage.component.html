@@ -182,18 +182,26 @@
           </div>
         </fieldset>
         <fieldset>
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <i>*</i> 密码</label>
-            <div class="col-sm-8">
-              <input class="form-control" required name="pwd" [(ngModel)]="limitForm.pwd"
-                     #pwd="ngModel" type="password"/>
-              <div [hidden]="pwd.valid || pwd.pristine"
-                   class="alert alert-danger">
-                密码是必填项，请填写密码
-              </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label"> <i>*</i> 密码</label>
+          <div class="col-sm-8">
+            <input class="form-control" required name="pwd" [(ngModel)]="limitForm.pwd" #pwd="ngModel" type="password" minlength="6" maxlength="16" placeholder="请输入6-16位密码"/>
+            <div [hidden]="pwd.valid || pwd.pristine"
+                 class="alert alert-danger">
+              密码是必填项，请填写密码
             </div>
           </div>
-        </fieldset>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">所属部门</label>
+          <div class="col-sm-8">
+            <app-bing-role  [staffCode]="staffCode" (roleCodes)="getRoleCodes($event)"></app-bing-role>
+          </div>
+        </div>
+      </fieldset>
+
         <!--<fieldset *ngIf="this.queryId == '3'">
           <div class="form-group">
             <label class="col-sm-4 control-label">机构LOGO</label>
@@ -273,10 +281,10 @@
             <label class="col-sm-3 control-label"> <i>*</i> 新密码</label>
             <div class="col-sm-8">
               <input class="form-control" required name="newpwd" [(ngModel)]="limitForm.newpwd"
-                     #newpwd="ngModel" type="password"/>
+                     #newpwd="ngModel" type="password" minlength="6" maxlength="16" placeholder="请输入6-16位密码"/>
               <div [hidden]="newpwd.valid || newpwd.pristine"
                    class="alert alert-danger">
-                新密码是必填项，请填写新密码
+                密码是必填项，请填写新密码
               </div>
             </div>
           </div>
@@ -339,6 +347,14 @@
                    class="alert alert-danger">
                 员工名称是必填项，请填写员工名称
               </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">所属部门</label>
+            <div class="col-sm-8">
+              <app-bing-role  [staffCode]="staffCode" (roleCodes)="getRoleCodes($event)"></app-bing-role>
             </div>
           </div>
         </fieldset>

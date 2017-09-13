@@ -9,7 +9,7 @@ import { RightpageComponent } from './rightpage/rightpage.component';
 import {OrgService} from './server/org.service';
 import {TreeModule} from 'ng2-tree';
 import { TreeComponent } from './tree/tree.component';
-import {BingRoleComponent} from "../role/bing-role/bing-role.component";
+import { BingRoleComponent } from './bing-role/bing-role.component';
 
 const appChildRoutes: Routes = [
   {path: 'rightpage', component: RightpageComponent},
@@ -31,7 +31,8 @@ const routes:Routes = [
     NavigationComponent,
     HomePComponent,
     RightpageComponent,
-    TreeComponent
+    TreeComponent,
+    BingRoleComponent
   ],
   providers: [OrgService]
 })

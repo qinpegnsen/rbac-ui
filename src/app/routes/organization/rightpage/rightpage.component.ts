@@ -21,6 +21,7 @@ export class RightpageComponent implements OnInit {
   public deptCode:string;//获取部门编码
   public staffCode:string;//获取员工编码
   public staffCodes:string;
+  public orgCode;//获取机构编码
   private limitForm = {
     deptCode:'',
     deptName: ''
@@ -33,10 +34,12 @@ export class RightpageComponent implements OnInit {
   public sysData;//系统列表的数据
   public roleGroupCode;//角色组列表的数据
   public roleCode;//角色列表的数据
+  public depts;//部门列表的数据
   public orgEmpExtVOList;
   private _staffList: any; // 员工列表
   private fileName:string = '选择图片';
   private myImg: any;
+  private loginlnfo: any;
 
   @ViewChild('defaultRole') public mySelectRoles: SelectComponent;//设置默认选中的角色
   @ViewChild('defaultGroup') public mySelectGroup: SelectComponent;//设置默认选中的角色组
@@ -60,6 +63,7 @@ export class RightpageComponent implements OnInit {
 
   private value:any = [];
 
+
   public refreshValueRole(value: any): void {
     this.roleCode = this.itemsToString(value);
   }
@@ -76,10 +80,14 @@ export class RightpageComponent implements OnInit {
 
 
   ngOnInit() {
+    let sessionInfo = localStorage.getItem('loginInfo');
+    this.loginlnfo = JSON.parse(sessionInfo);
 
     // 获取deptCode部门编码
     this.store.select('addStaff').subscribe((res) => {
       this.deptCode = res[0].deptCode;
+      console.log("█ this.deptCode ►►►",  this.deptCode);
+
     });
     //获取路由的参数
     this.queryId = this.routeInfo.snapshot.queryParams['id'];
@@ -87,6 +95,8 @@ export class RightpageComponent implements OnInit {
     this.staffCode = this.routeInfo.snapshot.queryParams['staffCode'];
     // 获取系统编码编码
     this.sysCode = this.routeInfo.snapshot.queryParams['sysCode'];// 获取系统编码编码
+    //获取机构编码
+    this.orgCode = this.routeInfo.snapshot.queryParams['orgCode'];
 
     this.store.select('staff').subscribe((item) => {
       const arr = [];
@@ -265,7 +275,7 @@ export class RightpageComponent implements OnInit {
       _this.ajax.post({
         url: '/staff/add',
         data: {
-          'deptCode': value.deptCode,
+          'deptCode':_this.depts,
           'idcard': value.idcard,
           'phone': value.phone,
           'staffName': value.staffName,
@@ -327,7 +337,9 @@ export class RightpageComponent implements OnInit {
           'staffName': value.staffName,
           'uuid': value.uuid,
           'home': value.home,
-          'position': value.position
+          'position': value.position,
+          'deptCodes':_this.depts,
+          'orgCode':_this.loginlnfo.orgCode
         },
         success: (res) => {
           console.log(res)
@@ -341,7 +353,6 @@ export class RightpageComponent implements OnInit {
                  _this.store.dispatch({type: 'STAFF_ADD', payload: res});
                })
              });
-
           } else {
             let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
             swal(res.info, errorMsg, 'error');
@@ -463,6 +474,11 @@ export class RightpageComponent implements OnInit {
         swal('删除部门失败！', '','error');
       }
     });
+  }
+
+
+  getRoleCodes(roleCodes) {
+    this.depts = roleCodes;
   }
 
 }
