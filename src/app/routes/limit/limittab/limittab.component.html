@@ -74,7 +74,7 @@
           <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="menuAdd" [queryParams]="{id:8,sysCode:sysCode,pageCode:page.pageCode}"></app-buttons>
           <span class="btn btn-default btn-xs" (click)="queryChildMenuList(page.pageCode,page.pageName,false)" *ngIf="page.hasSon=='Y'">
       <i class="fa fa-level-down"></i>
-      下级菜单
+      下级页面
     </span>
         </td>
       </tr>

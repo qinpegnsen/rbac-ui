@@ -199,7 +199,7 @@ export class RightpageComponent implements OnInit {
         }
       });
     } else if (this.queryId == 3) {
-      console.log(value)
+      console.log(this.roleGroupCode)
       this.ajax.put({
         url: '/roleGroup/update',
         data: {
