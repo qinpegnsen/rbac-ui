@@ -97,7 +97,7 @@
                   (click)="changeState('DEL',admin.mgrCode)"></button>
         </td>
         <td>
-          <div *ngIf="admin.state=='SUPER'">
+          <div *ngIf="admin.state=='SUPER' || admin.state=='OPEN'">
             <app-buttons [config]="option" (callback)="option.callback($event,admin.mgrCode,admin.orgCode)"
                          *ngFor="let option of buttonConfig"></app-buttons>
           </div>
