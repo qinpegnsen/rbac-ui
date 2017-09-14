@@ -451,7 +451,7 @@ export class RightpageComponent implements OnInit {
   /**
    * 删除部门
    */
-  delLimitList(value){
+ /* delLimitList(value){
     let _this = this;
     _this.ajax.post({
       url: '/dept/updateState',
@@ -474,6 +474,28 @@ export class RightpageComponent implements OnInit {
         swal('删除部门失败！', '','error');
       }
     });
+  }*/
+
+  delstaffs(delCodeId) {
+    let _this = this, url: string = "/dept/updateState", data: any;
+    swal({
+        title: '确认删除此信息？',
+        type: 'info',
+        confirmButtonText: '确认', //‘确认’按钮命名
+        showCancelButton: true, //显示‘取消’按钮
+        cancelButtonText: '取消', //‘取消’按钮命名
+        closeOnConfirm: false  //点击‘确认’后，执行另外一个提示框
+      },
+      function () {  //点击‘确认’时执行
+        swal.close(); //关闭弹框
+        data = {
+          'deptCode': _this.deptCode,
+          'state':'DEL'
+        }
+        console.log(data)
+        _this.bindRoleService.delCode(url, data); //删除数据
+      }
+    );
   }
 
 
