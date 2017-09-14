@@ -240,8 +240,8 @@ export class AddorganComponent implements OnInit {
     this.Role = newRolesArray;
     this.Group = newRoleGroupArray;
 
-    this.selectedRoleStr = this.itemsToString(newRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
-    this.selectedGroupStr = this.itemsToString(newRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
+    this.selectedRoleStr = this.itemsToString(myNewRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
+    this.selectedGroupStr = this.itemsToString(myNewRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
   }
 
   //获取机构代码(路由参数)
