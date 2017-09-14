@@ -12,45 +12,28 @@ const swal = require('sweetalert');
 })
 export class RolemanComponent implements OnInit,OnChanges {
 
-  //定义分页用的数据data
-  public data: Page = new Page();
-
-  /**
-   * 2个button的按钮
-   * disAuthButton 分配权限按钮
-   * updateButton  修改按钮
-   */
-  private disAuthButton;
-  private updateButton;
-
-  /**
-   * 获取到传递过来的系统编码，获取当前系统下的所有角色
-   */
+  public data: Page = new Page();                //定义分页用的数据data
+  private disAuthButton;                         //分配权限按钮
+  private updateButton;                          //修改按钮
   @Input()
-  public sysCode;
+  public sysCode;                                //输入属性，系统编码
+  @Input()
+  public roleGroupCode;                          //输入属性，角色组的编码
+  @Input()
+  public roleGroupName;                          //输入属性，角色组的名字如果没有的话默认是当前系统下的所有角色
+  public roleGroupNameText;                      //输入属性，角色组的文本
+  @Input()
+  public addrType;                               //输入属性
 
-  /**
-   * 下面的这两个输入属性是角色组传过来的
-   * roleGroupCode 角色组的编码
-   * roleGroupName 角色组的名字如果没有的话默认是当前系统下的所有角色
-   */
-  @Input()
-  public roleGroupCode;
-  @Input()
-  public roleGroupName;
-  public roleGroupNameText;
-
-  /**
-   * 获取到传递过来的地址栏的类型，在传给神龙，从而加载刷新不同的页面
-   */
-  @Input()
-  public addrType;
   constructor(private ajax: AjaxService) {
 
   }
+
+  /**
+   * 对按钮进行赋值
+   */
   ngOnInit() {
-    //分配权限按钮
-    this.disAuthButton = [
+     this.disAuthButton = [
       {
         text:"",
         title:"分配权限",
@@ -62,9 +45,8 @@ export class RolemanComponent implements OnInit,OnChanges {
           })
         }
       },
-    ];
-    //修改按钮
-    this.updateButton = [
+    ]; //分配权限按钮
+     this.updateButton = [
       {
         title: "修改",
         type: "update",
@@ -75,9 +57,11 @@ export class RolemanComponent implements OnInit,OnChanges {
           })
         }
       }
-    ];
+    ]; //修改按钮
 
   }
+
+
   /**
    *
    * @param changes 当有输入属性的时候会执行这个钩子
@@ -111,7 +95,11 @@ export class RolemanComponent implements OnInit,OnChanges {
     }
   }
 
-  //根据系统编码变化的角色列表
+
+  /**
+   * 根据系统编码变化的角色列表
+   * @param event
+   */
   public queryRoleListDatasBySyscode(event?: PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
@@ -133,7 +121,11 @@ export class RolemanComponent implements OnInit,OnChanges {
     })
   }
 
-  //根据角色组编码变化的角色列表
+
+  /**
+   * 根据角色组编码变化的角色列表
+   * @param event
+   */
   public queryRoleListDatasByroleGroupCode(event?: PageEvent) {
     let me = this, activePage = 1;
     if (typeof event !== "undefined") activePage = event.activePage;
@@ -155,7 +147,11 @@ export class RolemanComponent implements OnInit,OnChanges {
     });
   }
 
-  //修改角色的状态
+
+  /**
+   * 修改角色的状态
+   * @param data
+   */
   updateRoleState(data){
     if(data.isUse=="Y"){
       data.isUse="N"

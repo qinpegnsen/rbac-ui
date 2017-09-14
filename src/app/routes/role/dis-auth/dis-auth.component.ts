@@ -14,14 +14,11 @@ export class DisAuthComponent implements OnInit {
   @Input()
   public roleCode;
   @Output()
-  public bingLimit=new EventEmitter();
-  //存放的数据
-  public items:Array<object>;
-  //存储权限的编码
-
+  public bingLimit=new EventEmitter();          //存放的数据
+  public items:Array<object>;                   //存储权限的编码
   @ViewChild('defaultLimits')
-  public mySelectLimits: SelectComponent;//设置默认选中的角色数据数组集合
-  private mySelectLimitsStr:string; //默认绑定好的角色数组的编码集
+  public mySelectLimits: SelectComponent;        //设置默认选中的角色数据数组集合
+  private mySelectLimitsStr:string;             //默认绑定好的角色数组的编码集
 
   constructor(private ajax: AjaxService) {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -29,6 +26,10 @@ export class DisAuthComponent implements OnInit {
     this.modelWithValue = '5554441234';
     this.formControlInput.setValue('5555551234');
   }
+
+  /**
+   * 调用权限列表的方法
+   */
   ngOnInit() {
     /**
      * 查询所有的权限列表
@@ -37,6 +38,8 @@ export class DisAuthComponent implements OnInit {
      */
     this.getRoleLimit()
   }
+
+
   /**
    * 获取到当前角色已经绑定的权限
    * tempY 已经为为当前的角色绑定的权限数组集合

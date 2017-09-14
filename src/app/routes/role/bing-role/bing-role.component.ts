@@ -9,22 +9,17 @@ import {SelectComponent} from "ng2-select";
   encapsulation: ViewEncapsulation.None
 })
 export class BingRoleComponent implements OnInit {
-    //根据系统编码查询出当前系统下的角色
-    @Input()
-     public sysCode;
 
+    @Input()
+     public sysCode;                          //根据系统编码查询出当前系统下的角色
     @Output()
      public roleCodes=new EventEmitter();
-
     @Input()
     public roleGroupCode;
-
-    //存放的数据，临时的数组用来存放编码，之后截取
-     public items:Array<object>;
-
+     public items:Array<object>;              //存放的数据，临时的数组用来存放编码，之后截取
   @ViewChild('defaultRoles')
-  public mySelectRoles: SelectComponent;//设置默认选中的角色数据数组集合
-  private mySelectRolesStr:string; //默认绑定好的角色数组的编码集
+  public mySelectRoles: SelectComponent;      //设置默认选中的角色数据数组集合
+  private mySelectRolesStr:string;           //默认绑定好的角色数组的编码集
 
   constructor(private ajax: AjaxService) {
     this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -32,13 +27,14 @@ export class BingRoleComponent implements OnInit {
     this.modelWithValue = '5554441234';
     this.formControlInput.setValue('5555551234');
   }
-  ngOnInit() {
 
-    /**
-     * 查询所有的角色列表
-     * tempY 已经绑定的角色
-     * tempN 未绑定的角色而
-     */
+
+  /**
+   * 查询所有的角色列表
+   * tempY 已经绑定的角色
+   * tempN 未绑定的角色而
+   */
+  ngOnInit() {
     this.getBingRoleList()
   }
 
