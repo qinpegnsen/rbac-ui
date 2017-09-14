@@ -44,14 +44,9 @@ export class HomePComponent implements OnInit {
      */
   getOrgList(url:string) {
     this.org.getOrgList(url).subscribe((res) => {
-      console.log("█ res ►►►", res );
-
       const {result, pre_arr} = this.toTreeDate(res);
       this.result = result;
       this.pre_arr = pre_arr;
-      console.log("█ result ►►►", result );
-      console.log("█ pre_arr ►►►", pre_arr );
-
     })
   }
 

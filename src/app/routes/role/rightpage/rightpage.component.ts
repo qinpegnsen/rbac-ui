@@ -14,30 +14,27 @@ const swal = require('sweetalert');
 
 export class RightpageComponent implements OnInit {
 
-  private queryId: number;//根据查询参数queryId的不同，呈现不同的页面
-
-  private sysCode: string;//新增角色组，绑定角色用到，根据系统的的编码呈现当前的系统的名字
-
-  //绑定角色,修改角色组的时候用到
-  private roleGroupCode: string;
+  private queryId: number;          //根据查询参数queryId的不同，呈现不同的页面
+  private sysCode: string;          //新增角色组，绑定角色用到，根据系统的的编码呈现当前的系统的名字
+  private roleGroupCode: string;    //绑定角色,修改角色组的时候用到
   private roleGroupName: string;
   private roleGroupmark: string;
-
-  //修改角色，分配权限的时候用到
-  private roleCode: string;
+  private roleCode: string;         //修改角色，分配权限的时候用到
   private roleName: string;
-  private roleremark: string;//备注
+  private roleremark: string;       //备注
+  public sysData;                    //系统列表的数据
+  public limitCodes;                 //角色的权限集
+  public roleCodes;                  //绑定的角色编码集
+  public addrType;                   //获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
 
-
-  public sysData;//系统列表的数据
-  public limitCodes;//角色的权限集
-
-  // 构造 初始化
-  public roleCodes;//绑定的角色编码集
-
-  public addrType;//获取地址的类型，为了加载不同的页面使用的,传递到神龙页面
-
-  constructor(public settings: SettingsService, private router: Router, private ajax: AjaxService, private routeInfo: ActivatedRoute, private roleListComponent: RoleListComponent,private roleComponent: RoleComponent) {
+  constructor(
+    public settings: SettingsService,
+    private router: Router,
+    private ajax: AjaxService,
+    private routeInfo: ActivatedRoute,
+    private roleListComponent: RoleListComponent,
+    private roleComponent: RoleComponent
+  ) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }
 
@@ -68,7 +65,9 @@ export class RightpageComponent implements OnInit {
 
   }
 
-  // 取消
+  /**
+   * 取消
+   */
   cancel() {
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
   }
@@ -94,7 +93,11 @@ export class RightpageComponent implements OnInit {
     }
   }
 
-  //根据角色组编码获取角色组的名字
+
+  /**
+   * 根据角色组编码获取角色组的名字
+   * @param roleGroupCode
+   */
   selectRoleGroupNamebycode(roleGroupCode) {
     this.ajax.get({
       url: '/roleGroup/load',
@@ -116,7 +119,11 @@ export class RightpageComponent implements OnInit {
     });
   }
 
-  //根据角色编码获取角色的名字
+
+  /**
+   * 根据角色编码获取角色的名字
+   * @param roleCode
+   */
   selectRoleNamebycode(roleCode) {
     this.ajax.get({
       url: '/role/load',
@@ -138,15 +145,23 @@ export class RightpageComponent implements OnInit {
     });
   }
 
-  //获取到bing-role传递过来的角色编码集
+  /**
+   * 获取到bing-role传递过来的角色编码集
+   * @param roleCodes
+   */
   getRoleCodes(roleCodes) {
     this.roleCodes = roleCodes;
   }
 
-  //获取到传递过来的权限编码集
+
+  /**
+   * 获取到传递过来的权限编码集
+   * @param limitCodes
+   */
   getRoleLimit(limitCodes) {
     this.limitCodes = limitCodes;
   }
+
   /**
    * 表单提交事件 根据不同的id，调取不同的接口
    * @param value 表单提交时时候的携带的数据

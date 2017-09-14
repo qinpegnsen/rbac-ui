@@ -11,10 +11,6 @@ import { DisAuthComponent } from './dis-auth/dis-auth.component';
 import { RoleListComponent } from './role-list/role-list.component';
 import {RoleService} from "./role/role.service";
 
-
-
-
-
 // 子路由，用于页面嵌套显示
 const appChildRoutes: Routes = [
   {path: 'rightpage', component: RightpageComponent}

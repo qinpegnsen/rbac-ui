@@ -39,7 +39,7 @@
         </label>
       </td>
       <td>
-        <app-buttons [config]="option" *ngFor="let option of tableButtonConfig" routerLink="rightpage" [queryParams]="{id:5,staffCode:v.staffCode}"></app-buttons>
+        <app-buttons [config]="option" *ngFor="let option of tableButtonConfig" routerLink="rightpage" [queryParams]="{id:5,staffCode:v.staffCode,orgCode:v.orgCode}"></app-buttons>
         <app-buttons [config]="option" *ngFor="let option of buttonConfig" routerLink="rightpage" [queryParams]="{id:6,staffCode:v.staffCode}"></app-buttons>
       </td>
     </tr>
