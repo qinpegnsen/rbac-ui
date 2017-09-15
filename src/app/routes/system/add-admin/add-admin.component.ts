@@ -43,7 +43,8 @@ export class AddAdminComponent implements OnInit {
   private myImg:any;
   private uuid:string;
   public uploader:FileUploader = new FileUploader({
-    url: '/orgManager/uploadAvatar',
+    // url: '/orgManager/uploadAvatar',
+    url: '/upload/basic/upload',
     itemAlias:"limitFile"
   }); //初始化上传方法
 

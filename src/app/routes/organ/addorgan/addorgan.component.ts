@@ -55,7 +55,8 @@ export class AddorganComponent implements OnInit {
   private upBrandImg:boolean = false;
   private fileName:string = '选择图片';
   public uploader:FileUploader = new FileUploader({
-    url: '/organ/uploadOrgLogo',
+    // url: '/organ/uploadOrgLogo',
+    url: '/upload/basic/upload',
     itemAlias:"limitFile"
   }); //初始化上传方法
 
@@ -242,6 +243,9 @@ export class AddorganComponent implements OnInit {
 
     this.selectedRoleStr = this.itemsToString(myNewRolesArray);//选择系统之后，已经选中的角色转成字符串,因为如果没有改变，这个值会是undefined
     this.selectedGroupStr = this.itemsToString(myNewRoleGroupArray);//选择系统之后，已经选中的角色组转成字符串
+
+    console.log("█ this.selectedRoleStr ►►►",  this.selectedRoleStr);
+    console.log("█ this.selectedGroupStr ►►►",  this.selectedGroupStr);
   }
 
   //获取机构代码(路由参数)

@@ -7,7 +7,8 @@ import {LimitComponent} from "../limit/limit.component";
 import {LimittabComponent} from "../limittab/limittab.component";
 import {PatternService} from "../../../core/forms/pattern.service";
 const swal = require('sweetalert');
-const uploadUrl = "/limitFile/uploadLimitFile";  //图片上传路径(调取上传的接口)
+// const uploadUrl = "/limitFile/uploadLimitFile";  //图片上传路径(调取上传的接口)
+const uploadUrl = '/upload/basic/upload';  //图片上传路径(调取上传的接口)
 
 @Component({
   selector: 'app-rightpage',

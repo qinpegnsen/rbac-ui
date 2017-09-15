@@ -31,7 +31,8 @@ export class AddSysComponent implements OnInit {
   private upBrandImg:boolean = false;
   private fileName:string = '选择图片';
   public uploader:FileUploader = new FileUploader({
-    url: '/sys/uploadSysLogo',
+    // url: '/sys/uploadSysLogo',
+    url: '/upload/basic/upload',
     itemAlias:"limitFile"
   }); //初始化上传方法
 
