@@ -17,7 +17,7 @@ export class PatternService {
   public str:string;//URL路径
   public decimals: string;  // 0-1小数
   public doubleDigit: string; // 两位为整数（0-99）
-  public URL: string; //网址
+  public _URL: string; //网址
 
   constructor() {
     this.num = '^[0-9]*$'; //数字正则
@@ -30,7 +30,7 @@ export class PatternService {
     this.chinese = '^[\u4e00-\u9fa5]{0,}$'; //中文正则（三网合一）
     this.tel = '(^1[0-9]{10}$)|(^((^[0-9]{3,4}-[0-9]{7,8}$)|(^[0-9]{7,8}$))$)';//手机号和固话同时验证
     this.str = '[^\u4e00-\u9fa5]+'; //除中文的任何数字包括字符
-    this.URL = '^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+'; //网址
+    this._URL = '^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$'; //网址
     this.decimals = '^(0\.[0-9]*[1-9]$)|^0$';　　//0-1小数，包含0,不包含1
     this.doubleDigit = '^[0-9]{1,2}$'; // 两位为整数（0-99）
   }
