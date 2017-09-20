@@ -97,12 +97,12 @@
             <label class="col-sm-4 control-label">上传头像</label>
             <div class="col-sm-7">
               <img *ngIf="admin.avatar && !myImg" class="col-sm-5 p-sm" [src]="admin.avatar" alt="">
-              <img *ngIf="admin.avatar && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
-              <img *ngIf="!admin.avatar && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
+              <img *ngIf="admin.avatar && myImg" class="col-sm-5 p-sm" [src]="uploader.queue[0]._file | imgUrl" alt="">
+              <img *ngIf="!admin.avatar && myImg" class="col-sm-5 p-sm" [src]="uploader.queue[0]._file | imgUrl" alt="">
               <label class="btn btn-default file-upload">
                 <i class="icon-cloud-upload mr"></i>{{admin.avatar? '修改图片':'上传图片'}}
                 <input class="w100" type="file" name="avatar" ng2FileSelect [uploader]="uploader"
-                       (change)="fileChangeListener($event)"/>
+                       (change)="fileChangeListener()"/>
               </label>
             </div>
           </div>

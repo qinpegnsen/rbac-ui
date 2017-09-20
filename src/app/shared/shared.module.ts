@@ -41,6 +41,7 @@ import {SelectPageModule} from "./directives/selec-page/select-page.module";
 import {SelectPageComponent} from "./directives/selec-page/select-page/select-page.component";
 import {RouterGuardService} from "../core/routerGuard/router-guard.service";
 import {RoleService} from "../routes/role/role/role.service";
+import {ImgUrlPipe} from "./pipe/img-url.pipe";
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -87,8 +88,8 @@ import {RoleService} from "../routes/role/role/role.service";
     ScrollableDirective,
     JqcloudDirective,
     StatePipe,
-    AreaNamePipe
-
+    AreaNamePipe,
+    ImgUrlPipe
   ],
   exports: [
     CommonModule,
@@ -125,7 +126,8 @@ import {RoleService} from "../routes/role/role/role.service";
     SelectAreaModule,
     StatePipe,
     AreaNamePipe,
-    SelectModule
+    SelectModule,
+    ImgUrlPipe
   ]
 })
 

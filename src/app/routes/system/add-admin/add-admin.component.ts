@@ -79,19 +79,11 @@ export class AddAdminComponent implements OnInit {
   }
 
 
-  fileChangeListener($event) {
-    let image: any = new Image();
-    let file: File = $event.target.files[0];
-    let myReader: FileReader = new FileReader();
-    let that = this;
-    myReader.onloadend = function(loadEvent: any) {
-      image.src = loadEvent.target.result;
-      that.myImg = image.src;
-      console.log(image.src)
-      // that.cropper.setImage(image);
-    };
 
-    myReader.readAsDataURL(file);
+  fileChangeListener() {
+    // 当选择了新的图片的时候，把老图片从待上传列表中移除
+    if(this.uploader.queue.length > 1) this.uploader.queue[0].remove();
+    this.myImg = true;  //表示已经选了图片
   }
 
   ngOnInit() {

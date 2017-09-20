@@ -105,12 +105,12 @@
             <label class="col-sm-4 control-label">机构LOGO</label>
             <div class="col-sm-7">
               <img *ngIf="organ.orgLogo && !myImg" class="col-sm-5 p-sm" [src]="organ.orgLogo" alt="">
-              <img *ngIf="organ.orgLogo && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
-              <img *ngIf="!organ.orgLogo && myImg" class="col-sm-5 p-sm" [src]="myImg" alt="">
+              <img *ngIf="organ.orgLogo && myImg" class="col-sm-5 p-sm" [src]="uploader.queue[0]._file | imgUrl" alt="">
+              <img *ngIf="!organ.orgLogo && myImg" class="col-sm-5 p-sm" [src]="uploader.queue[0]._file | imgUrl" alt="">
               <label class="btn btn-default file-upload">
                 <i class="icon-cloud-upload mr"></i>{{organ.orgLogo? '修改图片':'上传图片'}}
                 <input class="w100" type="file" name="sysLogo" ng2FileSelect [uploader]="uploader"
-                       (change)="fileChangeListener($event)"/>
+                       (change)="fileChangeListener()"/>
               </label>
             </div>
           </div>
