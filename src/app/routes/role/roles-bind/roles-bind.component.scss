@@ -1,0 +1,37 @@
+.limit-group {
+  min-width: 1100px;
+}
+
+.limit-item-box {
+  float: left;
+  margin-right: 30px;
+}
+
+.limit-item {
+  display: inline-block;
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 4px;
+}
+
+.item-group {
+  display: inline-block;
+}
+
+.limit-dib {
+  display: inline-block;
+}
+
+.limit-group-title {
+  font-size: 18px;
+  line-height: 2;
+}
+
+.limit-title {
+  margin-bottom: 15px;
+  li{
+    float: left;
+    font-size: 16px;
+    line-height: 36px;
+  }
+}

@@ -1,0 +1,125 @@
+<div class="roles-bind">
+  <div class="content-heading mb-lg">
+    权限分配
+  </div>
+  <div class="panel">
+    <div class="panel-body">
+      <div class="current-system font20">为<strong class="text-info">{{roleName}}</strong>分配权限</div>
+    </div>
+  </div>
+  <div class="panel limit-group">
+    <div class="panel-body limit-menu">
+      <div class="clearfix">
+        <p class="limit-group-title">菜单</p>
+        <ul class="pl every-group">
+          <li class="clearfix" *ngFor="let one of limitList.MENU;let x = index">
+            <div class="mb pull-left w15 everyone" #x>
+              <label class="checkbox-inline c-checkbox">
+                <input class="_val" type="checkbox" [checked]="one.isHas=='Y'" [value]="one.limitCode"
+                       (change)="checkedItems($event.target,x)"/>
+                <span class="fa fa-check"></span>
+              </label>
+              <div class="limit-item menu-one bg-green">{{one.alias}}</div>
+            </div>
+            <ul class="w85 pull-left pl every-group" *ngIf="one.subLimitList.length > 0">
+              <li class="mb clearfix" *ngFor="let two of one.subLimitList;let y = index">
+                <div class="mb pull-left w18 everyone" #y>
+                  <label class="checkbox-inline c-checkbox">
+                    <input class="_val" type="checkbox" [checked]="two.isHas=='Y'" [value]="two.limitCode"
+                           (change)="checkedItems($event.target,y)"/>
+                    <span class="fa fa-check"></span>
+                  </label>
+                  <div class="limit-item menu-one bg-danger">{{two.alias}}</div>
+                </div>
+                <ul class="pull-left w82 pl every-group" *ngIf="two.subLimitList.length > 0">
+                  <li class="limit-item-box" *ngFor="let three of two.subLimitList;let m = index">
+                    <div class="mb everyone" #m>
+                      <label class="checkbox-inline c-checkbox">
+                        <input class="_val" type="checkbox" [checked]="three.isHas=='Y'" [value]="three.limitCode"
+                               (change)="checkedItems($event.target,m)"/>
+                        <span class="fa fa-check"></span>
+                      </label>
+                      <div class="limit-item menu-one bg-warning">{{three.alias}}</div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="clearfix">
+        <p class="limit-group-title">页面元素</p>
+        <ul class="pl every-group">
+          <li class="clearfix" *ngFor="let one of limitList.PAGE;let i = index">
+            <div class="mb pull-left w15 everyone" #i>
+              <label class="checkbox-inline c-checkbox">
+                <input class="_val" type="checkbox" [checked]="one.isHas=='Y'" [value]="one.limitCode"
+                       (change)="checkedItems($event.target,i)"/>
+                <span class="fa fa-check"></span>
+              </label>
+              <div class="limit-item menu-one bg-green">{{one.alias}}</div>
+            </div>
+            <ul class="w85 pull-left pl every-group" *ngIf="one.subLimitList && one.subLimitList.length > 0">
+              <li class="mb clearfix" *ngFor="let two of one.subLimitList;let s = index">
+                <div class="mb pull-left w18 everyone" #s>
+                  <label class="checkbox-inline c-checkbox">
+                    <input class="_val" type="checkbox" [checked]="two.isHas=='Y'" [value]="two.limitCode"
+                           (change)="checkedItems($event.target,s)"/>
+                    <span class="fa fa-check"></span>
+                  </label>
+                  <div class="limit-item menu-one bg-danger">{{two.alias}}</div>
+                </div>
+                <ul class="pull-left w82 pl every-group" *ngIf="two.subLimitList && two.subLimitList.length > 0">
+                  <li class="limit-item-box" *ngFor="let three of two.subLimitList;let n = index">
+                    <div class="mb everyone" #n>
+                      <label class="checkbox-inline c-checkbox">
+                        <input class="_val" type="checkbox" [checked]="three.isHas=='Y'" [value]="three.limitCode"
+                               (change)="checkedItems($event.target,n)"/>
+                        <span class="fa fa-check"></span>
+                      </label>
+                      <div class="limit-item menu-one bg-warning">{{three.alias}}</div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="clearfix">
+        <p class="limit-group-title">功能操作</p>
+        <ul class="pull-left w82 pl every-group" *ngIf="limitList.OPERATE.length > 0">
+          <li class="limit-item-box" *ngFor="let item of limitList.OPERATE">
+            <div class="mb everyone" #parent5>
+              <label class="checkbox-inline c-checkbox">
+                <input class="_val" type="checkbox" [checked]="item.isHas=='Y'" [value]="item.limitCode"
+                       (change)="checkedItems($event.target,parent5)"/>
+                <span class="fa fa-check"></span>
+              </label>
+              <div class="limit-item menu-one bg-green">{{item.alias}}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="clearfix">
+        <p class="limit-group-title">文件控制</p>
+        <ul class="pull-left w82 pl every-group" *ngIf="limitList.FILE.length > 0">
+          <li class="limit-item-box" *ngFor="let item of limitList.FILE">
+            <div class="mb everyone" #parent6>
+              <label class="checkbox-inline c-checkbox">
+                <input class="_val" type="checkbox" [checked]="item.isHas=='Y'" [value]="item.limitCode"
+                       (change)="checkedItems($event.target,parent6)"/>
+                <span class="fa fa-check"></span>
+              </label>
+              <div class="limit-item menu-one bg-green">{{item.alias}}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-purple" (click)="allotLimt()">提交</button>
+    </div>
+  </div>
+</div>

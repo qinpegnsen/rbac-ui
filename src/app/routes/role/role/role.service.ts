@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import {AjaxService} from "../../../core/services/ajax.service";
+import {MaskService} from "../../../core/services/mask.service";
+import {SettingsService} from "../../../core/settings/settings.service";
+import {AppComponent} from "../../../app.component";
+import {isNullOrUndefined} from "util";
+const swal = require('sweetalert');
 
 @Injectable()
 export class RoleService {
   public result;
-  constructor(private ajax: AjaxService) { }
+  constructor(private ajax: AjaxService,public mask:MaskService,public settings:SettingsService) { }
 
   getSysList(){
     let that=this;
@@ -29,5 +34,37 @@ export class RoleService {
       }
     });
     return that.result;
+  }
+
+'/role/limitList'
+  /**
+   * POST 请求
+   * @param submitUrl
+   * @param submitData
+   * @param back:true(返回上一级)
+   */
+  postRequest(submitUrl, submitData, back?: boolean) {
+    let me = this, result;
+    me.ajax.post({
+      url: submitUrl,
+      data: submitData,
+      async: false,
+      success: (res) => {
+        if(!isNullOrUndefined(res.success)){
+          if (res.success) {
+            if (back) me.settings.closeRightPageAndRouteBack()//关闭右侧页面并返回上级路由
+            swal(res.info, '', 'success');
+          } else if (!res.success) {
+            AppComponent.rzhAlt("error", res.info);
+          }
+        }else{
+          result = res;
+        }
+      },
+      error: (res) => {
+        AppComponent.rzhAlt("error", res.status + '**' + res.statusText);
+      }
+    })
+    return result;
   }
 }

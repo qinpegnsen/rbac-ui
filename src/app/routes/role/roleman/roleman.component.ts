@@ -24,6 +24,7 @@ export class RolemanComponent implements OnInit,OnChanges {
   public roleGroupNameText;                      //输入属性，角色组的文本
   @Input()
   public addrType;                               //输入属性
+  public showBindComp:boolean = false;
 
   constructor(private ajax: AjaxService) {
 
@@ -33,6 +34,7 @@ export class RolemanComponent implements OnInit,OnChanges {
    * 对按钮进行赋值
    */
   ngOnInit() {
+    let me = this;
      this.disAuthButton = [
       {
         text:"",
@@ -41,6 +43,7 @@ export class RolemanComponent implements OnInit,OnChanges {
         size:"xs",
         callback:function(result){
           result.then((id)=>{
+            me.showBindComp = !me.showBindComp;
             // alert(id);
           })
         }
