@@ -10,11 +10,13 @@
     .cell {
       height: 37px;
       line-height: 37px;
+      padding-left: 10px;
     }
   }
 
   .active {
     background: #38adff;
     color: #ffffff;
+    border-radius: 3px
   }
 }
