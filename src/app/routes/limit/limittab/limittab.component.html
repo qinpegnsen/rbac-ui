@@ -51,14 +51,14 @@
 
       </thead>
       <tbody>
-      <tr *ngFor="let page of dataTable2.data;let x = index" class="text-center" (click)="onSelecttable(page.pageCode)">
-        <td>{{x+1}}</td>
-        <td>{{page.pageName}}</td>
-        <td>{{page.icon}}</td>
-        <td>{{page.level}}</td>
-        <td>{{page.remarks}}</td>
-        <td>{{page.ord}}</td>
-        <td>
+      <tr *ngFor="let page of dataTable2.data;let x = index"  (click)="onSelecttable(page.pageCode)">
+        <td class="text-center">{{x+1}}</td>
+        <td class="text-center">{{page.pageName}}</td>
+        <td class="text-center">{{page.icon}}</td>
+        <td class="text-center">{{page.level}}</td>
+        <td class="text-center">{{page.remarks}}</td>
+        <td class="text-center">{{page.ord}}</td>
+        <td class="text-center">
           <!--页面元素的是否启用-->
 
               <label class="switch">
