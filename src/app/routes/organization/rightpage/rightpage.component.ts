@@ -3,13 +3,13 @@ import {SettingsService} from "../../../core/settings/settings.service";
 import {ActivatedRoute,Router} from '@angular/router';
 import {AjaxService} from "../../../core/services/ajax.service";
 import {AppStore} from "../store/app-store";
-const swal = require('sweetalert');
 import {Store} from "@ngrx/store";
 import {OrgService} from "../server/org.service";
-import {TableComponent} from "../table/table.component";
 import {BindRoleService} from "./bind-role.service";
 import {SelectComponent} from "ng2-select/index";
 import {isArray} from "rxjs/util/isArray";
+const swal = require('sweetalert');
+
 @Component({
   selector: 'app-rightpage',
   templateUrl: './rightpage.component.html',
@@ -189,28 +189,7 @@ export class RightpageComponent implements OnInit {
     };
     myReader.readAsDataURL(file);
   }
-  /**
-   *为部门设置主管
-   * @param data
-     */
-  /*refreshValueList(data: any) {
-    this.staffCodes = '';
-    console.log(this._staffList);
-    for (let i = 0; i < data.length; i ++) {
-      let len = isArray(this._staffList) ? this._staffList.length : 0;
-      for (let j = 0; j < len; j ++) {
-        if (this._staffList[j].staffName === data[i].text) {
-          if (i !== data.length - 1) {
-            this.staffCodes += this._staffList[j].staffCode + ',';
-          } else {
-            this.staffCodes += this._staffList[j].staffCode;
-          }
-        }
-      }
-    }
-    console.log(this.staffCodes);
-    console.log(data);
-  }*/
+
   /**
    * 关闭子页面（取消）
    */

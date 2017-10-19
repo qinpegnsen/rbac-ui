@@ -8,11 +8,34 @@
     </div>
   </div>
   <div class="panel limit-group">
-    <div class="panel-body limit-menu">
-      <div class="clearfix">
-        <p class="limit-group-title">菜单</p>
-        <ul class="pl every-group">
-          <li class="clearfix" *ngFor="let one of limitList.MENU;let x = index">
+    <div class="panel-body limit-menu" >
+
+      <div class="clearfix" >
+        <ul class="pl every-group" >
+          <li class="clearfix " >
+            <div class="mb pull-left w15 everyone" #x>
+              <h4>一级权限</h4>
+            </div>
+            <ul class="w85 pull-left pl every-group"  >
+              <li class="mb clearfix">
+                <div class="mb pull-left w18 everyone" #y>
+                  <h4 >二级权限</h4>
+                </div>
+                <ul class="pull-left w82 pl every-group"  >
+                  <li class="limit-item-box" >
+                    <div class="mb everyone" #m>
+                      <h4 >三级权限</h4>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="clearfix" >
+        <ul class="pl every-group" style="border: 1px solid #f5f7fa;padding: 5px">
+          <li class="clearfix mt12" *ngFor="let one of limitList.MENU;let x = index" style="border-bottom: 1px solid #f5f7fa">
             <div class="mb pull-left w15 everyone" #x>
               <label class="checkbox-inline c-checkbox">
                 <input class="_val" type="checkbox" [checked]="one.isHas=='Y'" [value]="one.limitCode"
@@ -21,8 +44,8 @@
               </label>
               <div class="limit-item menu-one bg-green">{{one.alias}}</div>
             </div>
-            <ul class="w85 pull-left pl every-group" *ngIf="one.subLimitList.length > 0">
-              <li class="mb clearfix" *ngFor="let two of one.subLimitList;let y = index">
+            <ul class="w85 pull-left pl every-group" *ngIf="one.subLimitList.length > 0" >
+              <li class="mb clearfix" *ngFor="let two of one.subLimitList;let y = index" style="border-bottom: 1px solid #f5f7fa; ">
                 <div class="mb pull-left w18 everyone" #y>
                   <label class="checkbox-inline c-checkbox">
                     <input class="_val" type="checkbox" [checked]="two.isHas=='Y'" [value]="two.limitCode"
@@ -31,7 +54,7 @@
                   </label>
                   <div class="limit-item menu-one bg-danger">{{two.alias}}</div>
                 </div>
-                <ul class="pull-left w82 pl every-group" *ngIf="two.subLimitList.length > 0">
+                <ul class="pull-left w82 pl every-group" *ngIf="two.subLimitList.length > 0" >
                   <li class="limit-item-box" *ngFor="let three of two.subLimitList;let m = index">
                     <div class="mb everyone" #m>
                       <label class="checkbox-inline c-checkbox">
@@ -48,7 +71,7 @@
           </li>
         </ul>
       </div>
-      <div class="clearfix">
+      <!--<div class="clearfix">
         <p class="limit-group-title">页面元素</p>
         <ul class="pl every-group">
           <li class="clearfix" *ngFor="let one of limitList.PAGE;let i = index">
@@ -116,7 +139,7 @@
             </div>
           </li>
         </ul>
-      </div>
+      </div>-->
     </div>
     <div class="panel-footer">
       <button class="btn btn-purple" (click)="allotLimt()">提交</button>
