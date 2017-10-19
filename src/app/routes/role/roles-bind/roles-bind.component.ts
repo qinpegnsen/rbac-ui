@@ -47,7 +47,7 @@ export class RolesBindComponent implements OnInit {
    * @param target
    * @param parent
    */
-  checkedItems(target,parent) {
+  checkedItems(target,parent,level?) {
     let $target = $(target),$parent = $(parent);
     if ($target.prop('checked')) {
       $parent.next('ul').find('._val').prop('checked', true)
@@ -56,28 +56,19 @@ export class RolesBindComponent implements OnInit {
     };
     let parents = $parent.parent('li').parent('ul');//找到当前元素所在级别的ul
     let siblings = parents.children('li');//选择当前元素父元素(.everyone)所在级别的ul的所有子元素li
-    let checkedNum = this.getSiblingsCheckedLength(siblings);
-    if (checkedNum == siblings.find('.everyone').length){
+    this.parentChecked(parents,siblings);
+    if(level == 3){
+      let level2 = parents.parent('li').parent('ul');//找到当前父级元素所在级别的ul
+      this.parentChecked(level2,siblings);
+    }
+  }
+
+  parentChecked(parents,siblings){
+    if (siblings.find('._val').length == siblings.find('._val:checked').length){
       parents.prev('.everyone').find('._val').prop('checked', true);
     }else{
       parents.prev('.everyone').find('._val').prop('checked', false);
     }
-
-  }
-
-  /**
-   * 获取当前选择元素同级的被选中的个数
-   * @param siblings
-   * @returns {number}
-   */
-  private getSiblingsCheckedLength(siblings){
-    let checkedNum: number = 0;
-    for(let i = 0; i < siblings.length; i ++){
-      if(siblings.eq(i).find('.everyone ._val').prop('checked')){
-        checkedNum += 1
-      }
-    }
-    return checkedNum;
   }
 
   /**

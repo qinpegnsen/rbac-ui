@@ -13,17 +13,17 @@
       <div class="clearfix" >
         <ul class="pl every-group" >
           <li class="clearfix " >
-            <div class="mb pull-left w15 everyone" #x>
+            <div class="mb pull-left w15 everyone">
               <h4>一级权限</h4>
             </div>
             <ul class="w85 pull-left pl every-group"  >
               <li class="mb clearfix">
-                <div class="mb pull-left w18 everyone" #y>
+                <div class="mb pull-left w18 everyone">
                   <h4 >二级权限</h4>
                 </div>
                 <ul class="pull-left w82 pl every-group"  >
                   <li class="limit-item-box" >
-                    <div class="mb everyone" #m>
+                    <div class="mb everyone">
                       <h4 >三级权限</h4>
                     </div>
                   </li>
@@ -33,9 +33,9 @@
           </li>
         </ul>
       </div>
-      <div class="clearfix" >
-        <ul class="pl every-group" style="border: 1px solid #f5f7fa;padding: 5px">
-          <li class="clearfix mt12" *ngFor="let one of limitList.MENU;let x = index" style="border-bottom: 1px solid #f5f7fa">
+      <div class="clearfix">
+        <ul class="pl every-group border p5">
+          <li class="clearfix mt12 border-b" *ngFor="let one of limitList.MENU;let x = index">
             <div class="mb pull-left w15 everyone" #x>
               <label class="checkbox-inline c-checkbox">
                 <input class="_val" type="checkbox" [checked]="one.isHas=='Y'" [value]="one.limitCode"
@@ -45,7 +45,7 @@
               <div class="limit-item menu-one bg-green">{{one.alias}}</div>
             </div>
             <ul class="w85 pull-left pl every-group" *ngIf="one.subLimitList.length > 0" >
-              <li class="mb clearfix" *ngFor="let two of one.subLimitList;let y = index" style="border-bottom: 1px solid #f5f7fa; ">
+              <li class="mb clearfix border-b" *ngFor="let two of one.subLimitList;let y = index">
                 <div class="mb pull-left w18 everyone" #y>
                   <label class="checkbox-inline c-checkbox">
                     <input class="_val" type="checkbox" [checked]="two.isHas=='Y'" [value]="two.limitCode"
@@ -59,7 +59,7 @@
                     <div class="mb everyone" #m>
                       <label class="checkbox-inline c-checkbox">
                         <input class="_val" type="checkbox" [checked]="three.isHas=='Y'" [value]="three.limitCode"
-                               (change)="checkedItems($event.target,m)"/>
+                               (change)="checkedItems($event.target,m,3)"/>
                         <span class="fa fa-check"></span>
                       </label>
                       <div class="limit-item menu-one bg-warning">{{three.alias}}</div>
