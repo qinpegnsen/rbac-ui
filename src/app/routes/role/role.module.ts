@@ -20,9 +20,14 @@ const appChildRoutes: Routes = [
 // 父路由，用于页面嵌套显示
 const routes: Routes = [
   {path: '', redirectTo: 'roleGroup', pathMatch: 'full'},
-  {path: 'roleGroup', component: RoleComponent,data:[{type:'roleGroup'}] ,children: appChildRoutes},
-  {path: 'roleList', component: RoleListComponent,data:[{type:'roleList'}], children: appChildRoutes},
-  {path: 'roles-bind', component: RolesBindComponent}
+  {path: 'roleGroup', children: [
+    {path: '', component: RoleComponent,data:[{type:'roleGroup'}],children: appChildRoutes},
+    {path: 'roles-bind', component: RolesBindComponent},
+  ]},
+  {path: 'roleList',children: [
+    {path: '', component: RoleListComponent,data:[{type:'roleList'}], children: appChildRoutes},
+    {path: 'roles-bind', component: RolesBindComponent}
+  ] },
 ];
 
 @NgModule({
