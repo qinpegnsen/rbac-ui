@@ -27,7 +27,7 @@ export class SettingsService {
       if(!isNullOrUndefined(loginInfo.state)){
         job = this.getUserJob(loginInfo);
       }
-      if(!isNullOrUndefined(loginInfo.rbacOrganVO.orgName) && !isNullOrUndefined(loginInfo.rbacOrganVO)){
+      if(!isNullOrUndefined(loginInfo.rbacOrganVO) && !isNullOrUndefined(loginInfo.rbacOrganVO.orgName)){
         orgName = loginInfo.rbacOrganVO.orgName;
       }
     };
