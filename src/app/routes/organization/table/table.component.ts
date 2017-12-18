@@ -24,13 +24,13 @@ export class TableComponent implements OnInit {
 
   @Input() set orgEmpExtVOList(value:Array<any>) {
     if (value) {
-      console.log(value);
+      //console.log(value);
       this.check_status = [];
       this.top_check = false;
       value.map((value, index, array) => {this.check_status[index] = false});
     }
     this._orgEmpExtVOList = value;
-    console.log(this._orgEmpExtVOList)
+    //console.log(this._orgEmpExtVOList)
   }
   get orgEmpExtVOList() {
     return this._orgEmpExtVOList;
@@ -60,7 +60,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.store.select('query').subscribe((res) => {
-      console.log(res);
+      //console.log(res);
       this.top_check = res as boolean;
       this.toggle();
     });
@@ -91,9 +91,9 @@ export class TableComponent implements OnInit {
    * @param staffCode
      */
   delstaff(event){
-    console.log(event);
-    console.log(event.check_status);
-    console.log(event._orgEmpExtVOList);
+    //console.log(event);
+    //console.log(event.check_status);
+    //.log(event._orgEmpExtVOList);
     this.arr.length=0;
     var checkStatus = event.check_status;
     var objs = event._orgEmpExtVOList;
@@ -105,7 +105,7 @@ export class TableComponent implements OnInit {
     }
     //this.arr.push(staffCode);
     this.srrStaff=this.arr.join(',');
-    console.log(this.arr);
+    //console.log(this.arr);
   }
 
   /**
@@ -147,14 +147,12 @@ export class TableComponent implements OnInit {
         closeOnConfirm: false  //点击‘确认’后，执行另外一个提示框
       },
       function () {  //点击‘确认’时执行
-        console.log("█ 1 ►►►",  1);
-
         swal.close(); //关闭弹框
         data = {
           'staffCode':_this.srrStaff,
           'state': 'DEL'
         }
-        console.log(data)
+        //console.log(data)
         _this.TableService.delCode(url, data); //删除数据
         _this.store.select('addStaff').subscribe((res) => {
           _this.org.getOrgList('/staff/list?deptCode=' + res[0].deptCode).subscribe((res) => {
@@ -170,8 +168,6 @@ export class TableComponent implements OnInit {
    * @param data
    */
   upMenudateState(data) {
-    console.log("█ data ►►►", data );
-
     if (data.isHead == "Y") {
       data.isHead = "N"
     }else{

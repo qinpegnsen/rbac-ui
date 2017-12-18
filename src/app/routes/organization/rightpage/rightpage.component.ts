@@ -8,6 +8,8 @@ import {OrgService} from "../server/org.service";
 import {BindRoleService} from "./bind-role.service";
 import {SelectComponent} from "ng2-select/index";
 import {isArray} from "rxjs/util/isArray";
+import {TreeComponent} from "../tree/tree.component";
+import {HomePComponent} from "../home-p/home-p.component";
 const swal = require('sweetalert');
 
 @Component({
@@ -51,7 +53,8 @@ export class RightpageComponent implements OnInit {
     private org:OrgService,
     private store: Store<AppStore>,
     private routeInfo:ActivatedRoute,
-    private bindRoleService:BindRoleService
+    private bindRoleService:BindRoleService,
+    private HomePComponent:HomePComponent
 
   ) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
@@ -86,8 +89,6 @@ export class RightpageComponent implements OnInit {
     // 获取deptCode部门编码
     this.store.select('addStaff').subscribe((res) => {
       this.deptCode = res[0].deptCode;
-      console.log("█ this.deptCode ►►►",  this.deptCode);
-
     });
     //获取路由的参数
     this.queryId = this.routeInfo.snapshot.queryParams['id'];
@@ -195,6 +196,7 @@ export class RightpageComponent implements OnInit {
    */
   cancel(){
     this.settings.closeRightPageAndRouteBack(); //关闭右侧滑动页面
+    this.HomePComponent.getOrgList('/staff/list?deptCode');
   }
 
   /**
@@ -209,7 +211,7 @@ export class RightpageComponent implements OnInit {
    */
   private getRoleAndGroupList(){
     let roleAndGroupList = this.bindRoleService.getRoleAndGroupList(this.sysCode,this.staffCode).data;
-    console.log("█ roleAndGroupList ►►►", roleAndGroupList);
+    //console.log("█ roleAndGroupList ►►►", roleAndGroupList);
     let oldRolesArray = roleAndGroupList.roleList;
     let oldRoleGroupArray = roleAndGroupList.roleGroupList;
     let newRolesArray = [], myNewRolesArray = [],myNewRoleGroupArray = [], newRoleGroupArray = [], obj = {};
@@ -233,8 +235,8 @@ export class RightpageComponent implements OnInit {
         myNewRoleGroupArray.push(obj)
       }
     }
-    console.log('myNewRolesArray',myNewRolesArray)
-    console.log('myNewRoleGroupArray',myNewRoleGroupArray)
+    //console.log('myNewRolesArray',myNewRolesArray)
+   // console.log('myNewRoleGroupArray',myNewRoleGroupArray)
     this.mySelectRoles.active = myNewRolesArray;
     this.mySelectGroup.active = myNewRoleGroupArray;
 
@@ -272,8 +274,7 @@ export class RightpageComponent implements OnInit {
 
             })
           } else {
-            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
-            swal(res.info, errorMsg, 'error');
+            swal(res.info, '','error');
           }
         },
         error: (data) => {
@@ -290,14 +291,13 @@ export class RightpageComponent implements OnInit {
           'newpwd': value.newpwd
         },
         success: (res) => {
-          console.log(res)
+          //console.log(res)
           if (res.success) {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
             swal('修改密码成功！', '','success');
             //_this.outputvalue.emit(true);//提交成功后向父组件传值
           } else {
-            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
-            swal(res.info, errorMsg, 'error');
+            swal(res.info, '','error');
           }
         },
         error: (data) => {
@@ -321,20 +321,19 @@ export class RightpageComponent implements OnInit {
           'orgCode':_this.loginlnfo.orgCode
         },
         success: (res) => {
-          console.log(res)
+          //console.log(res)
           if (res.success) {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
             swal('修改员工信息成功！', '','success');
             //_this.store.dispatch({type: 'LIST', payload: true});
-            console.log("/staff/list?deptCode=" + value.deptCode);
+            //.log("/staff/list?deptCode=" + value.deptCode);
              _this.store.select('addStaff').subscribe((res) => {
                _this.org.getOrgList('/staff/list?deptCode=' + res[0].deptCode).subscribe((res) => {
                  _this.store.dispatch({type: 'STAFF_ADD', payload: res});
                })
              });
           } else {
-            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
-            swal(res.info, errorMsg, 'error');
+            swal(res.info, '','error');
           }
         },
         error: (data) => {
@@ -353,15 +352,14 @@ export class RightpageComponent implements OnInit {
           'duty': value.duty
         },
         success: (res) => {
-          console.log(res)
+          //console.log(res)
           if (res.success) {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
             swal('添加部门成功！', '','success');
             //_this.outputvalue.emit(true);//提交成功后向父组件传值
             _this.store.dispatch({type: 'LIST', payload: true});
           } else {
-            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
-            swal(res.info, errorMsg, 'error');
+            swal(res.info, '','error');
           }
         },
         error: (data) => {
@@ -381,7 +379,7 @@ export class RightpageComponent implements OnInit {
           'roleGroupCode': this.roleGroupCode
         },
         success: (res) => {
-          console.log(res)
+          //console.log(res)
           if (res.success) {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
             swal('绑定角色角色组成功！', '','success');
@@ -389,8 +387,7 @@ export class RightpageComponent implements OnInit {
             // 通知home-p组件更新
             _this.store.dispatch({type: 'LIST', payload: true});
           } else {
-            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
-            swal(res.info, errorMsg, 'error');
+            swal(res.info, '','error');
           }
         },
         error: (data) => {
@@ -410,14 +407,13 @@ export class RightpageComponent implements OnInit {
           'duty': value.duty
         },
         success: (res) => {
-          console.log(res)
+          //console.log(res)
           if (res.success) {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
             swal('修改部门信息成功！', '','success');
             _this.store.dispatch({type: 'LIST', payload: true});
           } else {
-            let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
-            swal(res.info, errorMsg, 'error');
+            swal(res.info, '','error');
           }
         },
         error: (data) => {
@@ -430,32 +426,7 @@ export class RightpageComponent implements OnInit {
   /**
    * 删除部门
    */
- /* delLimitList(value){
-    let _this = this;
-    _this.ajax.post({
-      url: '/dept/updateState',
-      data: {
-        'deptCode': value.deptCode,
-        'state':'DEL'
-      },
-      success: (res) => {
-        console.log(res)
-        if (res.success) {
-          _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
-          swal('成功删除部门！', '','success');
-          _this.store.dispatch({type: 'LIST', payload: true});
-        } else {
-          let errorMsg = res.data.substring(res.data.indexOf('$$') + 2, res.data.indexOf('@@'))
-          swal(res.info, errorMsg, 'error');
-        }
-      },
-      error: (data) => {
-        swal('删除部门失败！', '','error');
-      }
-    });
-  }*/
-
-  delstaffs(delCodeId) {
+  delstaffs() {
     let _this = this, url: string = "/dept/updateState", data: any;
     swal({
         title: '确认删除此信息？',
@@ -471,8 +442,9 @@ export class RightpageComponent implements OnInit {
           'deptCode': _this.deptCode,
           'state':'DEL'
         }
-        console.log(data)
+        //console.log(data)
         _this.bindRoleService.delCode(url, data); //删除数据
+        _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
       }
     );
   }

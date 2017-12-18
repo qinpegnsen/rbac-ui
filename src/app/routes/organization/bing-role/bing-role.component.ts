@@ -48,7 +48,7 @@ export class BingRoleComponent implements OnInit {
   public refreshValue(value: any): void {
 
     this.value = this.itemsToString(value);
-    console.log("█ this.value ►►►",  this.value);
+    //console.log("█ this.value ►►►",  this.value);
 
     this.roleCodes.emit(this.value)
   }
@@ -75,7 +75,7 @@ export class BingRoleComponent implements OnInit {
         staffCode: this.staffCode
       },
       success: (data) => {
-        console.log("█ data ►►►",  data);
+        //console.log("█ data ►►►",  data);
 
         let tempY=[],temp=[],obj={}
         for(var i=0;i<data.length;i++){

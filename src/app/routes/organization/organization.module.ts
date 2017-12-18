@@ -34,6 +34,6 @@ const routes:Routes = [
     TreeComponent,
     BingRoleComponent
   ],
-  providers: [OrgService]
+  providers: [OrgService,TreeComponent,HomePComponent]
 })
 export class OrganizationModule { }

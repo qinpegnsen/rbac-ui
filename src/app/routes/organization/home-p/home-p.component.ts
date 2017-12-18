@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AppStore} from "../store/app-store";
 import {Store} from "@ngrx/store";
-import {Observable} from "rxjs/Observable";
 import {OrgService} from '../server/org.service';
 import {SettingsService} from "../../../core/settings/settings.service";
 
@@ -22,12 +21,13 @@ export class HomePComponent implements OnInit {
 
 
   ngOnInit() {
+    this.setting.aa();
     this.user = this.setting.user;
     this.getOrgList('/dept/list');
     // 更新组织列表
     this.store.select('staff').subscribe((item) => {
       this.orgEmpExtVOList = item as Array<any>;
-      console.log(this.orgEmpExtVOList);
+      //console.log(this.orgEmpExtVOList);
     })
     // 初始化导航的路径
     this.store.dispatch({type: 'PATH_ADD', payload: ['']});

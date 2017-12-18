@@ -20,7 +20,7 @@ export class OrgService {
   XXXXXX(data: any, url: string): Observable<any> {
     // const body = JSON.stringify(data);
     const body = OrgService.resolveData(data);
-    console.log(body);
+    //console.log(body);
     const header = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     const options = new RequestOptions({withCredentials: true, headers: header});
 
@@ -36,7 +36,7 @@ export class OrgService {
     const options = new RequestOptions({headers: header});*/
     return this.http.get(url)
       .map((res) => {
-        console.log("█ res.json() ►►►", res.json() );
+        //console.log("█ res.json() ►►►", res.json() );
 
         return res.json();
       })

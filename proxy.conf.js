@@ -20,14 +20,6 @@ const PROXY_CONFIG = [
     target: "http://192.168.10.178:8082",   //拦截 context配置路径，经过此地址
     secure: false
   },
-  // {
-  //   context: [
-  //     "/login2",
-  //     "/elder"
-  //   ],
-  //   target: "http://192.168.10.110:8086",   //拦截 context配置路径，经过此地址
-  //   secure: false
-  // },
   {
     context: [
       "/upload"

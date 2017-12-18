@@ -1,8 +1,7 @@
 <ul>
   <li *ngFor="let item of result; let i = index">
     <div (click)="itemClick(item.deptName,item.deptCode,item.id)" style="position:relative;width:100%;" class="cell" [ngClass]="{'active':active_tree_cell === item.deptName}">
-      <a href="javascr
-      ipt:void(0)">
+      <a href="javascript:void(0)">
         <!--角标begin-->
         <span (click)="tree_status[i] = pre_arr[item.deptCode] ? !tree_status[i] : tree_status[i];itemClick(item.deptCode)" *ngIf="pre_arr && pre_arr[item.deptCode]" class="fa span" [ngClass]="{'fa-caret-right':!tree_status[i],'fa-caret-down': tree_status[i]}"[innerHTML]="''">
         </span>

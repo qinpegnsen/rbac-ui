@@ -15,7 +15,7 @@ export class TreeComponent implements OnInit {
   private _result: any;
   @Input() set result(value: any) {
     if (!this._result && value) {
-      console.log(value);
+      //console.log(value);
       if(value.length>0) {
         //console.log(value[0].deptCode);
         if (value[0].istop) {
@@ -26,6 +26,7 @@ export class TreeComponent implements OnInit {
     this._result = value;
   };
   get result() {
+    //console.log("█ this._result ►►►",  this._result);
     return this._result;
   }
 
@@ -38,7 +39,7 @@ export class TreeComponent implements OnInit {
     this.store.dispatch({type: 'ADD_STAFF', payload: [{id: id,deptCode: deptCode}]})
     this.store.dispatch({type: 'ACTIVE', payload: name});
     this.store.select('active').subscribe((res) => this.active_tree_cell = res as string);
-    console.log(name);
+    //console.log(name);
     this.store.dispatch({type: 'QUERY', payload: false});
     this.forPath(name, deptCode);
     this.getStaff(deptCode)
