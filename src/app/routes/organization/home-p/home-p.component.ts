@@ -21,7 +21,7 @@ export class HomePComponent implements OnInit {
 
 
   ngOnInit() {
-    this.setting.aa();
+    this.setting.longinInfo();
     this.user = this.setting.user;
     this.getOrgList('/dept/list');
     // 更新组织列表

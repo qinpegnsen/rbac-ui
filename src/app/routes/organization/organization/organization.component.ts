@@ -9,10 +9,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrganizationComponent implements OnInit {
 
-
-
-
-
   constructor() {
 
   }

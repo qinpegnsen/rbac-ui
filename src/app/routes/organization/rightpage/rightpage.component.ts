@@ -8,7 +8,6 @@ import {OrgService} from "../server/org.service";
 import {BindRoleService} from "./bind-role.service";
 import {SelectComponent} from "ng2-select/index";
 import {isArray} from "rxjs/util/isArray";
-import {TreeComponent} from "../tree/tree.component";
 import {HomePComponent} from "../home-p/home-p.component";
 const swal = require('sweetalert');
 
@@ -55,7 +54,6 @@ export class RightpageComponent implements OnInit {
     private routeInfo:ActivatedRoute,
     private bindRoleService:BindRoleService,
     private HomePComponent:HomePComponent
-
   ) {
     this.settings.showRightPage("30%"); // 此方法必须调用！页面右侧显示，带滑动效果,可以自定义宽度：..%  或者 ..px
   }

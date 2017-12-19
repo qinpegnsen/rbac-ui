@@ -1,4 +1,4 @@
-import {Component, Input, OnInit,Output,EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, OnChanges} from '@angular/core';
 import {AppStore} from "../store/app-store";
 import {Store} from "@ngrx/store";
 import {OrgService} from "../server/org.service";
@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Rx';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss']
 })
-export class TreeComponent implements OnInit {
+export class TreeComponent implements OnInit ,OnChanges{
   tree_status = [true];
   active_tree_cell: string;
   private _result: any;
@@ -35,6 +35,7 @@ export class TreeComponent implements OnInit {
   constructor(private store: Store<AppStore>,private org:OrgService) {
 
   }
+
   itemClick(name, deptCode: string, id: any) {
     this.store.dispatch({type: 'ADD_STAFF', payload: [{id: id,deptCode: deptCode}]})
     this.store.dispatch({type: 'ACTIVE', payload: name});
@@ -52,6 +53,10 @@ export class TreeComponent implements OnInit {
         });*!/
       }
     });*/
+  }
+
+  ngOnChanges(){
+    this.result;
   }
 
   getStaff(deptCode) {
