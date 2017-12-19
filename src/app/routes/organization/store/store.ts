@@ -71,7 +71,7 @@ export function queryReducer(state: boolean = false, action: Action) {
       return state;
   }
 }
-export function upDataReducer(state: boolean = false, action: Action) {
+export function upDataReducer(state: any = false, action: Action) {
   switch (action.type) {
     case 'LIST':
       return action.payload;

@@ -355,7 +355,7 @@ export class RightpageComponent implements OnInit {
             _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
             swal('添加部门成功！', '','success');
             //_this.outputvalue.emit(true);//提交成功后向父组件传值
-            _this.store.dispatch({type: 'LIST', payload: true});
+            _this.store.dispatch({type: 'LIST', payload: {}});
           } else {
             swal(res.info, '','error');
           }
@@ -442,6 +442,7 @@ export class RightpageComponent implements OnInit {
         }
         //console.log(data)
         _this.bindRoleService.delCode(url, data); //删除数据
+        _this.store.dispatch({type: 'LIST', payload: {}});
         _this.router.navigate(['main/organization'], {replaceUrl: true});   //路由跳转
       }
     );

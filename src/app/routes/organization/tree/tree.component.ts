@@ -37,6 +37,7 @@ export class TreeComponent implements OnInit ,OnChanges{
   }
 
   itemClick(name, deptCode: string, id: any) {
+    console.log(name);
     this.store.dispatch({type: 'ADD_STAFF', payload: [{id: id,deptCode: deptCode}]})
     this.store.dispatch({type: 'ACTIVE', payload: name});
     this.store.select('active').subscribe((res) => this.active_tree_cell = res as string);

@@ -32,6 +32,7 @@ export class HomePComponent implements OnInit {
     // 初始化导航的路径
     this.store.dispatch({type: 'PATH_ADD', payload: ['']});
     this.store.select('updata').subscribe((res) => {
+      console.log(res);
       if (res) {
         this.getOrgList('/dept/list');
       }
