@@ -1,6 +1,3 @@
-/**
- * Created by hasee on 2017/8/13.
- */
 import {Action} from '@ngrx/store';
 
 export function routerReducer(state: string = 'admin管理', action: Action) {
