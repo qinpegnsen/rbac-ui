@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AppStore} from "../store/app-store";
 import {Store} from "@ngrx/store";
 import {OrgService} from '../server/org.service';
 import {SettingsService} from "../../../core/settings/settings.service";
+import {TreeComponent} from "../tree/tree.component";
 
 @Component({
   selector: 'app-home-p',
@@ -14,9 +15,12 @@ export class HomePComponent implements OnInit {
   public result;
   public pre_arr;
   private deptCode;
+  @ViewChild('tree')tree:TreeComponent;
   constructor(private store:Store<AppStore>,
               private setting: SettingsService,
-              private org:OrgService){}
+              private org:OrgService,
+              private treeComponent:TreeComponent
+  ){}
   private user;
 
 
@@ -96,5 +100,11 @@ export class HomePComponent implements OnInit {
     return {result: result, pre_arr: pre_arr}
   }
 
-
+  /**
+   * 获取全部的员工列表
+   */
+  getStaffs(){
+    this.tree.getStaff('')
+    console.log("█ 1111 ►►►",  1111);
+  }
 }

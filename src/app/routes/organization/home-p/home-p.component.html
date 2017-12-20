@@ -13,12 +13,12 @@
                 </div>
               </form>
             </div>
-            <div class="tab clearfix">
-              <span class="btn btn-primary w100" ><i class="fa fa-sitemap"></i>&nbsp;&nbsp;&nbsp;{{user.orgName}}
+            <div class="tab clearfix" >
+              <span class="btn btn-primary w100" (click)="getStaffs()"><i class="fa fa-sitemap"></i>&nbsp;&nbsp;&nbsp;{{user.orgName}}
 </span>
             </div>
             <div class="tree">
-              <app-tree [result]="result" [pre_arr]="pre_arr"></app-tree>
+              <app-tree [result]="result" [pre_arr]="pre_arr" #tree></app-tree>
             </div>
           </div>
         </div>

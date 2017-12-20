@@ -37,14 +37,15 @@ export class TreeComponent implements OnInit ,OnChanges{
   }
 
   itemClick(name, deptCode: string, id: any) {
-    console.log(name);
+    //console.log(name);
     this.store.dispatch({type: 'ADD_STAFF', payload: [{id: id,deptCode: deptCode}]})
     this.store.dispatch({type: 'ACTIVE', payload: name});
     this.store.select('active').subscribe((res) => this.active_tree_cell = res as string);
     //console.log(name);
     this.store.dispatch({type: 'QUERY', payload: false});
     this.forPath(name, deptCode);
-    this.getStaff(deptCode)
+    this.getStaff(deptCode);
+    this.getStaff(name)
   }
   ngOnInit() {
    /* this.store.select('updata').subscribe((res) => {
@@ -61,7 +62,7 @@ export class TreeComponent implements OnInit ,OnChanges{
   }
 
   getStaff(deptCode) {
-    this.org.getOrgList('/staff/list?deptCode=' + deptCode).subscribe((res) => {
+    this.org.getOrgList(deptCode?'/staff/list?deptCode=' + deptCode:'/staff/list').subscribe((res) => {
       this.store.dispatch({type: 'STAFF_ADD', payload: res});
     })
   }
@@ -71,6 +72,5 @@ export class TreeComponent implements OnInit ,OnChanges{
     if (this.pre_arr) {
       this.store.dispatch({type: 'LIST_ADD', payload: this.pre_arr[deptCode]});
     }
-
   }
 }
