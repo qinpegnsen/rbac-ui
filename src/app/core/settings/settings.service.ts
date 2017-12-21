@@ -53,7 +53,7 @@ export class SettingsService {
     let loginInfo: any = JSON.parse(sessionInfo);
     let name = '游客', job = '无',orgName = '';
     if (!isNullOrUndefined(loginInfo)) {
-      console.log('loginInfo--------',loginInfo)
+      //console.log('loginInfo--------',loginInfo)
       if (!isNullOrUndefined(loginInfo.mgrName)){
         name = loginInfo.mgrName;
       }

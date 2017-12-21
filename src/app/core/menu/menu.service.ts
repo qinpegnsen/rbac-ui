@@ -37,7 +37,7 @@ export class MenuService {
 
   foreachPushMenu(items:Array<menuVO>) {
     let menuItems:Array<MenuItem> = [],menuItem:MenuItem;
-    console.log("█ items ►►►",  items);
+    //console.log("█ items ►►►",  items);
     items.forEach((item) => {
       menuItem = new MenuItem();
       //设置菜单显示名称

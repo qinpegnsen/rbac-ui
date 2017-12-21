@@ -36,7 +36,7 @@ export class HomePComponent implements OnInit {
     // 初始化导航的路径
     this.store.dispatch({type: 'PATH_ADD', payload: ['']});
     this.store.select('updata').subscribe((res) => {
-      console.log(res);
+      //console.log(res);
       if (res) {
         this.getOrgList('/dept/list');
       }
@@ -105,6 +105,6 @@ export class HomePComponent implements OnInit {
    */
   getStaffs(){
     this.tree.getStaff('')
-    console.log("█ 1111 ►►►",  1111);
+    //console.log("█ 1111 ►►►",  1111);
   }
 }
