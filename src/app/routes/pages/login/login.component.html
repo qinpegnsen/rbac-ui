@@ -3,10 +3,19 @@
   <div class="page-container" ng-controller="LoginFormController">
     <h1 class="text-info">系统权限管理平台</h1>
     <form class="form" role="form" ng-submit="login()" name="loginForm" novalidate="" #loginForm="ngForm">
+
       <div id="authMsg" class="authMsg"></div>
-      <input type="text" class="input" name="username" [(ngModel)]="userName" autocomplete="off" required  placeholder="请输入管理员账号">
-      <input type="password" class="input" name="password" minlength="6" maxlength="16" [(ngModel)]="password"
-             autocomplete="off" required placeholder="请输入6-16位密码">
+      <input type="text" class="input" name="user" [(ngModel)]="userName"
+             #ngUserName="ngModel" autocomplete="off" required  placeholder="请输入管理员账号">
+      <div [hidden]="ngUserName.valid || ngUserName.pristine" class="text-danger text-left pl">
+        请填写正确账号
+      </div>
+
+      <input type="password" class="input" name="pwd" minlength="6" maxlength="16" [(ngModel)]="password"
+             #ngPwd="ngModel" autocomplete="off" required placeholder="请输入6-16位密码">
+      <div [hidden]="ngPwd.valid || ngPwd.pristine" class="text-danger text-left pl">
+        请输入6-16位密码
+      </div>
       <!--<div toggle-fullscreen="toggle-fullscreen">-->
 
       <button type="submit" class="button button-login" (click)="login()" [disabled]="!loginForm.form.valid">点击登陆</button>
