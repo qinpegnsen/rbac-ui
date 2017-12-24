@@ -17,8 +17,8 @@
         请输入6-16位密码
       </div>
       <!--<div toggle-fullscreen="toggle-fullscreen">-->
+      <button type="submit" class="button button-login" (click)="login()" [disabled]="!loginForm.form.valid&&!ngPwd.pristine&&!ngUserName.pristine">点击登陆</button>
 
-      <button type="submit" class="button button-login" (click)="login()" [disabled]="!loginForm.form.valid">点击登陆</button>
       <div [hidden]="!loginFail.type" class="text-danger text-left p-sm login-tip"  [innerHTML]="loginFail
         .info"></div>
       <!--</div>-->

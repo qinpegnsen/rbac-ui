@@ -10,7 +10,6 @@ import {CoreModule} from "./core/core.module";
 import {LayoutModule} from "./layout/layout.module";
 import {SharedModule} from "./shared/shared.module";
 import {RoutesModule} from "./routes/routes.module";
-import {CookieService} from "_angular2-cookie@1.2.6@angular2-cookie";
 import {
   activeReducer,
   addStaffReducer,
@@ -22,6 +21,7 @@ import {
 } from "./routes/organization/store/store";
 import {StoreModule} from "@ngrx/store";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {CookieService} from "angular2-cookie/core";
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: Http) {

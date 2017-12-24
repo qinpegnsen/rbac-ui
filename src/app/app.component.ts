@@ -1,10 +1,10 @@
 import {Component, HostBinding, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
 import {SettingsService} from "./core/settings/settings.service";
-import {CookieService} from "_angular2-cookie@1.2.6@angular2-cookie";
 import {Router} from "@angular/router";
 import {ToasterConfig, ToasterService} from "angular2-toaster";
 import {isNullOrUndefined} from "util";
+import {CookieService} from "angular2-cookie/core";
 
 declare var $: any;
 

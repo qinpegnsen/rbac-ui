@@ -9,6 +9,7 @@ import {MenuService} from "../../../core/menu/menu.service";
 import {RoleService} from "../../role/role/role.service";
 import {AppComponent} from "../../../app.component";
 import {CookieService} from "angular2-cookie/core";
+import {isNullOrUndefined} from "util";
 
 declare var $: any;
 @Component({
@@ -69,6 +70,10 @@ export class LoginComponent implements OnInit {
 
   // 用户登录
   public login() {
+    if(isNullOrUndefined(this.userName)||isNullOrUndefined(this.password)){
+      AppComponent.rzhAlt('info','请先输入登录信息');
+      return;
+    }
     let start = new Date().getTime(), end;
     let me = this;
     this.maskservice.showMask();
