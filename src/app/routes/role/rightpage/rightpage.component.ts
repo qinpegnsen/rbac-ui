@@ -186,8 +186,7 @@ export class RightpageComponent implements OnInit {
           if (data.success) {
             swal('新增角色组成功', '', 'success');
           } else {
-            let errorMsg = data.data.substring(data.data.indexOf('$$') + 2, data.data.indexOf('@@'))
-            swal(errorMsg, '', 'error');
+            swal('角色组名称已经存在', '', 'error');
           }
         },
         error: (data) => {
@@ -268,8 +267,7 @@ export class RightpageComponent implements OnInit {
           if (data.success) {
             swal('新增角色成功', '', 'success');
           } else {
-            let errorMsg = data.data.substring(data.data.indexOf('$$') + 2, data.data.indexOf('@@'))
-            swal(errorMsg, '', 'error');
+            swal('角色名称已经存在', '', 'error');
           }
         },
         error: (data) => {
